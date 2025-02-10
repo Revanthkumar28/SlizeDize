@@ -1,0 +1,10 @@
+<b2b-container row-body [property]="{backgroundTheme: '--color-light-grey', maxWidth: '530px', width: '100%', alignItem: 'flex-start'}">
+    <b2b-text container-body [text]="name" fontSize="20px"></b2b-text>
+    <b2b-spacer container-body height="20px"></b2b-spacer>
+    <b2b-row container-body>
+        <ng-container row-body *ngFor="let data of values; let i = index">
+            <b2b-label row-body [text]="data" [isRounded]="true" padding="20px" height="40px" [center]="true" [backgroundTheme]="(i == activeIndex-1) ? '--color-primary' : '--color-transparent'" [colorTheme]="(i == activeIndex-1) ? '--color-white' : '--color-black'" (click)="changeIndex(i+1)"></b2b-label>
+            <b2b-spacer row-body width="10px"></b2b-spacer>
+        </ng-container>
+    </b2b-row>
+</b2b-container>

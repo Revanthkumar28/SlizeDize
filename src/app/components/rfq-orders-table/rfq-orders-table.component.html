@@ -1,0 +1,215 @@
+
+<b2b-container [property]="{padding:'2px'}" >
+
+    <b2b-row container-body>
+        <!-- Mutiselect view -->
+        <!-- ALL RFQ REQUEST SELECTED CHECK BOX - (RFQ-1)-->
+        <ng-container row-body >
+            <b2b-trow row-body [column]="rfqColumnSpacing" *ngFor="let data of rfqSelectorHeading"
+            colorTheme="--color-drawer-bottom-card" margin="0" [bold]="true" fontSize="14px" position="relative">
+                <b2b-text trow-body [ngStyle]="{ 'position': 'absolute','left':'40%','top':'5%' }" text="Request For Quotation" colorTheme="--color-black" [bold]="true"
+                    height="20px" fontSize="15px">
+                </b2b-text>
+            
+                <ng-container trow-body>
+                    <b2b-tdata trow-body *appRoleBasedButton="[257,1]" width="45px">
+                        <b2b-container *ngIf="vendartable.length > 1 ? true:false" tdata-body [property]="{padding:'0'}">
+                            <b2b-spacer container-body width="80px"></b2b-spacer>
+                            <b2b-text container-body text="Select All" fontSize="8px"></b2b-text>
+                            <input container-body type="checkbox" [checked]="selectedData.length == 0 || isAllCheck == false ?false : true"
+                                (click)="selectAll($event)">
+                        </b2b-container>
+                    </b2b-tdata>    
+                </ng-container>
+                
+                <ng-container trow-body *appRoleBasedButton="[257,272,1]">
+                    <b2b-tdata trow-body *ngIf="selectedData.length > 0 && vendartable.length > 1 ? true :false" >
+                        <b2b-button tdata-body title="Select Vendor" (click)="selectDataForQutation()" width="100px" height="25px"
+                            backgroundTheme="--color-primary" colorTheme="--color-white" margin="0 5px 0 0"></b2b-button>
+                    </b2b-tdata>
+                </ng-container>
+                
+                <b2b-tdata trow-body *ngIf="isShowSelectVenderButton == true" width="100px"></b2b-tdata>
+                <b2b-tdata trow-body *ngIf="isLoggedIn"> 
+                    <b2b-button tdata-body *appRoleBasedButton="[254,1]" title="Approve" [apiSubmitDisable]="true" [isNogoLoader]="isApproveLoader" (click)="approveOrder()" width="100px" margin="0 5px 0 10px" height="25px" backgroundTheme="--color-green" colorTheme="--color-white"></b2b-button>
+                </b2b-tdata>
+                
+                <b2b-tdata trow-body *ngIf="isLoggedIn">
+                    <b2b-button tdata-body title="Reject" [apiSubmitDisable]="true" *appRoleBasedButton="[254,1]" width="100px" margin="0 5px 0 0" height="25px" backgroundTheme="--color-redd" colorTheme="--color-white" (onPressed)="approve_reject()"></b2b-button> 
+                </b2b-tdata>
+            </b2b-trow>
+        </ng-container>
+        
+    </b2b-row>
+
+    <b2b-row container-body>
+        <!-- - (RFQ-2) -->
+        <b2b-container row-body
+            [property]="{padding: '0', backgroundTheme: '--color-transparent', overflowX: 'hidden', alignItem: 'flex-start', width: '100%'}">
+            
+            <!-- RFQ Table Heading -->
+            <b2b-trow container-body [column]="tableColumnSpacing" margin="0 0 0 5px" height="90px" colorTheme="--color-drawer-bottom-card" [bold]="true"
+                fontSize="14px">
+                <ng-container trow-body *ngFor="let column of tableHeading">
+                    <b2b-tdata [title]="column.one" [title2]="column.two" flexDirection="column" fontSize="10px" [width]="column == 'Last Ordered Price Per Pcs/Box(Case)/Dozen' ? '60px':''" textTransform="capitalize" [margin]="column == 'Requested Person & Department' ? '0 30px 0 0' : '0 10px 0 0'"></b2b-tdata>
+                </ng-container>
+            </b2b-trow>
+
+            <!-- RFQ Table value - (RFQ-2.1)-->
+            <b2b-row container-body *ngFor="let data of vendartable">
+                <b2b-trow row-body id="1"  [HoverBoxShadow]="true" position="relative"
+                    [column]="tableColumnSpacing" fontSize="11.5px" colorTheme="--color-black"
+                    backgroundTheme="--color-light-grey" borderRadius="var(--table-radius)" position="relative">
+                    <div trow-body style="position: absolute;top: 0;left: 10px; width: 60px;height: 12px;background-color: red;font-size: 9px;border-radius: 4px;text-align: center;color: white;" [ngStyle]="{'background-color': data.approve == 'YES' ? 'green' : 'red'}" >{{data.approve == 'YES' ? 'Approved' : data.approve == 'REJECT' ? 'Reject' : data.approve == 'Finance' ? 'Finance' : 'Not Approve'}}</div>
+
+                    <b2b-tdata trow-body [title]="data['vendor']" >
+                        <ng-container tdata-body *appRoleBasedButton="[254,271,272,257,1]">
+                            <input *ngIf="data.approve == 'REJECT' ? false : true" type="checkbox" [disabled]="isDisabled" [checked]="selectedData.length == 0 ? false : data.ischecked"
+                            (change)="calculateTotal($event,data.purchase_request_random,data)">
+                        </ng-container>
+                        
+                    </b2b-tdata>
+
+                    <b2b-tdata trow-body title="{{data.purchase_request_random}}"></b2b-tdata>
+                    <b2b-tdata  trow-body [toolTip]="true" [toolTipName]="data.department_name" [title]="data.user_name+'('+ data.department_name+')' "></b2b-tdata>
+                    <b2b-tdata trow-body title="{{price_symbol}} {{data.approximate_price ? data.approximate_price : 0}}"[width]="isLoggedIn? '92px' :'130px' "></b2b-tdata>
+                    <b2b-tdata trow-body [title]="data.required_quantity"></b2b-tdata>
+                    <b2b-tdata trow-body title="{{data.case_quantity ? data.case_quantity: 0}}"></b2b-tdata>
+                    <b2b-tdata trow-body title="{{price_symbol}} {{data.approximate_price ? data.approximate_price : 0}}"></b2b-tdata>
+                    <b2b-tdata trow-body title="{{price_symbol}} {{data.approximate_shipping_cost ? data.approximate_shipping_cost : 0}}"></b2b-tdata>
+                    <b2b-tdata trow-body title="{{price_symbol}} {{data.approximate_price ? data.approximate_price + data.approximate_shipping_cost : 0}}" margin="0 0 0 10px"></b2b-tdata>
+
+                    <b2b-tdata trow-body [title]="data.requested_on">
+                        <!-- <b2b-inputbox tdata-body [twoInputFeild]="true" inputType="" [value]="data.requested_on"
+                            backgroundTheme="" [min]="now" inputboxMargin="0 0 0 10px" inputboxPadding="0"
+                            inputboxWidth="80px" inputboxFontSize="9px" inputboxTextalign="center" width="100px"
+                            height="">
+                        </b2b-inputbox> -->
+                    </b2b-tdata>
+                    <b2b-tdata trow-body [title]="transformPlacementData2(data.vednor ? data.vednor : '-')"></b2b-tdata>
+                    <!-- <b2b-tdata trow-body [title]="data.why_this_vendor"></b2b-tdata> -->
+                    <b2b-tdata trow-body [title]="transformPlacementData1(data.remarks ? data.remarks :'-')"></b2b-tdata>
+                    <ng-container *ngIf="isLoggedIn">
+
+                    <b2b-tdata trow-body width="60px" >
+                        <b2b-drop-down-xaxis tdata-body class="tour-payment-terms" *appRoleBasedButton="[255,257,1]">
+                            <div select-item style="display: flex; align-items: center;background-color: white;height: 20px; width:68px; padding: 5px; border:1px solid blue ">
+                                <b2b-text id="selectedValue" [text]="data.payment_terms ? data.payment_terms : 'Net 0'" fontSize="11px"></b2b-text>
+                                <b2b-icon-button style="position: absolute; right: 3px;" width="18px" icon="expand_more" padding="0 0 0 0"
+                                                 
+                                colorTheme="--color-dark-grey">
+                                </b2b-icon-button>
+                           </div>
+                            <div dropDown-Items>
+                                <b2b-list-tile container-body title="Net 0 (Immedite Payment)"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('Net 0',data.product_id,data.purchase_request_random)"></b2b-list-tile> 
+                                <b2b-list-tile container-body title="Net 30 (Payment after 30days)"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('Net 30',data.product_id,data.purchase_request_random)"></b2b-list-tile> 
+                                <b2b-list-tile container-body title="Net 60 (Payment after 60days)"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('Net 60',data.product_id,data.purchase_request_random)"></b2b-list-tile> 
+                                <b2b-list-tile container-body title="Net 90 (Payment after 90days)"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('Net 90',data.product_id,data.purchase_request_random)"></b2b-list-tile> 
+                                <b2b-list-tile container-body title="Net 120 (Payment after 120days)"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('Net 120',data.product_id,data.purchase_request_random)"></b2b-list-tile> 
+                                <b2b-list-tile container-body title="Net 150 (Payment after 150days)"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('Net 150',data.product_id,data.purchase_request_random)"></b2b-list-tile> 
+                                <b2b-list-tile container-body title="Net 180 (Payment after 180days)"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('Net 180',data.product_id,data.purchase_request_random)"></b2b-list-tile>                         
+                            </div> 
+                    </b2b-drop-down-xaxis> 
+                       
+                </b2b-tdata>
+                </ng-container>
+                <b2b-tdata *ngIf="!isLoggedIn" trow-body [title]="data.payment_terms" ></b2b-tdata>
+
+                    <b2b-tdata trow-body [title]="data.reject_reason ? data.reject_reason : '-'"></b2b-tdata>
+
+                    <b2b-tdata trow-body [title]="data['Push RFQ To Direct Order']">
+                        <b2b-toggle tdata-body *appRoleBasedButton="[256,1]" (onChange)="togglePost(data.purchase_request_random)"></b2b-toggle>
+                    </b2b-tdata>
+                    
+                    <b2b-tdata trow-body class="tour-select-vendor">
+                        <b2b-row tdata-body justifyContent="center" *appRoleBasedButton="[257,272,1]">
+                            <b2b-avatar-image row-body class="avatar_margin" *ngIf="data.approve == 'YES' && selectedData.length <= 1" img="https://th.bing.com/th?id=OIP.91aPKmo4kiDVUmyc2qIGWwHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
+                                (click)="poupQuotation(data['pur.request'],data)"></b2b-avatar-image>
+                            <b2b-spacer row-body width="10px"></b2b-spacer>
+                        </b2b-row>
+                    </b2b-tdata>
+
+                    <b2b-tdata *ngIf="isLoggedIn" trow-body [ngStyle]="{ 'position': 'absolute','right':'-11px','top':'17%' }">
+                        <b2b-drop-down-xaxis tdata-body *appRoleBasedButton="[260,261,1]">
+                            <b2b-icon-button select-item icon="more_vert" padding="0 5px 0 0"
+                            colorTheme="--color-dark-grey">
+                            </b2b-icon-button>
+                            <div dropDown-Items>   
+                                    
+                                    <b2b-list-tile dropdown-items *appRoleBasedButton="[260,1]" [isIcon]="true" icon="edit" [bold]="true" iconWidth="10px" iconsize="14px"  title="Order  & Approval Process"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="popup(data.purchase_request_random,'Order & Approval Process',data)"></b2b-list-tile> 
+                                    <b2b-spacer height="5px"></b2b-spacer>
+                                    <b2b-list-tile dropdown-items *appRoleBasedButton="[261,1]" [isIcon]="true" icon="delete" [bold]="true" iconWidth="10px" iconsize="14px"  title="Delete Order"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="delete(data,'select')"></b2b-list-tile> 
+                                    <b2b-spacer height="5px"></b2b-spacer>
+                                </div> 
+                    </b2b-drop-down-xaxis> 
+                    </b2b-tdata>
+                </b2b-trow>
+            </b2b-row>
+            
+        </b2b-container>
+    </b2b-row>
+</b2b-container>
+<!-- rejectpopup - (RFQ-3)-->
+<b2b-draggable-popup tdata-body *ngIf="rejectpopup" class="blur-overlay" positionTop="30%" positionLeft="43%">
+    <b2b-row draggable-popup height="20vh" widths="30vw" backgroundTheme="--color-white" justifyContent="center"
+            flexDirection="column" padding="10px 10px 0 10px" borderRadius="10px"
+            border="1px solid var(--color-toggle-background)">
+            <b2b-text row-body text="Are You Sure!" margin="5px 0 0 0"></b2b-text>
+            <b2b-text row-body text="Do You Want to Reject the order?" fontSize="14px"
+                    margin="0 0 10px 0"></b2b-text>
+            <b2b-row row-body border="1px solid var(--color-light-grey)" height="55px" widths="25vw"
+                    margin="0 0 0 30px">
+                    <b2b-inputbox row-body flexDirection="row" height="40px" [value]="reject1reason" width="90%"
+                            border="1px solid var(--color-primary)" (onChange)="reject1reason=$event"
+                            inputName="Reason:"></b2b-inputbox>
+            </b2b-row>
+            <div row-body style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <b2b-button title="OK" height="25px" width="70px" [apiSubmitDisable]="true"
+                            [buttonDisabled]="reject1reason.length > 0 ? false:true "
+                            [backgroundTheme]="reject1reason.length > 0 ? '--color-primary' :'--color-dark-grey'"
+                            margin="5px" (click)="Reject('','order_reject_multi')"> </b2b-button>
+                    <b2b-button title="CANCEL" [apiSubmitDisable]="true" height="25px" width="70px" backgroundTheme="--color-redd"
+                            margin="5px" (click)="rejectpopup = false"> </b2b-button>
+            </div>
+    </b2b-row>
+</b2b-draggable-popup>
+<!-- cancel popup - (RFQ-4)-->
+<b2b-draggable-popup  *ngIf="deleteorder" container-body positionTop="20%" positionLeft="50%">
+    <b2b-container draggable-popup [property]="{backgroundTheme: '',flex:1,padding:'10px 0 0 5px'}"> 
+        <b2b-row container-body>
+            <b2b-container row-body
+                [property]="{backgroundTheme: '--color-lighter-grey',border:'1px solid var(--color-toggle-background)',flex:1,padding:'0px 30px 30px 30px'}">
+                <b2b-row container-body backgroundTheme="--color-primary" justifyContent="center" padding='4px' widths='40%' position='absolute' height='25px'positionLeft='33px' borderRadius='0 0 150px 150px'>
+                    <b2b-text row-body text="Delete Item" fontSize="16px" colorTheme="--color-white" [bold]="true" ></b2b-text>
+
+                </b2b-row>
+               
+                    <b2b-spacer container-body height="10px"> </b2b-spacer>
+                    <b2b-row container-body >
+                        <b2b-text row-body text="Are You Sure Do You Want To Delete?" fontSize="13px" [bold]="true"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="15px"> </b2b-spacer>
+                    <b2b-row container-body border="2px solid var(--color-black)" borderRadius="5px" padding="10px 10px 10px 10px">
+                      
+                        <b2b-inputbox row-body   alignItem="start" 
+                            inputName="Provide Reason For Cancellation" titleWidth="200px" position="right" fontSize="13px" [bold]="true"  width="380px" height="55px" 
+                            inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                            (onChange)="remarks = $event"
+                            [twoInputFeild]="true" placeholder="Type Here.." popupOverflow="hide">
+                                
+                        </b2b-inputbox>
+                    </b2b-row>
+                    <b2b-spacer container-body height="35px"> </b2b-spacer>
+                    <div container-body style="display:flex">
+                        <b2b-button title="Reject" width="100px" height="30px" [buttonDisabled]="remarks.length == 0 ? true : false" [backgroundTheme]="remarks.length == 0 ?'--color-dark-grey' :'--color-primary'" (click)="Reject(deletedata,deletetype)"></b2b-button>
+                        <b2b-button title="Cancel" width="100px" height="30px" backgroundTheme="--color-primary" (click)="canceldelete()"></b2b-button>
+                    </div>
+            </b2b-container>
+                </b2b-row>
+            </b2b-container>
+</b2b-draggable-popup>
+<!--  approval process - (RFQ-5)-->
+<b2b-approval-process-track *ngIf="isTraking" [isOrderTracking]="isTraking" [type]="trackingType" (cacenl)="isTraking = $event"></b2b-approval-process-track>
+<!-- - (RFQ-6) -->
+<b2b-released-order-document-upload class="popup-1" *ngIf="isUploadDocument"></b2b-released-order-document-upload>   
+    

@@ -1,0 +1,34 @@
+div.dropdownContainer {
+    width: auto;
+    position: relative;
+    display:flex;
+}
+
+div.dropdownContainer div.dropdown-trigger {
+    width: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.dropdownContainer .dropdown {
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: calc(100% + 10px);
+    z-index: 1;
+    background-color: white;
+    border-radius: 5px;
+
+}
+
+div.dropdownContainer .dropdown-hover {
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: calc(100% + 10px);
+    z-index: 1;
+    /* background-color: white; */
+    border-radius: 5px;
+}

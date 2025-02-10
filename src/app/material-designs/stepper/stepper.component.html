@@ -1,0 +1,8 @@
+<div class="stepper">
+    <ng-container *ngFor="let step of stepperId; let i = index">
+        <div style="display: flex;">
+            <span class="ball" [class.active]="i+1 <= active"></span>
+        </div>
+        <span class="line" [style]="stepperStyle" [class.active]="i+1 <= active" *ngIf="i+1 != stepperCount"></span>
+    </ng-container>
+</div>

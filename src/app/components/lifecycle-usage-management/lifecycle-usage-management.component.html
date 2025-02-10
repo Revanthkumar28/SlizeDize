@@ -1,0 +1,123 @@
+<b2b-row alignItem="stretch" backgroundTheme="--color-white" borderRadius="var(--global-radius)" padding="35px" overflowY="scroll" height="51vh">
+    <b2b-container row-body [property]="{padding: '0', flex: 1}">
+        <b2b-row container-body>
+            <b2b-text row-body text="Life Cycle Management" [bold]="true"></b2b-text>
+        </b2b-row>
+        <b2b-row container-body>
+            <b2b-image row-body
+                image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7AFz54EQyV5IFjUHYCugJ5Mr7B2AHTum1iw&usqp=CAU"
+                width="70px" [isRounded]="true" objectFit="cover"></b2b-image>
+            <b2b-spacer row-body width="10px"></b2b-spacer>
+            <b2b-container row-body>
+                <b2b-row container-body>
+                    <b2b-text row-body text="Orange-Case" colorTheme="--color-dark-grey"></b2b-text>
+                    <b2b-spacer row-body width="40px"></b2b-spacer>
+                    <b2b-inputbox row-body padding="0 10px 0 20px" value="$6400"
+                        border="1px solid var(--color-light-grey)" width="100px" height="55px"></b2b-inputbox>
+                </b2b-row>
+                <b2b-row container-body>
+                    <b2b-text row-body text="Life Cycle / Depreciation" colorTheme="--color-dark-grey"></b2b-text>
+                    <b2b-spacer row-body width="40px"></b2b-spacer>
+                    <b2b-inputbox row-body value="Yes" [popupOption]="true" width="100px"
+                        border="1px solid var(--color-light-grey)" height="55px">
+                        <b2b-list-tile popup-body title="Yes" hoverTheme="--color-light-grey" colorTheme="--color-black"
+                            borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                        <b2b-list-tile popup-body title="No" hoverTheme="--color-light-grey" colorTheme="--color-black"
+                            borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    </b2b-inputbox>
+                </b2b-row>
+            </b2b-container>
+        </b2b-row>
+        <b2b-container container-body
+            [property]="{padding: '35px', backgroundTheme: '--color-light-grey',width:'100%'}">
+            <b2b-row container-body>
+                <b2b-text row-body text="Depreciation Method"></b2b-text>
+                <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                <b2b-inputbox row-body value="straight line" backgroundTheme="--color-white" width="100%"
+                    height="55px"></b2b-inputbox>
+            </b2b-row>
+            <b2b-spacer container-body height="20px"></b2b-spacer>
+            <b2b-row container-body>
+                <b2b-text row-body text="Asset Cost"></b2b-text>
+                <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                <b2b-inputbox row-body value="$1000" backgroundTheme="--color-white" width="100%"
+                    height="55px"></b2b-inputbox>
+            </b2b-row>
+            <b2b-spacer container-body height="20px"></b2b-spacer>
+            <b2b-row container-body>
+                <b2b-text row-body text="Salvage Value"></b2b-text>
+                <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                <b2b-inputbox row-body value="$100" backgroundTheme="--color-white" width="100%"
+                    height="55px"></b2b-inputbox>
+            </b2b-row>
+            <b2b-spacer container-body height="20px"></b2b-spacer>
+            <b2b-row container-body>
+                <b2b-text row-body text="Depreciation Year"></b2b-text>
+                <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                <b2b-inputbox row-body value="4" backgroundTheme="--color-white" width="100%"
+                    height="55px"></b2b-inputbox>
+            </b2b-row>
+            <b2b-spacer container-body height="20px"></b2b-spacer>
+            <b2b-row container-body>
+                <b2b-text row-body text="Partial Year Depreciation"></b2b-text>
+                <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                <b2b-choice row-body group="catelog-group1" name="Yes" [checked]="true"></b2b-choice>
+                <b2b-spacer row-body width="20px"></b2b-spacer>
+                <b2b-choice row-body group="catelog-group1" name="No"></b2b-choice>
+                <b2b-spacer row-body width="20px"></b2b-spacer>
+            </b2b-row>
+            <b2b-spacer container-body height="20px"></b2b-spacer>
+            <b2b-button container-body title="Calculate" backgroundTheme="--color-toggle-background"
+                borderRadius="var(--global-radius)" width="120px"></b2b-button>
+        </b2b-container>
+    </b2b-container>
+    <b2b-spacer row-body width="30px"></b2b-spacer>
+    <b2b-container row-body [property]="{padding: '0', flex: 1, height: '100%', rootHeight: 'auto'}">
+        <b2b-row container-body>
+            <b2b-text row-body text="Usage Management" [bold]="true"></b2b-text>
+        </b2b-row>
+        <b2b-spacer container-body height="30px"></b2b-spacer>
+        <b2b-container container-body
+            [property]="{backgroundTheme: '--color-light-grey', padding:'30px', width:'100%', height: '100%'}">
+            <b2b-trow container-body column="1fr 1fr" height="auto" gap="20px 50px">
+                <b2b-inputbox trow-body inputName="Hotel Groups" [bold]="false" value="GRT Groups" [popupOption]="true"
+                    width="100%"></b2b-inputbox>
+                <b2b-inputbox trow-body inputName="Hotel" [bold]="false" value="GRT Chennai" [popupOption]="true"
+                    margin="0 0 0 20px" width="100%%"></b2b-inputbox>
+                <b2b-inputbox trow-body inputName="Dated " [bold]="false" value="yearly" [popupOption]="true"
+                    width="100%"></b2b-inputbox>
+                <b2b-inputbox trow-body inputName="Departments" [bold]="false" value="F&B" [popupOption]="true"
+                    margin="0 0 0 20px" width="100%%"></b2b-inputbox>
+                <b2b-inputbox trow-body inputName="Spend Amount" [bold]="false" value="$6400" [popupOption]="true"
+                    width="100%"></b2b-inputbox>
+                <b2b-inputbox trow-body inputName="Chart" [bold]="false" value="Chart Name" [popupOption]="true"
+                    margin="0 0 0 20px" width="100%%"></b2b-inputbox>
+            </b2b-trow>
+        </b2b-container>
+    </b2b-container>
+</b2b-row>
+<b2b-spacer height="20px"></b2b-spacer>
+<b2b-container class="overflow"
+    [property]="{padding: '20px',overflowY:'auto', backgroundTheme: '--color-white',margin:'20px 0 0 0',height:'280px', borderRadius: 'var(--global-radius)'}">
+    <b2b-list-tile container-body title="Life Cycle Management" colorTheme="--color-dark" [bold]="true"></b2b-list-tile>
+    <b2b-trow container-body [column]="catelogColumnSpacing" colorTheme="--color-drawer-bottom-card" [bold]="true">
+        <ng-container trow-body *ngFor="let column of catelogTable">
+            <b2b-tdata fontSize="11px" [title]="column"></b2b-tdata>
+        </ng-container>
+    </b2b-trow>
+    <ng-container container-body *ngFor="let data of catelogTableData">
+        <b2b-trow fontSize="13px" border="2px solid var(--color-dark-grey)" [column]="catelogColumnSpacing"
+            colorTheme="--color-black" backgroundTheme="--color-white" borderRadius="var(--table-radius)" height="60px">
+            <b2b-tdata trow-body [title]="data['YEAR']"></b2b-tdata>
+            <b2b-tdata trow-body [title]="data['TIMELEFT']"></b2b-tdata>
+            <b2b-tdata trow-body [title]="data['BEGIN BOOK VALUE']"></b2b-tdata>
+            <b2b-tdata trow-body [title]="data['DEPRECIATED %']"></b2b-tdata>
+            <b2b-tdata trow-body [title]="data['ENDING BOOK VALUE']"></b2b-tdata>
+            <b2b-tdata trow-body [title]="data['REPAIR/MAIN']"></b2b-tdata>
+            <b2b-tdata trow-body [title]="data['HOTEL']"></b2b-tdata>
+            <b2b-tdata trow-body [title]="data['DEPT']"></b2b-tdata>
+            <b2b-tdata trow-body [title]="data['INVOICENO']"></b2b-tdata>
+            <b2b-tdata trow-body [title]="data['TODAY-PRICE']"></b2b-tdata>
+        </b2b-trow>
+    </ng-container>
+</b2b-container>

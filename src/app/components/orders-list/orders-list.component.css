@@ -1,0 +1,44 @@
+:host {
+    width: 100%;
+    overflow: auto;
+}
+.time-input {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .refreshing {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    animation: 0.5s rotate infinite linear;
+  }
+  
+  @keyframes rotate {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+  .deletebutton{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 60%;
+  }
+  table {
+    border-collapse: collapse; /* Merge borders */
+    width: 100%;
+    font-size: 13px;
+  }
+  .head{
+    background-color: var(--color-primary);
+    -webkit-text-fill-color: aliceblue;
+  }
+  table, th, td {
+    border: 1px solid black; /* Add borders */
+  }
+  
+  th, td {
+    padding: 4px;
+    text-align: center;
+  }

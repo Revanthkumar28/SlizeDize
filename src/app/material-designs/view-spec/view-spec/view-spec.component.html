@@ -1,0 +1,27 @@
+<b2b-container [property]="{padding:'0',width:'400px' ,alignItem:'flex-start'}">
+
+    <b2b-dropdown-two container-body [topHover]="false" backgroundColor="" popupPadding="10px" popupWidth="auto" dropdownRight="28%" popupHeight="auto" dropdownTop="250px" position="fixed" >
+        <b2b-row dropdown-hover>
+            <b2b-text row-body text="View product details" fontSize="10px" colorTheme="--color-primary" class="pro-link"></b2b-text>
+        </b2b-row> 
+        <b2b-container dropdown-items [property]="{padding:'0'}">
+            <!-- <div container-body class="thead">
+                <b2b-text text="SPEC"></b2b-text>
+            </div> -->
+            <!-- <b2b-spacer container-body height="10px"></b2b-spacer> -->
+            <table container-body id="customers">
+                <!-- <tr >
+                    <td>hello i am  vwrvwrvvwv revanth</td>
+                    <td>gdsgfjgjngjrngn rijgnijrn gjrngjgjrj</td>
+                </tr> -->
+                <tr *ngFor="let i of spec">
+                    <td>{{i.key}}</td>
+                    <td>{{i.value}}</td>
+                </tr>
+                
+            </table>
+        </b2b-container>
+        
+    </b2b-dropdown-two>
+
+</b2b-container>

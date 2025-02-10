@@ -1,0 +1,66 @@
+.head{
+    height: 10vh;
+    background-color:#92bfa4;
+}
+.head2{
+    height: 10vh;
+    background-color:#cef0db;
+}
+.body{
+    background-color: #e4f3e1;
+    /* overflow-y: scroll; */
+}
+.foot{
+    background-color: #92bfa4;
+    height: 10vh;
+}
+.Button{
+    background-color: #92bfa4;
+    color: #19502f;
+}
+.Button2{
+    background-color: #cef0db;
+    color: #19502f;
+}
+.line{
+    background-color: rgb(161, 163, 160);
+    height: 1px;
+    width: 95%;
+}
+.card  :hover{
+    background-color: rgb(192, 202, 179);
+    cursor: pointer;
+}
+.card_mail  :hover{
+    background-color: rgb(177, 217, 241);
+    cursor: pointer;
+}
+.dpimage{
+    z-index: 3;
+}
+.emailbody{
+    background-color: #c8f1f1;
+    /* overflow-y: scroll; */
+}
+.emailhead{
+    background-color: #a7d1f2;
+
+}
+.textarea{
+    background-color: transparent;
+    width:90% ;
+    min-height: 10vh;
+    height: auto;
+    border: none;
+}
+.file{
+    cursor: pointer;
+}
+.upload1{
+    position: absolute;
+    left: 20px;
+}
+
+
+
+

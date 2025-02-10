@@ -1,0 +1,67 @@
+ <b2b-drawer backgroundTheme="--color-sky-blue"  backgroundSecondary="--color-gradient-dark" >
+  <b2b-row drawer-body>
+    <b2b-spacer row-body [flex]="1"></b2b-spacer>
+    <!-- <b2b-icon *appRoleBasedButton="[1,152,168,169,170,171,172,173,174,175]" row-body icon="dashboard" (click)="drawerlist()" colorTheme="--color-dashboard"></b2b-icon> -->
+  </b2b-row>  
+  <!-- Executive Dashboard - (DD-1) -->
+  <b2b-drawer-list-tile drawer-body text="Dashboard"></b2b-drawer-list-tile>
+  <div drawer-body  class="drawer" [style]="{overflowY:drawerList == true && objectKeys(test).length >= 6 ? 'auto' : drawerList == false && objectKeys(test).length >= 10 ? 'scroll' : 'hidden'}" >
+    <div  [style]="'height:100%;'">
+
+      <!-- DRAWER HOTEL NAME - (DD-2) -->
+      <ng-container *ngFor="let i of test ;let a=index">
+        <b2b-sidenav [menu]="(a == sidenav-1) ?'menu':''" >
+          <b2b-drawer-list sidenavhotel  class="tour-menu tour-hotel-menu" [ngClass]="{ 'dd_hover': a === sidenav - 1 , 'ddd_hover': a !== sidenav - 1}"  margin="0px 0 0 0" padding="10px"  width="240px" text="{{transformPlacementData(i.Hotel_Name)}}"  address="{{transformPlacementData(i.state_full_name)}} - {{i.Country}}" (onPressed)="brand_id(i,i.role)" (onPressed)="handeler(a+1)" [backgroundTheme]="(a == sidenav-1) ? 'var( --color-drawer-light)' : 'linear-gradient(to bottom, var(--color-primary), var(--color-gradient-dark))'" [colorTheme]="(a == sidenav-1) ? 'var(--color-white)' : 'var(--color-dashboard)'" [active]="true" [isExpand]="false" >
+             <!-- <b2b-icon list-tile-icon icon="home" padding="10px"></b2b-icon> -->
+              
+
+             <b2b-dropdown edit-icon *ngIf="(a == sidenav-1) ? true : false" popupWidth="150px" [isPopupOpen]="guideTour ? true : false" overflow="hidden" popupHeight="auto" dropdownPosition="right" position="absolute" dropdownRight="10px" [dropdownTop]="a > 2 ? '-90px' : '40px' ">
+                <ng-container dropdown-selector *ngIf="userType_role.user_type != 'ho'">
+                  <b2b-icon-button *appRoleBasedButton="[1,177,178,179,180,181]" icon="more_vert" iconSize="20px" width="" [colorTheme]="(a == sidenav-1) ? 'var(--color-black)' : 'var(--color-dashboard)'" backgroundTheme="none" [isRounded]="true"></b2b-icon-button>
+                </ng-container>
+                <b2b-icon-button dropdown-selector *ngIf="userType_role.user_type == 'ho'" icon="more_vert" iconSize="20px" padding="5px"  width="" [colorTheme]="(a == sidenav-1) ? 'var(--color-black)' : 'var(--color-dashboard)'" backgroundTheme="--color-drawer-active" [isRounded]="true"></b2b-icon-button>
+                <b2b-list-tile dropdown-items title="View" *appRoleBasedButton="[177,1]" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (click)="viewHotelDetails(i.Hotel_Name_id,i.custom_brand)"></b2b-list-tile> 
+                 <ng-container dropdown-items *ngIf="isLoggedIn">
+                  <b2b-list-tile dropdown-items title="Edit" *appRoleBasedButton="[178,1]" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (click)="editHotelDetails(i.Hotel_Name_id,i.custom_brand)"></b2b-list-tile> 
+                  <b2b-list-tile dropdown-items title="Delete" *appRoleBasedButton="[179,1]" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (click)="deletepopup(i.Hotel_Name_id)"></b2b-list-tile> 
+                  <b2b-list-tile dropdown-items title="Budget" class="tour-hotel-menu-budget" *appRoleBasedButton="[180,1]" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (click)="vendor_budget()" ></b2b-list-tile> 
+                  <b2b-list-tile dropdown-items title="Add Vendor" *appRoleBasedButton="[181,1]" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (click)="add_new_vendor()" ></b2b-list-tile> 
+                
+                 </ng-container>
+               </b2b-dropdown>         
+
+           </b2b-drawer-list>
+        </b2b-sidenav>
+      </ng-container>
+    </div>
+  
+  </div>
+
+  <!-- BOTTOM SCREEN - (DD-3) -->
+  <div  class="bottom-screen_position" drawer-body *ngIf="drawerList" [style]="'position:absolute,bottom:0,display:flex;flex-direction:column;justify-content:flex-end;cursor:pointer;'">
+    <div [ngClass]="{'open':up_slide ,'closed':!up_slide}" class="drawer-bottom-card" >
+      <b2b-icon *ngIf="hide_arrow" class="Arrowicon" icon="keyboard_double_arrow_up"   [class.open]="up_slide" (click)="drawerClick()"></b2b-icon>
+      <b2b-spacer height="10px"></b2b-spacer>
+
+      <ng-container *ngFor="let item of bottom_screen; let i = index">
+          <b2b-label [text]="item" [class.tour-settings]="item == 'Settings' " [isCurved]="true" width="100%" fontSize="12.5px" padding="10px" margin="0px 0px 4px 0px" justifyContent="center" [backgroundTheme]="(i == activeIndex-1) ? '--color-drawer-active' : '--color-drawer-bottom-list'" [colorTheme]="(i == activeIndex-1) ? '--color-white' : '--color-white'" (click)="drawerClickHandler(item,i+1)"></b2b-label>
+          <b2b-spacer height="10px"></b2b-spacer>
+      </ng-container>
+    </div>
+  </div>   
+</b2b-drawer>
+<!-- delete hotel popup -->
+<b2b-draggable-popup tdata-body *ngIf="deletehotel" class="blur-overlay" positionTop="30%" positionLeft="43%">
+  <b2b-row draggable-popup height="18vh" widths="30vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="10px 10px 0 10px" borderRadius="10px" border="1px solid var(--color-toggle-background)">
+    <b2b-image row-body height="35px" [isRounded]="true" width="35px" image="assets/error.png"></b2b-image>
+  <b2b-text row-body text="Are You Sure!" margin="5px 0 0 0"></b2b-text>
+  <b2b-text row-body text="Do you want to Delete this Hotel Permanently?" fontSize="14px" margin="0 0 10px 0"></b2b-text>
+
+  <div row-body style="display: flex; flex-direction: row; justify-content: space-between;">
+    <b2b-button title="OK" height="25px" width="70px" backgroundTheme="--color-primary" margin="5px" (click)="delete_hotel(HotelName_id)"> </b2b-button>
+    <b2b-button title="CANCEL" height="25px" width="70px" backgroundTheme="--color-redd" margin="5px" (click)="closedeletepopup()"> </b2b-button>
+  </div>
+  </b2b-row>
+</b2b-draggable-popup>
+<!-- <b2b-vendor-budget *ngIf="budget" [type]="budgetType" (cancelpopup)="budget = $event"></b2b-vendor-budget> -->
+<!-- <b2b-add-product-vendor *ngIf="add_vendor" (cancelpopup)="add_vendor = $event"></b2b-add-product-vendor> -->

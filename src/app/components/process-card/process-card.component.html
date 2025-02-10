@@ -1,0 +1,90 @@
+<b2b-container  [property]="{backgroundTheme: '--color-process-card', height: '110px', alignItem: 'flex-start',position:'relative'}">
+    <b2b-text container-body [text]="processCardData.title" [bold]="true" fontSize="14px"></b2b-text>
+    <b2b-button  container-body *ngIf="showbutton" [title]="buttonname" backgroundTheme="--color-orange" height="20px" width="50px" position="absolute" positionTop="13px" positionRight="10px" (click)="opendesc_popup()"></b2b-button>
+    <b2b-spacer container-body height="30px"></b2b-spacer>
+
+    <ng-container container-body >
+        <b2b-row>
+            <b2b-text row-body text="ID : {{processCardData.name}} - {{processCardData.companyName}} {{processCardData.DepartmentPosition}}" fontSize="12px" ></b2b-text>
+        <ng-container row-body *ngFor="let name of vendors">
+            <b2b-text class="link" *ngIf="processCardData.title == 'Negotiation'" [text]="name.name+ ','" (click)="opentable(name.id)" fontSize="12px"></b2b-text>
+        </ng-container>
+        <ng-container row-body *ngFor="let name of vendors_sub">
+            <b2b-text class="link" *ngIf="processCardData.title == 'Vendor Submit'" [text]="name.vendor_name+ ','" (click)="opentable(name)" fontSize="12px"></b2b-text>
+        </ng-container>
+        </b2b-row>
+       
+        <b2b-spacer height="10px"></b2b-spacer>
+    </ng-container>
+
+    <b2b-spacer container-body height="10px"></b2b-spacer>
+    <b2b-row container-body>
+        <!-- <b2b-spacer row-body [flex]='1'></b2b-spacer> -->
+        <b2b-text row-body text="Created On : {{processCardData.createtedON}}" fontSize="12px" colorTheme="--color-dark-grey"></b2b-text>
+    </b2b-row>
+</b2b-container>
+<b2b-renegotiate-table *ngIf="open_nego"  [negotiateValue]="negotiateId" (cancelpopup)="open_nego = $event" ></b2b-renegotiate-table>
+<!-- //view report descrepency-->
+<b2b-draggable-popup row-body *ngIf="details" positionTop="0"  zIndex="150" positionLeft="40%">
+    <b2b-row draggable-popup height="auto" widths="40vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="30px 10px 10px 10px" borderRadius="10px" border="1px solid var(--color-toggle-background) ">
+     <b2b-icon row-body icon="close" left="92%" (click)="details = false" top="2%"
+            backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+            position="absolute"></b2b-icon>
+            <b2b-row row-body >
+                <table row-body>
+                    <thead>
+                        <tr class="head">
+                            <th colspan="3">Decrepency Details</th>
+                        </tr>
+                        <tr class="head">
+                          <th >Name</th>
+                          <th >Vendor Quoted</th>
+                          <th >Received</th>
+  
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let row of loopprice; let i = index">
+                            <tr >
+                               <td>{{ row.key}}</td>
+                               <td >{{row.value1}}</td>
+                               <td [ngStyle]="{'color': row.isHighlighted ? 'red' : 'black'}">{{row.value2}}</td>
+  
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+                             
+            </b2b-row>
+           
+    </b2b-row>
+  </b2b-draggable-popup>
+   <!-- popup for rfq submit -->
+  <b2b-draggable-popup row-body *ngIf="submited" positionTop="0"  zIndex="150" positionLeft="40%">
+    <b2b-row draggable-popup height="auto" widths="40vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="30px 10px 10px 10px" borderRadius="10px" border="1px solid var(--color-toggle-background) ">
+     <b2b-icon row-body icon="close" left="92%" (click)="submited = false" top="2%"
+            backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+            position="absolute"></b2b-icon>
+            <b2b-row row-body >
+                <table row-body>
+                    <thead>
+                        <tr class="head">
+                            <th colspan="2">Order Details</th>
+                        </tr>
+                       
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let row of submit_orders; let i = index">
+                            <tr >
+                               <td>{{ row.key}}</td>
+                               <td [ngStyle]="{'color': row.key == 'Brand Specification' || row.key == 'Vendor SKU Number'  ? 'blue' : 'black', 'cursor': row.key == 'Brand Specification' || row.key == 'Vendor SKU Number'  ? 'pointer' : 'text'}" (click)="openlink(row.value,row.val)">{{row.value}}</td>
+  
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+                             
+            </b2b-row>
+           
+    </b2b-row>
+  </b2b-draggable-popup>

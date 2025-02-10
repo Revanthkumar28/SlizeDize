@@ -1,0 +1,42 @@
+.grid{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 1vw;
+    row-gap: 1vw;
+}
+.picrows{
+    border:1px dotted grey;
+    height: 50px;
+    width:60vh;
+    position: relative;
+}
+.Hide_input{
+    position: absolute;
+    opacity: 0;
+    left: 0px;
+    width: 27vw;
+    height: 15vh;
+
+}
+.upload_file{
+    position: absolute;
+    opacity: 0;
+    width: 15vw;
+    height: 7vh;
+}
+
+.grid_design{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+::ng-deep .text_editor{
+    width: 100% !important;
+}
+::ng-deep .boxes{
+    box-shadow: 0 0 7px darkgray !important;
+    border-radius: 10px;
+    border:'1px solid grey';
+    position: relative;
+    cursor: pointer;
+}

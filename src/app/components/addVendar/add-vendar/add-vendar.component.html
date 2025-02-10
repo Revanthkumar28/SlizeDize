@@ -1,0 +1,16 @@
+<b2b-container [property]="{overflowY:'auto',height:'58vh' }">
+    <b2b-row container-body margin="0 0 5px 0" >
+        <b2b-text row-body text="Vendor" fontSize="13px" [bold]="true"></b2b-text>
+        <b2b-spacer row-body [flex]="1"></b2b-spacer>
+        <!-- <b2b-label row-body  [isRounded]="true" height="30px" (click)="addVendar()" width="100px" padding="0" backgroundTheme="--color-primary">
+            <b2b-spacer label-leading width="10px"></b2b-spacer>    
+            <b2b-icon-button label-leading icon="add" width="20px" iconSize="20px" backgroundTheme="--color-drawer-light" [isRounded]="true"></b2b-icon-button>
+            <b2b-spacer label-leading width="10px"></b2b-spacer>
+            <b2b-text label-leading text="Add Vendor" colorTheme="--color-white" fontSize="10px"></b2b-text>
+        </b2b-label> -->
+      
+    </b2b-row>
+    <b2b-row container-body *ngIf="addvendar">
+        <b2b-all-vendor-detail row-body></b2b-all-vendor-detail>
+    </b2b-row>
+</b2b-container>

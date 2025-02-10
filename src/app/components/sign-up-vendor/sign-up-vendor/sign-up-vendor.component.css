@@ -1,0 +1,177 @@
+:host {
+  /* width: 530px; */
+  height: 100%;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+input:focus {
+  outline: none;
+}
+
+input {
+  padding: 3px;
+  margin: 5px;
+  width: 90%;
+  border: none;
+  /* box-shadow: 1px 1px blue; */
+  border-bottom: 1px solid darkgrey;
+}
+
+#img {
+  outline: none;
+  border: none;
+  text-decoration: none;
+}
+
+/* ::ng-deep .focus input{
+      autofocus:'autofocus';
+  } */
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 0.5s linear infinite;
+  /* position: absolute;
+    top: 10%;
+    left: 25%; */
+  transform: translate(-50%, -50%);
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.expand-more {
+  width: 0;
+  height: 0;
+  cursor: pointer;
+  margin: 0 0.6rem 0 0.6rem;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid white;
+
+
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+
+.expand-more.expanded {
+  transform: rotate(180deg);
+}
+
+.expand-more.expanded::after {
+  transform: rotate(180deg);
+}
+
+button[b2b-button] {
+  /* Position the button relatively to contain the absolute loader */
+  position: relative;
+  /* Other button styles... */
+  overflow: hidden;
+  /* Hide overflowing content (text) */
+}
+
+button[b2b-button] .loader {
+  /* Centering the loader inside the button */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* Additional loader styles... */
+}
+
+
+button[b2b-button] span {
+  /* Hide button text when loader is visible */
+  display: inline-block;
+  opacity: 1;
+  /* Show text by default */
+}
+
+button[b2b-button] span:not(.loader) {
+  /* Hide text when loader is visible */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  /* Smooth transition when hiding/showing text */
+}
+
+
+
+/* TOGGLE FOR HOTELIER & SUPPLIER ................................*/
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  width: 165px;
+  height: 40px;
+  margin: 10px auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-switch {
+  flex: 1;
+  transition: color 0.8s ease;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  height: 100%;
+  /* transition: background-color 0.3s ease; */
+}
+
+.toggle-switch.active {
+  background-color: var(--color-drawer-light);
+  color: white;
+  transition: transform 0.8s ease;
+  border-radius: 20px;
+  text-align: center;
+}
+::ng-deep .Sigin-inputdesign .inputbox .dropdown-trigger {
+  cursor: pointer;
+  height: 14px !important;
+  width: 15px !important;
+  border-radius: 50% !important;
+  background-color: var(--color-dark-dim-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 5%;
+  padding: 7px;
+
+}
+.spacer{
+  background-color: white;
+  height: 33px;
+  width: 1px;
+}
+/* TOGGLE FOR HOTELIER & SUPPLIER ................................*/

@@ -1,0 +1,348 @@
+<b2b-container row-body [property]="{flex:1,padding:'5px',position:'relative'}">
+    <b2b-icon container-body icon="close" left="94%" (click)="closeJobs()" top="10px"
+    backgroundTheme="--color-white" tSize="16px" colorTheme="--color-dark-grey"
+    position="absolute"></b2b-icon>
+    <b2b-text container-body text="Job Details" fontSize="20px"  [bold]="true"></b2b-text>
+    <!-- <b2b-spacer container-body height="30px"></b2b-spacer> -->
+
+    <b2b-row container-body width="80vw" flexDirection="column" alignItem="start" padding="30px">
+        <b2b-row row-body> 
+            <b2b-row row-body flexDirection="column">
+                <b2b-row row-body>
+                    <b2b-text  row-body text="Job Title/Position:" [bold]="true"></b2b-text>
+                    <b2b-spacer row-body width="5px"></b2b-spacer>
+
+                    <b2b-text row-body [text]="show_single_jobs.position | uppercase" colorTheme="--color-sky-blue" [bold]="true" fontSize="18px"></b2b-text>
+
+                </b2b-row>
+                <b2b-spacer row-body height="5px"></b2b-spacer>
+
+
+                <b2b-row row-body>
+                    <b2b-text  row-body text="Company:" [bold]="true"></b2b-text>
+                    <b2b-spacer row-body width="5px"></b2b-spacer>
+
+                    <b2b-text row-body [text]="show_single_jobs.hotel_name | uppercase" colorTheme="--color-sky-blue" fontSize="16px" ></b2b-text>
+
+                </b2b-row> 
+                <b2b-spacer row-body height="5px"></b2b-spacer>
+
+                <b2b-row row-body>
+                    <b2b-icon-button  row-body icon="work" iconSize="20px" width="30px" colorTheme="--color-dark-grey"></b2b-icon-button>
+                    <b2b-text  row-body text="Experience:" [bold]="true"></b2b-text>
+                    <b2b-spacer row-body width="5px"></b2b-spacer>
+
+                    <b2b-text row-body [text]="show_single_jobs.experience | uppercase" colorTheme="--color-sky-blue"></b2b-text>
+        
+
+                </b2b-row> 
+                <b2b-spacer row-body height="5px"></b2b-spacer>
+
+                <b2b-row row-body>
+                    <b2b-icon-button  row-body icon="account_balance_wallet" iconSize="20px" width="30px" colorTheme="--color-dark-grey"></b2b-icon-button>
+                    <b2b-text  row-body text="Salary:" [bold]="true"></b2b-text>
+                    <b2b-spacer row-body width="5px"></b2b-spacer>
+
+                    <b2b-text row-body [text]="show_single_jobs.salary" colorTheme="--color-sky-blue"></b2b-text>
+              
+
+                </b2b-row> 
+                <b2b-spacer row-body height="5px"></b2b-spacer>
+
+                <b2b-row row-body>
+                    <b2b-icon-button  row-body icon="location_on" iconSize="20px" width="30px" colorTheme="--color-dark-grey"></b2b-icon-button>
+                    <b2b-text  row-body text="City:" [bold]="true"></b2b-text>
+                    <b2b-spacer row-body width="5px"></b2b-spacer>
+
+                    <b2b-text row-body [text]="show_single_jobs.address" colorTheme="--color-sky-blue"></b2b-text>
+                
+
+                </b2b-row>
+                <b2b-spacer row-body height="5px"></b2b-spacer>
+
+
+
+            </b2b-row>
+            <b2b-row row-body flexDirection="column">
+                <b2b-row row-body >
+                    <b2b-text row-body text="Employment Type: "  [bold]="true" width="100%" colorTheme="--color-black" fontSize="16px"></b2b-text>
+                    <b2b-spacer row-body width="5px"></b2b-spacer>
+
+                    <b2b-text row-body [text]="show_single_jobs.job_type"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+                </b2b-row>
+                <b2b-spacer row-body height="12px"></b2b-spacer>
+        
+                <b2b-row row-body >
+                    <b2b-text row-body text="Work Mode: "  [bold]="true" width="100%" colorTheme="--color-black" fontSize="16px"></b2b-text>
+                    <b2b-spacer row-body width="5px"></b2b-spacer>
+
+                    <b2b-text row-body [text]="this.show_single_jobs.work_mode"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+                </b2b-row>
+                <b2b-spacer row-body height="12px"></b2b-spacer>
+
+                <b2b-row row-body >
+                    <b2b-text row-body text="Education: "  [bold]="true" width="100%" colorTheme="--color-black" fontSize="16px"></b2b-text>
+                    <b2b-spacer row-body width="5px"></b2b-spacer>
+
+                    <b2b-text row-body [text]="this.show_single_jobs.qualification"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+                </b2b-row>
+                <b2b-spacer row-body height="12px"></b2b-spacer>
+
+                <b2b-row row-body >
+                    <b2b-text row-body text="Benifits: "  [bold]="true" width="100%" colorTheme="--color-black" fontSize="16px"></b2b-text>
+                    <b2b-spacer row-body width="5px"></b2b-spacer>
+
+                    <b2b-text row-body [text]="this.show_single_jobs.benefit"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+                </b2b-row>
+                <b2b-spacer row-body height="12px"></b2b-spacer>
+
+            </b2b-row>
+
+
+        </b2b-row>
+        <b2b-spacer row-body height="10px"></b2b-spacer>
+
+        <b2b-row row-body *ngIf="type !='Application' ">
+        <b2b-button row-body [title]="isLoggedIn || joblogin ?show_single_jobs.applied?'Applied': 'Apply': 'Register and Apply'" colorTheme="--color-white" [backgroundTheme]="show_single_jobs.applied ? '--color-redd' : '--color-green'" width="auto" borderRadius="6px" height="30px" padding="0px 30px" [bold]="true" (click)="show_single_jobs.applied ? '':applyJobs()"></b2b-button>
+        </b2b-row>
+        <b2b-spacer row-body height="10px"></b2b-spacer>
+        <b2b-row row-body backgroundTheme="--color-light-grey" height="40px" width="100%">
+            <b2b-spacer row-body width="25px"></b2b-spacer>
+            <!-- <b2b-text row-body text="Posted: " fontSize="15px"  colorTheme="--color-dark-grey"></b2b-text> -->
+            <b2b-text row-body [text]="show_single_jobs.date" fontSize="15px" ></b2b-text>
+            
+            <b2b-spacer row-body width="15px"></b2b-spacer>
+            <b2b-text row-body [text]=" type =='Application'? 'Application:': 'Openings:' " fontSize="15px"  colorTheme="--color-dark-grey"></b2b-text>
+            <b2b-text row-body [text]="type =='Application'? view_data.job_data.application.length: show_single_jobs.vacancy" fontSize="15px" ></b2b-text>
+            <b2b-spacer row-body width="15px"></b2b-spacer>
+
+        </b2b-row>
+        <b2b-row row-body *ngIf="type =='All' " justifyContent="end" height="30px" width="100%" (click)="share()">
+            <b2b-icon-button  row-body icon="share" iconSize="20px" width="30px" colorTheme="--color-green"></b2b-icon-button>
+            <b2b-text row-body text="Share" fontSize="17px"  colorTheme="--color-green" ></b2b-text>
+
+            <b2b-spacer row-body width="10px"></b2b-spacer>
+
+        </b2b-row>
+        <ng-container row-body *ngIf="type !='Application' ">
+
+        <b2b-row row-body  flexDirection="column">
+            <b2b-text row-body text="Job Description:" fontSize="17px" colorTheme="--color-sky-blue" [bold]="true"></b2b-text>
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+            <b2b-text row-body [text]="show_single_jobs.responsibility"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+
+
+        </b2b-row>
+        </ng-container>
+
+
+        <!-- bcecbcdc -->
+
+       <!-- new screen -->
+    <ng-container row-body *ngIf="type =='Application' " >
+        <b2b-spacer row-body height="20px"></b2b-spacer>
+
+        <b2b-row height="auto" row-body *ngFor="let key of view_data.job_data.application ;let i = index" backgroundTheme="--color-light-grey" flexDirection="column" padding="15px" borderRadius="15px" alignItem="flex-start" margin="0 0 20px 0px" >
+            <b2b-spacer row-body height="20px"></b2b-spacer>
+            <b2b-row row-body width="100%" justifyContent="center">
+                <b2b-text row-body text="Application:{{i+1}} " fontSize="20px"  [bold]="true"></b2b-text>
+
+            </b2b-row>
+            <b2b-spacer row-body height="25px"></b2b-spacer>
+            <b2b-text row-body text="Personal Details: " fontSize="20px" colorTheme="--color-sky-blue" [bold]="true"></b2b-text>
+            <b2b-spacer row-body height="10px"></b2b-spacer>
+
+           <b2b-row row-body>
+            <b2b-text row-body text="Full Name: " fontSize="17px"  [bold]="true"></b2b-text>
+            <b2b-spacer row-body width="10px"></b2b-spacer>
+            <b2b-text row-body [text]="key.name"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+            </b2b-row>
+            <b2b-spacer row-body height="20px"></b2b-spacer>
+
+            <b2b-row row-body>
+                <b2b-text row-body text="Contact Number: " fontSize="17px"  [bold]="true"></b2b-text>
+                <b2b-spacer row-body width="10px"></b2b-spacer>
+                <b2b-text row-body [text]="key.name"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+                </b2b-row>
+                <b2b-spacer row-body height="20px"></b2b-spacer>
+
+             <b2b-row row-body>
+                    <b2b-text row-body text="Email: " fontSize="17px"  [bold]="true"></b2b-text>
+                    <b2b-spacer row-body width="10px"></b2b-spacer>
+                    <b2b-text row-body [text]="key.email"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+             </b2b-row>
+             <b2b-spacer row-body height="20px"></b2b-spacer>
+
+             <b2b-row row-body>
+                <b2b-text row-body text="qualification: " fontSize="17px"  [bold]="true"></b2b-text>
+                <b2b-spacer row-body width="10px"></b2b-spacer>
+                <b2b-text row-body [text]="key.qualification"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+           </b2b-row>
+           <b2b-spacer row-body height="20px"></b2b-spacer>
+           <b2b-row row-body>
+            <b2b-text row-body text="Address: " fontSize="17px"  [bold]="true"></b2b-text>
+            <b2b-spacer row-body width="10px"></b2b-spacer>
+            <b2b-text row-body [text]="key.address"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+       </b2b-row>
+       <b2b-spacer row-body height="20px"></b2b-spacer>
+       <b2b-text row-body text="Work Details: " fontSize="20px" colorTheme="--color-sky-blue" [bold]="true"></b2b-text>
+       <b2b-spacer row-body height="10px"></b2b-spacer>
+
+           <b2b-row row-body>
+            <b2b-text row-body text="previous company name: " fontSize="17px"  [bold]="true"></b2b-text>
+            <b2b-spacer row-body width="10px"></b2b-spacer>
+            <b2b-text row-body [text]="key.previous_company_name"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+       </b2b-row>
+       <b2b-spacer row-body height="20px"></b2b-spacer>
+
+       <b2b-row row-body>
+        <b2b-text row-body text="previous designation: " fontSize="17px"  [bold]="true"></b2b-text>
+        <b2b-spacer row-body width="10px"></b2b-spacer>
+        <b2b-text row-body [text]="key.previous_designation"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+       </b2b-row>
+       <b2b-spacer row-body height="20px"></b2b-spacer>
+
+       <b2b-row row-body>
+        <b2b-text row-body text="previous Start Date: " fontSize="17px"  [bold]="true"></b2b-text>
+        <b2b-spacer row-body width="10px"></b2b-spacer>
+        <b2b-text row-body [text]="key.previous_job_start_date"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+       </b2b-row>
+       <b2b-spacer row-body height="20px"></b2b-spacer>
+
+       <b2b-row row-body>
+        <b2b-text row-body text="previous End Date: " fontSize="17px"  [bold]="true"></b2b-text>
+        <b2b-spacer row-body width="10px"></b2b-spacer>
+        <b2b-text row-body [text]="key.previous_job_end_date"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+       </b2b-row>
+       <b2b-spacer row-body height="20px"></b2b-spacer>
+
+       <b2b-row row-body>
+        <b2b-text row-body text="previous Salary: " fontSize="17px"  [bold]="true"></b2b-text>
+        <b2b-spacer row-body width="10px"></b2b-spacer>
+        <b2b-text row-body [text]="key.Previous_company_salary"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+       </b2b-row>
+       <b2b-spacer row-body height="20px"></b2b-spacer>
+
+       <b2b-row row-body>
+        <b2b-text row-body text="Expected Salary: " fontSize="17px"  [bold]="true"></b2b-text>
+        <b2b-spacer row-body width="10px"></b2b-spacer>
+        <b2b-text row-body [text]="key.Expected_salary"  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+       </b2b-row>
+       <b2b-spacer row-body width="10px"></b2b-spacer>
+       <b2b-text row-body text="Resume: " fontSize="20px" colorTheme="--color-sky-blue" [bold]="true"></b2b-text>
+       <b2b-spacer row-body height="20px"></b2b-spacer>
+
+       <b2b-button row-body title="View Resume" (click)="ViewResume(key.resume)" backgroundTheme="--color-sky-blue" borderRadius="10px" height="40px" width="100px"></b2b-button>
+       <b2b-spacer row-body width="30px"></b2b-spacer>
+
+      </b2b-row>
+    </ng-container>
+
+
+     </b2b-row>
+<b2b-spacer row-body width="20px"></b2b-spacer>
+</b2b-container>
+
+ <!-- apply form -->
+ <b2b-draggable-popup  *ngIf="apply_form" row-body positionTop="4%" positionLeft="20%">
+    <b2b-container draggable-popup [property]="{backgroundTheme:'--color-white',width:'60vw', padding:'15px',border:'1px solid var(--color-toggle-background)'}">
+        <b2b-icon container-body icon="close" left="94%" (click)="CloseJob_form()" top="10px"
+        backgroundTheme="--color-white" tSize="16px" colorTheme="--color-dark-grey"
+        position="absolute"></b2b-icon>
+        <b2b-text container-body fontSize="18px" [bold]="true" text="Job Apply"></b2b-text>
+        <b2b-spacer container-body height="10px"></b2b-spacer>
+        <b2b-row container-body width="60vw"  padding="20px">
+       
+        <b2b-row row-body flexDirection="column">
+            <b2b-inputbox row-body inputName="Full Name"  border="2px solid var(--color-light-grey)" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="65px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.full_name" (onChange)="get_job_data.full_name = $event" colorTheme="--color-black">                   
+            </b2b-inputbox>
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-inputbox row-body inputName="Phone Number" border="2px solid var(--color-light-grey)" [required]="true" [value]="get_job_data.phone_number" (onChange)="get_job_data.phone_number = $event" fontSize="15px" dropdownHeight="150px" width="25vw" height="65px" backgroundTheme="--color-white" borderRadius="var(--table-radius)"  colorTheme="--color-black">                   
+            </b2b-inputbox> 
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-inputbox row-body inputName="Email" border="2px solid var(--color-light-grey)" [required]="true" [value]="get_job_data.Email" (onChange)="get_job_data.Email = $event" fontSize="15px" dropdownHeight="150px" width="25vw" height="65px" backgroundTheme="--color-white" borderRadius="var(--table-radius)"  colorTheme="--color-black">                   
+            </b2b-inputbox>
+             <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-inputbox row-body inputName="Qualification" border="2px solid var(--color-light-grey)" [required]="true" [value]="get_job_data.Qualification" (onChange)="get_job_data.Qualification = $event" fontSize="15px" dropdownHeight="150px" width="25vw" height="65px" backgroundTheme="--color-white" borderRadius="var(--table-radius)"  colorTheme="--color-black">                   
+            </b2b-inputbox>
+             <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-inputbox row-body inputType="number" inputName="Expected Salary(lakhs per annum)" border="2px solid var(--color-light-grey)"  [value]="get_job_data.Expected_salary" (onChange)="get_job_data.Expected_salary = $event" fontSize="15px" dropdownHeight="150px" width="25vw" height="65px" backgroundTheme="--color-white" borderRadius="var(--table-radius)"  colorTheme="--color-black">                   
+            </b2b-inputbox> 
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-inputbox row-body  inputName="Address" border="2px solid var(--color-light-grey)" [required]="true" [value]="get_job_data.Address" (onChange)="get_job_data.Address = $event" fontSize="15px" dropdownHeight="150px" width="25vw" height="65px" backgroundTheme="--color-white" borderRadius="var(--table-radius)"  colorTheme="--color-black">                   
+            </b2b-inputbox> 
+        </b2b-row>
+        
+        <b2b-spacer row-body width="65px"></b2b-spacer>
+        <b2b-row row-body flexDirection="column">
+            <b2b-row row-body flexDirection="row" justifyContent="flex-start" padding="0 0 0 10px">
+            <b2b-inputbox row-body inputType="checkbox" width="20px" height="20px"         [(ngModel)]="isFresher"
+            (click)="fresher()" (onChange)="isFresher = $event.target.checked"></b2b-inputbox>
+            <b2b-text row-body text="Fresher"></b2b-text>
+            </b2b-row>
+        <b2b-row row-body *ngIf="!isFresher" flexDirection="column" borderRadius="10px" border="2px solid var(--color-light-grey)">
+            <b2b-spacer row-body height="10px"></b2b-spacer>
+
+            <b2b-text row-body text="Work Experience"></b2b-text>
+            <b2b-spacer row-body height="10px"></b2b-spacer>
+
+            <b2b-inputbox row-body inputName="previous Company Name"  border="2px solid var(--color-light-grey)" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="65px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.Pre_company_name" (onChange)="get_job_data.Pre_company_name = $event" colorTheme="--color-black">                   
+            </b2b-inputbox>
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-inputbox row-body inputName="previous Designation" border="2px solid var(--color-light-grey)" [required]="true" [value]="get_job_data.pre_designation" (onChange)="get_job_data.pre_designation = $event" fontSize="15px" dropdownHeight="150px" width="25vw" height="65px" backgroundTheme="--color-white" borderRadius="var(--table-radius)"  colorTheme="--color-black">                   
+            </b2b-inputbox> 
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-inputbox row-body inputName="previous Salary" inputType="number" border="2px solid var(--color-light-grey)" [required]="true" [value]="get_job_data.pre_salary" (onChange)="get_job_data.pre_salary = $event" fontSize="15px" dropdownHeight="150px" width="25vw" height="65px" backgroundTheme="--color-white" borderRadius="var(--table-radius)"  colorTheme="--color-black">                   
+            </b2b-inputbox>
+             <b2b-spacer row-body height="15px"></b2b-spacer>
+             <b2b-row row-body>
+                <b2b-spacer row-body width="17px"></b2b-spacer>
+
+                <b2b-inputbox row-body inputName="Start Date" inputType="date" border="2px solid var(--color-light-grey)" [required]="true" [value]="get_job_data.Start_date" (onChange)="get_job_data.Start_date = $event" fontSize="15px" dropdownHeight="150px" width="12vw" height="65px" backgroundTheme="--color-white" borderRadius="var(--table-radius)"  colorTheme="--color-black">                   
+                </b2b-inputbox>
+                <b2b-spacer row-body width="15px"></b2b-spacer>
+
+                <b2b-inputbox row-body inputName="End Date" inputType="date" border="2px solid var(--color-light-grey)" [required]="true" [value]="get_job_data.End_date" (onChange)="get_job_data.End_date = $event" fontSize="15px" dropdownHeight="150px" width="12vw" height="65px" backgroundTheme="--color-white" borderRadius="var(--table-radius)"  colorTheme="--color-black">                   
+                </b2b-inputbox>
+
+             </b2b-row>
+             <b2b-spacer row-body height="10px"></b2b-spacer>
+
+        </b2b-row>
+        <b2b-spacer row-body height="10px"></b2b-spacer>
+
+        <b2b-row row-body flexDirection="column" borderRadius="10px" border="2px solid var(--color-light-grey)" position="relative">
+            <b2b-spacer row-body height="10px"></b2b-spacer>
+
+            <b2b-text row-body text="Resume"></b2b-text>
+            <b2b-spacer row-body height="1px"></b2b-spacer>
+            <b2b-icon-button  row-body icon="cloud_upload" iconSize="30px" width="30px" colorTheme="--color-dark-grey"></b2b-icon-button>
+           
+            <b2b-spacer row-body height="1px"></b2b-spacer>
+            <b2b-text row-body *ngIf="uploadfile.length == 0" text="Drop your file here" fontSize="14px" colorTheme="--color-text-color"></b2b-text>
+            <b2b-text row-body *ngIf="uploadfile.length != 0" text="One File Uploaded" fontSize="14px" colorTheme="--color-redd"></b2b-text>
+
+            <b2b-spacer row-body height="10px"></b2b-spacer>
+           
+           
+            <input row-body class="Hide_input" type="file" (change)="uploadResume($event)" accept="application/pdf" >
+
+
+        </b2b-row>
+
+
+        </b2b-row>
+
+       
+      </b2b-row>
+      <b2b-button container-body title="Apply" colorTheme="--color-white" backgroundTheme="--color-green" width="auto" borderRadius="var(--global-radius)" height="40px" padding="0px 30px" [bold]="true" (click)="Apply_send()"></b2b-button>
+
+    </b2b-container>
+    </b2b-draggable-popup>

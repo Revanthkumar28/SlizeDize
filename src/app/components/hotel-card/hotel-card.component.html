@@ -1,0 +1,43 @@
+
+<b2b-container class="card" [property]="{padding:'0',width:'250px',height:'auto'}">
+      <b2b-stack container-body>
+        <b2b-image stack-body image="{{allhoteldata.hotelImage != null ? allhoteldata.hotelImage : defultImage }}" width="100%" height="200px" objectFit="cover" [isCurved]="true"></b2b-image>
+        <b2b-dropdown stack-body overflow="hidden" popupWidth="135px" popupHeight="auto" dropdownPosition="right" style="position: absolute; top: 10px; right: 10px;">
+               <b2b-icon-button dropdown-selector icon="more_vert" colorTheme="--color-white" backgroundTheme="--color-dim-white" [isRounded]="true" height="30px" width="30px"></b2b-icon-button>
+               <b2b-list-tile dropdown-items fontWeight="700" title="E_catalog" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px" fontSize="12px" margin="2px 0"></b2b-list-tile> 
+               <b2b-list-tile dropdown-items title="View" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px" fontSize="12px" margin="2px 0" (click)="viewHotelDetails(allhoteldata.Hotel_Name_id,allhoteldata.custom_brand)"></b2b-list-tile> 
+               <b2b-list-tile dropdown-items title="Edit" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px" fontSize="12px" margin="2px 0" (click)="editHotelDetails(allhoteldata.Hotel_Name_id,allhoteldata.custom_brand)"></b2b-list-tile> 
+               <b2b-list-tile dropdown-items title="Delete" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px" fontSize="12px" margin="2px 0" (click)="deletepopup()"></b2b-list-tile> 
+               <b2b-row dropdown-items width="" *ngIf="isNewProduct != 'new_products' ">
+                   <b2b-list-tile row-body title="image" hoverTheme="--color-dark-grey" width="" colorTheme="--color-black" borderRadius="8px" height="20px" fontSize="12px" margin="2px 0"></b2b-list-tile>   
+                  <input style="font-size: 12px;" row-body type="file" (change)="onFileSelecteddd($event)"/>
+               </b2b-row>
+              <!-- <b2b-button dropdown-items *ngIf="isNewProduct != 'new_products'" margin="0 0 1vw 0" padding="0,5vw" width="auto" height="auto" title="Save" backgroundTheme="--color-primary" colorTheme="--color-white"></b2b-button> -->
+           </b2b-dropdown>
+       </b2b-stack>
+       <b2b-spacer container-body height="10px"></b2b-spacer>
+       <b2b-text container-body  text="{{allhoteldata.hotelName|titlecase}}-{{allhoteldata.State}}" [bold]="true" fontSize="16px"></b2b-text>
+       <b2b-text container-body  text="{{allhoteldata.country|titlecase}}-{{allhoteldata.State}}" fontSize="16px"></b2b-text>
+       <b2b-spacer container-body height="10px"></b2b-spacer>
+
+       <b2b-row container-body [wrap]="true">
+           <ng-container row-body >
+               <!-- <b2b-label row-body text="{{allhoteldata.roomType}}" [isRounded]="true" padding="10px" height="20px" [center]="true" backgroundTheme="--color-dark-grey" margin="0 10px 10px 0"></b2b-label>
+               <b2b-label row-body text="{{allhoteldata.roomCount}}" [isRounded]="true" padding="10px" height="20px" [center]="true" backgroundTheme="--color-dark-grey" margin="0 10px 10px 0"></b2b-label> -->
+               <b2b-label row-body text="{{allhoteldata.roomName}}" [isRounded]="true" padding="10px" height="20px" [center]="true" backgroundTheme="--color-dark-grey" margin="0 10px 10px 0"></b2b-label>
+           </ng-container>
+       </b2b-row>
+       </b2b-container>
+   <!-- delete hotel popup -->
+<b2b-draggable-popup tdata-body *ngIf="deletehotel" class="blur-overlay" positionTop="30%" positionLeft="43%">
+    <b2b-row draggable-popup height="18vh" widths="30vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="10px 10px 0 10px" borderRadius="10px" border="1px solid var(--color-toggle-background)">
+      <b2b-image row-body height="35px" [isRounded]="true" width="35px" image="assets/error.png"></b2b-image>
+    <b2b-text row-body text="Are You Sure!" margin="5px 0 0 0"></b2b-text>
+    <b2b-text row-body text="Do you want to Delete this Hotel Permanently?" fontSize="14px" margin="0 0 10px 0"></b2b-text>
+  
+    <div row-body style="display: flex; flex-direction: row; justify-content: space-between;">
+      <b2b-button title="OK" height="25px" width="70px" backgroundTheme="--color-primary" margin="5px" (click)="delete_hotel_details()"> </b2b-button>
+      <b2b-button title="CANCEL" height="25px" width="70px" backgroundTheme="--color-redd" margin="5px" (click)="deletehotel = false"> </b2b-button>
+    </div>
+    </b2b-row>
+  </b2b-draggable-popup>

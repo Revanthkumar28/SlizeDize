@@ -1,0 +1,18 @@
+/* ::ng-deep .stepper .step-2 {
+    background-color: green !important;
+} */
+
+.scrollweb{
+    overflow-y: auto;
+}
+::ng-deep .catalogimg img {
+    border-radius: 10px !important;
+}
+
+::ng-deep .hotel-name-icon .more_vert {
+    height: 25px !important;
+    width: 25px !important;
+    padding-top: 0 !important;
+    color: #b4b4b4 !important;
+    background-color: #f5f5f5 !important;
+}

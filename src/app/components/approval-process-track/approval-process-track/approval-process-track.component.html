@@ -1,0 +1,77 @@
+<b2b-row container-body *ngIf="isOrderTracking" zIndex="18" alignItem="flex-start"  borderRadius="5px" position="fixed" backgroundTheme="--color-lighter-grey" height="100%" positionRight="0" positionTop="0">
+    <b2b-container row-body [property]="{backgroundTheme: '',width:'400px',flex:1,padding:'0'}">
+		<b2b-text *ngIf="type.screen =='PO'  && type.type=='Cencel Item'" container-body text="CANCEL ITEM"></b2b-text>
+        <b2b-text *ngIf="type.screen == 'Released Order' && type.type == 'Cencel Item'" container-body text="CANCEL ITEM OR PURCHASE ORDER"></b2b-text>
+        <b2b-text *ngIf="type.screen == 'Vendor-page'" container-body text="REJECT RFQ"></b2b-text>
+
+        <b2b-row container-body >
+            <b2b-container row-body [property]="{width:'100%',backgroundTheme: '',padding:'30px'}">
+                <b2b-row container-body >
+                    <b2b-icon row-body  icon="close" left="92%" (click)="closeButton()" top="5%" backgroundTheme="--color-white" colorTheme="--color-dark-grey" position="absolute"></b2b-icon>
+                </b2b-row>
+
+				<!-- Tracking Process .... -->
+                <ng-container container-body  *ngIf="type.type == 'Order & Approval Process'">
+                    <b2b-row justifyContent="space-around" padding="10px">
+                        <ng-container row-body *ngFor="let button of button_name">
+                            <b2b-button [title]="button['name']" boxShadow="0 0 10px lightGrey" [backgroundTheme]="button['name'] == selectedButton ? '--color-toggle-background' : '--color-white'" [colorTheme]="button['name'] == selectedButton ? '--color-white' : '--color-black'" padding="0 12px" width="auto" (onPressed)="buttonclicked($event)"></b2b-button>
+                        </ng-container>
+                    </b2b-row>
+    
+                    <ng-container [ngSwitch]="selectedButton">
+                        <b2b-process-card-one [process_person]="process_person" *ngSwitchCase="'Approval process'"> </b2b-process-card-one>
+                        <b2b-process-card-two [process_person]="process_person" *ngSwitchCase="'Order process'"></b2b-process-card-two>
+                    </ng-container>
+                </ng-container>
+                    
+				<!-- Tracking Process .... -->
+                <!-- revise-table -->
+                <b2b-revise-reorder-table container-body *ngIf="type.type == 'Revise'"></b2b-revise-reorder-table>
+
+				<!-- Deleted Item -->
+				<!-- <b2b-text container-body text="CANCEL ITEM"></b2b-text> -->
+                    <ng-container container-body *ngIf="type.type == 'Cencel Item'">
+                        <b2b-spacer width="10px" height="20px"></b2b-spacer>
+                        <b2b-text [text]="type.order" backgroundTheme="--color-primary" colorTheme="--color-white"></b2b-text>
+                        <b2b-spacer width="10px" height="20px"></b2b-spacer>
+                        <b2b-container [property]="{width:'100%',padding:'0'}">
+                            <table container-body>
+                                <thead>
+                                    <tr class="head">
+                                        <th>Select</th>
+                                        <th>Product Image</th>
+                                        <th>Required Quantity</th>
+                                        <th>Price-Pcs/Box</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let row of rejectProduct; let i = index">
+                                        <tr >
+                                            <td><input type="checkbox" class="checkbox" (change)="isCheckProduct($event,row.product_id)"></td>
+                                            <td >
+                                                <img class="picture" [src]="row.image" alt="Product Image" width="50" height="50"> <!-- Display Image -->
+                                            </td>                                        
+                                            <td>{{ row.hotel_required_qty }}</td>
+                                            <td>10</td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </b2b-container>
+                        <b2b-spacer container-body width="10px" height="15px"></b2b-spacer>
+                        <b2b-button *ngIf="type.screen =='PO'" container-body title="CANCEL ITEM" width="100px" height="30px" backgroundTheme="--color-primary" (click)="deleteItem('Pipeline')"></b2b-button>
+                    <div class="Relese">
+                        <b2b-button *ngIf="type.screen !='PO'" container-body [title]="type.screen == 'Released Order' ? 'CANCEL SELECTED ITEM':'REJECT SELECTED ITEM'" width="160px" height="30px" backgroundTheme="--color-primary" fontSize="12px" (click)="deleteItem('Item')"></b2b-button>
+                        <b2b-button  *ngIf="type.screen !='PO'" container-body [title]="type.screen == 'Released Order' ? 'CANCEL PURCHASE ORDER':'REJECT PURCHASE ORDER'" width="165px" height="30px" backgroundTheme="--color-primary" fontSize="12px" margin="0 0 0 15px" (click)="deleteItem('Purchase order')"></b2b-button>
+                    </div>
+                    
+                    </ng-container>
+                    
+                <!-- Delete Item -->
+            </b2b-container>
+        </b2b-row>
+    </b2b-container> 
+</b2b-row>
+
+<!-- Delete Line Item -->
+<b2b-delete-line-item *ngIf="isDelete" [deleteProduct]="deleteProduct" [type]="buttonType"  (cancelpopup)="isDelete = $event"></b2b-delete-line-item>

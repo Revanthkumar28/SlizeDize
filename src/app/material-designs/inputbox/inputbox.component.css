@@ -1,0 +1,226 @@
+:host {
+    width: auto;
+}
+
+div.inputbox {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: flex-start;
+
+    position: relative;
+    /* margin-bottom: 17px; */
+
+}
+
+div.inputbox .input-name-icon {
+    position: relative;
+}
+
+div.inputbox .input-name-icon .input-name span {
+    color: #EF9A9A;
+}
+
+div.inputbox .input-name-icon .input-name {
+    margin: 0;
+    padding: 0;
+    /* width:180px; */
+    margin-bottom: 7px;
+    position: relative;
+    /* margin-top: 8px; */
+
+}
+
+div.inputbox .input-group {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    /* overflow: hidden; */
+    /* position: relative; */
+}
+
+.errorMsg {
+    position: absolute;
+    bottom: -25px;
+    color: #EF9A9A;
+    font-size: 10px;
+}
+
+.insideLable {
+    width: 100%;
+    font-size: 10px;
+    color: var(--color-dark-grey);
+}
+
+div.inputbox div.input-group input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    background-color: transparent;
+    /* cursor: pointer; */
+    padding: 0 !important;
+    text-indent: 15px;
+    /* text-transform: capitalize; */
+}
+
+div.inputbox div.input-group .input-1::placeholder {
+    color: white;
+    font-size: 12px;
+}
+
+div.inputbox div.input-group .input-2::placeholder {
+    color: rgb(145, 117, 117);
+    font-size: 12px;
+    border-color: none;
+}
+
+div.inputbox div.input-group .input-3::placeholder {
+    color: rgb(145, 117, 117);
+    font-size: 12px;
+    border-color: none;
+    text-transform: capitalize;
+}
+
+div.inputbox div.input-group div.smallLetter input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    background-color: transparent;
+    text-transform: none;
+}
+
+div.inputbox div.input-group div.dropdown-trigger {
+    width: 35px;
+    /* margin: 0 1rem 0 0; */
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: var(--color-dark-dim-white);
+    height: 70%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.inputbox .dropdown {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: calc(100% + 10px);
+    z-index: 100;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+
+}
+
+::placeholder {
+    color: white;
+    font-size: 12px;
+}
+
+input[type='file'] {
+    position: absolute;
+    transform: scale(2);
+    opacity: 0;
+}
+
+div.inputbox div.input-group input[type="date"] {
+    text-transform: uppercase;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+.expand-more {
+    width: 0;
+    height: 0;
+
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid white;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+
+.expand-more.expanded {
+    transform: rotate(180deg);
+}
+
+.expand-more.expanded::after {
+    transform: rotate(180deg);
+}
+
+input[readonly] {
+    cursor: pointer;
+}
+
+
+/* ng-date */
+.shadow-input {
+    position: absolute;
+    color: transparent;
+    top: 22px;
+    width: 0px;
+    height: 0px;
+    border: none;
+    font-size: 10px;
+}
+
+.ng-date {
+    padding: 8px;
+}
+
+/* Hide the next month dates */
+.owl-dt-calendar-view .owl-dt-calendar-table .owl-dt-calendar-cell.next-month {
+    visibility: hidden;
+}
+
+/* Disable white color for the next month dates */
+.owl-dt-calendar-view .owl-dt-calendar-table .owl-dt-calendar-cell.next-month .owl-dt-calendar-cell-content {
+    color: black;
+    /* Change this to your desired color */
+}
+
+.date-input-container {
+    position: relative;
+    display: inline-block;
+    width: 90%;
+    font-size: .7vw;
+}
+
+/* .date-input {
+    padding: 10px;
+    
+  } */
+
+.date-label {
+    position: absolute;
+    top: 0px;
+    left: 1px;
+    width: 77%;
+    height: 88%;
+    padding: 3px 0 0 7px;
+    pointer-events: none;
+    font-size: 1.3vh;
+    color: black;
+    background-color: white;
+}

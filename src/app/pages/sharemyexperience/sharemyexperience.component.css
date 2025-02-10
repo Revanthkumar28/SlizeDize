@@ -1,0 +1,9 @@
+@media (max-width: 500px){
+     .scrollmobile{
+        width: 95%;
+        padding: 0 35px 0 0;
+    }
+    ::ng-deep .text_size p{
+        width: 80%;
+    }
+}

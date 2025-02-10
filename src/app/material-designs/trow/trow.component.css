@@ -1,0 +1,48 @@
+div.trow {
+    display: grid;
+    align-items:stretch;
+    position: relative;
+    box-sizing: border-box;
+    transition: 0.4s all;
+}
+
+
+@media (max-width: 600px) {
+    div.mobileview {
+        display: flex;
+      flex-direction: column;
+    }
+}
+@media (min-width: 600px) and (max-width: 1000px) {
+    div.mobileview {
+        grid-template-columns:1fr 1fr;
+    }
+
+    
+}
+@media (min-width: 1000px){
+    div.mobileview {
+        grid-template-columns:1fr 1fr 1fr 1fr;
+    }
+    div.trow{
+        height: 80px;
+    }
+}
+
+@media (min-width: 1900px){
+    div.trow{
+        height: 100px;
+    }
+}
+
+/* .trow:hover{
+    box-shadow: var(--color-box-sadow);
+} */
+
+div.expandBadge {
+    position: absolute;
+    top: 91%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    z-index: 1;
+}

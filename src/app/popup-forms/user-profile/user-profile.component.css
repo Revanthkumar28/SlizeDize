@@ -1,0 +1,40 @@
+.user-profile {
+  width: 30vw;
+  height:80vh;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-header img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-details {
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.detail {
+  margin-bottom: 10px;
+}
+
+.detail label {
+  font-weight: bold;
+}
+
+.detail span {
+  margin-left: 10px;
+}

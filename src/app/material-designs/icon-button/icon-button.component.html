@@ -1,0 +1,23 @@
+
+<div *ngIf="tabIndexIcon == false">
+    <div class="icon-button"  *ngIf="icon; else textBlock" [style]="iconStyle" (keydown.enter)="buttonClicked()" (click)="buttonClicked()">
+        <i class="material-icons" [style]="iconTheme">{{icon}}</i>
+
+        <span *ngIf="toolTip" class="tooltiptext" [ngStyle]="tooltiptop ? {'left':'-220%'} :{'left':'260%'}">{{toolTipName}}</span>
+    </div>
+</div>
+
+
+<div *ngIf="tabIndexIcon == true">
+    <div class="icon-button" tabindex="0" *ngIf="icon; else textBlock" [style]="iconStyle" (keydown.enter)="buttonClicked()" (click)="buttonClicked()">
+        <i class="material-icons" [style]="iconTheme">{{icon}}</i>
+        <!-- <span *ngIf="toolTip" class="tooltiptext">{{toolTipName}}</span> -->
+    </div>
+</div>
+
+
+<ng-template #textBlock>
+    <div class="icon-button" [style]="iconStyle" (click)="buttonClicked()">
+        <span id="icon-text">{{text}}</span>
+    </div>
+</ng-template>

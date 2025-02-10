@@ -1,0 +1,598 @@
+<b2b-container [property]="{padding:'8px 25px 25px 25px',alignItem:'flex-start'}">
+  <b2b-row container-body>
+    <b2b-container row-body [property]="{padding:'0',alignItem:'flex-start'}">
+
+      <b2b-row container-body>
+        <b2b-button *ngIf="show_add_products" row-body title="Add Products" borderRadius="5px" backgroundTheme="--color-green" height="30px" width="auto"
+          padding="5px" fontSize="12px" colorTheme="--color-white" (click)="add_product('vendor_add')"></b2b-button>
+          <b2b-spacer row-body width="10px"></b2b-spacer>
+        <!-- <b2b-button  row-body title="Reload" borderRadius="5px" backgroundTheme="--color-orange" height="30px" width="auto"
+          padding="5px" fontSize="12px" colorTheme="--color-white" ></b2b-button> -->
+          <b2b-spacer row-body [flex]="1"></b2b-spacer>
+      </b2b-row>
+
+      <b2b-spacer container-body height="8px"></b2b-spacer>
+    </b2b-container>
+  </b2b-row>
+
+  <b2b-row container-body boxShadow="0 0 10px darkGrey" >
+    <b2b-container row-body [property]="{padding:'0' ,backgroundTheme:'--color-dashboard'}">
+       <!-- Purchase order Heading leve 1 -->
+       <ng-container container-body *ngIf="navBarSelected == 'pur_Order' || navBarSelected == 'Ready_Dispatch' || navBarSelected == 'Dispatch'">
+        <b2b-trow container-body column="6*1fr"  backgroundTheme="--color-dashboard"
+        colorTheme="--color-drawer-bottom-card" [bold]="true">
+            <b2b-tdata trow-body [title]="column" *ngFor="let column of groupOrder_heading" backgroundTheme="--color-dashboard" colorTheme="--color-drawer-bottom-card" fontSize="11px"></b2b-tdata>
+        </b2b-trow>
+
+        <!-- DIRECT ORDER DATA -->
+        <ng-container container-body *ngFor="let data of mergeRFQ_DO;let i = index">
+          <b2b-trow container-body *ngIf="purchaseTableId == '' || purchaseTableId == data.mv_id"
+          [id]="data.mv_id" [isExpanded]="purchaseTableId == data.mv_id" fontSize="12px" Expandwidth="97px" ExpandName="PO Expand" [HoverBoxShadow]="true"
+          column="6*1fr" colorTheme="--color-black" [backgroundTheme]="data.trigger_color"
+          borderRadius="var(--table-radius)" height="50px" (onExpand)="purchase_tableExpand($event,data)"
+          [showExpand]="true">
+  
+            <!-- Purchase Ordered data-->
+            <ng-container trow-body>
+              <b2b-tdata trow-body *ngFor="let value of fiveColumnTable(data.source)" [title]="value == '-' ? '-' : data[value] ">
+                <b2b-toggle tdata-body *ngIf="value == 'toggle'" (onChange)="toggleSwitchOrder($event,data,i,'group_order')"></b2b-toggle>
+
+                <b2b-tdata tdata-body *ngIf="value == 'Upload'" width="110px" (click)="uploadDocument('vendor',data.id,data)"> 
+                  <b2b-image tdata-body [image]="upload_image"></b2b-image>
+              </b2b-tdata>
+              </b2b-tdata>
+            </ng-container>
+
+            <!-- Direct ordered data -->
+            <!-- <ng-container trow-body *ngIf="data.source == 'diractorder'">
+              <b2b-tdata trow-body *ngFor="let value of purchaseDirectOrderValue_level1" [title]="value == '-' ? '-' : data[value] ">
+                <b2b-toggle tdata-body *ngIf="value == 'toggle' " (onChange)="toggleSwitchOrder($event,data,'Group')"></b2b-toggle>
+                <b2b-tdata tdata-body *ngIf="value == 'Upload'" width="110px" (click)="uploadDocument('vendor')"> 
+                  <b2b-image tdata-body image="upload_image"></b2b-image>
+              </b2b-tdata>
+              </b2b-tdata>
+            </ng-container> -->
+          
+          </b2b-trow>
+        </ng-container>
+      </ng-container>
+    </b2b-container>
+  </b2b-row>
+
+  <b2b-row container-body *ngIf="navBarSelected == 'pur_Order'|| navBarSelected == 'Ready_Dispatch' || navBarSelected == 'Dispatch' ? purchaseTableId != '' ? true : false : true " boxShadow="0 0 10px darkGrey" overflowX="scroll">
+    <b2b-container row-body [property]="{padding:'0',backgroundTheme:'--color-dashboard',width:'auto'}">
+
+      <!-- Purchase order --level2 >
+        Rfq Hotel Details Table Heading -->
+      <ng-container container-body *ngIf="navBarSelected == 'pur_Order'||navBarSelected == 'Ready_Dispatch' || navBarSelected == 'Dispatch' ? purchaseTableId != '' ? true : false : true ">
+        <b2b-trow container-body  display="flex" backgroundTheme="--color-dashboard"
+        colorTheme="--color-drawer-bottom-card" [bold]="true">
+            <ng-container trow-body *ngFor="let column of catelogTable_two">
+                <b2b-tdata [title]="column" backgroundTheme="--color-dashboard" colorTheme="--color-drawer-bottom-card" fontSize="11px" [width]="column == 'RFQ Number' || column == 'Purchase Order Num' || column == 'Purchase order Number'  ? '170px' : '120px'" ></b2b-tdata>
+            </ng-container>
+        </b2b-trow>
+  
+        <!-- Rfq Hotel Details Table values -->
+        <ng-container container-body *ngFor="let data of requestedProduct;let i = index;trackBy: trackById">
+          <b2b-trow fontSize="12px" display="flex" [HoverBoxShadow]="true" [column]="catelogColumnSpacing_two" colorTheme="--color-black"
+            backgroundTheme="--color-white" borderRadius="var(--table-radius)" height="40px" margin="0 0 4px">
+  
+            <!-- Dynamic data -- Tdata use onle tag its use loop key -- input is if use onle given key-->
+            <!-- order listed hotel based Dynamic data -->
+  
+  <!-- Purchase all Order .................. -->
+            <ng-container trow-body *ngIf="data.source != 'diractorder' ">
+              <b2b-tdata *ngFor="let test of dataKeys" [title]="test == '-' || test.split('_')[0] === 'numInput' ? test.split('_')[0] === 'numInput' ? '' : '-' : test == 'vendor_sku' ? '' : data[test]" [width]="test == 'mv_id' || test =='rfq_id' ? '170px' : '120px'" [toolTip]="test =='Hotel_Name_short' ? true:false " [toolTipName]="test =='Hotel_Name_short' ? data.Hotel_Name:'' " [ngStyle]="{'color': data.eta_red == true && test == 'etaDate' ? 'red' : 'var(--color-black)'}">
+                <img tdata-body *ngIf="test == 'image_product'" src="{{data.brand_image ? data.brand_image :data.product_image }}" width="30px"/>
+                <img tdata-body *ngIf="test == 'image_product2'" src="{{ data.brand_image}}" width="30px"/>
+
+                <img tdata-body *ngIf="test == 'image_vendor'" src="{{data.product_image}}" width="30px"/>
+               
+                 <!-- service request -->
+                 <b2b-badge *ngIf="test == 'service_img'" tdata-body height="18px" width="18px" backgroundTheme="--color-green" fontSize="13px" [text]="data.imagearray.length" (click)="ServiceIMG(data.imagearray)"> 
+                  <ng-container badge-body *ngIf="isImage2(data.image); else videoThumbnail">
+                      <b2b-image  id="image-element" height="2.2vw" width="3.2vw" [image]="data.image"></b2b-image>
+                  </ng-container>
+                  <ng-template badge-body #videoThumbnail>
+                      <b2b-image  id="image-element" height="2.2vw" width="3.2vw" [image]="defaultVideoThumbnail"></b2b-image>
+                  </ng-template>
+              </b2b-badge>
+              
+
+                  <b2b-tdata tdata-body *ngIf="test === 'S_Upload'" width="110px" (click)="uploadDocument('vendor_service','',data)"> 
+                    <b2b-image tdata-body [image]="upload_image"></b2b-image>
+                 </b2b-tdata>
+
+                 <b2b-button tdata-body *ngIf="test == 'S_submit'"
+                 title="Submit" padding="5px 10px 5px 10px"
+                 (click)="service_submit(data.product_id,data.vender_id,data.service_request_random,data.work_status,data.service_cost)"
+                 fontSize="12px" [backgroundTheme]="inuptValidation  ? '--color-green' : '--color-green' " height="auto" width="auto">
+               </b2b-button>
+
+               <b2b-tdata *ngIf="test == 't_price'" tdata-body width="110px">
+                <b2b-inputbox tdata-body width="95%" 
+                inputType="number" [value]="data.service_cost" (onChange)="data.service_cost = $event" [twoInputFeild]="true" placeholder="100"
+                border="2px solid var(--color-green)" colorTheme="--color-black" height="25px">
+                </b2b-inputbox>
+                </b2b-tdata>
+
+                  <b2b-drop-down-xaxis tdata-body *ngIf="test == 'service_status'">
+                    <div select-item style="display: flex; align-items: center;background-color: white;height: 20px; width:90px; padding: 5px; border:1px solid blue ">
+                        <b2b-text id="selectedValue" [text]="data.working_status" fontSize="11px"></b2b-text>
+                        <b2b-icon-button style="position: absolute; right: 3px;" width="18px" icon="expand_more" padding="0 0 0 0"
+                                         
+                        colorTheme="--color-dark-grey">
+                        </b2b-icon-button>
+                   </div>
+                    <div dropDown-Items>
+                        <b2b-list-tile container-body title="Not Started"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('0',data)"></b2b-list-tile> 
+                        <b2b-list-tile container-body title="Under process"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('1',data)"></b2b-list-tile> 
+                        <b2b-list-tile container-body title="Completed"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('2',data)"></b2b-list-tile> 
+                        <b2b-list-tile container-body title="Cancelled"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('3',data)"></b2b-list-tile> 
+                    </div> 
+            </b2b-drop-down-xaxis> 
+            <b2b-tdata tdata-body *ngIf="test == 's_icon'" width="20px">
+              <b2b-drop-down-xaxis tdata-body>
+                      <b2b-icon-button select-item icon="more_vert" padding="0 5px 0 0"
+                      colorTheme="--color-dark-grey">
+                      </b2b-icon-button>
+                      <div dropDown-Items>
+                              <b2b-list-tile dropdown-items [isIcon]="true" icon="cyclone" [bold]="true" iconWidth="10px" iconsize="14px" title="Communication (Chat&Email)" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="Chat(data)"></b2b-list-tile> 
+                              <b2b-spacer height="5px"></b2b-spacer>
+                              <b2b-list-tile dropdown-items [isIcon]="true" icon="search" [bold]="true" iconWidth="10px" iconsize="14px"  title="View All Documents" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="Viewalldocuments()"></b2b-list-tile> 
+                              <b2b-spacer height="5px"></b2b-spacer>
+
+                              </div>
+                              </b2b-drop-down-xaxis>
+                              </b2b-tdata>
+               <!-- service request end -->
+
+                <b2b-drop-down-xaxis tdata-body *ngIf="test == 'vendor_product' && data.id" maxheight="200px" overflowY="scroll" >
+                    <img select-item [src]="data.vendorProductImage ? data.vendorProductImage : 'https://th.bing.com/th/id/OIP.xaADddZHWRoU3TbjEVGssQHaFj?w=234&h=180&c=7&r=0&o=5&pid=1.7' " height="30px"  width="30px">
+                    <b2b-inputbox #search search height="25px" [twoInputFeild]="true" inputType="text" autofocus (onChange)="rfq_filterProducts = $event" placeholder="search" border="1px solid var(--color-dark-grey)" backgroundTheme="--color-light-grey" width="null" margin="5px 10px 5px 5px"></b2b-inputbox>
+
+                    <b2b-container dropDown-Items>
+                      <b2b-container container-body *ngFor="let y of vendorAllProductsArr | filter : rfq_filterProducts : 'name'" [property]="{padding:'0px'}" (click)="vendorProductSelect(y.product_image,y.vendor_products_id,data.id,y.sku,data,y,'RFQ')">
+                        <b2b-row container-body *ngIf="y.vendor_products_category_id == data.category_id || y.vendor_products_category_id == data.vendor_category_id " borderBottom="1px solid var(--color-dark-grey)" backgroundTheme="--color-white" class="product-item" alignItem="flex-start" margin="0px 0px 10px 0px" >
+                            <ng-container row-body>
+                                <b2b-container row-body [property]="{backgroundTheme:'--color-white',padding:'2px',width:'100px'}">
+                                    <b2b-image container-body image="{{y.product_image}}" width="100%" class="pro-image"></b2b-image>
+                                    <b2b-text container-body text="SKU : {{y.sku}}" fontSize="10px" class="product-name"></b2b-text>
+                                </b2b-container>   
+                                        
+                                <b2b-container class="product-details" row-body [property]="{backgroundTheme:'--color-white',alignItem:'flex-start',padding:'0px 10px 10px 10px',width:'100%' }">
+                                    <b2b-spacer container-body height="10px"></b2b-spacer>
+                                    <b2b-row container-body>
+                                        <b2b-text row-body text="{{y.name}}" fontSize="13px" class="product-name"></b2b-text>
+                                    </b2b-row>
+                                    <b2b-spacer container-body height="5px"></b2b-spacer>
+    
+                                    <b2b-row container-body>
+                                        <b2b-text row-body text="Spec" fontSize="13px" class="price"></b2b-text>
+                                    </b2b-row>
+                                                                                      
+                                </b2b-container> 
+                            </ng-container>
+                        </b2b-row>
+                    </b2b-container>
+                    </b2b-container> 
+                </b2b-drop-down-xaxis>
+                
+                <b2b-tdata tdata-body *ngIf="test == 'date_formet' " [title]="data.requested_on"></b2b-tdata>
+            
+                <b2b-inputbox *ngIf="test == 'date'" tdata-body width="auto"
+                  inputType="ng-date" [Input_1]="false"
+                  (onChange)="numberInputFeilds($event,data,test,data.mv_id)" inputboxFontSize="10px" inputboxPadding="0px"
+                  border="1px solid var(--color-primary)" colorTheme="--color-black" height="25px">
+                </b2b-inputbox>
+                  <b2b-tdata tdata-body *ngIf="test == 'No_box'" flexDirection="column">
+                    <b2b-text tdata-body *ngIf="data.vendor_Box_qty > 0 && items_box_rfq.wholeNumber > 0" 
+                    [text]=data.box_items1 fontSize="11px">
+                 </b2b-text>               
+                 <b2b-text tdata-body *ngIf="items_box_rfq.decimalPart > 0 &&  items_box_rfq.wholeNumber > 0" [text]=data.box_items2 fontSize="11px"></b2b-text>
+                </b2b-tdata>
+                <b2b-tdata tdata-body *ngIf="test == 'No_box2'" flexDirection="column">
+                  <b2b-text tdata-body  
+                  [text]=data.box_items1 fontSize="11px">
+               </b2b-text>               
+               <b2b-text tdata-body *ngIf="data.box_items3 > 0" [text]=data.box_items2 fontSize="11px"></b2b-text>
+              </b2b-tdata>
+
+                <b2b-inputbox tdata-body id="priceInput{{ data.mv_id }}" *ngIf="test.split('_')[0] === 'numInput' " width="95%"
+                  inputType="number" border="1px solid var(--color-primary)"
+                  (onChange)="numberInputFeilds($event,data,test,data.mv_id)"
+                  colorTheme="--color-black" height="25px">
+                </b2b-inputbox>
+                <b2b-inputbox tdata-body id="priceInput{{ data.mv_id }}" *ngIf="test.split('_')[0] === 'textInput' " width="95%"
+                  inputType="text" border="1px solid var(--color-primary)"
+                  (onChange)="numberInputFeilds($event,data,test,data.mv_id)"
+                  colorTheme="--color-black" height="25px">
+                </b2b-inputbox>
+<!-- <link> -->
+                <a tdata-body *ngIf="test === 'vendor_sku'"
+                target="blank" href="" (click)="openLink(data.vendor_product_id)">{{ data.vendor_sku }}</a>
+                
+                <a tdata-body *ngIf="test === 'brand_spec'"
+                target="blank" href="" (click)="openLink_brand(data.product_id)">View_Spec</a>
+             
+                <b2b-tdata tdata-body *ngIf="test === 'Upload'" width="110px" (click)="uploadDocument('vendor',data.id,data)"> 
+                  <b2b-image tdata-body [image]="upload_image"></b2b-image>
+               </b2b-tdata>
+
+                <b2b-toggle tdata-body *ngIf="test == 'toggle'" (onChange)="toggleSwitchOrder($event,data,i,'single_order')"></b2b-toggle>
+            
+                <b2b-button tdata-body *ngIf="test == 'order_submit'" [apiSubmitDisable]="true"
+                  title="Submit" padding="5px 10px 5px 10px"
+                  (click)="vendorQuoted(data['id'],data['Hotel_Name_id'],data['user_id'],data['mv_id'],data['product_id'],data['approximate_price'],data['approximate_shipping_cost'],data['product_count_mv'],data['requested_on'],data)"
+                  fontSize="12px" [backgroundTheme]="inuptValidation  ? '--color-green' : '--color-green' " height="auto" width="auto">
+                </b2b-button>
+                
+                <b2b-tdata tdata-body *ngIf="test == 'revoke'" width="20px">
+                  <b2b-drop-down-xaxis tdata-body>
+                          <b2b-icon-button select-item icon="more_vert" padding="0 5px 0 0"
+                          colorTheme="--color-dark-grey">
+                          </b2b-icon-button>
+                          <div dropDown-Items>
+                                  <b2b-list-tile dropdown-items [isIcon]="true" icon="cyclone" [bold]="true" iconWidth="10px" iconsize="14px"  title="Communication(Chat & Email)" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="Chat(data)"></b2b-list-tile> 
+                                  <b2b-spacer height="5px"></b2b-spacer>
+                                  <b2b-list-tile dropdown-items [isIcon]="true" icon="search" [bold]="true" iconWidth="10px" iconsize="14px"  title="View All Documents" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="Viewalldocuments()"></b2b-list-tile> 
+                                  <b2b-spacer height="5px"></b2b-spacer>
+                                  <b2b-list-tile dropdown-items [isIcon]="true" icon="search" [bold]="true" iconWidth="10px" iconsize="14px"  title="Hotel Details" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="ShowHotelDetails(data)"></b2b-list-tile> 
+                                  <b2b-spacer height="5px"></b2b-spacer>
+                                  <b2b-list-tile dropdown-items [isIcon]="true" icon="cyclone" *ngIf="this.navBarSelected == 'Pick&Pack' || this.navBarSelected == 'Ready_Dispatch' || this.navBarSelected == 'Dispatch'" [bold]="true" iconWidth="10px" iconsize="14px" title="Revoke Order" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="RevokePO(data)"></b2b-list-tile> 
+                                  <b2b-spacer height="5px"></b2b-spacer>
+                                  <b2b-list-tile dropdown-items [isIcon]="true" icon="cyclone" *ngIf="this.navBarSelected == 'Discrepancy'" [bold]="true" iconWidth="10px" iconsize="14px" title="Descrepency Details" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="descrepencdetails(data)"></b2b-list-tile> 
+                                  <b2b-spacer height="5px"></b2b-spacer>
+                                   </div> 
+                      </b2b-drop-down-xaxis>
+          
+              </b2b-tdata>
+                <b2b-tdata tdata-body *ngIf="test == 'icon'" width="20px">
+                    <b2b-drop-down-xaxis tdata-body>
+                            <b2b-icon-button select-item icon="more_vert" padding="0 5px 0 0"
+                            colorTheme="--color-dark-grey">
+                            </b2b-icon-button>
+                            <div dropDown-Items>
+                                    <b2b-list-tile dropdown-items [isIcon]="true" icon="cyclone" [bold]="true" iconWidth="10px" iconsize="14px" title="Communication (Chat&Email)" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="Chat(data)"></b2b-list-tile> 
+                                    <b2b-spacer height="5px"></b2b-spacer>
+                                    <!-- <b2b-list-tile dropdown-items [isIcon]="true" icon="edit" [bold]="true" iconWidth="10px" iconsize="14px"  title="Purchase Intelligence" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="trackingPopup('Order & Approval Process')"></b2b-list-tile> 
+                                    <b2b-spacer height="5px"></b2b-spacer> -->
+                                    <b2b-list-tile dropdown-items [isIcon]="true" icon="search" [bold]="true" iconWidth="10px" iconsize="14px"  title="View All Documents" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="Viewalldocuments()"></b2b-list-tile> 
+                                    <b2b-spacer height="5px"></b2b-spacer>
+                                    <b2b-list-tile dropdown-items [isIcon]="true" icon="search" [bold]="true" iconWidth="10px" iconsize="14px"  title="Hotel Details" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="ShowHotelDetails(data)"></b2b-list-tile> 
+                                    <b2b-spacer height="5px"></b2b-spacer>
+                                    <b2b-list-tile dropdown-items [isIcon]="true" icon="cancel" [bold]="true" iconWidth="10px" iconsize="14px"  title="Reject - Item or Purchase Order" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="trackingPopup('Cencel Item')"></b2b-list-tile> 
+                                    </div> 
+                        </b2b-drop-down-xaxis>
+            
+                </b2b-tdata>
+                  <!-- <b2b-image tdata-body *ngIf="test == 'user_negotiate_img'" height="30px" [isRounded]="true" width="30px" image="assets/renegotiation.png" (click)="Renegotiate(data)"></b2b-image> -->
+  
+                  <!-- Negotiate Table -->
+                  <i tdata-body *ngIf="test == 'user_negotiate_img' && data.loading == true" [class.refreshing]="true" class="material-icons">refresh</i>
+
+                  <b2b-drop-down-xaxis tdata-body *ngIf="test == 'user_negotiate_img' && data.loading != true">
+                    <b2b-image select-item  height="30px" [isRounded]="true" width="30px" (click)="user_Renegotiate(data)" image="data:image/jpeg;base64,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" (click)="user_Renegotiate(data.id)"></b2b-image>
+  
+                    <div dropDown-Items style="position: fixed;top: 20%;"></div>
+                  </b2b-drop-down-xaxis>
+                </b2b-tdata>
+            </ng-container>
+  <!-- Purchase Order Order .................. -->
+  
+  <!-- Direct Order .................. -->
+            <ng-container trow-body *ngIf="data.source == 'diractorder'">
+              <b2b-tdata *ngFor="let test of directOrderpurchaseValue" [title]="test == '-'  || test.split('_')[0] === 'numInput' ? test.split('_')[0] === 'numInput' ? '' : '-' :test == 'vendor_sku' ?'': data[test]" [toolTip]="test == 'brand_products_name' ? true : false" [toolTipName]="test == 'brand_products_name' ? data.brand_products_Fullname : '' " [ngStyle]="{'color': data.eta_red && test == 'etaDate' ? 'red' : 'var(--color-black)'}" width="120px">
+                <b2b-tdata tdata-body *ngIf="test == 'date_formet' " [title]="data.requested_on"></b2b-tdata>
+                
+                <img tdata-body *ngIf="test == 'image_product'" src="{{data.image}}" width="30px"/>
+                
+                <b2b-inputbox *ngIf="test == 'date'" tdata-body width="auto"
+                  inputType="ng-date" [Input_1]="false"
+                  (onChange)="directOrderInput($event,data,test,data.mv_id)" inputboxFontSize="10px" inputboxPadding="0px"
+                  border="1px solid var(--color-primary)" colorTheme="--color-black" height="25px"></b2b-inputbox>
+    
+                <b2b-inputbox tdata-body id="priceInput{{ data.mv_id }}" *ngIf="test.split('_')[0] === 'numInput' " width="95%"
+                  inputType="number" border="1px solid var(--color-primary)"
+                  [inputboxWidth]="test == 'numInput_BoxQty' ? '60%' : ''"
+                  (onChange)="directOrderInput($event,data,test,data.mv_id)"
+                  [value]="data[test]"
+                  colorTheme="--color-black" height="25px"
+                  >
+                </b2b-inputbox>
+                
+                <b2b-inputbox tdata-body id="priceInput{{ data.mv_id }}" *ngIf="test.split('_')[0] === 'textInput' " width="95%"
+                  inputType="text" border="1px solid var(--color-primary)"
+                  (onChange)="directOrderInput($event,data,test,data.mv_id)"
+                  colorTheme="--color-black" height="25px">
+                </b2b-inputbox>
+            <!-- PRODUCT IMAGE SELECTION -->
+                <b2b-drop-down-xaxis tdata-body *ngIf="test == 'vendor_product' && data.id" maxheight="200px" overflowY="scroll" >
+                  <img select-item [src]="data.vendorProductImage ? data.vendorProductImage : 'https://th.bing.com/th/id/OIP.xaADddZHWRoU3TbjEVGssQHaFj?w=234&h=180&c=7&r=0&o=5&pid=1.7' " height="30px"  width="30px">
+                  <b2b-inputbox #search search height="25px" [twoInputFeild]="true" inputType="text" autofocus (onChange)="filterProducts = $event" placeholder="search" border="1px solid var(--color-dark-grey)" backgroundTheme="--color-light-grey" width="null" margin="5px 10px 5px 5px"></b2b-inputbox>
+
+                  <b2b-container dropDown-Items>
+                    <b2b-container container-body *ngFor="let y of vendorAllProductsArr | filter : filterProducts : 'name'" [property]="{padding:'0px'}" (click)="vendorProductSelect(y.product_image,y.vendor_products_id,data.id,y.sku,data,y,'directOrder')">
+                      <b2b-row *ngIf="y.vendor_products_category_id == data.category_id" container-body borderBottom="1px solid var(--color-dark-grey)" backgroundTheme="--color-white" class="product-item" alignItem="flex-start" margin="0px 0px 10px 0px" >
+                          <ng-container row-body>
+                              <b2b-container row-body [property]="{backgroundTheme:'--color-white',padding:'2px',width:'100px'}">
+                                  <b2b-image container-body image="{{y.product_image}}" width="100%" class="pro-image"></b2b-image>
+                                  <b2b-text container-body text="{{y.sku}}" fontSize="13px" class="product-name"></b2b-text>
+                              </b2b-container>   
+                                      
+                              <b2b-container class="product-details" row-body [property]="{backgroundTheme:'--color-white',alignItem:'flex-start',padding:'0px 10px 10px 10px',width:'100%' }">
+                                  <b2b-spacer container-body height="10px"></b2b-spacer>
+                                  <b2b-row container-body>
+                                      <b2b-text row-body text="{{y.name}}" fontSize="13px" class="product-name"></b2b-text>
+                                  </b2b-row>
+                                  <b2b-spacer container-body height="5px"></b2b-spacer>
+  
+                                  <b2b-row container-body>
+                                      <b2b-text row-body text="Spec" fontSize="13px" class="price"></b2b-text>
+                                  </b2b-row>
+                                                                                    
+                              </b2b-container> 
+                          </ng-container>
+                      </b2b-row>
+                  </b2b-container>
+                  </b2b-container> 
+              </b2b-drop-down-xaxis>
+
+              <a tdata-body *ngIf="test === 'vendor_sku'"
+              target="blank" href="" (click)="openLink(data.vendor_products_id)">{{ data.vendor_sku }}</a>
+              
+              <a tdata-body *ngIf="test === 'brand_spec'"
+                target="blank" href="" (click)="openLink_brand(data.product_id)">View_Spec</a>
+              <b2b-toggle tdata-body *ngIf="test == 'toggle'" (onChange)="move_to_negotiate($event,data,i)"></b2b-toggle>
+              <b2b-toggle tdata-body *ngIf="test == 'toggle1' && data.eta_red == false " (onChange)="move_to_negotiate($event,data,i)"></b2b-toggle>
+
+              <b2b-button tdata-body *ngIf="test == 'order_submit' " [apiSubmitDisable]="true"
+                  margin="0 5px 0 0" hoverTheme="--color-light-grey" title="Submit" padding="5px 10px 5px 10px"
+                  (click)="PO_directOrderSubmit('submit',data['id'],data['Hotel_Name_id'],data['user_id'],data['mv_id'],data['product_id'],data['approximate_price'],data['approximate_shipping_cost'],data['product_count_mv'],data['requested_on'],data)"
+                  fontSize="12px" backgroundTheme="--color-green" height="auto" width="auto"></b2b-button>
+              
+              <b2b-tdata tdata-body *ngIf="test == 'No_box'" flexDirection="column">
+                <b2b-text tdata-body *ngIf="data.vendor_box_qty > 0 && items_box.wholeNumber > 0" 
+                  text="{{ data.box_items1 }}" 
+                    fontSize="11px">
+                </b2b-text>               
+                <b2b-text tdata-body *ngIf="items_box.decimalPart > 0 &&  items_box.wholeNumber > 0" text=" {{data.box_items2}}" fontSize="11px"></b2b-text>
+              </b2b-tdata>
+              
+            <!-- renegotiate_po -->
+    
+              <b2b-tdata tdata-body *ngIf="test == 'icon'" width="20px">
+                  <b2b-drop-down-xaxis tdata-body>
+                      <b2b-icon-button select-item icon="more_vert" padding="0 5px 0 0"
+                        colorTheme="--color-dark-grey">
+                      </b2b-icon-button>
+                          <div dropDown-Items>
+                            <b2b-list-tile dropdown-items [isIcon]="true" icon="cyclone" [bold]="true" iconWidth="10px" iconsize="14px" title="Communication (Chat&Email)" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="trackingPopup('Communication')"></b2b-list-tile> 
+                            <b2b-spacer height="5px"></b2b-spacer>
+                            <!-- <b2b-list-tile dropdown-items [isIcon]="true" icon="edit" [bold]="true" iconWidth="10px" iconsize="14px"  title="Purchase Intelligence" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="trackingPopup('Order & Approval Process')"></b2b-list-tile> 
+                            <b2b-spacer height="5px"></b2b-spacer> -->
+                            <b2b-list-tile dropdown-items [isIcon]="true" icon="search" [bold]="true" iconWidth="10px" iconsize="14px"  title="Hotel Details" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="ShowHotelDetails(data)"></b2b-list-tile> 
+                            <b2b-spacer height="5px"></b2b-spacer>
+                            <b2b-list-tile dropdown-items [isIcon]="true" icon="cancel" [bold]="true" iconWidth="10px" iconsize="14px"  title="Reject - Item or Purchase Order" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="trackingPopup('Cencel Item')"></b2b-list-tile> 
+                          </div> 
+                  </b2b-drop-down-xaxis>
+            
+                </b2b-tdata>
+                <b2b-image tdata-body *ngIf="test == 'negotiate_img'" height="30px" [isRounded]="true" width="30px" image="assets/renegotiation.png" (click)="user_Renegotiate(data.id)"></b2b-image>
+              </b2b-tdata>
+            </ng-container>
+  <!-- Direct Order .................. -->
+            
+          </b2b-trow>
+  
+        </ng-container>
+      </ng-container>
+
+    </b2b-container>
+  </b2b-row>
+
+</b2b-container>
+ <!-- //view report descrepency-->
+ <b2b-draggable-popup row-body *ngIf="details" positionTop="0"  zIndex="150" positionLeft="40%">
+  <b2b-row draggable-popup height="auto" widths="40vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="30px 10px 10px 10px" borderRadius="10px" border="1px solid var(--color-toggle-background) ">
+   <b2b-icon row-body icon="close" left="92%" (click)="details = false" top="2%"
+          backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+          position="absolute"></b2b-icon>
+          <b2b-row row-body >
+              <table row-body>
+                  <thead>
+                      <tr class="head">
+                          <th colspan="3">Decrepency Details</th>
+                      </tr>
+                      <tr class="head">
+                        <th >Name</th>
+                        <th >Vendor Quoted</th>
+                        <th >Received</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <ng-container *ngFor="let row of loopprice; let i = index">
+                          <tr >
+                             <td>{{ row.key}}</td>
+                             <td >{{row.value1}}</td>
+                             <td [ngStyle]="{'color': row.isHighlighted ? 'red' : 'black'}">{{row.value2}}</td>
+
+                          </tr>
+                      </ng-container>
+                  </tbody>
+              </table>
+                           
+          </b2b-row>
+         
+  </b2b-row>
+</b2b-draggable-popup>
+<!-- Purchase Intelligence -->
+<b2b-row container-body *ngIf="vendortable" zIndex="18" boxShadow="0 0 10px darkGrey" borderRadius="5px"
+  position="fixed" positionRight="0%" positionTop="24%">
+  
+  <b2b-container row-body
+    [property]="{backgroundTheme: '--color-white',flex:1,padding:'10px',borderRadius:'10px',width:'auto'}">
+
+    <b2b-row container-body>
+      <b2b-icon row-body icon="close" left="95%" (click)="vendorCloseButton()" top="5%" backgroundTheme="--color-white"
+        colorTheme="--color-dark-grey" position="absolute"></b2b-icon>
+    </b2b-row>
+
+    <b2b-spacer container-body height="20px"></b2b-spacer>
+    
+    <b2b-row container-body boxShadow="0 0 10px darkGrey">
+
+      <b2b-container row-body [property]="{padding:'0'}">
+        <b2b-trow container-body [column]="vendorColumnSpacing_two" margin="0" zIndex="1" position="sticky" top="0"
+          height="50px" backgroundTheme="--color-dashboard" colorTheme="--color-drawer-bottom-card" [bold]="true">
+          <ng-container trow-body *ngFor="let column of vendortableHeading">
+            <b2b-tdata [title]="column" width="100%" fontSize="12px"></b2b-tdata>
+          </ng-container>
+        </b2b-trow>
+
+        <b2b-trow container-body fontSize="12px" [column]="vendorColumnSpacing_two"
+          colorTheme="--color-black" backgroundTheme="--color-white" borderRadius="var(--table-radius)" height="60px">
+          <b2b-tdata trow-body [title]="qtyCount.gst"></b2b-tdata>
+          <b2b-tdata trow-body [title]="qtyCount.totalCost"></b2b-tdata>
+          <b2b-tdata trow-body [title]="qtyCount.shipping">
+            <b2b-inputbox tdata-body *ngIf="navBarSelected == 'RFQ list'" width="95%" inputType="number" (onChange)="shippingPercentage($event)" 
+              border="1px solid var(--color-primary)" colorTheme="--color-black" height="25px">
+            </b2b-inputbox>
+          </b2b-tdata>
+          <b2b-tdata trow-body [title]="qtyCount.shippingCost"></b2b-tdata>
+
+          <b2b-tdata trow-body [title]="qtyCount.gstShipping"></b2b-tdata>
+          <b2b-tdata trow-body [title]="qtyCount.totalAmount">
+            <!-- <bb-icon tdata-body [icon]="'msg'"></b2b-icon> -->
+          </b2b-tdata>
+          <b2b-tdata trow-body >
+            <b2b-icon tdata-body icon="chat"></b2b-icon>
+          </b2b-tdata>
+          <b2b-tdata trow-body ></b2b-tdata>
+              
+   
+
+          <b2b-tdata trow-body>
+            <!-- <b2b-row tdata-body>
+              <b2b-container row-body [property]="{padding:'10px'}">
+                <b2b-row container-body>
+                  <b2b-tdata row-body title="Low-Rs.18"></b2b-tdata>
+                </b2b-row>
+                <b2b-row container-body>
+                  <b2b-tdata row-body title="High-Rs.32"></b2b-tdata>
+                </b2b-row>
+              </b2b-container>
+            </b2b-row> -->
+          </b2b-tdata>
+          
+        </b2b-trow>
+
+      </b2b-container>
+    </b2b-row>
+  </b2b-container>
+
+</b2b-row>
+
+<!-- ALERT FOR ORDER MOVE NEXT COLUMN START-->
+<b2b-draggable-popup tdata-body *ngIf="isMoveColumnOrder" class="blur-overlay" positionTop="30%" positionLeft="43%">
+  <b2b-row draggable-popup height="18vh" widths="30vw" position="relative" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="10px 10px 0 10px" borderRadius="10px" border="1px solid var(--color-toggle-background)">
+    <b2b-image row-body height="35px" *ngIf="isLoading != true" [isRounded]="true" width="35px" image="assets/error.png"></b2b-image>
+    <b2b-spacer row-body height="60px" *ngIf="isLoading == true"></b2b-spacer>
+    <!-- loader Style.css-->
+    <div row-body class="loader-" style="left: 45%;" *ngIf="isLoading == true"></div>
+    
+    <b2b-text row-body text="Are You Sure!" margin="5px 0 0 0"></b2b-text>
+    <b2b-text row-body text="Do you want to move this to {{pushOrderColumn}}?" fontSize="14px" margin="0 0 10px 0"></b2b-text>
+
+    <div row-body style="display: flex; flex-direction: row; justify-content: space-between;">
+      <b2b-button title="OK" [apiSubmitDisable]="true" height="25px" width="70px" backgroundTheme="--color-primary" margin="5px" (click)="approvedOrderToLoading($event,selectedProductPush)"> </b2b-button>
+      <b2b-button title="CANCEL" [apiSubmitDisable]="true" height="25px" width="70px" backgroundTheme="--color-redd" margin="5px" (click)="error_notmsg()"> </b2b-button>
+    </div>
+  </b2b-row>
+</b2b-draggable-popup>
+<!-- ALERT FOR ORDER MOVE NEXT COLUMN END-->
+
+<!-- revoke popup -->
+<b2b-draggable-popup tdata-body *ngIf="revokepopup" class="blur-overlay" positionTop="30%" positionLeft="43%">
+  <b2b-row draggable-popup height="20vh" widths="30vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="10px 10px 0 10px" borderRadius="10px" border="1px solid var(--color-toggle-background)">
+  <b2b-text row-body text="Are You Sure!" margin="5px 0 0 0"></b2b-text>
+  <b2b-text row-body text="This Will Revoke the Order to {{revokeorderColumn}}?" fontSize="14px" margin="0 0 10px 0"></b2b-text>
+  <b2b-row row-body border="1px solid var(--color-light-grey)" height="70px" widths="25vw" margin="0 0 0 30px">
+  <b2b-inputbox row-body flexDirection="row" height="40px" [value]="revokereason" width="90%" border="1px solid var(--color-primary)" (onChange)="revokereason=$event" inputName="Reason:" ></b2b-inputbox>
+  </b2b-row>
+  <div row-body style="display: flex; flex-direction: row; justify-content: space-between;">
+    <b2b-button title="OK" height="25px" width="70px" [buttonDisabled]="revokereason.length > 0 ? false:true " [backgroundTheme]="revokereason.length > 0 ? '--color-primary' :'--color-dark-grey'" margin="5px" (click)="Revokeorder(revoke_orders)"> </b2b-button>
+    <b2b-button title="CANCEL" height="25px" width="70px" backgroundTheme="--color-redd" margin="5px" (click)="revokeclose()"> </b2b-button>
+  </div>
+  </b2b-row>
+</b2b-draggable-popup>
+ <!-- draggable-popup for images in service request -->
+ <b2b-draggable-popup *ngIf="serviceimg" positionTop="20%" positionLeft="50%">
+  <b2b-container draggable-popup [property]="{backgroundTheme: '--color-white', height:'65vh',width1:'39vw',padding:'10px'}">
+      <b2b-icon container-body icon="close" left="92%" (click)="closeimg()" top="2%"
+          backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+          position="absolute"></b2b-icon>
+      <div container-body>
+          <b2b-icon *ngIf="currentImageIndex > 0" icon="arrow_circle_left" [isRounded]="true" left="1%" top="45%"
+              backgroundTheme="--color-white" fontSize="30px" colorTheme="--color-dark-grey"
+              position="absolute" (click)="previousImage()"></b2b-icon>
+
+          <ng-container *ngIf="isImage(serviceImages[currentImageIndex]); else videoTemplate">
+              <b2b-image id="image-element" height="400px" width="400px" margin="15px 0 0 0"
+                  [image]="serviceImages[currentImageIndex]"></b2b-image>
+          </ng-container>
+          <ng-template #videoTemplate>
+              <video id="video-element" height="400px" width="400px" margin="15px 0 0 0" controls>
+                  <source [src]="serviceImages[currentImageIndex]" type="video/mp4">
+                  Your browser does not support the video tag.
+              </video>
+          </ng-template>
+
+          <b2b-icon *ngIf="currentImageIndex < serviceImages.length - 1" icon="arrow_circle_right" [isRounded]="true" left="93%" top="45%"
+              backgroundTheme="--color-white" fontSize="30px" colorTheme="--color-dark-grey"
+              position="absolute" (click)="nextImage()"></b2b-icon>
+      </div>
+  </b2b-container>
+</b2b-draggable-popup>
+
+<!-- Hotel details popup -->
+<b2b-draggable-popup trow-body *ngIf="Hoteldetails" positionTop="30%" positionLeft="43%">
+	<b2b-row draggable-popup height="25vh" widths="30vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="15px" borderRadius="10px" border="1px solid var(--color-toggle-background) ">
+	 <b2b-icon row-body icon="close" left="92%" (click)="Hoteldetails = false" top="5%"
+			backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+			position="absolute"></b2b-icon>
+			<b2b-text row-body [bold]="true" text="Hotel Details"></b2b-text>
+
+	        <b2b-row row-body>
+			<b2b-text row-body [bold]="true" text="Hotel Name : " margin="8px 0 0 0"></b2b-text>
+	        <b2b-text row-body [text]="showhotel_name"  margin="8px 0 0 8px"></b2b-text>
+		    </b2b-row>
+			<!-- <b2b-row row-body>
+		    <b2b-text row-body  [bold]="true" text="Hotel ID : " margin="8px 0 0 0"></b2b-text>
+			<b2b-text row-body [text]="showhotel_id"  margin="8px 0 0 8px"></b2b-text>
+			</b2b-row> -->
+			<b2b-row row-body>
+				<b2b-text row-body [bold]="true" text="Purchause Manager : " margin="8px 0 0 0"></b2b-text>
+				<b2b-text row-body [text]="showhotel_manager_name"  margin="8px 0 0 8px"></b2b-text>
+				</b2b-row>	
+				<b2b-row row-body>
+				<b2b-text row-body [bold]="true" text="Email : " margin="8px 0 0 0"></b2b-text>
+				<b2b-text row-body [text]="showhotel_manager_email"  margin="8px 0 0 8px"></b2b-text>
+				</b2b-row>	
+				<!-- <b2b-row row-body>
+				<b2b-text row-body [bold]="true" text="Country : " margin="8px 0 0 0"></b2b-text>
+				<b2b-text row-body [text]="showhotel_address"  margin="8px 0 0 8px"></b2b-text>
+				</b2b-row> -->
+				<!-- <b2b-row row-body>
+					<b2b-text row-body [bold]="true" text="Zip Code : " margin="8px 0 0 0"></b2b-text>
+					<b2b-text row-body [text]="showvendor_zipcode"  margin="8px 0 0 8px"></b2b-text>
+					</b2b-row>	   -->
+	
+	</b2b-row>
+</b2b-draggable-popup>
+<b2b-approval-process-track [isOrderTracking]="isTraking" [rejectProduct]="rejectedProducts" [type]="trackingType" (cacenl)="isTraking = $event"></b2b-approval-process-track>
+<b2b-renegotiate-table *ngIf="negotiate" [mvId]="mvId" (submitData)="submitFirstNegotiate($event)" [poNegotiate]="negotiationData" [negotiateValue]="negotiateId" (cancelpopup)="cancelNegotiate($event)" (loader)="negotiateLoaderMethod($event)"></b2b-renegotiate-table>
+<b2b-add-vendor-products *ngIf="add_vendor_product" (cancelpopup)="add_vendor_product = $event"></b2b-add-vendor-products>
+<b2b-released-order-document-upload class="popup-1" *ngIf="isUploadDocument" [type]="uploaddocument_type" (cancelPopup)="isUploadDocument = $event" [poid]="po_id" [docum]="documentsarray" (upload)="invoiceDocument($event)"></b2b-released-order-document-upload>
+<b2b-chat-email *ngIf="openchat" (cancelpopup)="openchat = $event" [chat_orders]="orders" screen="order"></b2b-chat-email>

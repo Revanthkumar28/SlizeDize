@@ -1,0 +1,12 @@
+@media (max-width: 500px){
+    .scrollmobile{
+        width: 80%;
+        padding: 0 35px 0 0;
+    }
+    .allhotel{
+        width: 80%;
+        height: 30px;
+        font-size: small;
+        padding: 10px 55px 0 0;
+    }
+}

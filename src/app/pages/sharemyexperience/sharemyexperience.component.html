@@ -1,0 +1,133 @@
+<b2b-dashboard-body backgroundTheme="--color-light-grey">
+    <b2b-heading-panel  body-content title="Share My Experience" height="22px" fontSize="20px" margin-left="10px" margin="0 0 10px 0">
+        <b2b-icon-button height="22px" width="23px" fontSize="23px" panel-leading icon="chevron_left" (click)="goBack()" backgroundTheme="--color-primary" [isCurved]="true" colorTheme="--color-white"></b2b-icon-button>
+    </b2b-heading-panel>
+
+    <b2b-row body-content margin="0 0 0 0" alignItem="flex-start" width="100%">     
+    </b2b-row>
+
+    <b2b-container   body-content >
+        <b2b-row container-body>
+            <b2b-text row-body class="text_size" text="Collaborate with Idea's / Share Unique Idea's concepts" colorTheme="--color-black" fontSize="20px" marginLeft="22px"></b2b-text>
+        </b2b-row>
+        <b2b-spacer container-body minHeight="1px"></b2b-spacer>
+        <b2b-row container-body padding="5px">
+            <b2b-container class="scrollmobile" row-body [property]="{backgroundTheme: '--color-light-grey',height:'80vh' ,padding:'5px 2% 2% 2%'}">
+                <b2b-text container-body text="Jam Board" colorTheme="--color-black" fontSize="16px" [bold]="true"></b2b-text>
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+                    <b2b-row container-body alignItem="flex-start" gap="5px" [mobileview]="true">
+                        <b2b-menu-dropdown row-body text="Upload Picture" fontSize="13px" icon="arrow_drop_down"  height="50px"   [active]="true" colorTheme="--color-dark-grey"  [isExpand]="true">
+                            <b2b-container list-child [property]="{backgroundTheme:' none',padding:'0 0 10px 0px',height:'auto'}">
+                                <b2b-row width="100%" container-body backgroundTheme="--color-white"  borderRadius="8px" alignItem="flex-start" margin="10px 0px 0px 0px" border="0px solid var(--color-dark-grey)">                               
+                                    <b2b-container row-body >
+                                        <b2b-row container-body>
+                                            <b2b-text row-body text="Select a image" fontSize="12px"></b2b-text>
+                                        </b2b-row>
+                                        <b2b-spacer container-body height="5px"></b2b-spacer>
+                                        <b2b-row container-body border="1px solid var(--color-dark-grey)" padding="8px" borderRadius="5px">
+                                                <b2b-label row-body text="Choose image" [isRounded]="true" fontSize="13px" padding="20px" height="40px" [center]="true" backgroundTheme="--color-dark-grey" colorTheme="--color-black"></b2b-label>
+                                        </b2b-row>  
+                                        <b2b-spacer container-body height="10px"></b2b-spacer>
+                                        <b2b-row container-body>
+                                            <b2b-text row-body text="Description" fontSize="12px"></b2b-text>
+                                        </b2b-row>                                    
+                                        <b2b-textarea container-body  border="1px solid var(--color-dark-grey)" width="95%" height="70px" padding="6px" borderRadius="5px"></b2b-textarea>
+                
+                                        <b2b-spacer container-body height="15px"></b2b-spacer>
+                                        <b2b-label container-body text="Post" [isRounded]="true" fontSize="14px" padding="20px" width="100px" height="40px" [center]="true" backgroundTheme="--color-primary"></b2b-label>
+                
+                                    </b2b-container>                    
+                                </b2b-row>                           
+                            </b2b-container>
+                        </b2b-menu-dropdown>
+                        <b2b-spacer row-body width="50px"></b2b-spacer>
+                    
+                        <b2b-menu-dropdown row-body text="Upload Picture" fontSize="13px" icon="arrow_drop_down"  height="50px" [active]="true" colorTheme="--color-dark-grey"  [isExpand]="true">
+                            <b2b-container list-child [property]="{backgroundTheme:' none',padding:'0 0 10px 0px',height:'auto'}">
+                                <b2b-row container-body backgroundTheme="--color-white"  borderRadius="8px" alignItem="flex-start" margin="10px 0px 0px 0px" border="0px solid var(--color-dark-grey)">                               
+                                    <b2b-container row-body >
+                                        <b2b-row container-body>
+                                            <b2b-text row-body text="Select a image" fontSize="12px"></b2b-text>
+                                        </b2b-row>
+                                        <b2b-spacer container-body height="5px"></b2b-spacer>
+                                        <b2b-row container-body border="1px solid var(--color-dark-grey)" padding="8px" borderRadius="5px">
+                                                <b2b-label row-body text="Choose image" [isRounded]="true" fontSize="13px" padding="20px" height="40px" [center]="true" backgroundTheme="--color-dark-grey" colorTheme="--color-black"></b2b-label>
+                                        </b2b-row>  
+                                        <b2b-spacer container-body height="10px"></b2b-spacer>
+                                        <b2b-row container-body>
+                                            <b2b-text row-body text="Description" fontSize="12px"></b2b-text>
+                                        </b2b-row>                                    
+                                        <b2b-textarea container-body  border="1px solid var(--color-dark-grey)" width="95%" height="70px" padding="6px" borderRadius="5px"></b2b-textarea>
+                
+                                        <b2b-spacer container-body height="15px"></b2b-spacer>
+                                        <b2b-label container-body text="Post" [isRounded]="true" fontSize="14px" padding="20px" width="100px" height="40px" [center]="true" backgroundTheme="--color-primary"></b2b-label>
+                
+                                    </b2b-container>                    
+                                </b2b-row>                           
+                            </b2b-container>
+                    </b2b-menu-dropdown>
+                    <b2b-spacer row-body width="50px"></b2b-spacer>
+
+                    <b2b-menu-dropdown row-body text="Upload Picture" fontSize="13px" icon="arrow_drop_down"  height="50px" [active]="true" colorTheme="--color-dark-grey"  [isExpand]="true">
+                        <b2b-container list-child [property]="{backgroundTheme:' none',padding:'0 0 10px 0px',height:'auto'}">
+                            <b2b-row container-body backgroundTheme="--color-white"  borderRadius="8px" alignItem="flex-start" margin="10px 0px 0px 0px" border="0px solid var(--color-dark-grey)">                               
+                                <b2b-container row-body >
+                                    <b2b-row container-body>
+                                        <b2b-text row-body text="Select a image" fontSize="12px"></b2b-text>
+                                    </b2b-row>
+                                    <b2b-spacer container-body height="5px"></b2b-spacer>
+                                    <b2b-row container-body border="1px solid var(--color-dark-grey)" padding="8px" borderRadius="5px">
+                                            <b2b-label row-body text="Choose image" [isRounded]="true" fontSize="13px" padding="20px" height="40px" [center]="true" backgroundTheme="--color-dark-grey" colorTheme="--color-black"></b2b-label>
+                                    </b2b-row>  
+                                    <b2b-spacer container-body height="10px"></b2b-spacer>
+                                    <b2b-row container-body>
+                                        <b2b-text row-body text="Description" fontSize="12px"></b2b-text>
+                                    </b2b-row>                                    
+                                    <b2b-textarea container-body  border="1px solid var(--color-dark-grey)" width="95%" height="70px" padding="6px" borderRadius="5px"></b2b-textarea>
+            
+                                    <b2b-spacer container-body height="15px"></b2b-spacer>
+                                    <b2b-label container-body text="Post" [isRounded]="true" fontSize="14px" padding="20px" width="100px" height="40px" [center]="true" backgroundTheme="--color-primary"></b2b-label>
+            
+                                </b2b-container>                    
+                            </b2b-row>                           
+                        </b2b-container>
+                    </b2b-menu-dropdown>
+                    </b2b-row>
+
+                    <b2b-spacer container-body height="20px"></b2b-spacer>
+                <b2b-trow class="scrollweb"  container-body  height="100%" gap="50px" [mobileview]="true" >                    
+                    <!-- <b2b-innovative-design-card trow-body></b2b-innovative-design-card> -->
+                    <b2b-container trow-body *ngFor="let cards of card" [property]="{alignItem:'flex-start',padding:'10px'}" >
+                        <b2b-stack container-body>
+                            <b2b-image stack-body [image]="cards['image']" width="100%" height="180px" objectFit="cover" [isCurved]="true"></b2b-image>
+                    
+                            <b2b-icon-button stack-body icon="star" colorTheme="--color-yellow" backgroundTheme="--color-dark-grey" [isRounded]="true" style="position: absolute; top: 5px; left: 10px;" height="30px" width="30px"></b2b-icon-button>
+                            <b2b-dropdown stack-body popupWidth="80px" dropdownPosition="right" style="position: absolute; top: 5px; right: 5px;">
+                                <b2b-icon-button dropdown-selector icon="more_vert" colorTheme="--color-white" backgroundTheme="--color-dim-white" [isRounded]="true" height="30px" width="30px"></b2b-icon-button>
+                                <b2b-list-tile dropdown-items title="View" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px" fontSize="10px" margin="2px 0"></b2b-list-tile> 
+                                <b2b-list-tile dropdown-items title="Edit" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px" fontSize="10px" margin="2px 0"></b2b-list-tile> 
+                                <b2b-list-tile dropdown-items title="Delete" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px" fontSize="10px" margin="2px 0"></b2b-list-tile> 
+                            </b2b-dropdown>
+                        </b2b-stack>
+                        <b2b-row container-body>
+                            <b2b-text row-body text="527 Likes" fontSize="15px" colorTheme="--color-primary" ></b2b-text>
+                            <b2b-spacer  row-body [flex]="1"></b2b-spacer>
+                            <b2b-text row-body text="Share" fontSize="15px" colorTheme="--color-primary"></b2b-text>
+                    
+                        </b2b-row>
+                    
+                        <b2b-spacer container-body height="8px"></b2b-spacer>
+                        <b2b-icon-button container-body icon="star" fontSize="10px" colorTheme="--color-yellow"  [isRounded]="true"></b2b-icon-button>
+                        <b2b-text container-body [text]="cards['description']" fontSize="15px"></b2b-text>
+                        <b2b-spacer container-body height="8px"></b2b-spacer>
+                        <b2b-text container-body text="Posted by" colorTheme="--color-primary" fontSize="13px" ></b2b-text>
+                        <b2b-text container-body [text]="cards['user']" fontSize="13px" ></b2b-text>
+                    
+                    </b2b-container> 
+                </b2b-trow>
+                
+                    
+            </b2b-container>
+        </b2b-row>
+    </b2b-container>    
+</b2b-dashboard-body>    

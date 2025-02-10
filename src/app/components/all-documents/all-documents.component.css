@@ -1,0 +1,27 @@
+table{
+    width:100%;
+    border-collapse:collapse;
+    text-align:center;
+    border:1px solid black;
+    font-size:12px;
+    
+    }
+    th {
+       
+        text-align:center;
+      }
+     td {
+        padding: 8px;
+        text-align: left;
+      }
+
+      .link{
+        text-decoration: underline;
+      }
+     ::ng-deep .marginleft{
+      margin-left: 20px !important;
+     }
+
+     ::ng-deep .invoice_padd{
+      padding: 15px;
+     }

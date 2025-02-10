@@ -1,0 +1,20 @@
+<div b2bGestureDetector [detectInsideClicks]="isPopupOpen" class="axis" (clickedOutside)="clickedOutside()">
+    <div id="image-element" (click)="image_mark($event)">
+        <ng-content select="[select-item]"></ng-content>
+    </div>
+
+    <!-- Popup -->
+    <ng-container>
+        <div id="marker-element" [ngStyle]="{'display': isPopupOpen ? 'block' : 'none'}" [style.left.px]="markerLeft" [style.top.px]="markerTop"
+            style="position:fixed; z-index: 50;">
+            <b2b-popup [width]="popupWidth" overflow="hidden" [maxheight]="maxheight" [overflowY]="overflowY" zIndex="100" popupHeight="auto" alignItem="start"
+                dropdownPosition="right">
+                <!-- SEARCH -->
+                <ng-content popup-content select="[search]"></ng-content>
+                <div popup-content (click)="closePopup()">
+                    <ng-content popup-content select="[dropDown-Items]"></ng-content>
+                </div>
+            </b2b-popup>
+        </div>
+    </ng-container>
+</div>

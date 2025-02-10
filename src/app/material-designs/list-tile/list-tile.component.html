@@ -1,0 +1,12 @@
+<div class="list-tile" [style.backgroundColor]="hoverColor" [style]="listStyles" (click)="listtileClicked()">
+    <div class="leading">
+        <ng-content select="[leading]"></ng-content>
+    </div>
+
+    <b2b-icon-button *ngIf="isIcon" [icon]="icon" margin="0 5px 0 0" [width]="iconWidth" iconSize="20px"
+        [backgroundTheme]="iconBackgroundTheme" borderRadius="50px" padding="5px"></b2b-icon-button>
+
+    <p class="title" [style]="textStyles">{{title}}</p>
+    <b2b-spacer [flex]="1"></b2b-spacer>
+    <ng-content select="[actions]"></ng-content>
+</div>

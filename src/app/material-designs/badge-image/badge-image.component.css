@@ -1,0 +1,20 @@
+div.icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    z-index: 1;
+    position: relative;
+    -webkit-box-align: center;
+}
+
+div.icon-button i {
+    font-size: 20px;
+}
+
+div.icon-button span#icon-text {
+    font-weight: bold;
+    margin:15px
+    /* color:black; */
+}

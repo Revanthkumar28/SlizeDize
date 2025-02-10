@@ -1,0 +1,251 @@
+<b2b-dashboard-body backgroundTheme="--color-light-grey">
+    <b2b-heading-panel body-content title="Job Opportunity" margin="0 0 10px 0" height="22px" fontSize="16px">
+        <b2b-icon-button panel-leading icon="chevron_left" (click)="goBack()" backgroundTheme="--color-primary" [isCurved]="true" colorTheme="--color-white" height="22px" width="23px"></b2b-icon-button>
+       
+    </b2b-heading-panel>
+    <b2b-spacer body-content minHeight="15px"></b2b-spacer>
+    <ng-container body-content [ngSwitch]="Screen">
+    <b2b-container body-content *ngSwitchDefault [property]="{height:'80vh',overflowX:'hidden',overflowY:'visible'}" >
+        
+        <b2b-row container-body  margin="8px 0 0 0" justifyContent="flex-start" [mobileview]="true" width="100%">
+            <!-- <b2b-label row-body #inputTag text=""  [isCurved]="false" colorTheme="--color-dark-grey" backgroundTheme="--color-white" fontSize="13px" height="45px" width="100%" borderRadius="2px" margin="2px"></b2b-label> -->
+            
+
+            <b2b-row row-body  width="400px" margin="0 0 15px 0" borderRadius="5px" >
+                <!-- <b2b-label row-body #inputTag text="Date Posted"  [isCurved]="false" colorTheme="--color-dark-grey" backgroundTheme="--color-white" fontSize="13px" height="22px" width="100%" borderRadius="2px" margin="2px"></b2b-label> -->
+                <b2b-inputbox row-body [popupOption]="true"  [readOnly]="true" border="1px solid var(--color-dark-grey)" [required]="true" fontSize="15px" width="17vw" height="45px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="this.searchDate"  colorTheme="--color-black" [twoInputFeild]="true" placeholder="Filter by Date"> 
+                    <ng-container popup-body *ngFor="let i of job_date">
+                        <b2b-list-tile [title]="i" (click)="getInput(i,'job_date')" hoverTheme="--color-light-grey"
+                            colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px"
+                            margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+            </b2b-row>
+            <b2b-spacer row-body width="20px"></b2b-spacer>
+
+            <b2b-row row-body width="400px"  borderRadius="5px" margin="0 0 15px 0">
+              
+                <input row-body class="box"
+                type="text" 
+                placeholder="Search by position..." 
+                [(ngModel)]="searchText" 
+                (input)="filterUsers()"
+              />
+              
+            </b2b-row>
+            <b2b-spacer row-body width="20px"></b2b-spacer>
+
+            <b2b-row row-body  width="400px" margin="0 0 15px 0" borderRadius="5px" >
+
+                <b2b-inputbox row-body [popupOption]="true"  [readOnly]="true" border="1px solid var(--color-dark-grey)" [required]="true" fontSize="15px" width="17vw" height="45px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="this.searchJob_type"  colorTheme="--color-black" [twoInputFeild]="true" placeholder="Filter by Jobtype"> 
+                    <ng-container popup-body *ngFor="let i of job_type">
+                        <b2b-list-tile [title]="i" (click)="getInput(i,'job_type')" hoverTheme="--color-light-grey"
+                            colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px"
+                            margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+            
+            </b2b-row>
+            <b2b-spacer row-body width="20px"></b2b-spacer>
+
+            <b2b-row row-body  width="400px" margin="0 0 15px 0" borderRadius="5px" >
+                <!-- <b2b-label row-body #inputTag text="Date Posted"  [isCurved]="false" colorTheme="--color-dark-grey" backgroundTheme="--color-white" fontSize="13px" height="22px" width="100%" borderRadius="2px" margin="2px"></b2b-label> -->
+                <input row-body class="box"
+                type="text" 
+                placeholder="Search by location..." 
+                [(ngModel)]="searchLocation" 
+                (input)="filterUsers2(searchLocation,'address')"
+              />
+            </b2b-row>
+            <b2b-spacer row-body width="20px"></b2b-spacer>
+
+            <b2b-row *appRoleBasedButton="[1]" class="menu-Admin" row-body margin="0px 0px 12px" width="27%" justifyContent="end">
+                <b2b-dropdown  row-body class="menu"  popupWidth="170px" overflow="hidden"  popupHeight="auto"  alignItem="start"dropdownPosition="left">
+                    <b2b-icon-button dropdown-selector icon="menu" width="40px" padding="0 20px 0px 0" alignItem="end" colorTheme="--color-dark-grey"></b2b-icon-button>
+                    <b2b-choice dropdown-items class="radio"  group="group1" fontSize="12px" name="All Jobs" height="35px" fontSize="12px" [checked]="check_jobs" (clickRadio)="JobType(0) "></b2b-choice>
+                    <b2b-choice dropdown-items class="radio"   group="group1" fontSize="12px" name="Applied Jobs" height="35px" fontSize="12px" [checked]="!check_jobs" (clickRadio)="JobType(1)"></b2b-choice>
+                   </b2b-dropdown>
+                <b2b-button *ngIf="isLoggedIn || joblogin" row-body title="Admin" alignItem="end" colorTheme="--color-white" backgroundTheme="--color-sky-blue" width="auto" borderRadius="6px" height="30px" padding="0px 30px" [bold]="true" (click)="Admin()"></b2b-button>
+            </b2b-row>
+            
+        </b2b-row>
+
+        <b2b-row container-body alignItem="flex-start" [mobileview]="true">
+            <b2b-container row-body [property]="{flex:1,padding:'5px',alignItem:'flex-start'}">
+                <!-- new shared jobs start -->
+                <b2b-row container-body *ngIf="open_share_page" flexDirection="column" alignItem="start">
+                    <b2b-text row-body [bold]="true" text="Shared Jobs:"></b2b-text>
+                    <b2b-spacer row-body height="10px"></b2b-spacer>
+
+                <b2b-container class="shared_box" row-body *ngFor="let job of shared_jobs"  [property]="{padding:'15px', borderRadius :'10px',alignItem:'flex-start'}" >
+                    <b2b-spacer container-body height="10px"></b2b-spacer>
+                    <b2b-row container-body flexDirection="column" alignItem="flex-start" (click)="viewJobs(job,0)">
+                        <b2b-row row-body>
+                            <b2b-text row-body text="Job Title/Position:" padding="0 0 0 6px"></b2b-text>
+                            <b2b-text row-body  [text]="transformPlacementData(job.position |titlecase,2)" margin="0 0 0 10px" colorTheme="--color-sky-blue"></b2b-text>
+
+                        </b2b-row>
+    
+                        <b2b-row row-body>
+                            <b2b-text row-body text="Company:" padding="0 0 0 6px"></b2b-text>
+                            <b2b-text row-body [text]="transformPlacementData(job.hotel_name,3)"  colorTheme="--color-sky-blue" fontSize="16px" margin="0 0 0 10px"></b2b-text>
+                        </b2b-row>              
+                        <b2b-spacer row-body height="10px"></b2b-spacer>
+                            <b2b-row row-body>
+                                <b2b-icon-button  row-body icon="work"  iconSize="20px" width="30px" colorTheme="--color-dark-grey"></b2b-icon-button>
+                                <b2b-text row-body text="Experience:"></b2b-text>
+                    
+                                <b2b-text row-body [text]="transformPlacementData( job.experience,2)" colorTheme="--color-sky-blue" margin="0 0 0 10px"></b2b-text>
+                    
+                                <b2b-spacer  row-body width="15px" ></b2b-spacer>
+                            </b2b-row>
+                            <b2b-row  row-body>
+                                <b2b-icon-button  row-body icon="account_balance_wallet" iconSize="20px" width="30px" colorTheme="--color-dark-grey"></b2b-icon-button>
+                                <b2b-text row-body text="salary:"></b2b-text>
+                                <b2b-text row-body [text]="transformPlacementData( job.salary,2)" colorTheme="--color-sky-blue" margin="0 0 0 10px"></b2b-text>
+                            </b2b-row>
+                          
+                            <b2b-row  row-body>
+                                <b2b-icon-button  row-body icon="location_on" iconSize="20px" width="30px" colorTheme="--color-dark-grey"></b2b-icon-button>
+                                <b2b-text row-body text="City:"></b2b-text>
+                                <b2b-text row-body [text]="transformPlacementData(job.city,3)" colorTheme="--color-sky-blue" margin="0 0 0 10px"></b2b-text>
+                    
+                            </b2b-row>
+                      
+                        <b2b-spacer row-body height="10px"></b2b-spacer>
+                        <b2b-row row-body justifyContent="start" margin="0 0 0 8px">
+                            <b2b-row row-body>
+                                <b2b-text row-body [text]="job.date" fontSize="12px" colorTheme="--color-black"></b2b-text>
+                    
+                            </b2b-row>
+                            <b2b-spacer row-body width="20px"></b2b-spacer>
+
+                            <b2b-text *ngIf="job.application_count > 0" row-body [text]="'Application: '+job.application_count" fontSize="12px" colorTheme="--color-black"></b2b-text>
+                            <b2b-spacer row-body width="20px"></b2b-spacer>
+
+                            <b2b-row row-body  justifyContent="end">
+                                <b2b-text row-body [text]=" job.vacancy != '' ? 'Openings':'' " fontSize="15px"  colorTheme="--color-black"></b2b-text>
+                                <b2b-text row-body [text]="job.vacancy" fontSize="15px" ></b2b-text>
+                          
+                            </b2b-row>
+                            </b2b-row>
+
+                    </b2b-row>
+    
+                </b2b-container>
+                <b2b-spacer row-body height="10px"></b2b-spacer>
+
+
+            </b2b-row>
+              <!-- new shared jobs ends -->
+
+                <!-- <b2b-spacer container-body height="20px"></b2b-spacer> -->
+
+                <b2b-text container-body [bold]="true" [text]="show_jobs_name"></b2b-text>
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+                <b2b-text *ngIf="filteredUsers.length == 0 && !this.isLoading " container-body class="Job_Empty" text="No Jobs Available" colorTheme="--color-redd" ></b2b-text>
+
+                <div container-body class="grid">
+                <!-- Loader Style.css -->
+                <div container-body class="loader-" *ngIf="isLoading == true"></div>
+                <b2b-container class="boxes" container-body *ngFor="let job of filteredUsers"  [property]="{padding:'15px', borderRadius :'10px',alignItem:'flex-start'}" >
+                    
+                  
+                    <b2b-spacer container-body height="10px"></b2b-spacer>
+                    <b2b-row container-body flexDirection="column" alignItem="flex-start" (click)="viewJobs(job,0)">
+                        <b2b-row row-body>
+                            <b2b-text row-body text="Job Title/Position:" padding="0 0 0 6px"></b2b-text>
+                            <b2b-text row-body  [text]="transformPlacementData(job.position |titlecase,2)" margin="0 0 0 10px" colorTheme="--color-sky-blue"></b2b-text>
+
+                        </b2b-row>
+    
+                        <b2b-row row-body>
+                            <b2b-text row-body text="Company:" padding="0 0 0 6px"></b2b-text>
+                            <b2b-text row-body [text]="transformPlacementData(job.hotel_name,3)"  colorTheme="--color-sky-blue" fontSize="16px" margin="0 0 0 10px"></b2b-text>
+                        </b2b-row>              
+                        <b2b-spacer row-body height="10px"></b2b-spacer>
+                            <b2b-row row-body>
+                                <b2b-icon-button  row-body icon="work"  iconSize="20px" width="30px" colorTheme="--color-dark-grey"></b2b-icon-button>
+                                <b2b-text row-body text="Experience:" padding="0 0 0 6px"></b2b-text>
+                    
+                                <b2b-text row-body [text]="transformPlacementData( job.experience,2)"  colorTheme="--color-sky-blue" margin="0 0 0 10px"></b2b-text>
+                    
+                                <b2b-spacer  row-body width="15px" ></b2b-spacer>
+                            </b2b-row>
+                            <b2b-row  row-body>
+                                <b2b-icon-button  row-body icon="account_balance_wallet" iconSize="20px" width="30px" colorTheme="--color-dark-grey"></b2b-icon-button>
+                                <b2b-text row-body text="salary:" ></b2b-text>
+                                <b2b-text row-body [text]="transformPlacementData( job.salary,2)"  colorTheme="--color-sky-blue" margin="0 0 0 10px"></b2b-text>
+                            </b2b-row>
+                          
+                            <b2b-row  row-body>
+                                <b2b-icon-button  row-body icon="location_on" iconSize="20px" width="30px" colorTheme="--color-dark-grey"></b2b-icon-button>
+                                <b2b-text row-body text="City:" ></b2b-text>
+                                <b2b-text row-body [text]="transformPlacementData(job.city,3)"  colorTheme="--color-sky-blue" margin="0 0 0 10px"></b2b-text>
+                    
+                            </b2b-row>
+                      
+                        <b2b-spacer row-body height="10px"></b2b-spacer>
+                        <b2b-row row-body justifyContent="start" width="100%" margin="0 0 0 8px">
+                            <b2b-row row-body width="100%">
+                                <b2b-text row-body [text]="job.date" fontSize="12px" colorTheme="--color-black"></b2b-text>
+                    
+                            </b2b-row>
+                            <b2b-row row-body width="70%">
+
+                            <b2b-text *ngIf="job.application_count > 0" row-body [text]="'Application: '+job.application_count" fontSize="12px" colorTheme="--color-black"></b2b-text>
+                            </b2b-row>
+                            <b2b-row row-body justifyContent="end" width="70%">
+                                <b2b-text row-body [text]="job.vacancy != ''?'Openings:':' '" fontSize="15px"  colorTheme="--color-black"></b2b-text>
+                                <b2b-text row-body [text]="job.vacancy" fontSize="15px" ></b2b-text>
+                          
+                            </b2b-row>
+                            </b2b-row>
+
+                    </b2b-row>
+                 
+                    </b2b-container>
+                </div>
+            </b2b-container>
+            <b2b-spacer row-body width="20px"></b2b-spacer>
+          
+           
+
+        </b2b-row>
+    </b2b-container>
+     <!-- new screen for View -->
+     <b2b-container body-content *ngSwitchCase="'viewing'" [property]="{height:'80vh',overflowY:'scroll',position:'relative'}" >
+          <!-- view jobs component -->
+               <b2b-view-jobs container-body [view_data]="send_job_view_data" (close_view)="closeView()"></b2b-view-jobs>
+               
+    </b2b-container>
+    <!-- admin screen  component-->
+    <b2b-container body-content *ngSwitchCase="'admin'" [property]="{height:'80vh',overflowY:'scroll',overflowX:'hidden'}" >
+       <b2b-job-admin container-body style="width: 100%;"  [all_hotels]="hotels" (close_jobs)="Screen = $event" (view_jobs)="get_jobs()" (view_applicaion)="viewApplication()"> </b2b-job-admin>
+     </b2b-container>
+      <!-- view job application  component-->
+    <b2b-container body-content *ngSwitchCase="'application'" [property]="{height:'80vh',overflowY:'scroll'}" >
+        <b2b-view-job-application container-body style="width: 100%;" [all_hotels]="hotels" (close_jobs)="Screen = $event" > </b2b-view-job-application>
+      </b2b-container>
+    </ng-container>
+</b2b-dashboard-body>
+<!-- alert box -->
+<b2b-draggable-popup tdata-body *ngIf="alertpopup" class="blur-overlay" positionTop="30%" positionLeft="43%">
+    <b2b-row draggable-popup height="20vh" widths="30vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="10px 10px 0 10px" borderRadius="10px" border="1px solid var(--color-toggle-background)">
+        <b2b-image row-body height="35px"  [isRounded]="true" width="35px" image="assets/error.png"></b2b-image>
+
+        <b2b-text row-body text="Are You Sure!" margin="5px 0 0 0"></b2b-text>
+    <b2b-text row-body text="This Will Delete the Job Permently" fontSize="14px" margin="0 0 10px 0"></b2b-text>
+   
+    <div row-body style="display: flex; flex-direction: row; justify-content: space-between;">
+      <b2b-button title="OK" height="25px" width="70px"  backgroundTheme="--color-primary" margin="5px" > </b2b-button>
+      <b2b-button title="CANCEL" height="25px" width="70px" backgroundTheme="--color-redd" margin="5px" (click)="alertpopup = false"> </b2b-button>
+    </div>
+    </b2b-row>
+  </b2b-draggable-popup>
+
+ 
+   
+
+
+

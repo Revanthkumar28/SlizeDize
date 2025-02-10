@@ -1,0 +1,4 @@
+::ng-deep .card .container {
+    padding: 10px !important;
+    box-shadow: 0 0 7px darkgray;
+}

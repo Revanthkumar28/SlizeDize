@@ -1,0 +1,18 @@
+<b2b-row container-body >
+    <ng-container row-body *ngFor="let button of button_name">
+        <b2b-button [title]="button['name']" [apiSubmitDisable]="true" boxShadow="0 0 10px lightGrey" borderRadius="3px" [borderBottom]="button['name'] == selectedButton ? '--color-orange' : '--color-white'" [colorTheme]="button['name'] == selectedButton ? '--color-black' : '--color-dark-grey'" padding="5px 10px" margin="10px 10px 15px 0" height="auto" width="auto" (onPressed)="buttonclicked($event)" margin="10px"></b2b-button>
+    </ng-container>
+</b2b-row>
+
+<ng-container [ngSwitch]="selectedButton">
+    <!-- <b2b-quotation-table *ngSwitchCase="'RFQ Quotation'"></b2b-quotation-table> -->
+    <b2b-rfq-orders *ngSwitchCase="'Pipeline Orders'"></b2b-rfq-orders>
+    <ng-container  *appRoleBasedButton="[188,1]">
+
+    <b2b-status-order-table *ngSwitchCase="'RFQ-Compare'"></b2b-status-order-table>
+    </ng-container>
+    <!-- <b2b-process-card-one *ngSwitchCase="'Approval process'"> </b2b-process-card-one>
+    <b2b-process-card-two *ngSwitchCase="'order process'"></b2b-process-card-two> -->
+    <b2b-orders-list *ngSwitchCase="'Released Orders'"></b2b-orders-list>
+    <b2b-user-history *ngSwitchCase="'History'" ></b2b-user-history>
+</ng-container>

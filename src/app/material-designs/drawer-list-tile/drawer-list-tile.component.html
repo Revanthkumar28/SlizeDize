@@ -1,0 +1,17 @@
+<div class="list-tile" [style]="drawerStyle" [class.active]="active" [style.borderBottomRightRadius]="childOpen ? '0' : 'var(--global-radius)'" (click)="openChildren()" *ngIf="!isChild; else childBlock">
+    <p class="title">{{text}} <span class='req' *ngIf="required"> * </span></p>
+    <b2b-spacer [flex]="1"></b2b-spacer>
+    <i tabindex="0" class="material-icons" *ngIf="isExpand" [class.open]="childOpen" (keyUp.enter)="openChildren()" >arrow_drop_down</i>
+</div>
+
+<ng-template #childBlock>
+    <div class="list-tile-child" [class.active-child]="active">
+        <span class="title">{{text}}</span>
+        <b2b-spacer [flex]="1"></b2b-spacer>
+        <b2b-icon-button icon="more_vert" backgroundTheme="--color-drawer-light" colorTheme="--color-white" [isRounded]="true" iconSize="22px" width="35px"></b2b-icon-button>
+    </div>
+</ng-template>
+
+<ng-container *ngIf="childOpen">
+    <ng-content select="[list-child]"></ng-content>
+</ng-container>

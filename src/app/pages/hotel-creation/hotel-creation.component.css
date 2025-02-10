@@ -1,0 +1,313 @@
+::ng-deep .check-box .choice {
+    align-items: initial !important;
+}
+
+::ng-deep .check-box .choice input[type=checkbox] {
+    width: 20px !important;
+    height: 20px !important;
+
+}
+
+::ng-deep .Brandimg img{
+    height: 87% !important;
+    border-radius: 10px !important;
+}
+
+::ng-deep .product-name p {
+    line-height: 1.25;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+}
+
+::ng-deep .create-rooms .row{
+    gap: 10px;
+}
+
+/* ::ng-deep .pro-link p  {
+    color: rgb(65, 123, 172) !important;
+    text-decoration: underline;
+} */
+
+::ng-deep .pro-link p:hover {
+    color: rgb(229, 90, 13) !important;
+    text-decoration: none;
+}
+
+::ng-deep .price p {
+    margin: 4px !important;
+}
+
+::ng-deep .pro-image img {
+    width: 100px;
+    height: 100px;
+}
+
+::ng-deep .row-bottom-border:last-child {
+    border-bottom: none !important;
+}
+
+::ng-deep .product-list>.container {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+@media (min-width: 600px) {
+    ::ng-deep .product-item {
+        width: auto !important;
+        align-items: baseline !important;
+        margin: 0 15px;
+    }
+
+    .trans-bg {
+        background-color: white;
+        z-index: 1000;
+        transition: opacity 0.5s ease 0s;
+        opacity: 1;
+        pointer-events: auto;
+        position: fixed;
+        top: 70px;
+        right: 0;
+        width: 450px;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .paddingweb {
+        padding-left: 90px;
+    }
+}
+
+::ng-deep .product-item:not(:last-child) {
+    border-bottom: 1px solid rgba(184, 187, 179, 0.5) !important;
+    
+}
+
+.total-price-div {
+    position: absolute;
+    width: 385px;
+    top: 91px;
+    /* left: 0px; */
+    right: 37px;
+    border-radius: 8px;
+    box-shadow: darkgrey 0px 0px 5px;
+    z-index: 1001;
+}
+
+::ng-deep .total-price-div .container {
+    align-items: start !important;
+}
+
+::ng-deep.button {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: aquamarine;
+    border: none;
+}
+
+::ng-deep .productsdetails .row:hover {
+    border: 2px solid darkgrey !important;
+}
+
+::ng-deep.row_1 {
+    margin: 10px;
+}
+
+.price-text {
+    align-items: end !important;
+}
+
+.custom-control-input {
+    width: 20px;
+    height: 20px;
+
+}
+
+div.list-tile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 0 var(--global-padding);
+    box-sizing: border-box;
+
+    cursor: pointer;
+    width: 100%;
+    background-color: white;
+    height: 55px;
+    border-radius: 8px;
+}
+
+::ng-deep div.list-tile i.open {
+    transform: rotate(180deg) !important;
+}
+
+::ng-deep div.list-tiles i.opens {
+    transform: rotate(180deg) !important;
+}
+
+.more_vert {
+    background-color: lightgray;
+    border-radius: 50%;
+    width: 37px;
+    height: 30px;
+    padding-top: 8px;
+    align-items: center;
+    text-align: center;
+}
+
+::ng-deep .stepper .step-2 {
+    background-color: green !important;
+}
+
+::ng-deep .icon .material-icons {
+    position: absolute;
+    bottom: 35%;
+    left: 20%;
+}
+
+::ng-deep .icon-2 .material-icons {
+    position: absolute;
+    bottom: 35%;
+    right: 20%;
+}
+
+::ng-deep .sample-images img:hover {
+    border: 1px solid white;
+}
+
+.title {
+    font-size: 13px;
+    margin-left: 10px;
+}
+
+::ng-deep .radio .choice-1 {
+    width: 15px;
+    height: 15px;
+}
+
+::ng-deep .row .shadows {
+    /* box-shadow: 0 0 10px darkgrey; */
+    border-radius: 5px;
+}
+
+#image {
+    position: relative;
+}
+
+#marker-element {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 12%;
+    left: 85%;
+}
+
+.redMark {
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+::ng-deep .container .border {
+    border-bottom: 1px solid black;
+}
+
+@media (max-width: 600px) {
+    .rowsize {
+        width: 80%;
+    }
+
+    .fake {
+        display: none;
+    }
+
+    .trans-bg {
+        background-color: white;
+        z-index: 1000;
+        transition: opacity 0.5s ease 0s;
+        opacity: 1;
+        pointer-events: auto;
+        position: fixed;
+        top: 58px;
+        right: 0;
+        width: 350px;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        overflow-y: scroll;
+    }
+
+}
+
+.loader {
+    border: 6px solid #F5F7F9;
+    border-radius: 50%;
+    border-top: 6px solid #2F87F8;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    /* position: absolute;
+        top: 10%;
+        left: 25%; */
+    transform: translate(-50%, -50%);
+}
+
+button[b2b-button] .loader {
+    /* Centering the loader inside the button */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* Additional loader styles... */
+}
+
+
+button[b2b-button] span {
+    /* Hide button text when loader is visible */
+    display: inline-block;
+    opacity: 1;
+    /* Show text by default */
+}
+
+button[b2b-button] span:not(.loader) {
+    /* Hide text when loader is visible */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    /* Smooth transition when hiding/showing text */
+}
+
+.blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Light black shadow effect */
+    backdrop-filter: blur(5px);
+    /* You can adjust the blur amount */
+    z-index: 999;
+    /* Make sure it's above other elements */
+}
+
+::ng-deep .pro-image{
+    box-shadow: 0 0 7px darkgray !important;
+    border-radius: 10px;
+}
+
+
+
+::ng-deep .hotel-name-icon .more_vert {
+    height: 25px !important;
+    width: 25px !important;
+    padding-top: 0 !important;
+    color: #b4b4b4 !important;
+    background-color: #f5f5f5 !important;
+}

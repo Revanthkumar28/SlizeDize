@@ -1,0 +1,78 @@
+<b2b-draggable-popup  dragwidth="2%" container-body  positionTop="30%" positionLeft="30%">
+  <b2b-container draggable-popup [property]="{backgroundTheme: '--color-white',border:'1px solid var(--color-toggle-background)'}">
+  <div class="uploadDocument" container-body style="display: flex;">
+    <b2b-icon icon="close" left="96%" (click)="exit()" top="7px"
+      backgroundTheme="--color-white" fontSize="18px" colorTheme="--color-dark-grey"
+      position="absolute">
+    </b2b-icon>
+    
+    <div class="flex-table">
+      <ng-container *ngIf="type  !='vendor_service' && type != 'hotel_service' && type !='service_ready_pay' ">
+        <div class="flex-row" *ngFor="let item of data">
+        <!-- <table>
+          <tr>
+              <td colspan="4" class="flex-cell" style="background-color:blue">{{ item.label }}</td>
+              <td style="background-color:blue">{{ item.value }}</td>
+              <td><input type="file" ></td>
+          </tr>
+      </table> -->
+        <div class="flex-cell">{{ item.label }}</div>
+        <div class="flex-cell">{{ item.value }}</div>
+      </div>
+      </ng-container>
+      <ng-container *ngIf="type  !='vendor_service' && type != 'hotel_service' && type !='service_ready_pay' ">
+       <div class="flex-table3" *ngFor="let group of groups">
+        <div class="flex-column">
+          <p *ngFor="let subItem of group.items">{{ subItem }}</p>
+        </div>
+        <div>
+          <h1 class="flex-cell">{{ group.header }}</h1>
+        </div>
+      </div>
+      </ng-container>
+      <ng-container *ngIf="type  !='vendor_service' && type != 'hotel_service' && type !='service_ready_pay' ">
+       <div class="flex-table4" *ngFor="let group of grop">
+        <div class="flex-column">
+          <p *ngFor="let subItem of group.items">{{ subItem }}</p>
+        </div>
+        <div>
+          <h1 class="flex-cell">{{ group.header }}</h1>
+        </div>
+      </div>
+      </ng-container>
+      <ng-container *ngIf="type  =='vendor_service' || type== 'hotel_service' ||type =='service_ready_pay' ">
+      <div class="flex-table5" *ngFor="let group of service">
+        <div class="flex-column">
+          <p *ngFor="let subItem of group.items">{{ subItem }}</p>
+        </div>
+        <!-- <div>
+          <h1 class="flex-cell">{{ group.header }}</h1>
+        </div> -->
+      </div>
+    </ng-container>
+      <b2b-text class="under" *appRoleBasedButton="[161,1]" (click)="speccification()" colorTheme="--color-primary" [text]="type=='vendor' || type == 'vendor_service' ?'': 'Specification Click Here'"></b2b-text>   
+     </div>
+      <div class="buttton">
+        <ng-container  *ngFor="let row of tableData1; let i = index">
+          <tr>
+            <td>
+              <!-- <button class="btn-browser" (click)="handleButton1Click(row)">{{ row.column1 }}</button> -->
+              <input style="width:200px ; cursor: pointer" *ngIf="row.checked == true && row.service == true " type="file" (change)="serviceRequestFile($event,row)" accept="application/pdf" multiple >
+              <!-- <button class="save-btn" *ngIf="row.id != 1 && row.id != 6 && row.id != 7 && row.id != 8" (click)="savefiles($event)">{{savebtn}}</button> -->
+               <div style="display: flex; flex-direction: row;">
+              <b2b-button  [buttonDisabled]="row.disable" *ngIf="row.checked == false && row.service == true" height="20px" width="91px" [backgroundTheme]="row.disable ?'--color-dark-grey' :'--color-primary'" [title]="row.column3" margin="4px 5px 2px 0px" (click)="showdocumens(row.id,1)"></b2b-button>
+               <b2b-icon tdata-body *ngIf="row.id == 1 && row.service == true" icon="download" backgroundTheme="--color-primary" borderRadius="4px" colorTheme="--color-white" fontSize="18px" (click)="showdocumens(row.id,0)"></b2b-icon>
+              </div>
+            </td>
+            
+          </tr>
+        </ng-container>
+        
+      </div>
+     
+
+    </div>
+    <button container-body class="save-btn"  (click)="savefiles()">Submit</button>
+  </b2b-container>
+</b2b-draggable-popup>
+

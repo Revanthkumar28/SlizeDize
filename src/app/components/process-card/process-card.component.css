@@ -1,0 +1,25 @@
+:host {
+    width: 100%;
+}
+.link{
+    text-decoration: underline;
+    -webkit-text-fill-color: blue;
+}
+table {
+    border-collapse: collapse; /* Merge borders */
+    width: 100%;
+    font-size: 13px;
+  }
+  .head{
+    background-color: var(--color-primary);
+    -webkit-text-fill-color: aliceblue;
+  }
+  table, th, td {
+    border: 1px solid black; /* Add borders */
+  }
+  
+  th, td {
+    padding: 4px;
+    text-align: center;
+  }
+  

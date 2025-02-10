@@ -1,0 +1,10 @@
+<!-- src/app/pagination/pagination.component.html -->
+<div [style]="pagination" class="pagination">
+  <span class="previous" (click)="onPageChange(currentPage - 1)" [class.disabled]="currentPage === 1">
+      <i class="material-icons">keyboard_double_arrow_left</i>
+  </span>
+  <span >Page {{ currentPage }} of {{ totalPages }}</span>
+  <span class="next" (click)="onPageChange(currentPage + 1)" [class.disabled]="currentPage >= totalPages">
+      <i class="material-icons">keyboard_double_arrow_right</i>
+  </span>
+</div>

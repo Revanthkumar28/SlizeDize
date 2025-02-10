@@ -1,0 +1,38 @@
+
+<div class="flag">
+    <ng-container container-body >
+        <b2b-row container-body class="data" width="175px" margin="0px 0px 0px 0px">
+            <b2b-label row-body text="Ph.No" [isCurved]="false"  width="100px" fontSize="14px" backgroundTheme="none" margin="15px 0px 15px 0px"></b2b-label>
+            <b2b-tdata row-body *ngIf="Option">
+            <img tdata-body src="https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/IN.svg">
+            <b2b-tdata tdata-body [title]="'IN'" color="--color-white"></b2b-tdata >       
+            </b2b-tdata>
+            <b2b-tdata row-body *ngIf="flagArr">
+                <img tdata-body [src]="flagArr['image']">
+                <b2b-tdata tdata-body [title]="flagArr['code']" color="--color-white"></b2b-tdata >
+            </b2b-tdata>
+                <b2b-tdata row-body>
+                    <b2b-dropdown tdata-body popupWidth="200px" dropdownPosition="right">
+                        <b2b-icon-button dropdown-selector icon="expand_more" width="32px" colorTheme="--color-white"></b2b-icon-button>
+                        <b2b-row dropdown-items *ngFor="let data of countryFlagArray">
+                            <b2b-tdata row-body (click)="getflag(data)">
+                                <b2b-tdata tdata-body >
+                                    <img tdata-body [src]="data['image']">                              
+                                </b2b-tdata >
+                                <b2b-tdata tdata-body [title]="data['name']" color="--color-black"></b2b-tdata >
+                            </b2b-tdata>
+                        </b2b-row>
+                        <!-- <b2b-tdata dropdown-items [title]="data['name']"></b2b-tdata > -->
+                    </b2b-dropdown>
+                    <!-- <b2b-tdata  tdata-body *ngIf="Option" [title]="'+91'"></b2b-tdata>
+                    <b2b-tdata  tdata-body *ngIf="flagArr" [title]="flagArr['phcode']"></b2b-tdata> -->
+
+                </b2b-tdata>             
+                
+        </b2b-row>
+        <!-- <b2b-tdata tdata-body id="input">
+            <input tdata-body [type]="inputType" [value]="value" maxlength="10" pattern="\d{10}" [style]="flagStyle">
+        </b2b-tdata > -->
+        
+    </ng-container>
+</div>

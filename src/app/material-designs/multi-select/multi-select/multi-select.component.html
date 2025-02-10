@@ -1,0 +1,47 @@
+<div class="inputbox" [style]="inputStyles" b2bGestureDetector (clickedOutside)="outsideElementClicked()">
+    
+    <div class="input-name-icon" *ngIf="inputName" [style]="titleStyles">
+        <p class="input-name" >{{inputName}} <span *ngIf="required"> * </span></p>
+    </div>
+
+        <!-- <b2b-spacer width="20px"></b2b-spacer> -->
+            <div class="input-group" [style]="inputGroupStyles" (click)="dropdownClicked()">
+                <div *ngIf="iconClick" class="dropdown-trigger" >
+                    <b2b-icon-button [icon]="icon"  [backgroundTheme]="triggerBackgroundThemeOne" [colorTheme]="triggerColorThemeOne" [isRounded]="true" [width]="iconWidth" [iconSize]="iconSize" (onPressed)="dropdownClicked()"></b2b-icon-button>
+                </div>
+
+                <div style="display: flex;flex-direction: column;width: 80%;">
+                    <div *ngFor="let val of arrayValue,let i = index" style="position: relative;">
+                        <div style="padding:7px;background-color: blue;margin: 10px;border-radius: 50px;color: white;">{{val.name}}</div>
+                        <i class="material-icons" style="position: absolute;top: 24%;right: 10%;color: white;font-size: 18px;cursor: pointer;" (click)="cencel(i)">close</i>
+                    </div>
+                </div>
+
+                <label class="insideLable" *ngIf="label">{{title}}</label> 
+
+                <div class="dropdown-trigger" [style]="dropDownIcon" *ngIf="popupOption">
+                    <b2b-icon-button icon="expand_more" [tabIndexIcon]="true" [backgroundTheme]="triggerBackgroundTheme" (click)="dropdownClicked()" (onPressed)="dropdownClicked()" [colorTheme]="triggerColorTheme" [isRounded]="true" [width]="inputDropDownIconWidth" ></b2b-icon-button>
+                </div>
+
+                <div class="dropdown-trigger" *ngIf="expandMore">
+                    <div class="expand-more"></div>
+                   
+                </div>
+
+                <div class="errorMsg" *ngIf="errorMsg" >
+                    <p [style]="titleStyles">{{errorMsg}}</p>
+                </div>
+
+            </div>
+
+
+    <ng-container >
+        <div class="dropdown" *ngIf="showDropdown" [style]="dropdownStyles">
+            <ng-content  select="[search]" ></ng-content>
+            <b2b-popup [width]="popWidth" [popUpValues]="dropDownValues" [arrowKey]="true" (onSelectValue)="dropDownSelectedValue($event)" [overflow]="popupOverflow == 'hide'? 'hidden':''" [overflowY]="popupOverflow" [position]="popupPosition" [top]="poppupTop" [maxheight]="popupHeight" [alignItem]="popupAlignItem" (click)="buttonClicked()">
+                <ng-content popup-content select="[popup-body]" ></ng-content>
+            </b2b-popup>
+        </div> 
+    </ng-container>
+</div>
+

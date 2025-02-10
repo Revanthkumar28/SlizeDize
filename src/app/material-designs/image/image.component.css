@@ -1,0 +1,17 @@
+:host {
+    width: auto;
+    text-align: center;
+
+}
+img{
+    outline: none;
+    border: none;
+    text-decoration:none;
+    /* position: relative; */
+}
+#mark{
+    position: relative;
+}
+
+
+

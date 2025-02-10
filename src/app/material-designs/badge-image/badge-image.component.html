@@ -1,0 +1,10 @@
+<div class="icon-button" [style.width]="hoverWidth" *ngIf="icon; else textBlock" [style]="iconStyle" (click)="buttonClicked()">
+    <i class="material-icons"  [style]="iconTheme">{{icon}}</i>
+    <span id="icon-text" *ngIf="hoverTexts">{{text}}</span>
+</div>
+
+<ng-template #textBlock>
+    <div class="icon-button" [style]="iconStyle" (click)="buttonClicked()">
+        <span id="icon-text">{{text}}</span>
+    </div>
+</ng-template>

@@ -1,0 +1,98 @@
+<b2b-draggable-popup class="blur-overlay" *ngIf="negotiateLoader == true" container-body positionTop="20%" positionLeft="20%">
+    
+    <b2b-container draggable-popup [property]="{backgroundTheme: '',flex:1,padding:'10px 0 0 10px'}">
+        
+        <b2b-row container-body>
+            <b2b-container row-body
+            [property]="{backgroundTheme: '--color-lighter-grey',border:'1px solid var(--color-toggle-background)',flex:1,padding:'10px 10px 10px 10px'}">
+                
+                <b2b-row container-body>
+                    <!-- <b2b-text row-body text="SR -{{base_id}}" fontSize="11px"></b2b-text> -->
+                    <b2b-icon row-body icon="close" left="92%" (click)="clocecancelpopup()" top="4%"
+                        backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+                        position="absolute"></b2b-icon>
+                </b2b-row>
+                <b2b-spacer container-body height="10px"> </b2b-spacer>
+                <b2b-row container-body>
+                    <b2b-container row-body [property]="{width:'100%',padding:'0'}">
+                        <table container-body>
+                            <thead>
+                            <tr class="head">
+                                <th colspan="10">Renegotiate</th>
+                            </tr>
+                            <tr class="head">
+                                <th colspan="10">{{negotiate_Vendor}} <span *ngIf="isNegotiationCompleted == true" style="color: green;">, Negotiation Completed</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let row of tableData; let i = index">
+                                    <tr>                                                                      
+                                        <td [ngStyle]="{'height': row.id == 7 ? '40px' : 'auto'}">{{ row.column1 }}</td>
+                                        <td>{{row.firstPrice}}</td>
+                                        <ng-container *ngFor="let data of row.column2; let j = index">
+                                            <td *ngIf="data == 'Payment' ? false : true" style="position: relative;">{{data}}
+                                            
+                                                <b2b-inputbox *ngIf="data != 'Payment' && indexBasedEdit == i && row.column2.length - 1 == j && row.id == 3" tdata-body width="auto"
+                                                    inputType="ng-date" [Input_1]="false"
+                                                    inputboxFontSize="10px" inputboxPadding="0px"
+                                                    border="1px solid var(--color-primary)" colorTheme="--color-black" height="25px">
+                                                </b2b-inputbox>
+                                                <!-- <b2b-button *ngIf="row.id == 6 && row.column2.length - 1 == j && isEditLastValue == false && isEditableAllBotttons == true && row.isUserOrVendor == true" (onChange)="remarks = $event" position="absolute" positionRight="30px" positionTop="50px" height="30px" width="80px" title="Accept" backgroundTheme="--color-primary" (click)="negotiateUpdate(row)"></b2b-button> -->
+                                            </td>
+                                        </ng-container>
+
+                                        <td [ngStyle]="{color: row.color == 1 ? 'var(--color-redd)' : '' }">
+                                            {{row.defaultData}}
+                                            <ng-container >
+                                                <b2b-button *ngIf="row.id == 7 && isEditableAllBotttons == true && row.isUserOrVendor == true" title="Accept" [apiSubmitDisable]="true" (onChange)="remarks = $event" style="z-index: 100;" position="absolute" positionRight="176px" positionBottom="23px" height="30px" width="60px" backgroundTheme="--color-primary" (onPressed)="negotiateUpdate(row)"></b2b-button>
+                                            </ng-container>
+                                        </td>
+
+                                        <!-- <td *ngIf="row.id == 6" style="position: relative;">
+                                            <b2b-button *ngIf="row.id == 6 && isEditLastValue == false && isEditableAllBotttons == true && row.isUserOrVendor == true" (onChange)="remarks = $event" style="z-index: 100;" position="absolute" positionRight="7px" positionTop="55px" height="30px" width="60px" title="Accept" backgroundTheme="--color-primary" (onPressed)="negotiateUpdate(row)"></b2b-button>
+                                        </td> -->
+
+                                        <!-- IF VENDOR WANT TO EDIT FIRST TIME , isEditableAllBotttons  variabble is there -->
+                                        <td *ngIf="row.column1 !== 'Submit' && isEditableAllBotttons == true && row.isUserOrVendor == true" style="height: 40px;">
+                                            <b2b-inputbox *ngIf="row.id != 4 && row.id != 5 && row.column1 !== 'Submit' && row.id != 10 && isEditableAllBotttons == true" [value]="poNegotiate.length == 0 && row.id != 6 ? row.defaultData : row.firstPrice" [inputType]="row.id == 3  ? 'ng-date' : 'text'" [send_date]="row.id == 3  ? row.defaultData : row.firstPrice" backgroundTheme="--color-light-red" placeholder="Type Here.." height="35px" [Input_1]="row.id == 3  ? false : true" (onChange)="negotiateChanges($event,row)"></b2b-inputbox>                                        
+                                            <b2b-button [isNogoLoader]="isNogoSubmitLoader" [apiSubmitDisable]="true" position="absolute" positionRight="30px" positionBottom="24px" height="30px" width="80px" title="Submit" backgroundTheme="--color-primary" (click)="submitNegotiate(row)"></b2b-button>
+                                            <b2b-drop-down-xaxis tdata-body *ngIf="row.id == 4 ">
+                                                <div select-item style="display: flex; align-items: center;background-color: white;height: 20px; padding: 5px; border:1px solid blue">
+                                                    <b2b-text id="selectedValue" [text]="paymentTerms" fontSize="11px"></b2b-text>
+                                                    <b2b-icon-button style="position: absolute; right: 0px;color:black" width="18px" icon="expand_more" padding="0 0 0 0"
+                                                    colorTheme="--color-dark-grey">
+                                                    </b2b-icon-button>
+                                                </div>
+                                                <div dropDown-Items>
+                                                    <b2b-list-tile container-body title="Net 0 (Immedite Payment)" (click)="paymentTermsSelection('Net 0')"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" ></b2b-list-tile> 
+                                                    <b2b-list-tile container-body title="Net 30 (Payment after 30days)" (click)="paymentTermsSelection('Net 30')"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0"></b2b-list-tile> 
+                                                    <b2b-list-tile container-body title="Net 60 (Payment after 60days)" (click)="paymentTermsSelection('Net 60')" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0"></b2b-list-tile> 
+                                                    <b2b-list-tile container-body title="Net 90 (Payment after 90days)" (click)="paymentTermsSelection('Net 90')" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0"></b2b-list-tile> 
+                                                    <b2b-list-tile container-body title="Net 120 (Payment after 120days)" (click)="paymentTermsSelection('Net 120')"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" ></b2b-list-tile> 
+                                                    <b2b-list-tile container-body title="Net 150 (Payment after 150days)" (click)="paymentTermsSelection('Net 150')" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" ></b2b-list-tile> 
+                                                    <b2b-list-tile container-body title="Net 180 (Payment after 180days)" (click)="paymentTermsSelection('Net 180')" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" ></b2b-list-tile>
+                                                </div> 
+                                            </b2b-drop-down-xaxis>
+                                        </td>
+                                        <!-- <td *ngIf="row.column1 !== 'Submit' && row.isUserOrVendor == true">
+                                            <img  src="assets/crt.png" alt="Product Image"  style="margin-bottom: 5px;" width="20" height="20" (click)="editNegotiate(40,row.id,false)">
+                                            <img  src="assets/wrg.jpg" alt="Product Image" width="30" height="30" (click)="editNegotiate(i,row.id,true)">
+                                        </td> -->
+                                    </tr>
+                                </ng-container>
+
+                            </tbody>
+                        </table>
+                    </b2b-container>
+                
+                </b2b-row>
+            </b2b-container>
+        </b2b-row>
+    </b2b-container>
+</b2b-draggable-popup>   
+
+
+
+
+
+

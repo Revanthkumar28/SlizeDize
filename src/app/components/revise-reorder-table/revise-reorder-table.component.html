@@ -1,0 +1,96 @@
+<b2b-draggable-popup tdata-body backgroundTheme="--color-white" height="300px" width="500px" positionTop="30%" positionLeft="43%">
+    <b2b-container draggable-popup [property]="{backgroundTheme: '--color-white',border:'1px solid var(--color-toggle-background)',padding:'0 10px 0 10px'}">
+
+<ng-container   container-body >
+    <b2b-spacer  width="10px" height="20px"></b2b-spacer>
+   
+    <b2b-container  [property]="{width:'100%',padding:'10px 10px 10px 10px',backgroundTheme:'--color-white'}">
+        <b2b-icon container-body icon="close" left="92%" (click)="clocecancelpopup()" top="3%"
+                        fontSize="16px" colorTheme="--color-dark-grey" backgroundTheme="--color-white"
+                        position="absolute"></b2b-icon>
+        <table container-body>
+            <thead>
+            <tr class="head">
+                <th colspan="2">Revise and Reorder</th>
+                
+            </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let row of tableData; let i = index">
+                <tr >  
+                    <ng-container *ngIf="type =='service' ">
+                        <td *ngIf="row.id == '2' || row.id == '4' || row.id == '5' || row.id == '6'  ? true : false">{{  row.column1 }}</td>
+                        <td *ngIf="row.id == '2' || row.id == '4' || row.id == '5' || row.id == '6'  ? true : false">{{ row.column2 }}
+                            <b2b-inputbox  type="text"  backgroundTheme="--color-light-red" placeholder="Type Here.."  height="45px" (onChange)="remarks = $event" *ngIf="row.column1 === 'Reason for Revising the PO'"  ></b2b-inputbox>
+                            <b2b-inputbox *ngIf="row.column1 === 'New Vendor'" [value]="vendorname"
+                             [popupOption]="true" textTransform="capitalize"
+                            fontSize="12px" [bold]="true" width="100%" height="30px" 
+                            inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                            [twoInputFeild]="true" >
+        
+                            <!-- <input #search search type="text" placeholder="Search" [(ngModel)]="industrySeach"  (ngModelChange)="industrySeach =$event"> -->
+                            <ng-container popup-body *ngFor="let i of dropdownvalues">
+                                <b2b-list-tile [title]="i.companyName" (click)="getInput(i)" hoverTheme="--color-light-grey"
+                                    colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px"
+                                    margin="2px 0"></b2b-list-tile>
+                            </ng-container>
+                        </b2b-inputbox>
+        
+                        <b2b-inputbox  *ngIf="row.column1 === 'Required Date'"
+                        (onChange)="required_date = $event "
+                        inputType="ng-date" [isTrueMonthDate]="true"
+                        inputboxPadding="0 0 0 10px" 
+                        border="1px solid var(--color-green)" margin="3px 0 0 0"
+                        position="right" fontSize="8px" [bold]="true" width="217px" height="25px" flexDirection="row" 
+                        [Input_1]="false" placeholder="70">
+                       </b2b-inputbox>
+                          
+                        </td>
+                        </ng-container>                                    
+                   <ng-container *ngIf="type !='service' ">
+                    <td >{{  row.column1 }}</td>
+                    <td >{{  row.column2 }}
+                    <b2b-inputbox  type="text"  backgroundTheme="--color-light-red" placeholder="Type Here.."  height="45px" (onChange)="remarks = $event" *ngIf="row.column1 === 'Reason for Revising the PO'"  ></b2b-inputbox>
+                    <b2b-inputbox *ngIf="row.column1 === 'New Vendor'" [value]="vendorname"
+                     [popupOption]="true" textTransform="capitalize"
+                    fontSize="12px" [bold]="true" width="100%" height="30px" 
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" >
+
+                    <!-- <input #search search type="text" placeholder="Search" [(ngModel)]="industrySeach"  (ngModelChange)="industrySeach =$event"> -->
+                    <ng-container popup-body *ngFor="let i of dropdownvalues">
+                        <b2b-list-tile [title]="i.companyName" (click)="getInput(i)" hoverTheme="--color-light-grey"
+                            colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px"
+                            margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+
+                <b2b-inputbox  *ngIf="row.column1 === 'Required Date'"
+                (onChange)="required_date = $event "
+                inputType="ng-date" [isTrueMonthDate]="true"
+                inputboxPadding="0 0 0 10px" 
+                border="1px solid var(--color-green)" margin="3px 0 0 0"
+                position="right" fontSize="8px" [bold]="true" width="217px" height="25px" flexDirection="row" 
+                [Input_1]="false" placeholder="70">
+               </b2b-inputbox>
+                    <!-- <select class="textbox"  *ngIf="row.column1 === 'Vendor'" >
+                        <option value="Welco">Welco</option>
+                        <option value="ABC CORP">ABC CORP</option>
+                    </select> -->
+                </td>
+                </ng-container>
+                </tr>
+               
+
+                </ng-container>
+            </tbody>
+        </table>
+        <b2b-spacer container-body width="10px" height="15px"></b2b-spacer>
+        <b2b-button  container-body title="SAVE" width="100px" height="30px" margin="10px 0 0 20px" [buttonDisabled]="remarks.length == 0 ? true : false" [backgroundTheme]="remarks.length == 0 ?'--color-dark-grey' :'--color-light-red'" (click)="submit()"  ></b2b-button>
+    
+    </b2b-container>
+   
+
+</ng-container>
+    </b2b-container>
+</b2b-draggable-popup>

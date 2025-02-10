@@ -1,0 +1,99 @@
+.grid{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 1vw;
+    row-gap: 1vw;
+}
+::ng-deep .boxes{
+    box-shadow: 0 0 7px darkgray !important;
+    border-radius: 10px;
+    border:'1px solid grey';
+    position: relative;
+    cursor: pointer;
+}
+.box{
+    width: 100%;
+    height: 40px;
+    border:1px solid lightgrey;
+    border-radius: 5px;
+    padding-left: 15px;
+    position: relative;
+}
+.icons{
+    position: absolute;
+    top:7px;
+    right: 5px;
+}
+.dash{
+    background-color: rgb(156, 154, 154);
+}
+
+ .shared_box{
+    width: 22vw;
+    height: 100%;
+    border:1px solid lightgrey;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 7px darkgray !important;
+
+
+ }
+ .radio{
+    padding: 0 0 0 8px;
+ }
+ ::ng-deep .Job_Empty{
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    width: 100% !important;
+ }
+
+ @media (max-width: 1100px){
+    .grid{
+      display: grid;
+      width: 100%;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 2vw;
+      row-gap: 2vw;
+    }
+  }
+  @media (max-width: 810px){
+    .grid{
+      display: grid;
+      width: 75%;
+      grid-template-columns: 1fr;
+      column-gap: 2vw;
+      row-gap: 2vw;
+      margin-left: 10px;
+    }
+  }
+
+  @media (max-width: 500px){
+    .box{
+      width: 60%;
+      height: 40px;
+      border: 1px solid lightgrey;
+      border-radius: 5px;
+      padding-left: 15px;
+      margin-left: 40px;
+  }
+  }
+
+  @media (max-width: 500px){
+    .menu-Admin{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+
+    .menu{
+      padding-right: 20px;
+    }
+  }
+  ::ng-deep .loader- {
+    left: 55%;
+    top: 230px;
+  }
+  
+  

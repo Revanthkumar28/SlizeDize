@@ -1,0 +1,46 @@
+button {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+     /* Animation styles */
+     
+}
+
+.button:not(:disabled):hover {
+  box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
+}
+
+button b2b-icon {
+    margin-left: 12px;
+}
+.button:disabled{
+  opacity: .5;
+}
+
+  .button:not(:disabled) {
+   
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .button:not(:disabled):active {
+    transform: scale(0.95);
+  }
+
+
+  /* LOADER */
+  .refreshing {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    animation: 0.5s rotate infinite linear;
+  }
+  
+  @keyframes rotate {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+  

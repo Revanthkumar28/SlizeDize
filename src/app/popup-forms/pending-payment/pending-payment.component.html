@@ -1,0 +1,92 @@
+<b2b-row  row-body height="87vh" widths="79vw" zIndex="150" backgroundTheme="--color-dashboard"  flexDirection="column" padding="30px 10px 10px 30px" borderRadius="10px" justifyContent="flex-start" border="1px solid var(--color-toggle-background)" position="fixed"  positionTop="7%" positionLeft="16%">
+    <b2b-text  row-body  fontSize="20px"  [bold]="true" text="Pending Payments"></b2b-text>
+    <b2b-icon-button row-body *ngIf="filerproduct" class="filtericon" row-body icon="filter_alt" [toolTip]="true" toolTipName="Filter" iconSize="23px" (click)="closefilter()" ></b2b-icon-button>
+
+<b2b-row  row-body height="78vh" widths="76vw"  backgroundTheme="--color-white"  flexDirection="column" padding="10px 10px 10px 10px" borderRadius="10px" justifyContent="flex-start"  >
+    <b2b-icon row-body icon="close" left="97%" (click)="cancel_popup()" top="2%"
+    backgroundTheme="--color-white" fontSize="20px" colorTheme="--color-dark-grey"
+    position="absolute"></b2b-icon>
+    
+
+    <b2b-row row-body *ngIf="openfilter">
+    <ng-container  row-body *ngFor="let button of buttons">
+        <b2b-dropdown popupWidth="10.5vw" [isInsideClickFalsePopup]="false" overflow="auto" zIndex="100" popupHeight="auto" alignItem="start"
+        dropdownPosition="left">
+            <b2b-button dropdown-selector [title]="button['name']" width="10.5vw" height="1.4vw" margin="0 0 0 10px" [bold]="true" fontSize="10px" [backgroundTheme]="button['name'] == selectedButton ? '--color-orange' : '--color-green'" borderRadius="6px" colorTheme="--color-white"  (onPressed)="buttonClicked($event)"></b2b-button>
+            <b2b-row dropdown-items *ngFor="let i of button['filter']" padding="0.417vw">
+                <input row-body type="checkbox" (change)="getfilter($event,i.vendor_id,i.rfq_id)">
+                <b2b-text row-body [text]="selectedButton == 'VENDOR'? i.vendor_name : i.rfq_id " fontSize="12px"  padding="0 0 0 0.521vw"></b2b-text>
+            </b2b-row>
+        </b2b-dropdown>
+    </ng-container>
+    </b2b-row>
+   
+    <full-calendar class="calender" row-body  #calendar [options]="calendarOptions"></full-calendar>
+    <b2b-text class="monthtotal" row-body text="Monthly Total = {{price_symbol+modifiedArray}}"></b2b-text>
+   <!-- view price -->
+    <b2b-draggable-popup row-body *ngIf="details" positionTop="0"  zIndex="150" positionLeft="40%">
+        <b2b-row draggable-popup height="auto" widths="25vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="30px 10px 10px 10px" borderRadius="10px" border="1px solid var(--color-toggle-background) ">
+         <b2b-icon row-body icon="close" left="92%" (click)="close()" top="5%"
+                backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+                position="absolute"></b2b-icon>
+                <b2b-row row-body >
+                    <table row-body>
+                        <thead>
+                            <tr class="head">
+                                <th>Purchase Order Number</th>
+                                <th>Payment</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let row of loopprice; let i = index">
+                                <tr >
+                                   <td>{{ row.Id}}</td>
+                                   <td>{{price_symbol+row.price}}</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                                 
+                </b2b-row>
+               
+        </b2b-row>
+      </b2b-draggable-popup>
+<!-- popup -->
+      <b2b-draggable-popup row-body *ngIf="choice" class="blur-overlay" positionTop="30%" positionLeft="43%">
+        <b2b-row draggable-popup height="18vh" widths="24vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="10px 10px 0 10px" borderRadius="10px" border="1px solid var(--color-toggle-background)">
+            <b2b-icon row-body icon="close" left="92%" (click)="choice = false" top="5%"
+            backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+            position="absolute"></b2b-icon>
+            <b2b-image row-body height="35px" [isRounded]="true" width="35px" image="assets/error.png"></b2b-image>
+        <b2b-text row-body text="What Do You Want to Do?" fontSize="14px" margin="0 0 10px 0"></b2b-text>
+      
+        <div row-body style="display: flex; flex-direction: row; justify-content: space-between;">
+          <b2b-button title="VIEW ORDER" height="25px" width="100px" backgroundTheme="--color-primary" margin="5px" fontSize="11px" (click)="viewoption('viewprice')"> </b2b-button>
+          <b2b-button title="VIEW PRODUCT" height="25px" width="100px" backgroundTheme="--color-green" margin="5px" fontSize="11px" (click)="viewoption('viewproduct')"> </b2b-button>
+        </div>
+        </b2b-row>
+      </b2b-draggable-popup>
+
+      <!-- weekly total -->
+      <b2b-row row-body >
+        <table row-body class="weeklytotal">
+            <thead>
+                <tr class="head">
+                    <th>Weekly Total</th>
+                  
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let row of weelytotal; let i = index">
+                    <tr >
+                       <td class="weektd">{{price_symbol+ row.amount}}</td>
+                       
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+      </b2b-row>
+   
+</b2b-row>
+</b2b-row>

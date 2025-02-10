@@ -1,0 +1,385 @@
+<b2b-row row-body height="100vh" widths="78vw" padding="30px" zIndex="100" backgroundTheme="--color-white"
+    borderRadius="10px" justifyContent="flex-start" border="3px solid var(--color-dashboard) " position="fixed"
+    positionTop="1%" positionLeft="16%">
+    <b2b-icon row-body icon="close" left="97%" (click)="close_window()" top="2%" backgroundTheme="--color-white"
+        fontSize="20px" colorTheme="--color-dark-grey" position="absolute"></b2b-icon>
+        <b2b-row row-body style="margin-top: -20px;"  height="88vh" overflowY="auto" alignItem="flex-start">
+      <b2b-button row-body position="absolute" height="30px" width="90px" backgroundTheme="--color-green" title="Edit Profile" positionRight="31%" positionTop="10%" (click)="profileEdit('Editprofile',usertype)">
+
+      </b2b-button>
+<!-- //command_by_user -->
+<div row-body class="user-profile">
+    <div class="profile-header">
+      <img [src]="user.profilePicture" alt="No">
+      <h2>User Profile</h2>
+    </div>
+    <div class="profile-details">
+      <ng-container *ngIf="type_user.user_type =='ho' || type_user.user_type =='he' ">
+        <div class="detail">
+        <label>Name:</label>
+        <span>{{ user.name }}</span>
+      </div>
+      </ng-container>
+      <ng-container *ngIf="type_user.user_type =='vu' ">
+      <div class="detail">
+        <label>Name:</label>
+        <span>{{ user.contactPersonName }}</span>
+      </div>
+
+      <div class="detail">
+        <label>Description:</label>
+        <span *ngIf="user.PP =='1' && user.SP == '1'">Products & Service Provider</span>
+        <span *ngIf="user.PP =='1' && user.SP == '0'">Products Provider</span>
+        <span *ngIf="user.PP =='0' && user.SP == '1'">Service Provider</span>
+      </div>
+
+    </ng-container>
+      <div class="detail">
+        <label>Email:</label>
+        <span>{{ user.email }}</span>
+      </div>
+      <ng-container *ngIf="type_user.user_type =='vu' ">
+
+      <div class="detail">
+        <label>Address:</label>
+        <span>{{ user.vendor_address }}</span>
+      </div>
+      </ng-container>
+      <ng-container *ngIf="type_user.user_type =='ho' && type_user.user_type =='he' ">
+
+      <div class="detail">
+        <label>Address:</label>
+        <span>{{ user.user_address }}</span>
+      </div>
+      </ng-container>
+      <div class="detail">
+        <label>Zip Code:</label>
+        <span>{{ user.zipcode }}</span>
+      </div>
+
+      <div class="detail">
+        <label>Mobile Number:</label>
+        <span>{{ user.mobileNumber }}</span>
+      </div>
+      <ng-container *ngIf="type_user.user_type =='vu' ">
+
+      <div class="detail">
+        <label>Land Line:</label>
+        <span>{{ user.landline }}</span>
+      </div>
+      </ng-container>
+      <div class="detail">
+        <label>Company Name:</label>
+        <span>{{ user.companyname }}</span>
+      </div>
+      
+       <ng-container *ngIf="type_user.user_type =='he' "> 
+       <div class="detail">
+        <label>Department:</label>
+        <span>{{ user.department }}</span>
+      </div>
+
+      <div class="detail">
+        <label>Designation:</label>
+        <span>{{ user.designation }}</span>
+      </div>
+      </ng-container> 
+
+      <ng-container *ngIf="type_user.user_type =='vu' ">
+      <div class="detail">
+       <label>Industry Type:</label>
+        <span>{{ user.industrytype }}</span>
+      </div>
+    
+     <div class="detail">
+      <label>Product Name:</label>
+      <span>{{ user.products }}</span>
+    </div>  
+     <div class="detail">
+      <label>Product Link:</label>
+      <span>{{ user.productUrl }}</span>
+    </div>
+  </ng-container>
+      <!-- Add more fields as needed -->
+    </div>
+  </div>
+  
+</b2b-row>
+</b2b-row>
+<!-- user_profile_edit_form -->
+<b2b-draggable-popup container-body *ngIf="addvendor">
+<b2b-container  draggable-popup [property]="{backgroundTheme: '',flex:1,padding:'20px 0 0 5px',position:'relative',zIndex:'101'}">
+  <b2b-row container-body>
+
+      <b2b-container row-body
+          [property]="{backgroundTheme: '--color-white',border:'1px solid var(--color-toggle-background)',flex:1,padding:'30px'}">
+          <b2b-row container-body position="absolute" positionRight="5%">
+              <b2b-icon row-body icon="close" left="85%" top="10%" backgroundTheme="--color-white"
+                  colorTheme="--color-dark-grey" position="absolute" (click)="addvendor = false">
+              </b2b-icon>
+          </b2b-row>
+          <b2b-text container-body  colorTheme="--color-dark-grey" [text]="usertype =='vu'?'Edit Vendor Profile':'Edit User Profile' " style="position: absolute;top: 4.5%;left: 40%;z-index: 100;"></b2b-text>
+          <b2b-container  container-body [property]="{padding:'0'}">
+            <ng-container container-body >
+              <b2b-row container-body>
+                    <b2b-inputbox *ngIf="usertype!== 'ho' && usertype!== 'he' " row-body [value]="add_product_table.typeOfIndustry"
+                        [required]="true" (onChange)="add_product_table.typeOfIndustry=$event" [popupOption]="true"
+                        inputName="Type oF Industry" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                        popupAlignItem="flex-start" inputboxPadding="0 0 0 10px" position="right" popupOverflow="hidden"
+                        border="2px solid var(--color-light-grey)" [twoInputFeild]="true" popupWidth="227px"
+                        [errorMsg]="isAllRequireData == true && add_product_table.typeOfIndustry == '' ? 'This Field Is Required':'' "
+                        placeholder="Select Type oF Industry" >
+                            <ng-container popup-body
+                                *ngFor="let Industry of typeOfIndustry">
+                                <b2b-list-tile [title]="Industry.drop_down_value"
+                                    (tileClicked)="add_product_table.typeOfIndustry = Industry.drop_down_value"
+                                    hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                                    height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                                <!-- <b2b-keyup ></b2b-keyup> -->
+                            </ng-container>
+                    </b2b-inputbox>
+                    <b2b-inputbox *ngIf="usertype =='ho' || usertype == 'he' " row-body 
+                    [twoInputFeild]="true" [value]="username" (onChange)="username=$event"
+                    inputName="User Name" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                    backgroundTheme="--color-dim-white"
+                    placeholder="Alex" border="2px solid var(--color-light-grey)"
+                    
+                    ></b2b-inputbox>
+
+                </b2b-row>
+                <b2b-spacer container-body height="18px"> </b2b-spacer>
+
+                <b2b-row container-body>
+                    <b2b-inputbox *ngIf="usertype!== 'ho' && usertype!== 'he' " row-body 
+                        (onChange)="add_product_table.street1 = $event" [value]="add_product_table.street1" height="40px"
+                        inputName="Street 1" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                        inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                        [twoInputFeild]="true" placeholder="Enter The Street Address " 
+                        ></b2b-inputbox>
+                    <b2b-spacer *ngIf="usertype!== 'ho' && usertype!== 'he' " row-body width="45px"></b2b-spacer>
+
+                    <b2b-inputbox row-body [value]="add_product_table.country" placeholder="Select Country"
+                        [required]="true" [twoInputFeild]="true" (onChange)="add_product_table.country = $event" [readOnly]="true"
+                        inputName="Country" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                        backgroundTheme="" borderRadius="var(--table-radius)" colorTheme="" dropdownWidth="227px"
+                        border="2px solid var(--color-light-grey)" [popupOption]="true" position="right"
+                        triggerBackgroundTheme="--color-light-grey" triggerColorTheme="--color-dark-grey"
+                        [errorMsg]="isAllRequireData == true && add_product_table.country == '' ? 'This Field Is Required':'' "
+                        >
+                        <input #search search type="text" autofocus placeholder="Search"
+                            [(ngModel)]="filterData" (ngModelChange)="filterData =$event">
+                        <ng-container popup-body
+                            *ngFor="let country of listcountry | searchFilter : filterData">
+                            <b2b-list-tile [title]="country.name"
+                                (tileClicked)="onCountrySelected(country.iso2, country.name)"
+                                hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                                height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                            <!-- <b2b-keyup ></b2b-keyup> -->
+                        </ng-container>
+                    </b2b-inputbox>
+
+                </b2b-row>
+                <b2b-spacer container-body height="18px"></b2b-spacer>
+
+                <b2b-row container-body>
+
+                    <b2b-inputbox *ngIf="usertype!== 'ho'&& usertype!== 'he' " row-body 
+                        (onChange)="add_product_table.street2 = $event" [value]="add_product_table.street2" height="40px"
+                        inputName="Street 2" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                        inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                        [twoInputFeild]="true" placeholder="Enter The Street Address "></b2b-inputbox>
+                    <b2b-spacer *ngIf="usertype!== 'ho'&& usertype!== 'he' " row-body width="45px"></b2b-spacer>
+
+                    <b2b-inputbox row-body [value]="add_product_table.state" placeholder="Select State"
+                        [required]="true" [twoInputFeild]="true" (onChange)="add_product_table.state = $event" [readOnly]="true"
+                        inputName="State" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                        backgroundTheme="" borderRadius="var(--table-radius)" colorTheme="" dropdownWidth="227px"
+                        border="2px solid var(--color-light-grey)" [popupOption]="true" position="right"
+                        triggerBackgroundTheme="--color-light-grey" triggerColorTheme="--color-dark-grey"
+                        [errorMsg]="isAllRequireData == true && add_product_table.state == '' ? 'This Field Is Required':'' "
+                        >
+                        <input #search search type="text" autofocus placeholder="Search"
+                            [(ngModel)]="stateFilter" (ngModelChange)="stateFilter =$event">
+                        <ng-container popup-body *ngFor="let state of listState | searchFilter : stateFilter">
+                            <b2b-list-tile [title]="state.name"
+                                (tileClicked)="onStateSelected(state.iso2,state.name)"
+                                hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                                height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                            <!-- <b2b-keyup ></b2b-keyup> -->
+                        </ng-container>
+                    </b2b-inputbox>
+
+                </b2b-row>
+                <b2b-spacer container-body height="18px"></b2b-spacer>
+
+                <b2b-row container-body>
+
+                    <b2b-inputbox row-body inputType="number" [value]="add_product_table.zipCode"
+                        [required]="true" (onChange)="add_product_table.zipCode=$event" (keypress)="numericOnly($event)"
+                        inputName="Postal Code" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                        [twoInputFeild]="true" backgroundTheme="--color-dim-white"
+                        placeholder="Zip / Pin Code"
+                        border="2px solid var(--color-light-grey)" colorTheme=""
+                        [errorMsg]="isAllRequireData == true && add_product_table.zipCode == '' ? 'This Field Is Required':'' "
+                        ></b2b-inputbox>
+                    <b2b-spacer row-body width="45px"></b2b-spacer>
+
+                    <b2b-inputbox row-body [value]="add_product_table.city" placeholder="Select City"
+                        [required]="true" [twoInputFeild]="true" (onChange)="add_product_table.city = $event" [readOnly]="true"
+                        inputName="City" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                        backgroundTheme="" borderRadius="var(--table-radius)" colorTheme="" dropdownWidth="227px"
+                        border="2px solid var(--color-light-grey)" [popupOption]="true" position="right"
+                        triggerBackgroundTheme="--color-light-grey" triggerColorTheme="--color-dark-grey"
+                        [errorMsg]="isAllRequireData == true && add_product_table.city == '' ? 'This Field Is Required':'' "
+                        >
+                        <input #search search type="text" autofocus placeholder="Search"
+                            [(ngModel)]="cityFilter" (ngModelChange)="cityFilter =$event">
+                        <ng-container popup-body *ngFor="let city of listCity | searchFilter : cityFilter">
+                            <b2b-list-tile [title]="city.name"
+                                (tileClicked)="onStateCity(add_product_table.city = city.name)"
+                                hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                                height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                            <!-- <b2b-keyup ></b2b-keyup> -->
+                        </ng-container>
+                    </b2b-inputbox>
+                    <b2b-spacer row-body width="60px"></b2b-spacer>
+
+                </b2b-row>
+                <b2b-spacer container-body height="18px"></b2b-spacer>
+
+                <b2b-row *ngIf="usertype!== 'ho' && usertype!== 'he' " container-body>  
+                    <b2b-inputbox row-body [value]="add_product_table.products"
+                        [required]="true" (onChange)="add_product_table.products=$event" alignItem="start"
+                        inputName="Product Name" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                        inputboxPadding="0 0 0 10px"
+                        border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                        placeholder="Ex : 50'' Flat Screen TV"
+                        [errorMsg]="isAllRequireData == true && add_product_table.products == '' ? 'This Field Is Required':'' "
+
+                        ></b2b-inputbox>
+                      
+                </b2b-row>
+                <b2b-spacer container-body height="25px"></b2b-spacer>
+
+                <b2b-row *ngIf="usertype!== 'ho' && usertype!== 'he' " container-body>
+                    <b2b-inputbox row-body [value]="add_product_table.contactPersonName"
+                        [required]="true" (onChange)="add_product_table.contactPersonName=$event" [twoInputFeild]="true"
+                        inputName="Contact Person Name" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                        backgroundTheme="--color-dim-white"
+                        placeholder="Enter Person Name" border="2px solid var(--color-light-grey)"
+                        colorTheme=""
+                        [errorMsg]="isAllRequireData == true && add_product_table.contactPersonName == '' ? 'This Field Is Required':'' "
+
+                        ></b2b-inputbox>
+                       
+
+                    <b2b-spacer row-body width="45px"></b2b-spacer>
+                    <b2b-inputbox row-body [value]="add_product_table.position"
+                        [required]="true" (onChange)="add_product_table.position=$event" [popupOption]="true"
+                        inputName="Designation / Position" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                        popupAlignItem="flex-start" position="right" popupWidth="227px"
+                        inputboxPadding="0 0 0 10px" 
+                        border="2px solid var(--color-light-grey)" [twoInputFeild]="true" placeholder="Select Designation"
+                        [errorMsg]="isAllRequireData == true && add_product_table.position == '' ? 'This Field Is Required':'' ">
+                        <ng-container popup-body *ngFor="let i of position_type">
+                        <b2b-list-tile popup-body [title]="i.drop_down_value" (click)="add_product_table.position = i.drop_down_value " fontSize="15px" hoverTheme="--color-dark-grey" colorTheme="--color-black" height="15px"></b2b-list-tile>
+                        </ng-container>
+                    </b2b-inputbox>
+                    <b2b-spacer row-body width="25px"></b2b-spacer>
+
+                </b2b-row>
+                <b2b-spacer container-body height="18px"></b2b-spacer>
+
+                <b2b-row container-body>
+                    <b2b-inputbox [required]="true" *ngIf="usertype!== 'ho' && usertype!== 'he' " row-body [value]="add_product_table.land_line"
+                            (onChange)="add_product_table.land_line=$event" [twoInputFeild]="true" inputType="number"
+                            inputName="Land Line" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                            backgroundTheme="--color-dim-white"
+                            placeholder="Land Line" border="2px solid var(--color-light-grey)"
+                            
+                            ></b2b-inputbox>
+                            <b2b-spacer *ngIf="usertype!== 'ho'&& usertype!== 'he' " row-body width="45px"></b2b-spacer>
+                           
+                            <b2b-inputbox row-body  [required]="true"
+                            [twoInputFeild]="true" [value]="add_product_table.Email" (onChange)="add_product_table.Email=$event"
+                            inputName="Email" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                            backgroundTheme="--color-dim-white"
+                            placeholder="user@gmail.com" border="2px solid var(--color-light-grey)"
+                            
+                            ></b2b-inputbox>
+                        
+                </b2b-row>
+                <b2b-spacer container-body height="18px"></b2b-spacer>
+
+                <b2b-row *ngIf="usertype!== 'ho' && usertype!== 'he' " container-body>
+                    <b2b-inputbox row-body [value]="add_product_table.website"
+                        [required]="true" (onChange)="add_product_table.website=$event" [Input_3]="true"
+                        inputName="Website" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                        backgroundTheme="--color-dim-white"
+                        placeholder="Ex : https://www.amazon.com/" border="2px solid var(--color-light-grey)"
+                        colorTheme=""
+                        [errorMsg]="isAllRequireData == true && add_product_table.website == '' ? 'This Field Is Required':'' "
+
+                        ></b2b-inputbox>
+                    <b2b-spacer row-body width="45px"></b2b-spacer>
+
+                    <b2b-inputbox row-body [value]="add_product_table.productUrl"
+                        (onChange)="add_product_table.productUrl=$event" popupPosition="absolute"
+                        inputName="Product Page" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row"
+                        poppupTop="-100px" alignItem="start"
+                        inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                        [Input_3]="true" placeholder="Ex : https://www.amazon.com/amazon-fire-tv-50-inch-4-series-4k-smart-tv"></b2b-inputbox>
+                </b2b-row>
+
+                <!-- //vendorimage -->
+                <b2b-row container-body >
+                    <b2b-row row-body>
+                    <b2b-text row-body text="Image" [required]="true" fontSize="12px" [bold]="true"></b2b-text>
+
+                    <b2b-container row-body [property]="{padding:'0',margin:'10px 0 0 69px',width:'50%'}">
+                        <img container-body [src]="vendor_profile" style="width: 10vw;height: 5vw;">
+                        <b2b-row container-body position="relative" justifyContent="center">
+                            <input row-body
+                                style="width:46%;position: absolute;top: 10%;height: 100%;opacity: 0;"
+                                type="file" (change)="handleFileInput($event)" accept="image/*">
+                            <b2b-button row-body title="Upload Image" fontSize="0.8vw" borderRadius="0"
+                                backgroundTheme="--color-primary" height="2vw" width="10vw"></b2b-button>
+                        </b2b-row>
+                    </b2b-container>
+                    </b2b-row>
+                 <b2b-row row-body flexDirection="column" *ngIf="usertype!== 'ho' && usertype!== 'he' " margin="0 0 0 -7px">
+                    <b2b-row row-body>
+                    <b2b-text row-body text="Service Request" [required]="true" fontSize="12px" [bold]="true"></b2b-text>
+                    <b2b-spacer row-body width="57px"></b2b-spacer>
+
+                    <b2b-choice row-body  fontSize="14px" group="catelog-group1" name="Yes"  (click)="getchoice('SR','1')"></b2b-choice>
+                    <b2b-spacer row-body width="20px"></b2b-spacer>
+                    <b2b-choice row-body  fontSize="14px" group="catelog-group1" name="No" [checked]="true" (click)="getchoice('SR','0') "></b2b-choice>
+
+                  </b2b-row>
+                  <b2b-row row-body>
+                    <b2b-text row-body text="Product Request" [required]="true" fontSize="12px" [bold]="true"></b2b-text>
+                    <b2b-spacer row-body width="55px"></b2b-spacer>
+
+                    <b2b-choice row-body  fontSize="14px" group="catelog-group2" name="Yes" [checked]="true" (click)="getchoice('PR','1')"></b2b-choice>
+                    <b2b-spacer row-body width="20px"></b2b-spacer>
+                    <b2b-choice row-body  fontSize="14px" group="catelog-group2" name="No"  (click)="getchoice('PR','0') "></b2b-choice>
+
+                  </b2b-row>
+                </b2b-row>
+                </b2b-row>
+            </ng-container>
+            <b2b-spacer container-body height="15px"> </b2b-spacer>
+            <b2b-row container-body justifyContent="center">
+
+                <b2b-button row-body  width="150px" title="Submit" height="30px"
+                    backgroundTheme="--color-toggle-background" colorTheme="--color-white" (click)="Submit()"
+                    ></b2b-button>
+            </b2b-row>
+            
+        </b2b-container>
+</b2b-container>
+</b2b-row>
+</b2b-container>
+</b2b-draggable-popup>
+<!-- <b2b-add-product-vendor *ngIf="addvendor" [screen]="screen" [type]="usertype" (cancelpopup)="addvendor = $event" ></b2b-add-product-vendor> -->

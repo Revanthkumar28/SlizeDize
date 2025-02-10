@@ -1,0 +1,167 @@
+.popup-1{
+  /* position: fixed; */
+  z-index: 100;
+  background-color:white;
+  /* left: 55%;
+  top: 30%; */
+  padding: 10px;
+  height:auto;
+  width: 500px;
+  border: 2px solid var(--color-dark-grey);
+}
+
+  .uploadDocument{
+    background-color: var(--color-white);
+  }
+
+table {
+width: 100%; 
+border-collapse:none;
+}
+
+th, td {
+border:none;
+text-align: left;
+
+}
+
+.td1{
+font-size: 12px;
+}
+.buttton{
+  width: 460px ;
+  margin:4px;
+  margin-left: 14px;
+  width: 250px;
+  margin-top: 14px;
+}
+.tr1{
+font-size: 12px;
+}
+.view-btn{
+background-color:var(--color-primary);
+color: white;
+height: 20px;
+width: 91px;
+border-radius: 5px;
+font-size: 12px;
+margin-bottom: 3px;
+}
+.save-btn{
+  cursor: pointer;
+  background-color:var(--color-green);
+  color: white;
+  height: 25px;
+  width: 100px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-bottom: 3px;
+  }
+
+
+.btn-browser{
+font-size: 12px;
+
+
+height: 20px;
+width: 70px;
+border-radius: 5px;
+
+}
+.tble-style{
+background-color: lightgray;
+border-radius: 10px;
+padding: 10px;
+}
+
+
+.close-btn {
+margin-top: 10px; 
+height: 10px;
+width: 10px;
+}
+
+.flex-container {
+display: flex;
+flex-direction: column;
+width: 100%;
+}
+
+.table-row {
+display: flex;
+border-bottom: 1px solid #ccc; 
+}
+
+.category {
+flex: 1;
+padding: 8px;
+font-weight: bold;
+border-right: 1px solid #ccc; 
+}
+
+.value {
+flex: 1;
+padding: 8px;
+}
+/*  */
+.flex-table {
+
+width: 400px; 
+}
+.flex-column{
+font-size: 15px;
+}
+p{
+margin: 0;
+}
+
+.flex-row {
+display: flex;
+flex-direction: row;
+height: 40px;
+justify-content: space-between;
+background-color: lightblue;
+}
+.flex-table2 {
+display: flex;
+flex-direction: row;
+}
+.flex-table3 {
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
+background-color: lightgoldenrodyellow;
+padding: 0 0 0 6px;
+height: 112px;
+
+}
+.flex-table4 {
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0 0 0 6px;
+justify-content: space-between;
+background-color: lightblue;
+height: 80px;
+}
+.flex-table5 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px 0 0 6px;
+  justify-content: space-between;
+  background-color: lightblue;
+  height: 128px;
+  }
+.flex-cell {
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 15px;
+padding: 8px;
+}
+.under{
+  text-decoration: underline;
+  text-decoration-color: var(--color-primary);
+}

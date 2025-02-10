@@ -1,0 +1,37 @@
+<b2b-row container-body  zIndex="18" borderRadius="5px"     widths="35vw"  position="fixed"
+backgroundTheme="--color-lighter-grey" height="100%" positionRight="0" positionTop="0">
+<b2b-container row-body [property]="{backgroundTheme: '',flex:1,padding:'5px 0 0 5px'}">
+    <b2b-row container-body>
+        <b2b-container row-body [property]="{width:'100%',backgroundTheme: '',padding:'20px 30px 30px 30px'}">
+            <b2b-row container-body>
+                <b2b-icon row-body icon="close" left="92%" (click)="closeButton()" top="2%"
+                    backgroundTheme="--color-white" colorTheme="--color-dark-grey" position="absolute"></b2b-icon>
+
+            </b2b-row>
+            <b2b-text container-body text="Order History" [bold]="true"></b2b-text>
+            <b2b-spacer container-body height="10px"></b2b-spacer>
+
+            <b2b-row container-body backgroundTheme="--color-white" height="5vh" widths="80%" borderRadius="10px" margin="5px 5px 5px 57px" justifyContent="center" >
+             <b2b-text row-body text="PO No : {{Po_id }}" ></b2b-text>
+
+            </b2b-row>
+            <b2b-spacer container-body height="10px"></b2b-spacer>
+           
+            <!-- card -->
+            <b2b-row container-body alignItem="flex-start" padding="10px 0 0 0" overflowY="auto" height="80vh">
+                <b2b-container row-body [property]="{width: 'auto', height: 'auto', padding: '0'}">
+                    <b2b-stepper container-body lineHeight="104px" [stepperCount]="trackingPoint" [active]="trackingPoint"></b2b-stepper>
+                </b2b-container>
+                <b2b-spacer row-body width="10px"></b2b-spacer>
+                <b2b-container row-body [property]="{padding: '0', backgroundTheme: '--color-transparent', height: 'auto'}">
+                    <ng-container container-body *ngFor="let cardData of cardDataList">
+                        <b2b-process-card [processCardData]="cardData" [showbutton]="cardData.title =='Discrepancy'? true:false " [vendors_sub]="this.removeDuplicatesByProperty(allvendor_sub,'vendor_id')" [vendors]="this.removeDuplicatesByProperty(allvendor_neg,'id')" [orders]="this.historydata.discrepancy"></b2b-process-card>
+                        <b2b-spacer minHeight="20px"></b2b-spacer>
+                    </ng-container>
+                </b2b-container>
+            </b2b-row>
+           
+        </b2b-container>
+    </b2b-row>
+</b2b-container>
+</b2b-row>

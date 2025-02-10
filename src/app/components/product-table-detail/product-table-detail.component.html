@@ -1,0 +1,16 @@
+<b2b-container [property]="{padding:'10px'}">
+    <b2b-list-tile container-body title="{{product_name}}" colorTheme="--color-black" [bold]="true">
+        <b2b-avatar-image leading img="{{product_image}}" width="60px"></b2b-avatar-image>
+        <b2b-dropdown actions popupWidth="250px" *ngIf="dropdownVisible">
+            <b2b-button dropdown-selector title="Request For Quotations" backgroundTheme="--color-dark-grey" trailingIcon="expand_more" width="auto" padding="0 12px" trailingBgTheme="--color-light-grey" [trailingIconRounded]="true"></b2b-button>
+            <b2b-list-tile dropdown-items title="Request For Quotation" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (tileClicked)="clickHandler($event)"></b2b-list-tile>
+            <b2b-list-tile dropdown-items title="RFQ Compare" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (tileClicked)="clickHandler($event)"></b2b-list-tile>
+            <b2b-list-tile dropdown-items title="Pipeline order list" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (tileClicked)="clickHandler($event)"></b2b-list-tile>
+            <b2b-list-tile dropdown-items title="Approval Process" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (tileClicked)="clickHandler($event)"></b2b-list-tile>
+            <b2b-list-tile dropdown-items title="Order Process" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (tileClicked)="clickHandler($event)"></b2b-list-tile>
+            <b2b-list-tile dropdown-items title="Order List" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (tileClicked)="clickHandler($event)"></b2b-list-tile>
+        </b2b-dropdown>
+    </b2b-list-tile>
+    <b2b-spacer container-body height="5px"></b2b-spacer>
+    <b2b-product-table container-body [tableHeading]="tableHeading"  [tableColumnSpacing]="tableColumnSpacing"></b2b-product-table>
+</b2b-container>

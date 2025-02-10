@@ -1,0 +1,13 @@
+<b2b-container [property]="{backgroundTheme: '--color-transparent', margin: '0px 0 0 0', borderRadius: '0', padding: '0'}">
+    <b2b-row container-body justifyContent="space-around" backgroundTheme="--color-button-navbar" borderTopLeftRadius="5px" borderTopRightRadius="5px">
+        <ng-container row-body *ngFor="let button of buttons">
+            <b2b-button [title]="button['name']" [bold]="true" height="35px" [backgroundTheme]="button['name'] == selectedButton ? '--color-white' : '--color-transparent'" borderRadius="3px" [colorTheme]="button['name'] == selectedButton ? ' --color-primary-dark' : '--color-light-dark'" borderRadius="0" borderTopLeftRadius="10px" borderTopRightRadius="10px" (onPressed)="buttonClicked($event)"></b2b-button>
+        </ng-container>
+        
+    </b2b-row>
+    <ng-container container-body [ngSwitch]="selectedButton">
+        <b2b-vendor-table [rfqRequrest]="rfqRequrest" [directOrderArray]="directOrderArray" [vendorAllProductsArr]="vendorAllProductsArr" *ngSwitchCase="'Purchase Order'"></b2b-vendor-table>
+        <b2b-specification-warranty *ngSwitchCase="'Specification Warranty'"></b2b-specification-warranty>
+        <b2b-all-documents *ngSwitchCase="'All Documents'" [vendor_id]="vendor_id"></b2b-all-documents>
+    </ng-container>
+</b2b-container>

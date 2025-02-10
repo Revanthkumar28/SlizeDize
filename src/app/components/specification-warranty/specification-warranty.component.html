@@ -1,0 +1,168 @@
+<b2b-container [property]="{ padding: '0',alignItem:'flex-start',height:'58vh',overflowY:'auto' ,overflowX:'hidden'}">
+    <div container-body style="display: flex;width: 100%;margin-top: 15px;margin-left: 10px;padding-right: 10px;">
+        <!-- BRAND PRODUCT SPECIFICATION -->
+        <div container-body *ngIf="!specifcationAndWarrenty.tp" style="margin-right: 100px;">
+            <div container-body style="display: flex;margin-bottom: 15px;">
+                <b2b-text row-body text="Brand Specifications" fontSize="18px" [bold]="true"></b2b-text>
+                <b2b-spacer row-body width="20px"></b2b-spacer>
+                <span row-body>Item <a [href]="brandproductlink" target="_blank">!234563</a></span>
+            </div>
+                
+            <b2b-row container-body alignItem="stretch">
+                <!-- specification image -->
+                <!-- BRAND PRODUCT SPECIFICATION -->
+                <div row-body style="display: flex;flex-wrap: wrap;" *ngFor="let pdf of brandProductSpec.pdf">
+                    <div row-body>
+                        <a style="display: flex;flex-direction: column;" href="{{pdf.pdf}}"
+                             title="Choice HACCP sheet" target="_blank" rel="noopener noreferrer">
+                            <img *ngIf="pdf.pdfImage != '' " [src]="pdf.pdfImage"
+                                style="height: 90px;width: 70px;" class="ez-padf-2"  srcset=""/>
+                        </a>
+                        <p>{{pdf.pdfName}}</p>
+
+                    </div>
+            
+                    <b2b-spacer row-body width="10px"></b2b-spacer>
+                </div>
+                
+        
+                <b2b-spacer row-body width="20px"></b2b-spacer>
+        
+                <!-- specification details 999-->
+                <div row-body style="flex: 1;height:100%;width:350px" >
+                    <b2b-trow container-body  backgroundTheme="--color-drawer-dark" colorTheme="--color-white" borderRadius="var(--table-radius) var(--table-radius) 0 0" height="70px" margin="0">
+                        <b2b-row trow-body>
+                        <b2b-image height="38%" width="39%" [isRounded]="true" margin="10px" row-body [image]="brandproductimage" ></b2b-image>
+                        <b2b-tdata row-body title="Brand Specifications"></b2b-tdata>
+                        </b2b-row>
+                    </b2b-trow>
+                    <ng-container container-body >
+                        <b2b-trow class="specification-row" colorTheme="--color-black" *ngFor="let val of brandProductSpec.spec" column="2*1fr" border="2px solid var(--color-light-grey)" margin="0">
+                            <b2b-tdata trow-body [title]="val.key"></b2b-tdata>
+                            <b2b-tdata trow-body [title]="val.value" color="--color-dark-grey"></b2b-tdata>
+                        </b2b-trow>
+        
+                    </ng-container>
+        
+                    <b2b-spacer container-body height="20px"></b2b-spacer>
+        
+                    <b2b-label container-body text="Warranty: 1 Year From Purchase" backgroundTheme="--color-drawer-bottom-list" width="100%" height="50px" [isCurved]="true" [center]="true"></b2b-label>
+                </div>                
+        
+            </b2b-row> 
+        </div>
+
+        <!-- VENDOR PRODUCT SPECIFICATION -->
+        <div container-body *ngIf="VendorProductSpec.spec ? VendorProductSpec.spec[0].vendor_key || VendorProductSpec.spec[0].key  != null :'' ">
+            <div container-body style="display: flex;margin-bottom: 15px;">
+                <b2b-text row-body text="Vendor Specifications" fontSize="18px" [bold]="true"></b2b-text>
+                <b2b-spacer row-body width="20px"></b2b-spacer>
+                <span row-body>Item <a *ngIf="isLoggedIn" href="{{openlink}}/vendor_view_products/{{VendorProductSpec.ProdId}}" target="_blank">{{VendorProductSpec.vendor_product_sku}}</a> <span *ngIf="!isLoggedIn">{{VendorProductSpec.vendor_product_sku}}</span></span>
+
+            </div>
+
+            <b2b-row container-body alignItem="stretch">
+                <!-- specification image -->
+                <!-- BRAND PRODUCT SPECIFICATION -->
+                <div row-body style="display: grid;grid-template-columns: 1fr 1fr;">
+                    <div row-body *ngFor="let pdf of VendorProductSpec.pdf">
+                        <a style="display: flex;flex-direction: column;" href="{{pdf.pdf}}"
+                             title="Choice HACCP sheet"  target="_blank" rel="noopener noreferrer">
+                            <img *ngIf="pdf.pdfImage != null" [src]="pdf.pdfImage"
+                                style="height: 90px;width: 70px;" class="ez-padf-2"  srcset=""/>
+                            <!-- <a href="pdf.pdf" >{{pdf.pdfName}}</a> -->
+                        </a>
+                        <p>{{pdf.pdfName}}</p>
+                    </div>
+            
+                    <b2b-spacer row-body width="10px"></b2b-spacer>
+                </div>
+                
+        
+                <b2b-spacer row-body width="20px"></b2b-spacer>
+        
+                <!-- specification details -->
+                <div row-body style="flex: 1;height:100%;width:350px" >
+                    <b2b-trow container-body backgroundTheme="--color-drawer-dark" colorTheme="--color-white" borderRadius="var(--table-radius) var(--table-radius) 0 0" height="70px" margin="0">
+                        <b2b-row trow-body>
+                        <b2b-image height="38%" class="specimg" width="39%" margin="10px" [isRounded]="true" row-body [image]="vendorproductimage" ></b2b-image>
+                        <b2b-tdata row-body title="Vendor Specifications"></b2b-tdata>
+                        </b2b-row>
+                    </b2b-trow>
+                    <ng-container container-body >
+                        <b2b-trow class="specification-row" colorTheme="--color-black" *ngFor="let val of VendorProductSpec.spec" column="2*1fr" border="2px solid var(--color-light-grey)" margin="0">
+                            <b2b-tdata trow-body [title]="val.vendor_key"></b2b-tdata>
+                            <b2b-tdata trow-body [title]="val.vendor_value" color="--color-dark-grey"></b2b-tdata>
+                        </b2b-trow>
+        
+                    </ng-container>
+        
+                    <b2b-spacer container-body height="20px"></b2b-spacer>
+        
+                    <b2b-label container-body text="Warranty: {{VendorProductSpec.vendor_product_warranty != null ? VendorProductSpec.vendor_product_warranty :'1' }} Year From Purchase" backgroundTheme="--color-drawer-bottom-list" width="100%" height="50px" [isCurved]="true" [center]="true"></b2b-label>
+                </div>
+        
+                <!-- VENDOR SPECIFICATION PRODUCT-->
+            </b2b-row> 
+        </div>
+    </div>
+
+      
+</b2b-container>
+
+
+<!-- <div container-body class="ez-bg-white ez-border-dark-grey ez-rounded-4  ez-rounded ez-specification" id="specifications">
+    <p class=" ez-font-semibold ez-m-0 ez-p-0">Specs</p>
+    <dl class="ez-m-0 ez-fs-1 ez-spec-table">
+        <div class="ez-flex">
+            <dt>Quantity</dt>
+            <dd>2500/Case</dd>
+        </div>
+        <div class="ez-flex">
+            <dt>Shipping Weight</dt>
+            <dd>2500/Case</dd>
+        </div>
+        <div class="ez-flex">
+            <dt>Height</dt>
+            <dd>1 1/2 Inches</dd>
+        </div>
+        <div class="ez-flex">
+            <dt>Bottom Diameter</dt>
+            <dd>1 1/8 Inches</dd>
+        </div>
+        <div class="ez-flex">
+            <dt>Top Diameter</dt>
+            <dd>1 3/4 Inches</dd>
+        </div>
+        <div class="ez-flex">
+            <dt>Capacity</dt>
+            <dd>1 oz.</dd>
+        </div>
+        <div class="ez-flex">
+            <dt>Color</dt>
+            <dd>Clear</dd>
+        </div>
+        <div class="ez-flex">
+            <dt>Features</dt>
+            <dd>BPA Free
+
+                Recyclable</dd>
+        </div>
+        <div class="ez-flex">
+            <dt>Material</dt>
+            <dd>Plastic</dd>
+        </div>
+        <div class="ez-flex">
+            <dt>Shape</dt>
+            <dd>Round</dd>
+        </div>
+        <div class="ez-flex">
+            <dt>Style</dt>
+            <dd>1-Piece</dd>
+        </div>
+        <div class="ez-flex">
+            <dt>Type</dt>
+            <dd>Bowls<span> Glasses</span></dd>
+        </div>
+    </dl>
+</div> -->

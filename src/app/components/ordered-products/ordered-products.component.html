@@ -1,0 +1,22 @@
+<ng-container >
+    <b2b-container [ngSwitch]="nextNav" [property]="{padding:'0',backgroundTheme:'none',height:'57vh',overflowY:'auto'}">
+        <b2b-quoation-screen container-body *ngSwitchCase="'Request For Quotation'"></b2b-quoation-screen>
+        <b2b-status-order-main container-body *ngSwitchCase="'RFQ Compare'"></b2b-status-order-main>
+        <b2b-rfq-orders container-body *ngSwitchCase="'Pipeline order list'"></b2b-rfq-orders>
+        <b2b-approval-process container-body *ngSwitchCase="'Approval Process'"></b2b-approval-process>
+        <b2b-order-process container-body *ngSwitchCase="'Order Process'"></b2b-order-process>
+        <b2b-orders-list container-body *ngSwitchCase="'Order List'"></b2b-orders-list>
+        <ng-container container-body *ngSwitchDefault="">
+            <!-- <b2b-order-process *ngIf="quoatationScreen"></b2b-order-process> -->
+          
+            <b2b-quoation-screen  ></b2b-quoation-screen>
+            <b2b-spacer height="20px" ></b2b-spacer>
+             <!-- <b2b-row justifyContent="center" *ngIf="continueRow">
+                <b2b-button row-body title="Continue with RFQ" (click)="continute()"  backgroundTheme="--color-toggle-background" colorTheme="--color-white" width="170px" borderRadius="var(--global-radius)" margin="0 12px"></b2b-button>
+                <b2b-button row-body title="Push to order" (click)="pushOrder()" backgroundTheme="--color-toggle-background" colorTheme="--color-white" width="170px" borderRadius="var(--global-radius)"></b2b-button>
+            </b2b-row>  -->
+        </ng-container>
+        <b2b-text container-body text="{{i.lead_time}}" *ngFor="let i of deatails"></b2b-text>
+    </b2b-container>
+    
+</ng-container>

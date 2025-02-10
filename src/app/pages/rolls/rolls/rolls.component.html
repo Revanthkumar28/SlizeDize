@@ -1,0 +1,676 @@
+<b2b-dashboard-body backgroundTheme="--color-light-grey">
+    <b2b-heading-panel body-content title="Roles Permission" margin="0 0 10px 0">
+        <b2b-icon-button panel-leading icon="chevron_left" (click)="goBack()" backgroundTheme="--color-primary" [isCurved]="true" colorTheme="--color-white"></b2b-icon-button>
+    </b2b-heading-panel>
+    <b2b-spacer body-content minHeight="10px"></b2b-spacer>
+
+    <b2b-container body-content style="overflow-y: scroll;overflow-x: hidden;height: 82vh;" [property]="{alignItem:'flex-start'}">
+      <!-- BUTTON FOR ROLLS ADDED - (RP-1) -->
+          <ng-container container-body >
+            <b2b-row>
+              <b2b-button row-body *ngFor="let button of button_name" [title]="button['name']" [apiSubmitDisable]="true" boxShadow="0 0 10px lightGrey" borderRadius="3px" [borderBottom]="button['name'] == selectedButton ? '--color-orange' : '--color-white'" [colorTheme]="button['name'] == selectedButton ? '--color-black' : '--color-dark-grey'" padding="5px 10px" margin="10px 10px 15px 0" height="auto" width="auto" (onPressed)="buttonclicked($event)" margin="10px"></b2b-button>
+            </b2b-row>
+          </ng-container>
+
+          <!-- DEPARTMENT FORM - (RP-2) -->
+          <ng-container container-body *ngIf="isDepartment">
+            <b2b-inputbox container-body class="tour-list-hotel" [popupOption]="true"
+            inputName="Hotel" [value]="department_hotel"                                     
+            fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+            inputboxPadding="0 0 0 10px"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="Employee" popWidth="auto">
+
+                <ng-container popup-body *ngFor="let hotel of numberOfHotels ">
+                  <b2b-list-tile [title]="hotel.Hotel_Name" (click)="department(hotel)"
+                      hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                      height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                  <!-- <b2b-keyup ></b2b-keyup> -->
+                </ng-container>
+            </b2b-inputbox>
+
+            <b2b-spacer container-body height="10px"></b2b-spacer>
+
+            <b2b-inputbox container-body class="tour-department" [popupOption]="false"
+                inputName="Department Name" [value]="department_Create.department_name" (onChange)="department_Create.department_name = $event"                                     
+                fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+                inputboxPadding="0 0 0 10px"
+                border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                placeholder="Department">
+            </b2b-inputbox>
+          </ng-container>
+
+          <!-- DESIGNATION FORM - (RP-3)-->
+          <ng-container container-body *ngIf="isDesignation">
+            <b2b-inputbox container-body [popupOption]="true"
+            inputName="Hotel" [value]="hotelDepartment"                                     
+            fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+            inputboxPadding="0 0 0 10px"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="Employee" popWidth="auto">
+
+                <ng-container popup-body *ngFor="let hotel of numberOfHotels ">
+                  <b2b-list-tile [title]="hotel.Hotel_Name" (click)="hotel_deparment_select(hotel)"
+                      hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                      height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                  <!-- <b2b-keyup ></b2b-keyup> -->
+                </ng-container>
+            </b2b-inputbox>
+            <b2b-spacer container-body height="10px"></b2b-spacer>
+
+            <b2b-inputbox container-body [popupOption]="true"
+            inputName="Department" [value]="selectedDepartmentName"                                   
+            fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+            inputboxPadding="0 0 0 10px"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="Department" popWidth="auto">
+
+                <ng-container popup-body *ngFor="let dep of departmentDetails ">
+                    <b2b-list-tile [title]="dep.department_name" (click)="deparment_desig_select(dep)"
+                        hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                        height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                </ng-container>
+            </b2b-inputbox>
+
+            <b2b-spacer container-body height="10px"></b2b-spacer>
+
+            <b2b-inputbox container-body [popupOption]="false"
+                inputName="Designation Name" [value]="designation_create.designations_name" (onChange)="designation_create.designations_name = $event"                                     
+                fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+                inputboxPadding="0 0 0 10px"
+                border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                placeholder="Designation">
+            </b2b-inputbox>
+          </ng-container>
+
+          <!-- INPUT ROLLS - (RP-4)-->
+          <ng-container container-body *ngIf="isRoll">
+            <b2b-inputbox container-body [popupOption]="true"
+            inputName="Hotel" [value]="HotelName"                                     
+            fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+            inputboxPadding="0 0 0 10px"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="Hotel" popWidth="auto">
+
+                <ng-container popup-body *ngFor="let hotel of numberOfHotels ">
+                  <b2b-list-tile [title]="hotel.Hotel_Name" (click)="selectHotel(hotel)"
+                      hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                      height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                  <!-- <b2b-keyup ></b2b-keyup> -->
+                </ng-container>
+            </b2b-inputbox>
+
+            <b2b-spacer container-body height="10px"></b2b-spacer>
+
+            <!-- DESIGNATION GET -->
+            <b2b-inputbox container-body [popupOption]="true"
+            inputName="Designation" [value]="roleDesignationName"                                  
+            fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+            inputboxPadding="0 0 0 10px"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="Designation" popWidth="auto">
+
+                <ng-container popup-body *ngFor="let des of filter_hotel_designation ">
+                  <b2b-list-tile [title]="des.designations_name" (click)="role_desination_select(des)"
+                      hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                      height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                </ng-container>
+            </b2b-inputbox>
+
+            <b2b-spacer container-body height="10px"></b2b-spacer>
+            
+            <!-- ROLE  -->
+            <b2b-inputbox container-body value="{{exist_role_name}}" [popupOption]="false"
+                inputName="Role Name" (onChange)="newCreateRole($event)"                                     
+                fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+                inputboxPadding="0 0 0 10px"
+                border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                placeholder="Role">
+
+                <ng-container popup-body *ngFor="let role of role_prvilage_heading">
+                  <b2b-list-tile [title]="role.role_name" (click)="existRole_id(role)"
+                      hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                      height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                </ng-container>
+            </b2b-inputbox>
+          </ng-container>
+            
+          <!-- PRIVILAGES ASSIGN TO ROLES - (RP-5) -->
+          <ng-container container-body *ngIf="isPrevilages">
+            <b2b-inputbox container-body [popupOption]="true"
+            inputName="Hotel" [value]="privilage_to_role.hotel_name"                                     
+            fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+            inputboxPadding="0 0 0 10px"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="Hotel">
+
+                <ng-container popup-body *ngFor="let hotel of numberOfHotels ">
+                    <b2b-list-tile [title]="hotel.Hotel_Name" (click)="privilage_hotel(hotel)"
+                        hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                        height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                </ng-container>
+            </b2b-inputbox>
+
+            <b2b-spacer height="15px"></b2b-spacer>
+            <!-- SELECT CHECKBOX FOR PRIVILAGES START............ -->
+            <!-- HEADER -->
+
+            <!-- TEST TABLE DYNAMIMALLY START-->  
+
+            <table class="table" container-body>
+                <thead style="position: sticky;top: -3px;background-color: white;">
+                  <tr>
+                    <th>Web page</th>
+                    <th>Co-ordinates</th>
+                    <th>Function</th>
+                    <td class="center-content" *ngFor="let role of filter_hotel_privilages">{{ role.role_name }}</td>
+                  </tr>
+                </thead>
+                <tbody>
+                
+                  <ng-container *ngFor="let previlage of privilages_filter; let hotelIndex = index">
+                    <tr *ngFor="let dept of previlage.items; let deptIndex = index">
+                      <ng-container *ngIf="deptIndex === 0">
+                        <td class="center-content" style="text-align: center;" [attr.rowspan]="previlage.items.length">
+                          {{ previlage.webpage}}
+                        </td>
+                      </ng-container>
+        
+                      <td class="center-content">{{ dept.co_ordinates }}</td>
+                      <td class="center-content">{{ dept.privilege_name }}</td>
+                      <td class="center-content" *ngFor="let role of filter_hotel_privilages">
+                        <input type="checkbox" [checked]="isPrivilegeChecked(dept.id, role)" (change)="privilage_actions($event,dept,role,1)">
+                        <!-- <input type="checkbox" [checked]="dept.isChecked" (change)="privilage_actions($event,dept,role,1)"> -->
+                      </td>
+    
+                    </tr>
+                    
+                    <!-- <tr>
+                        
+                    </tr> -->
+                    
+                  </ng-container>
+    
+                  <!-- <td class="center-content" *ngFor="let role of filter_hotel_privilages">
+                    <ng-container >
+                      <div>{{ role.role_name }}</div>
+                    </ng-container>
+                  </td> -->
+                </tbody>
+              </table>
+            <!-- SELECT CHECKBOX FOR PRIVILAGES END............ -->
+            <b2b-spacer container-body height="10px"></b2b-spacer>
+          </ng-container>
+
+          <!-- EMPLOYEES CREATION - (RP-6) -->
+          <b2b-row container-body>
+            <!-- COLUMN 1 -->
+            <b2b-container row-body *ngIf="isEmployee" [property]="{alignItem:'flex-start',padding:'0'}">
+                <!-- NAME -->
+                <b2b-inputbox container-body inputName="Name" [required]="true"
+                  [value]="employeeDetails.name" (onChange)="employeeDetails.name = $event"                                     
+                  fontSize="12px" [bold]="true" width="90%" height="35px" flexDirection="row"
+                  inputboxPadding="0 0 0 10px"
+                  border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                  placeholder="Name" popWidth="auto">
+                </b2b-inputbox>
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+    
+                <!-- MOBILE NUMBER -->
+                <b2b-row  container-body alignItem="center">
+                <b2b-container row-body
+                    [property]="{padding:'0',width:'159px',alignItem:'start',backgroundTheme:''}">
+                    <b2b-text container-body text="Mobile Number" [required]="true" [bold]="true" fontSize="12px"></b2b-text>
+                </b2b-container>
+                <b2b-spacer row-body width="77px"></b2b-spacer>
+                <b2b-container row-body [property]="{padding:'0',alignItem:'start',backgroundTheme:''}">
+    
+                    <b2b-row container-body alignItem="center" backgroundTheme=""
+                        border="2px solid var(--color-light-grey)" borderRadius="5px" width="350px">
+                        <!-- <b2b-label row-body text="Mobile No" inputboxPadding="0" fontSize="12px"
+                            colorTheme="" padding="14px" backgroundTheme="--color-dim-white" height="33px"
+                            width="90px" borderRadius="5px 0 0 5px"></b2b-label> -->
+    
+                        <b2b-tdata row-body *ngIf="CountryFlag" backgroundTheme="--color-dim-white"
+                            height="33px">
+                            <b2b-image tdata-body
+                                image="https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/IN.svg"
+                                width="40px" margin="5px 0 0 0"></b2b-image>
+                            <b2b-spacer tdata-body width="10px"></b2b-spacer>
+                            <b2b-tdata tdata-body [title]="'IN'" fontSize="12px"
+                                color="--color-black"></b2b-tdata>
+                        </b2b-tdata>
+    
+                        <b2b-tdata row-body *ngIf="flagArr" backgroundTheme="--color-dim-white"
+                            height="40px">
+                            <b2b-image tdata-body #img image="{{flagArr.image}}" width="30px"
+                                margin="5px 0 0 0"></b2b-image>
+                            <b2b-spacer tdata-body width="5px"></b2b-spacer>
+                            <b2b-tdata tdata-body [title]="flagArr.code" color="--color-black"></b2b-tdata>
+                        </b2b-tdata>
+                        <b2b-tdata row-body backgroundTheme="" height="33px">
+                            <b2b-dropdown tdata-body popupWidth="200px" dropdownPosition="right"
+                                dropdownTop="-200px" popupHeight="200px">
+                                <b2b-icon-button dropdown-selector icon="expand_more" width="40px"
+                                    iconSize="20px" colorTheme="--color-dark-grey"></b2b-icon-button>
+                                <input #search search type="text" autofocus placeholder="search"
+                                    [(ngModel)]="flagFilter" (ngModelChange)="flagFilter =$event">
+    
+                                <b2b-row dropdown-items
+                                    *ngFor="let data of flag | alphatic: 'name' | searchFilter : flagFilter">
+                                    <b2b-tdata row-body (click)="getflag(data)">
+                                        <b2b-tdata tdata-body>
+                                            <b2b-image tdata-body image="{{data.image}}" width="20px"
+                                                margin="5px 0 0 0"></b2b-image>
+                                        </b2b-tdata>
+                                        <b2b-spacer tdata-body width="10px"></b2b-spacer>
+                                        <b2b-tdata tdata-body [title]="data['name']" color="--color-black"
+                                            fontSize="14px" alignItem="flex-start"
+                                            justifyContent="flex-start" textAlign="start"></b2b-tdata>
+                                        <b2b-spacer tdata-body width="30px"></b2b-spacer>
+    
+                                    </b2b-tdata>
+                                </b2b-row>
+                            </b2b-dropdown>
+                        </b2b-tdata>
+                        <b2b-tdata row-body *ngIf="CountryFlag" backgroundTheme="--color-dim-white"
+                            fontSize="14px" [title]="defaultCountryCode" color="--color-black" height="33px"></b2b-tdata>
+                        <b2b-tdata row-body [title]="flagArr.dial_code" fontSize="14px"
+                            colorTheme="--color-black" height="33px"></b2b-tdata>
+    
+                        <b2b-inputbox row-body inputType="number" [value]="mobileNumber"
+                            inputboxPadding="5px" fontSize="16px" 
+                            (onChange)="mobileNumber=$event" width="100%" height="33px"
+                            backgroundTheme="--color-dim-white" borderRadius="var(--flag-input-radius)"
+                            type="tel" colorTheme="" 
+                            [border]="mobileNumber ? ' ' : '1px solid var(--color-light-grey)'"
+                            [title]="mobileNumber ? '' : 'Enter your designation'"></b2b-inputbox>
+    
+                        <!-- <b2b-button row-body title="Find" width="80px" height="32px" backgroundTheme="--color-primary" margin="0 0 0 10px" (click)="findVendor(add_product_table.mobileNumber)"></b2b-button>     -->
+                    </b2b-row>
+                </b2b-container>
+                </b2b-row>
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+                <!-- EMAIL -->
+    
+                 <b2b-inputbox container-body inputName="Email" [required]="true"
+                 [value]="employeeDetails.email" (onChange)="employeeDetails.email = $event"                                     
+                 fontSize="12px" [bold]="true" width="90%" height="35px" flexDirection="row"
+                 inputboxPadding="0 0 0 10px"
+                 border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                 placeholder="user@gmail.com" popWidth="auto">
+               </b2b-inputbox>
+               <b2b-spacer container-body height="10px"></b2b-spacer>
+    
+                <!-- ADDRESS -->
+                <b2b-inputbox container-body [popupOption]="true" inputName="Country" [required]="true"
+                  [value]="employeeDetails.country" (onChange)="employeeDetails.country = $event"                                     
+                  fontSize="12px" [bold]="true" width="90%"  height="35px" flexDirection="row"
+                  inputboxPadding="0 0 0 10px"
+                  border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                  placeholder="Country">              
+                  <input #search search type="text" autofocus placeholder="Search" [(ngModel)]="filterData"  (ngModelChange)="filterData =$event">
+                  <ng-container popup-body *ngFor="let country of listcountry | searchFilter : filterData" >
+                      <b2b-list-tile  [title]="country.name"  (tileClicked)="onCountrySelected(country)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                      <!-- <b2b-keyup ></b2b-keyup> -->
+                  </ng-container>
+                </b2b-inputbox>
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+    
+                <b2b-inputbox container-body [popupOption]="true" inputName="State" [required]="true"
+                  [value]="employeeDetails.state" (onChange)="employeeDetails.state = $event"                                     
+                  fontSize="12px" [bold]="true" width="90%" height="35px" flexDirection="row"
+                  inputboxPadding="0 0 0 10px"
+                  border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                  placeholder="State">                 <input #search search type="text" autofocus *ngIf="employeeDetails.country !=''?true:false" placeholder="Search" [(ngModel)]="stateFilter" (ngModelChange)="stateFilter =$event">
+                    <ng-container popup-body *ngFor="let state of listState | alphatic: 'name' | searchFilter : stateFilter">
+                        <b2b-list-tile [title]="state.name" (tileClicked)="onStateSelected(state)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+          
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+                <b2b-inputbox container-body [popupOption]="true"inputName="City" [required]="true"
+                  [value]="employeeDetails.city" (onChange)="employeeDetails.city = $event"                                     
+                  fontSize="12px" [bold]="true" width="90%" height="35px" flexDirection="row"
+                  inputboxPadding="0 0 0 10px"
+                  border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                  placeholder="City">                
+                  <input #search search type="text" autofocus *ngIf="employeeDetails.state !='' && cityData =='' ?true:false" placeholder="Search" [(ngModel)]="cityFilter" (ngModelChange)="cityFilter =$event">
+            
+                    <ng-container popup-body *ngFor="let city of listCity | searchFilter : cityFilter" >
+                        <b2b-list-tile   [title]="city.name" (tileClicked)="onStateCity(employeeDetails.city = city.name)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    </ng-container> 
+                </b2b-inputbox>
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+    
+                <b2b-inputbox container-body inputName="Zip Code" [required]="true"
+                  [value]="employeeDetails.zipCode" (onChange)="employeeDetails.zipCode = $event"                                     
+                  fontSize="12px" [bold]="true" width="90%" height="35px" flexDirection="row"
+                  inputboxPadding="0 0 0 10px"
+                  border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                  placeholder="Zip Code" popWidth="auto">
+                </b2b-inputbox>
+              
+              </b2b-container>
+
+            <!-- COLUMN 2 -->
+            <b2b-container row-body *ngIf="isEmployee">
+                <!-- HOTEL -->
+                <b2b-inputbox container-body [popupOption]="true" [required]="true"
+                inputName="Hotel" [value]="employee_role.Hotel_Name"                                     
+                fontSize="12px" [bold]="true" width="90%" height="35px" flexDirection="row"
+                inputboxPadding="0 0 0 10px"
+                border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                placeholder="Employee" popWidth="auto">
+
+                    <ng-container popup-body *ngFor="let hotel of numberOfHotels ">
+                    <b2b-list-tile [title]="hotel.Hotel_Name" (click)="employeeRegisterHotel(hotel)"
+                        hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                        height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    <!-- <b2b-keyup ></b2b-keyup> -->
+                    </ng-container>
+                </b2b-inputbox>
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+    
+                <!-- DEPARTMENT -->
+                <b2b-inputbox container-body [popupOption]="true" [required]="true"
+                inputName="Department" [value]="employee_role.Deparment"                                     
+                fontSize="12px" [bold]="true" width="90%" height="35px" flexDirection="row"
+                inputboxPadding="0 0 0 10px"
+                border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                placeholder="Department" popWidth="auto">
+
+                    <ng-container popup-body *ngFor="let dep of department_table ">
+                        <b2b-list-tile [title]="dep.department" (click)="filterRole(dep)"
+                            hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                            height="30px" fontSize="14px" margin="2px 0">
+                        </b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+               <b2b-spacer container-body height="10px"></b2b-spacer>
+    
+                <!-- Designation -->
+                <b2b-inputbox container-body [popupOption]="true" [required]="true"
+                inputName="Designation" [value]="register_desination_name"                                     
+                fontSize="12px" [bold]="true" width="90%" height="35px" flexDirection="row"
+                inputboxPadding="0 0 0 10px"
+                border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                placeholder="Designation" popWidth="auto">
+
+                    <ng-container popup-body *ngFor="let desig of assign_filter_desig">
+                        <b2b-list-tile [title]="desig.designations_name" (click)="register_designation_select(desig)"
+                            hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                            height="30px" fontSize="14px" margin="2px 0" >
+                        </b2b-list-tile>
+                    <!-- <b2b-keyup ></b2b-keyup> -->
+                  </ng-container>
+                </b2b-inputbox>
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+    
+                <!-- REPORTING PERSION -->
+                <b2b-inputbox container-body [popupOption]="true" [required]="true"
+                inputName="Reporting to" [value]="roproting_to"                                      
+                fontSize="12px" [bold]="true" width="90%" height="35px" flexDirection="row"
+                inputboxPadding="0 0 0 10px"
+                border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                placeholder="Reporting to" popWidth="auto">
+
+                    <ng-container popup-body >
+                    <b2b-list-tile [title]="i.name" *ngFor="let i of hotelUsers.slice().reverse()" (click)="roportingTo(i)"
+                        hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                        height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    <!-- <b2b-keyup ></b2b-keyup> -->
+                    </ng-container>
+                </b2b-inputbox>
+          
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+                <!-- DATE OF JOINING -->
+                <b2b-inputbox container-body [required]="true"
+                (onChange)="date_of_joining = $event"
+                inputType="ng-date"
+                inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                inputName="Date of Joining" position="right" fontSize="12px" [bold]="true" width="90%" height="35px" flexDirection="row" 
+                [Input_1]="false" placeholder="70">
+                </b2b-inputbox>
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+    
+                <!-- DATE OF TERMINATION -->
+                <b2b-inputbox container-body
+                (onChange)="employeeDetails.date_of_termination = $event"
+                inputType="ng-date"
+                inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                inputName="Date of Termination" position="right" fontSize="12px" [bold]="true" width="90%" height="35px" flexDirection="row" 
+                [Input_1]="false" placeholder="70">
+                </b2b-inputbox>
+            </b2b-container>
+          </b2b-row>
+          
+          <!-- ASSIGN USER - (RP-7)-->
+          <b2b-inputbox container-body [popupOption]="true" *ngIf="isAssign"
+            inputName="Hotel" [value]="assign_Hotel_Name"                                     
+            fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+            inputboxPadding="0 0 0 10px"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="Hotel" popWidth="auto">
+
+                <ng-container popup-body *ngFor="let hotel of numberOfHotels">
+                  <b2b-list-tile [title]="hotel.Hotel_Name" (click)="hotel_desig(hotel)"
+                      hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                      height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                  <!-- <b2b-keyup ></b2b-keyup> -->
+                </ng-container>
+            </b2b-inputbox>
+            
+            <b2b-spacer container-body height="17px"></b2b-spacer>
+
+          <!-- DESIGNATION -->
+          <ng-container container-body *ngIf="isAssign">
+            <b2b-inputbox container-body [popupOption]="true"
+                inputName="Role" [value]="assig_desigantion"                                    
+                fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+                inputboxPadding="0 0 0 10px"
+                border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                placeholder="Role"
+                >
+
+                <ng-container popup-body *ngFor="let desig of filter_hotel_designation ">
+                  <b2b-list-tile [title]="desig.designations_name"
+                      hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                      height="30px" fontSize="14px" margin="2px 0" (click)="assign_user_desig(desig)"></b2b-list-tile>
+                  <!-- <b2b-keyup ></b2b-keyup> -->
+                </ng-container>
+
+            </b2b-inputbox>
+            <b2b-spacer container-body height="17px"></b2b-spacer>
+
+            <!-- REPORTING TO -->
+            <b2b-inputbox container-body [popupOption]="true"
+            inputName="Reporting to" [value]="roproting_to_assign"                                      
+            fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+            inputboxPadding="0 0 0 10px"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="Reporting to" popWidth="auto">
+
+                <ng-container popup-body >
+                <b2b-list-tile [title]="i.name" *ngFor="let i of hotelUsers.slice().reverse()" (click)="roportingToAssignTwo(i)"
+                    hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                    height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                <!-- <b2b-keyup ></b2b-keyup> -->
+                </ng-container>
+            </b2b-inputbox>
+
+            <b2b-spacer container-body height="17px"></b2b-spacer>
+
+            <!-- EMPLOYEE -->
+            <b2b-inputbox container-body [popupOption]="true"
+                inputName="Employee Name"                                  
+                fontSize="12px" [bold]="true" width="80%" height="35px" flexDirection="row"
+                inputboxPadding="0 0 0 10px" [value]="assign_employee_Name"
+                border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                placeholder="Employee Name"
+                >
+
+                <ng-container popup-body *ngFor="let user of list_All_User.slice().reverse()">
+                  <b2b-list-tile [title]="user.name"
+                      hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                      height="30px" fontSize="14px" margin="2px 0" (click)="assign_employee(user)">
+                    </b2b-list-tile>
+                  <!-- <b2b-keyup ></b2b-keyup> -->
+                </ng-container>
+
+            </b2b-inputbox>
+
+          </ng-container>
+
+            <b2b-spacer container-body height="10px"></b2b-spacer>
+            <b2b-spacer container-body height="10px"></b2b-spacer>
+            <b2b-button container-body class="tour-dep-submit" title="Submit" [apiSubmitDisable]="true" width="100px" height="30px" backgroundTheme="--color-primary" (click)="addRole()"></b2b-button>
+            <b2b-spacer container-body height="30px"></b2b-spacer>
+            
+            <b2b-spacer container-body height="40px"></b2b-spacer>
+            <!-- USER DETAILES TABLE START.......................................-->
+            <!-- TABLE HEADER -->
+            <b2b-row container-body>
+                <b2b-text row-body text="User Table"></b2b-text>
+                <!-- HOTEL DROPDOWN -->
+                <b2b-spacer row-body width="15px"></b2b-spacer>
+                <b2b-dropdown row-body popupWidth="150px" overflow="auto" alertPopWidth="150px" popupHeight="auto" zIndex="100"
+                alignItem="start" dropdownPosition="left">
+                    <b2b-row dropdown-selector>
+                        <b2b-tdata row-body >
+                            <div tdata-body style="display: flex;">
+                                <b2b-icon-button tdata-body icon="arrow_drop_down" width="20px" margin="0 0 0 3px"  iconSize="20px" colorTheme="--color-white" backgroundTheme="--color-drawer-light" [isRounded]="true"></b2b-icon-button>
+                                <b2b-text [text]="all_hotel_name_dep"></b2b-text>
+                            </div>
+                        </b2b-tdata>
+                    </b2b-row>
+    
+                    <b2b-text dropdown-selector-container text="Click Order Frequency"  fontSize="10px"></b2b-text>
+                    <b2b-row dropdown-items>
+                        <b2b-container row-body [property]="{padding:'0',borderRadius:'0'}">
+                           
+                            <ng-container container-body *ngFor="let hotel of numberOfHotels ">
+                                <b2b-list-tile class="orderFrequency" [title]="hotel.Hotel_Name" padding="2px 0" (click)="list_role_user(hotel)" row-body hoverTheme="--color-dark-grey" colorTheme="--color-black" height="25px" fontSize="13px"></b2b-list-tile>
+                            </ng-container>
+                            
+                        </b2b-container>
+                    </b2b-row>
+                </b2b-dropdown>
+            </b2b-row>
+    
+            <b2b-trow container-body display="flex" margin="0" zIndex="15" height="40px"
+            style="border: 1px solid grey;" width="auto"
+            colorTheme="--color-drawer-bottom-card" [bold]="true">
+                <ng-container trow-body *ngFor="let column of catelogTable">
+                    <b2b-tdata [title]="column" width="150px"
+                    style="border-right: 1px solid grey;color: black;" textAlign="center" fontSize="11.5px">
+                        <!-- <b2b-text *ngIf="column != 'SL No' " tdata-body text=" (" fontSize="11.5px"></b2b-text> -->
+                        <!-- <input tdata-body *ngIf="column != 'SL No' " type="checkbox"/> 
+                        <b2b-tdata tdata-body *ngIf="column != 'SL No' " title="all )"></b2b-tdata> -->
+                    </b2b-tdata>
+                </ng-container>
+            </b2b-trow>
+    
+            <!-- TABLE DATA -->
+            <b2b-trow container-body *ngFor="let user of roles_user_table; let i = index" display="flex" margin="0" zIndex="15" height="50px"
+            style="border: 1px solid lightgray;" width="auto"
+            colorTheme="--color-drawer-bottom-card" [bold]="true">
+                <b2b-tdata trow-body [title]="i + 1" width="150px"
+                style="border-right: 1px solid lightgray;" textAlign="center" fontSize="11.5px">
+                </b2b-tdata>
+    
+                <b2b-tdata trow-body [title]="user.name" width="150px"
+                style="border-right: 1px solid lightgray;" textAlign="center" fontSize="11.5px">
+                </b2b-tdata>
+                <b2b-tdata trow-body [title]="user.roles" width="150px" fontSize="11.5px" style="border-right: 1px solid lightgray;"></b2b-tdata>
+                <b2b-tdata trow-body [title]="user.designations_name" width="150px" fontSize="11.5px" style="border-right: 1px solid lightgray;"></b2b-tdata>
+                <b2b-tdata trow-body [title]="user.department_name" width="150px" fontSize="11.5px" style="border-right: 1px solid lightgray;"></b2b-tdata>
+    
+            </b2b-trow>
+        <!-- USER DETAILES TABLE END.......................................-->
+        <b2b-spacer container-body height="40px"></b2b-spacer>
+
+            
+        <!-- DEPARTMENT ...........................-->
+        <b2b-text container-body text="Department Table"></b2b-text>
+        <!-- HEADING -->
+        <table class="table" container-body>
+            <thead>
+              <tr>
+                <th>Hotel Name</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <!-- <td class="center-content" *ngFor="let role of filter_hotel_privilages">{{ role.role_name }}</td> -->
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let hotel of Hotel_deparment_designation; let hotelIndex = index">
+                <tr *ngFor="let dept of hotel.departments; let deptIndex = index">
+                  <ng-container *ngIf="deptIndex === 0">
+                    <td class="center-content" style="text-align: center;" [attr.rowspan]="hotel.departments.length">
+                      {{ hotel.hotel_name }}
+                    </td>
+                  </ng-container>
+                  <td class="center-content">{{ dept.department_name }}</td>
+                  <td class="center-content">
+                    <ng-container *ngFor="let desig of dept.designations">
+                      <div>{{ desig.designation_name }}</div>
+                    </ng-container>
+                  </td>
+                </tr>
+              </ng-container>
+
+
+              <!-- <td class="center-content" *ngFor="let role of filter_hotel_privilages">
+                <ng-container >
+                  <div>{{ role.role_name }}</div>
+                </ng-container>
+              </td> -->
+            </tbody>
+          </table>
+    </b2b-container>
+
+    <!-- Examble -->
+
+    <!-- privileges.component.html -->
+
+<!-- <div body-content>
+    <h2>Select Role:</h2>
+  
+    <label>
+      <input
+        type="radio"
+        name="role"
+        value="employee"
+        [(ngModel)]="selectedRole"
+        (change)="selectRole('employee')"
+      />
+      Employee
+    </label>
+  
+    <label>
+      <input
+        type="radio"
+        name="role"
+        value="manager"
+        [(ngModel)]="selectedRole"
+        (change)="selectRole('manager')"
+      />
+      Manager
+    </label>
+  
+    <label>
+      <input
+        type="radio"
+        name="role"
+        value="owner"
+        [(ngModel)]="selectedRole"
+        (change)="selectRole('owner')"
+      />
+      Owner
+    </label>
+  
+    <p>Selected Role: {{ selectedRole }}</p>
+  </div> -->
+  
+</b2b-dashboard-body>

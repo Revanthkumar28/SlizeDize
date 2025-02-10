@@ -1,0 +1,258 @@
+<b2b-container class="blur-overlay" [class.modified]="ismodified" container-body
+	[property]="{backgroundTheme: '--color-white', height:'98vh',overflowX:'hidden',overflowY:'hidden',maxWidth:'45%',position:'fixed',positionTop:'1%',positionRight:'1%',zIndex:'100',border:'2px solid var(--color-light-grey)',padding:'2px 9px 0 10px'}">
+	<b2b-container container-body [property]="{padding:'0 0 0 0'}">
+		<b2b-icon container-body icon="close" style="position: absolute;;right: 3%;" colorTheme="--color-white"
+			(click)="isProcurementStage()" fontSize="20px"></b2b-icon>
+		<!-- <b2b-icon container-body icon="expand" style="position: absolute;;right: 8%;" colorTheme="--color-white" (click)="ismodified = false" fontSize="20px"></b2b-icon> -->
+
+		<!-- Loader Style.css -->
+		<div container-body class="loader-" *ngIf="isLoading == true"></div>
+
+		<b2b-row container-body backgroundTheme="--color-primary" justifyContent="center" height="20px" >
+			<b2b-text row-body text="ORDER - LIFE CYCLE" fontSize="0.677vw"  colorTheme="--color-white" [bold]="true" ></b2b-text>
+		</b2b-row>
+
+		<!-- DROPDOWN for FILTER-->
+		<b2b-row container-body justifyContent="space-around" backgroundTheme="--color-button-navbar" borderTopLeftRadius="0vw" borderTopRightRadius="0vw">
+			<b2b-image class="refresh" row-body image="assets/reset.png" height="15px" width="16px" margin="0 0 2px 0" (click)="openorders('refresh')"></b2b-image>
+			<ng-container row-body *ngFor="let button of buttons">
+				<b2b-dropdown popupWidth="17vw" [isInsideClickFalsePopup]="false" overflow="auto" zIndex="100" popupHeight="auto" alignItem="start"
+				dropdownPosition="left">
+					<b2b-button dropdown-selector [title]="button['name']" width="8.854vw" height="1.302vw" [bold]="true" fontSize="0.625vw" [backgroundTheme]="button['name'] == selectedButton ? '--color-white' : '--color-transparent'" borderRadius="0vw" [colorTheme]="button['name'] == selectedButton ? ' --color-primary' : '--color-light-dark'" borderRadius="0" borderTopLeftRadius="0vw" borderTopRightRadius="0vw" (onPressed)="buttonClicked($event)"></b2b-button>
+					<input *ngIf="button['id'] != 1" #search search type="text" autofocus placeholder="Search"
+										[(ngModel)]="filterData" (ngModelChange)="filterData =$event">
+					<b2b-row dropdown-items *ngFor="let i of button['dropdown'] | multisearchFilter : filterData " padding="0.417vw">
+						<input row-body type="checkbox" (change)="checkvendor($event,i.vendor_id,i.rfq_id,i.departments_id,button)">
+						<b2b-text row-body text="{{i.vednor || i.rfq_id || i.department_name}}" fontSize="12px"  padding="0 0 0 0.521vw"></b2b-text>
+					</b2b-row>
+				</b2b-dropdown>
+			</ng-container>
+		</b2b-row>
+ </b2b-container>
+ 
+	 <!-- RFQ - DO -->
+	 <b2b-row *ngIf="count.Rfq_order_count != 0 || count.Rfq_approved != 0 || count.Rfq_waiting != 0 || count.direct_order != 0 || count.Do_approved !=0 ||  count.Do_waiting != 0" container-body backgroundTheme="--color-light-grey" padding="0" margin="0 0 0.521vw 0">	 
+		 <b2b-container row-body [property]="{backgroundTheme: '--color-white',height:'5.9vw', maxWidth:'5.977vw',padding:'0.521vw',width:'auto',margin:'4px 0.521vw 0 0',border:'2px solid var(--color-orange)'}">
+			 <b2b-image container-body image="assets/RFQ.jpeg" height="3.5vw" width="3.8vw"></b2b-image>
+			 <div container-body style="font-size: 0.625vw;">PIPELINE</div>
+		 </b2b-container>
+ 
+		 <b2b-row row-body  margin="0.521vw 0 0 0vw">
+			 <b2b-container row-body [property]="{padding:'0',height:'5.9vw',width:'13.021vw',position:'relative',margin:'0 0.521vw 0 1.8vw',border:'2px solid var(--color-orange)'}">
+				 <b2b-row container-body>
+					 <b2b-button row-body title="RFQ - Request for Quatation ({{count.Rfq_order_count}})" width="5.104vw" height="2.24vw" [buttonDisabled]="count.Rfq_order_count > 0 ? false:true" fontSize="0.573vw" colorTheme="--color-black" backgroundTheme="--color-yellow" margin="0 0 0 0.5vw" (click)="openorders('rfq_order')"></b2b-button>
+					 <div row-body class="diagonal-line"></div>
+					 <div row-body class="diagonal-line-2"></div>
+	 
+					 <b2b-container row-body [property]="{padding:'0.26vw 0 0.781vw 0.781vw',backgroundTheme:'none'}">
+						 <b2b-button container-body title="RFQ - Approved ({{count.Rfq_approved}})" backgroundTheme="--color-green" [buttonDisabled]="count.Rfq_approved > 0 ? false:true" width="5.104vw" height="2.24vw" fontSize="0.573vw" margin="0 0 0.6vw 0" (click)="openorders('rfq_approved')"></b2b-button>
+						 <b2b-button container-body title="RFQ - Awaiting Approval ({{count.Rfq_waiting}})" backgroundTheme="--color-orange" [buttonDisabled]="count.Rfq_waiting > 0 ? false:true" width="5.104vw" height="2.24vw" fontSize="0.573vw" (click)="openorders('rfq_waiting')"></b2b-button>
+					 </b2b-container>
+				 </b2b-row>
+			 </b2b-container>
+	 
+			 <b2b-container row-body [property]="{padding:'0',height:'5.9vw',width:'13.021vw',position:'relative',margin:'0 0.521vw 0 3.3vw',border:'2px solid var(--color-orange)' }">
+				 <b2b-row container-body >
+					 <b2b-button row-body title="DO - Direct Order ({{count.direct_order}})" width="5.104vw" height="2.24vw" [buttonDisabled]="count.direct_order > 0 ? false:true" fontSize="0.573vw"margin="0 0 0 0.469vw" backgroundTheme="--color-primary" (click)="openorders('direct_order')"></b2b-button>
+					 <div row-body class="diagonal-line"></div>
+					 <div row-body class="diagonal-line-2"></div>
+	 
+					 <b2b-container row-body [property]="{padding:'0.26vw 0 0.781vw 0.781vw',backgroundTheme:'none'}">
+						 <b2b-button container-body title="DO - Approved ({{count.Do_approved}})" backgroundTheme="--color-green" width="5.104vw" height="2.24vw" [buttonDisabled]="count.Do_approved > 0 ? false:true" fontSize="0.573vw" margin="0 0 0.6vw 0" (click)="openorders('do_approved')"></b2b-button>
+						 <b2b-button container-body title="DO - Awaiting Approval ({{count.Do_waiting}})" [buttonDisabled]="count.Do_waiting > 0 ? false:true" backgroundTheme="--color-orange" width="5.104vw" height="2.24vw" fontSize="0.573vw" (click)="openorders('do_waiting')"></b2b-button>
+					 </b2b-container>
+				 </b2b-row>
+			 </b2b-container>
+	 
+			 <b2b-container row-body [property]="{padding:'0',height:'5.9vw',width:'6.25vw',position:'relative',margin:'0 0.521vw 0 4.7vw',justifyContent:'center',border:'2px solid var(--color-orange)'}">
+				 <b2b-button container-body title="Service Request ({{count.service_request}})" [buttonDisabled]="count.service_request > 0 ? false:true" width="5.104vw" height="2.24vw" fontSize="0.573vw" backgroundTheme="--color-brown" (click)="openorders('service')"></b2b-button>
+			 </b2b-container>
+		 </b2b-row>
+		 
+	 </b2b-row>
+ 
+	 <!-- Compare -->
+	 <b2b-row *ngIf="count.rfq_compare !=0 " container-body backgroundTheme="--color-light-grey" padding="0">
+		 <!-- <b2b-container row-body [property]="{backgroundTheme: '--color-white',maxWidth:'11.042vw',padding:'0.521vw',width:'auto',margin:'0 0.521vw 0 0'}">
+			 <b2b-image container-body image="assets/RFQ-compare.jpeg" width="70vw"></b2b-image>
+			 <div container-body style="font-size: 12vw;text-align: center;">RFQ Compare</div>
+		 </b2b-container> -->
+		<b2b-container row-body
+			[property]="{backgroundTheme: '--color-white',maxWidth:'5.677vw',padding:'0.521vw',width:'auto',margin: '0px 1.521vw 0px 0px',border:'2px solid var(--color-orange)'}">
+			<b2b-image container-body image="assets/RFQ-compare.jpeg" height="3.8vw" width="100%"></b2b-image>
+			<div container-body style="font-size: 0.625vw; text-align: center;">RFQ COMPARE</div>
+		</b2b-container>
+
+		<b2b-row row-body margin="0.521vw">
+			<b2b-container row-body
+				[property]="{padding:'0',height:'5.9vw',width:'18vw',margin:'0 0 0 1vw' ,position:'relative',border:'2px solid var(--color-orange)'}">
+				<b2b-row container-body>
+					<b2b-button row-body title="RFQ - Compare ({{count.rfq_compare}})" [buttonDisabled]="count.rfq_compare > 0 ? false:true" width="5.104vw" height="2.24vw"
+						fontSize="0.573vw" margin="0 0 0 0.469vw" colorTheme="--color-black"
+						backgroundTheme="--color-yellow" (click)="openorders('rfq_compare')"></b2b-button>
+					<div row-body class="diagonal-line"></div>
+					<div row-body class="diagonal-line-2-5"></div>
+
+					<b2b-container row-body [property]="{padding:'0.26vw 0 0.781vw 0.781vw',backgroundTheme:'none'}">
+						<b2b-button container-body title="RFQ - Submitted ({{count.rfq_submitted}})" [buttonDisabled]="count.rfq_submitted > 0 ? false:true"
+							backgroundTheme="--color-green" width="5.104vw" height="2.24vw" fontSize="0.573vw"
+							margin="0 0 0.6vw 0" (click)="openorders('rfq_submited')"></b2b-button>
+						<b2b-button container-body title="RFQ - Not Submitted ({{count.rfq_received}})" [buttonDisabled]="count.rfq_received > 0 ? false:true"
+							backgroundTheme="--color-orange" width="5.104vw" height="2.24vw" fontSize="0.573vw"
+							(click)="openorders('rfq_received')"></b2b-button>
+					</b2b-container>
+					<div row-body class="diagonal-line-5-2"></div>
+
+
+					<b2b-button row-body title="RFQ - Renegotiate({{count.rfq_negotiate}})" [buttonDisabled]="count.rfq_negotiate > 0 ? false:true"
+						backgroundTheme="--color-primary" width="5.104vw" height="2.24vw" fontSize="0.573vw"
+						margin="0 0.6vw 3.6vw 0" (click)="openorders('rfq_negotiate')"></b2b-button>
+
+				</b2b-row>
+			</b2b-container>
+		</b2b-row>
+
+
+	</b2b-row>
+
+
+	<b2b-row container-body justifyContent="center" margin="7px 0 0 0">
+		<b2b-text row-body text="RELEASED ORDERS" fontSize="0.6vw" backgroundTheme="--color-primary" textAlign="center"
+			colorTheme="--color-white" style="height: 17px; width:100px;"></b2b-text>
+	</b2b-row>
+
+	<!-- Released Order -->
+	<!-- scheduleorder -->
+	<b2b-row *ngIf="this.count.schedule_order != 0 " container-body backgroundTheme="--color-light-grey" padding="0"
+		margin="0 0 0.521vw 0">
+		<!-- <b2b-container row-body [property]="{backgroundTheme: '--color-white',maxWidth:'11.042vw',padding:'0.521vw',width:'auto',margin:'0 0.521vw 0 0'}">
+			 <b2b-image container-body image="assets/scheduled-order.jpeg" width="70vw"></b2b-image>
+ 
+			 <div container-body style="font-size: 12vw;text-align: center;">SECHDUELD ORDERS</div>
+		 </b2b-container> -->
+		<b2b-container row-body
+			[property]="{backgroundTheme: '--color-white',maxWidth:'5.677vw',padding:'0.521vw',width:'auto', margin:'0px 0.521vw 0px 0px',border:'2px solid var(--color-orange)'}">
+			<b2b-image container-body image="assets/scheduled-order.jpeg" width="4.08vw" height="2.9vw"></b2b-image>
+			<div container-body style="font-size: 0.625vw; text-align: center;">SECHDUELD ORDERS</div>
+		</b2b-container>
+
+		<b2b-row row-body margin="0.521vw">
+			<b2b-container row-body
+				[property]="{padding:'0',height:'5.9vw',width:'18.229vw',position:'relative',margin:'0 0.521vw 0 1.5vw',border:'2px solid var(--color-orange)'}">
+				<b2b-row container-body>
+
+					<b2b-button row-body title="Number of Items ({{count.schedule_po}})" [buttonDisabled]="count.schedule_po > 0 ? false:true" width="5.104vw" height="2.24vw"
+						fontSize="0.573vw" backgroundTheme="--color-purple" margin="0 0.781vw 0 0.26vw"
+						(click)="openorders('schedule')"></b2b-button>
+					<div row-body class="diagonal-line-3-1"></div>
+					<b2b-button row-body title="Number of Products ({{count.schedule_order}})" [buttonDisabled]="count.schedule_order > 0 ? false:true" width="5.104vw"
+						height="2.24vw" fontSize="0.573vw" backgroundTheme="--color-black"
+						(click)="openorders('schedule')"></b2b-button>
+
+					<div row-body class="diagonal-line-3"></div>
+					<div row-body class="diagonal-line-3-2"></div>
+
+					<b2b-container row-body [property]="{padding:'0.26vw 0 0.781vw 0.781vw',backgroundTheme:'none'}">
+						<b2b-button container-body title="RFQ ({{count.schedule_rfq_count}})" [buttonDisabled]="count.schedule_rfq_count > 0 ? false:true"
+							backgroundTheme="--color-yellow" width="5.104vw" height="2.24vw" fontSize="0.573vw"
+							colorTheme="--color-black" margin="0 0 0.6vw 0"
+							(click)="openorders('rfq_schedule')"></b2b-button>
+						<b2b-button container-body title="DO ({{count.schedule_do_count}})" [buttonDisabled]="count.schedule_do_count > 0 ? false:true"
+							backgroundTheme="--color-primary" width="5.104vw" height="2.24vw" fontSize="0.573vw"
+							(click)="openorders('do_schedule')"></b2b-button>
+					</b2b-container>
+				</b2b-row>
+			</b2b-container>
+		</b2b-row>
+	</b2b-row>
+
+	<!-- Under Process -->
+	<b2b-row *ngIf="count.underprocess != 0" container-body backgroundTheme="--color-light-grey" padding="0"
+		margin="0 0 0.521vw 0">
+		<!-- <b2b-container row-body [property]="{backgroundTheme: '--color-white',maxWidth:'11.042vw',padding:'0.521vw',width:'auto',margin:'0 0.521vw 0 0'}">
+			 <b2b-image container-body image="assets/under-process.jpeg" width="70vw"></b2b-image>
+			 <div container-body style="font-size: 12vw;text-align: center;">UNDER PROCESS</div>
+		 </b2b-container> -->
+		 <b2b-container row-body [property]="{backgroundTheme: '--color-white',maxWidth:'5.677vw',padding:'0.521vw',width:'auto',margin:'0px 1.521vw 0px 0px',border:'2px solid var(--color-orange)'}">
+			 <b2b-image container-body image="assets/under-process.jpeg" width="100%" height="3.3vw"></b2b-image>
+			 <div container-body style="font-size: 0.625vw;text-align: center;">UNDER PROCESS</div>
+		 </b2b-container>
+ 
+		 <b2b-row row-body margin="0.521vw">
+			 <b2b-container row-body [property]="{padding:'0',height:'6.4vw',width:'18.229vw',position:'relative',margin:'0px 1.900vw 0px 1vw',border:'2px solid var(--color-orange)'}">
+				 <b2b-row container-body>
+					 
+					 <b2b-button row-body title="PO ({{count.underprocess_po}})" [buttonDisabled]="count.underprocess_po > 0 ? false:true" width="5.104vw" height="1.771vw" fontSize="0.521vw" backgroundTheme="--color-purple" margin="0 0.781vw 0 0.26vw" (click)="openorders('under_process')"></b2b-button>
+					 <div row-body class="diagonal-line-4-1"></div>
+					 <b2b-button row-body title="Number of Products ({{count.underprocess}})" [buttonDisabled]="count.underprocess > 0 ? false:true" width="5.104vw" height="1.771vw" fontSize="0.521vw" backgroundTheme="--color-black" (click)="openorders('under_process')"></b2b-button>
+					 <div row-body class="diagonal-line-4"></div>
+					 <div row-body class="diagonal-line-4-2"></div>
+					 <div row-body class="diagonal-line-4-3"></div>
+					 <b2b-container row-body [property]="{padding:'0.16vw 0 0.781vw 0.781vw',backgroundTheme:'none'}">
+						 <b2b-button container-body title="Under Process ({{count.sales_order}})" [buttonDisabled]="count.sales_order > 0 ? false:true" backgroundTheme="--color-pink-1" colorTheme="--color-black" width="5.104vw" height="1.671vw" fontSize="0.521vw" margin="0 0 0.3vw 0" (click)="openorders('sales_order')"></b2b-button>
+						 <b2b-button container-body title="Pick & Pack /Ready for Dispatch ({{count.pick_and_pack}})" [buttonDisabled]="count.pick_and_pack > 0 ? false:true" backgroundTheme="--color-pink" colorTheme="--color-black" width="5.104vw" height="1.98vw" fontSize="0.521vw" margin="0 0 0.3vw 0" (click)="openorders('pick_and_pack')"></b2b-button>
+						 <b2b-button container-body title="Dispatched ({{count.dispatched}})" [buttonDisabled]="count.dispatched > 0 ? false:true" backgroundTheme="--color-pink-2" colorTheme="--color-black" width="5.104vw" height="1.671vw" fontSize="0.521vw" (click)="openorders('dispatched')"></b2b-button>
+					 </b2b-container>
+				 </b2b-row>
+			 </b2b-container>
+	 
+			 <!-- <b2b-container row-body [property]="{padding:'0',height:'6.4vw',width:'6.15vw',position:'relative',margin:'0 0.521vw 0 2.5vw',justifyContent:'center',border:'2px solid var(--color-orange)'}">
+				 <b2b-button container-body title="Service Request (2)" width="5.104vw" height="2.24vw" fontSize="0.573vw" backgroundTheme="--color-brown"></b2b-button>
+			 </b2b-container> -->
+		 </b2b-row>
+	 </b2b-row>
+
+	 <!-- renegotiate -->
+	 <b2b-row *ngIf="count.renogo_reject != 0" container-body backgroundTheme="--color-light-grey" padding="0" margin="0 0 0.521vw 0">
+		 
+		 <b2b-container row-body [property]="{backgroundTheme: '--color-white',maxWidth:'5.677vw',padding:'0.521vw',width:'auto',margin:'0 0.521vw 0 0',border:'2px solid var(--color-orange)'}">
+			 <b2b-image container-body image="assets/Rejected.jpeg" height="2vw" width="90%"></b2b-image>
+			 <div container-body style="font-size: 0.625vw; text-align:center">RENEGOTIATE, <br>REJECTED OR <br> CANCELLED</div>
+		 </b2b-container>
+		 <b2b-container row-body [property]="{padding:'0',height:'5.9vw',width:'18.229vw',position:'relative',margin:'0 0.521vw 0 1.3vw',border:'2px solid var(--color-orange)'}">
+			 <b2b-row container-body  >
+  
+				 <b2b-button row-body title="PO ({{count.renogo_reject_po}})" [buttonDisabled]="count.renogo_reject_po > 0 ? false:true" width="5.104vw" height="2.24vw" fontSize="0.573vw" backgroundTheme="--color-purple" margin="0 0.781vw 0 0.26vw" (click)="openorders('reject_reno')"></b2b-button>
+				 <div row-body class="diagonal-line-3-1"></div>
+				 <b2b-button row-body title="Number of Products ({{count.renogo_reject}})" [buttonDisabled]="count.renogo_reject > 0 ? false:true" width="5.104vw" height="2.24vw" fontSize="0.573vw" backgroundTheme="--color-black" (click)="openorders('reject_reno')"></b2b-button>
+				 
+				 <div row-body class="diagonal-line-3"></div>
+				 <div row-body class="diagonal-line-3-2"></div>
+ 
+				 <b2b-container row-body [property]="{padding:'0.26vw 0 0.781vw 1.1vw',backgroundTheme:'none'}">
+					 <b2b-button container-body title="Negotiate ({{count.renegotiation_po}})" [buttonDisabled]="count.renegotiation_po > 0 ? false:true" backgroundTheme="--color-yellow" width="5.104vw" height="2.24vw" fontSize="0.573vw" colorTheme="--color-black"  margin="0 0 0.6vw 0" (click)="openorders('negotiate')"></b2b-button>
+					 <b2b-button container-body title="Reject ({{count.reject_po}})" [buttonDisabled]="count.reject_po > 0 ? false:true" backgroundTheme="--color-primary" width="5.104vw" height="2.24vw" fontSize="0.573vw" (click)="openorders('reject')"></b2b-button>
+				 </b2b-container>
+				 <!-- <b2b-container row-body [property]="{padding:'0',height:'5.9vw',width:'6.15vw',position:'relative',margin:'-4px 1.801vw 0px 1.9vw',justifyContent:'center',border:'2px solid var(--color-orange)'}">
+					 <b2b-button container-body title="Service Request (2)" width="5.104vw" height="2.24vw" fontSize="0.573vw" backgroundTheme="--color-brown"></b2b-button>
+				 </b2b-container> -->
+			 </b2b-row>
+		 </b2b-container>
+	 </b2b-row>
+	 
+	 <!-- descrepancy -->
+	 <b2b-row  *ngIf="count.descrepancy != 0" container-body backgroundTheme="--color-light-grey" padding="0" margin="0 0 0.521vw 0">
+		 <b2b-container row-body [property]="{backgroundTheme: '--color-white',maxWidth:'5.677vw',padding:'0.521vw',width:'auto',margin:'0 0.521vw 0 0',border:'2px solid var(--color-orange)'}">
+			 <b2b-image container-body image="assets/Discrepancy.jpeg" height="3.7vw" width="100%"></b2b-image>
+			 <div container-body style="font-size: 0.625vw;">DISCREPANCY</div>
+		 </b2b-container>
+		 <b2b-container row-body [property]="{padding:'0',height:'5.9vw',width:'18.229vw',position:'relative',margin:'0 0.521vw 0 1.5vw', justifyContent:'center', border:'2px solid var(--color-orange)'}">
+			 <b2b-row container-body  >
+  
+				 <b2b-button row-body title="PO ({{count.descrepancy_po}})" [buttonDisabled]="count.descrepancy_po > 0 ? false:true" width="5.104vw" height="2.24vw" fontSize="0.573vw" backgroundTheme="--color-purple" margin="0 0.781vw 0 0.26vw" (click)="openorders('descrepancy')"></b2b-button>
+				 <div row-body class="diagonal-line-5-1"></div>
+				 <b2b-button row-body title="Number of Products ({{count.descrepancy}})" [buttonDisabled]="count.descrepancy > 0 ? false:true" width="5.104vw" height="2.24vw" fontSize="0.573vw" backgroundTheme="--color-black" (click)="openorders('descrepancy')"></b2b-button>
+				 <div row-body class="diagonal-line-5-3"></div>
+				 <b2b-button row-body title="Discrepancy ({{count.descrepency_items}})" [buttonDisabled]="count.descrepency_items > 0 ? false:true" backgroundTheme="--color-primary" width="5.104vw" height="2.24vw" fontSize="0.573vw" margin="0 0 0 1vw" (click)="openorders('descrepancy')"></b2b-button>
+
+
+				<!-- <div row-body class="diagonal-line-3"></div>
+				 <div row-body class="diagonal-line-3-2"></div> -->
+			</b2b-row>
+		</b2b-container>
+	</b2b-row>
+	<b2b-text
+		*ngIf="count.Rfq_order_count == 0 && count.direct_order == 0 && count.rfq_compare == 0 && count.schedule_order == 0 && count.underprocess == 0 && count.renogo_reject ==0 && count.descrepancy == 0 "
+		container-body class="infotext" text="Currently there is no orders in this Hotel"></b2b-text>
+
+</b2b-container>

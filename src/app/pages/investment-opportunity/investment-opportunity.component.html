@@ -1,0 +1,142 @@
+<b2b-dashboard-body  backgroundTheme="--color-light-grey">
+    <b2b-heading-panel body-content title="Investment Opportunity" height="22px" fontSize="16px">
+        <b2b-icon-button panel-leading icon="chevron_left" (click)="goBack()" backgroundTheme="--color-primary" [isCurved]="true" colorTheme="--color-white" height="22px" width="23px"></b2b-icon-button>
+    </b2b-heading-panel>
+  <b2b-row body-content margin="10px 0 0 0" padding="10px 20px 30px 20px" height="77vh"  overflowX="hidden" overflowY="scroll" backgroundTheme="--color-white" borderRadius="20px" alignItem="start" [mobileview]="true">
+    <ng-container row-body  [ngSwitch]="Screen">
+
+            <b2b-container row-body *ngSwitchDefault [property]="{flex: 2, height: 'auto',padding:'0',alignItem:'start'}">
+                <b2b-spacer container-body height="20px"></b2b-spacer>
+                <b2b-row container-body justifyContent="flex-start">
+                  <b2b-row row-body  width="400px" margin="0 0 0 0" borderRadius="5px" >
+                    <b2b-inputbox row-body [popupOption]="true"  [readOnly]="true" border="1px solid var(--color-dark-grey)" width="97%" [required]="true" fontSize="15px"  height="45px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="this.searchDate"  colorTheme="--color-black" [twoInputFeild]="true" placeholder="Filter by Date"> 
+                      <ng-container popup-body *ngFor="let i of job_date">
+                          <b2b-list-tile [title]="i" (click)="getInput2(i)" hoverTheme="--color-light-grey"
+                              colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px"
+                              margin="2px 0"></b2b-list-tile>
+                      </ng-container>
+                  </b2b-inputbox>
+                </b2b-row>
+                  <b2b-row row-body width="400px" margin="0 0 0 0" borderRadius="5px">
+                    <input row-body class="box" type="text"  placeholder="Search by property Name..." [(ngModel)]="searchName"  (input)="filterlist()"/>
+                  </b2b-row>
+                  <b2b-spacer row-body width="20px"></b2b-spacer>
+
+                  <b2b-row row-body  width="400px" margin="0 0 0 0" borderRadius="5px" >
+                    <input row-body class="box" type="text" placeholder="Search by location..." [(ngModel)]="searchLocation"  (input)="filterlocation(searchLocation,'country')"/>
+                </b2b-row>
+                <b2b-spacer row-body width="20px"></b2b-spacer>
+                   
+                    <b2b-button *ngIf="isLoggedIn || joblogin" row-body title="Admin" alignItem="end" colorTheme="--color-white" backgroundTheme="--color-sky-blue" width="auto" borderRadius="6px" height="30px" padding="0px 30px" [bold]="true" (click)="Admin()"></b2b-button>
+
+                </b2b-row>
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+  <!-- shared Start -->
+  <b2b-row container-body *ngIf="open_share_page" flexDirection="column" alignItem="start">
+
+  <b2b-text row-body text="Shared files:"></b2b-text>
+  <b2b-spacer row-body height="10px"></b2b-spacer>
+
+  <b2b-row row-body class="boxes" *ngFor="let data of shared_files" position="relative" flexDirection="column" width="23vw" alignItem="start" margin="0 0 20px 0 "  (click)="viewproperty(data)"  borderRadius="10px" [mobileview]="true">
+    <b2b-container row-body [property]="{padding:'10px',height:'100%',width:'100%',backgroundTheme:'',flex:1,alignItem:'center',position:'relative'}">
+    <b2b-badge-image container-body fontSize="12px" [text]="data.sale_type" position="absolute" positionLeft="70%"  positionTop="10%" width="70px" height="25px" colorTheme="--color-white" padding="2px" backgroundTheme="--color-marketplace-accent" borderRadius="20px"  ></b2b-badge-image>
+      <b2b-spacer container-body [flex]="1"></b2b-spacer>
+
+        <b2b-image container-body [image]="data.images.length > 0 ? data.images[0].file : ''"  width="100%" borderRadius="10px" height="150px"></b2b-image>
+    </b2b-container>
+    <b2b-container row-body  [property]="{padding:'0 20px',alignItem:'start',justifyContent:'flex-start'}">
+    <ng-container container-body >
+            <b2b-row fontSize="13px"  height="100%" colorTheme="--color-black" flexDirection="column"backgroundTheme="--color-white">
+              <b2b-row row-body>
+              <b2b-text row-body text="Property Name:"></b2b-text>
+              <b2b-text row-body [text]="data.property_name" fontSize="15px" colorTheme="--color-sky-blue"></b2b-text>
+              
+          </b2b-row>
+          <b2b-row row-body>
+              <b2b-text row-body text="Country:"></b2b-text>
+              <b2b-text row-body [text]="data.country" fontSize="15px" colorTheme="--color-sky-blue"></b2b-text>
+              
+          </b2b-row>
+                <b2b-container row-body [property]="{justifyContent:'flex-start',alignItem:'flex-start',padding:'0'}">
+                  <b2b-row container-body>
+                  <b2b-text row-body text="Price:"></b2b-text>
+                    <b2b-text row-body [text]="data.asking_price" fontSize="15px" colorTheme="--color-sky-blue" textAlign="start" justifyContent="flex-start"></b2b-text>
+                    </b2b-row>
+              <b2b-row container-body>
+                  <b2b-text row-body text="Square Feet:"></b2b-text>
+             <b2b-tdata row-body [title]="data.square_feet" fontSize="14px" colorTheme="--color-sky-blue" textAlign="start" justifyContent="start"></b2b-tdata>
+             </b2b-row>
+             <b2b-text container-body [text]="data.date" fontSize="12px"></b2b-text>
+             <b2b-spacer container-body height="3px"></b2b-spacer>
+
+                </b2b-container>
+                   
+            </b2b-row>
+        </ng-container>
+    </b2b-container>
+   </b2b-row>
+   </b2b-row>
+   <!-- shared end -->
+   <b2b-text container-body text="All files:" [bold]="true"></b2b-text>
+   <b2b-spacer container-body height="10px"></b2b-spacer>
+ 
+                <div container-body class="grid">
+               
+                    <b2b-row container-body class="boxes" *ngFor="let data of filteredlist" position="relative" flexDirection="column" alignItem="start" margin="0 0 20px 0 "    
+
+                    (click)="viewproperty(data)"  borderRadius="10px" [mobileview]="true">
+                  <b2b-container row-body [property]="{padding:'10px',height:'100%',width:'100%',backgroundTheme:'',flex:1,alignItem:'center',position:'relative'}">
+                  <b2b-badge-image container-body fontSize="12px" [text]="data.sale_type" position="absolute" positionLeft="70%"  positionTop="10%" width="70px" height="25px" colorTheme="--color-white" padding="2px" backgroundTheme="--color-marketplace-accent" borderRadius="20px"  ></b2b-badge-image>
+                    <b2b-spacer container-body [flex]="1"></b2b-spacer>
+        
+                      <b2b-image container-body [image]="data.images.length > 0 ? data.images[0].file : ''"  width="100%" borderRadius="10px" height="150px"></b2b-image>
+                  </b2b-container>
+                  <b2b-container row-body  [property]="{padding:'0 20px',alignItem:'start',justifyContent:'flex-start'}">
+                  <ng-container container-body >
+                          <b2b-row fontSize="13px"  height="100%" colorTheme="--color-black" flexDirection="column"backgroundTheme="--color-white">
+                            <b2b-row row-body>
+                            <b2b-text row-body text="Property Name:"></b2b-text>
+                            <b2b-text row-body [text]="data.property_name" fontSize="15px" colorTheme="--color-sky-blue"></b2b-text>
+                            
+                        </b2b-row>
+                        <b2b-row row-body>
+                            <b2b-text row-body text="Country:"></b2b-text>
+                            <b2b-text row-body [text]="data.country" fontSize="15px" colorTheme="--color-sky-blue"></b2b-text>
+                            
+                        </b2b-row>
+                              <b2b-container row-body [property]="{justifyContent:'flex-start',alignItem:'flex-start',padding:'0'}">
+                                <b2b-row container-body>
+                                <b2b-text row-body text="Price:"></b2b-text>
+                                  <b2b-text row-body [text]="data.asking_price" fontSize="15px" colorTheme="--color-sky-blue" textAlign="start" justifyContent="flex-start"></b2b-text>
+                                  </b2b-row>
+                            <b2b-row container-body>
+                                <b2b-text row-body text="Square Feet:"></b2b-text>
+                           <b2b-tdata row-body [title]="data.square_feet" fontSize="14px" colorTheme="--color-sky-blue" textAlign="start" justifyContent="start"></b2b-tdata>
+                           </b2b-row>
+                              <b2b-text container-body [text]="data.date" fontSize="12px"></b2b-text>
+                              <b2b-spacer container-body height="3px"></b2b-spacer>
+
+                            
+                              </b2b-container>
+                                 
+                          </b2b-row>
+                      </ng-container>
+                  </b2b-container>
+                 </b2b-row>
+                </div>
+
+           </b2b-container> 
+            <!-- new screen for View -->
+     <b2b-container body-content *ngSwitchCase="'viewing'" [property]="{height:'auto',overflowY:'hidden',overflowX:'hidden',position:'relative'}" >
+
+      <!-- view listing component -->
+       <b2b-investment-viewproperty container-body [view_property]="share_data" [type]="send_type" (close_view)="closeView()"> </b2b-investment-viewproperty>
+           
+</b2b-container>
+           <!-- admin-screen -->
+           <b2b-container row-body *ngSwitchCase="'admin'" [property]="{ height: 'auto',padding:'0',alignItem:'start'}">
+           <b2b-investment-admin class="admin" container-body (close_jobs)="Screen = $event" (refresh_data)="getapi()"> </b2b-investment-admin>
+        </b2b-container>
+        </ng-container>
+    </b2b-row>
+   </b2b-dashboard-body>

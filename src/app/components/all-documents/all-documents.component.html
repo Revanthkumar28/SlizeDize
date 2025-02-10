@@ -1,0 +1,282 @@
+<!-- <table border="1">
+	<thead>
+	  <tr style="color: blue;">
+		<th *ngFor="let header of headers">{{ header }}</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr *ngFor="let row of rows">
+		<td *ngFor="let cell of row">{{ cell }}</td>
+	  </tr>
+	</tbody>
+  </table> -->
+<!-- Heading -->
+ <b2b-row container-body flexDirection="column" >
+	<b2b-row row-body >
+		<ng-container row-body *ngFor="let button of button_name">
+			<b2b-button [title]="button['name']" boxShadow="0 0 10px lightGrey" borderRadius="3px" [borderBottom]="button['name'] == selectedButton ? '--color-orange' : '--color-white'" [colorTheme]="button['name'] == selectedButton ? '--color-black' : '--color-dark-grey'" padding="5px 10px" margin="-7px" height="auto" width="auto" (onPressed)="buttonclicked($event)" margin="10px"></b2b-button>
+		</ng-container>
+	</b2b-row>
+	<b2b-spacer row-body height="8px"></b2b-spacer>    
+
+<b2b-row row-body *ngIf="selectedButton =='Purchase Request' " flexDirection="column" >	
+<b2b-trow row-body [column]="headcolumn" margin="0" position="sticky" top="0" height="50px"
+	backgroundTheme="--color-white" colorTheme="--color-drawer-bottom-card" [bold]="true">
+	<ng-container trow-body *ngFor="let column of headers">
+		<b2b-tdata [title]="column" [width]="column == 'Purachase Order' ? '150px' :'100%'" fontSize="12px"></b2b-tdata>
+	</ng-container>
+</b2b-trow>
+<!-- <values> -->
+<!-- <b2b-row container-body >
+
+</b2b-row> -->
+<b2b-row row-body overflowY="auto" [height]="user_type == 'vu'? '60vh':'42vh' " flexDirection="column">
+
+<ng-container row-body *ngFor="let data of tableValues.slice().reverse()">
+	<b2b-trow container-body [HoverBoxShadow]="true" [isExpanded]="true"
+	[column]="headcolumn"  fontSize="12px" colorTheme="--color-black" backgroundTheme=" --color-lighter-green"
+
+	*ngIf="groupOrder_id == '' || groupOrder_id == data.rfq_id " (onExpand)="tableExpand($event)"
+	[id]="data.rfq_id" fontSize="12px" [isExpanded]="groupOrder_id == data.rfq_id"
+	borderRadius="var(--table-radius)" height="40px" [showExpand2]="true">
+
+	<b2b-tdata trow-body class="marginleft" [title]="data.rfq_id"></b2b-tdata>
+	<b2b-tdata trow-body [title]="data.count"></b2b-tdata>
+	<b2b-tdata trow-body>
+		<b2b-drop-down-xaxis tdata-body>
+         <b2b-text select-item class="link" text="Invoice" [colorTheme]="data.invoices.length > 0 ?' --color-primary-dark':'--color-redd' " fontSize="11px"> </b2b-text>
+		 <div class="invoice_padd" dropDown-Items *ngFor="let i of data.invoices[0] ;let x = index">
+			<a dropdown-items target="blank"  [href]="i" >Invoice_{{x+1}}</a>
+			
+		 </div>
+		 </b2b-drop-down-xaxis>
+	</b2b-tdata>
+	<b2b-tdata trow-body>
+		<b2b-drop-down-xaxis tdata-body>
+         <b2b-text select-item class="link" text="Delivery Challan" [colorTheme]="data.delivery_chalans.length > 0 ?' --color-primary-dark':'--color-redd' " fontSize="11px"> </b2b-text>
+		 <div class="invoice_padd" dropDown-Items *ngFor="let i of data.delivery_chalans[0] ;let x = index">
+			<a dropdown-items target="blank"  [href]="i" >Delivery_challan_{{x+1}}</a>
+			
+		 </div>
+		 </b2b-drop-down-xaxis>
+	</b2b-tdata>
+	<b2b-tdata trow-body>
+		<b2b-drop-down-xaxis tdata-body>
+         <b2b-text select-item class="link" text="Lorry Recepts" [colorTheme]="data.lorry_recepts.length > 0 ?' --color-primary-dark':'--color-redd' " fontSize="11px"> </b2b-text>
+		 <div class="invoice_padd" dropDown-Items *ngFor="let i of data.lorry_recepts[0] ;let x = index">
+			<a dropdown-items target="blank"  [href]="i" >Lorry_Recepts_{{x+1}}</a>
+			
+		 </div>
+		 </b2b-drop-down-xaxis>
+	</b2b-tdata>
+	
+	<b2b-tdata trow-body>
+		<b2b-drop-down-xaxis tdata-body>
+         <b2b-text select-item class="link" text="Warrenty Card" [colorTheme]="data.warrantys.length > 0 ?' --color-primary-dark':'--color-redd' " fontSize="11px" (click)="data.warrantys.length > 0 ? '':showError()"> </b2b-text>
+		 <div class="invoice_padd" dropDown-Items *ngFor="let i of data.warrantys[0] ;let x = index">
+			<a dropdown-items target="blank"  [href]="i" >Warrenty_card_{{x+1}}</a>
+			
+		 </div>
+		 </b2b-drop-down-xaxis>
+	</b2b-tdata>
+	<b2b-tdata trow-body [title]="data.payment_terms"></b2b-tdata>
+	
+	<!-- <b2b-tdata trow-body [title]="data.vendor_coating_price"></b2b-tdata>
+	<b2b-tdata trow-body [title]="data.total_req_qty"></b2b-tdata>
+	<b2b-tdata trow-body [title]="data.ETA"></b2b-tdata>
+	<b2b-tdata trow-body [title]="'-'"></b2b-tdata>-->
+	<b2b-tdata *ngIf="user_type =='vu' " trow-body [title]="data.Hotel_Name"></b2b-tdata> 
+
+	<b2b-tdata  trow-body *ngIf="isLoggedIn">
+		<b2b-icon-button  tdata-body style="position: absolute; right: 20px;" row-body icon="more_vert" (click)="vendor_details(data,'PR')" padding="0 0 0 0"
+			colorTheme="--color-dark-grey">
+		</b2b-icon-button>
+
+	</b2b-tdata>
+	<b2b-tdata *ngIf="!isLoggedIn" trow-body title="-"></b2b-tdata> 
+
+	<!-- <b2b-tdata *ngIf="user_type =='vu' " trow-body title="-"></b2b-tdata>  -->
+ 
+</b2b-trow>
+</ng-container>
+
+
+<!-- EXPANDED ORDER VALUE AND DETAILS -->
+<ng-container row-body >
+	<b2b-trow *ngIf="groupOrder_id != ''" margin="0" position="sticky" top="0" column="9*1fr" height="50px"
+	backgroundTheme="--color-white" colorTheme="--color-drawer-bottom-card" [bold]="true"> 
+	<ng-container trow-body *ngFor="let column of expandedTable">
+		<b2b-tdata [title]="column" column="9*1fr" fontSize="12px"></b2b-tdata>
+	</ng-container>
+</b2b-trow>
+</ng-container>
+
+<ng-container row-body *ngFor="let data of documents_values">
+	<b2b-trow container-body [HoverBoxShadow]="true" 
+	column="9*1fr"  fontSize="12px" colorTheme="--color-black" backgroundTheme="--color-button-navbar"
+	*ngIf="groupOrder_id == data.rfq_id " 
+	borderRadius="var(--table-radius)" height="40px" >
+	<b2b-tdata trow-body>
+	<img tdata-body [src]=" data.vp == '1'? data.vendor_products[0].product_image:data.vp =='2'? data.temporary_products[0].product_image: data.products[0].product_image"  width="30px"/>
+    </b2b-tdata>
+	<b2b-tdata trow-body [title]="transformPlacementData(data.vp == '1'? data.vendor_products[0].name :data.vp =='2'? data.temporary_products[0].name :data.products[0].brand_products_name)"></b2b-tdata>
+	<b2b-tdata trow-body [title]="data.rfq_id"></b2b-tdata>
+	<b2b-tdata trow-body>
+		<b2b-drop-down-xaxis tdata-body>
+         <b2b-text select-item class="link" text="GRN document" [colorTheme]="data.GRNdocuments.length > 0 ?' --color-primary-dark':'--color-redd' " fontSize="11px" (click)="data.GRNdocuments.length > 0 ?'':showError()"> </b2b-text>
+		 <div class="invoice_padd" dropDown-Items *ngFor="let i of data.GRNdocuments[0] ;let x = index">
+			<a dropdown-items target="blank"  [href]="i" >GRN_Document_{{x+1}}</a>
+			
+		 </div>
+		 </b2b-drop-down-xaxis>
+	</b2b-tdata>
+	<b2b-tdata trow-body>
+		<!-- <a tdata-body target="blank" [href]="data.check_receipt">Check_Receipt</a> -->
+		<b2b-drop-down-xaxis tdata-body>
+			<b2b-text select-item class="link" text="Check " [colorTheme]="data.check.length > 0 ?' --color-primary-dark':'--color-redd' " fontSize="11px" (click)="data.check.length > 0 ?'':showError()"> </b2b-text>
+			<div class="invoice_padd" dropDown-Items *ngFor="let i of data.check[0] ;let x = index">
+			   <a dropdown-items target="blank"  [href]="i" >Check{{x+1}}</a>
+			   
+			</div>
+			</b2b-drop-down-xaxis>
+	</b2b-tdata>
+	<b2b-tdata trow-body>
+		<b2b-drop-down-xaxis tdata-body>
+         <b2b-text select-item class="link" text="other documents" [colorTheme]="data.otherdocuments.length > 0 ?' --color-primary-dark':'--color-redd' " fontSize="11px" (click)="data.otherdocuments.length > 0 ?'':showError()"> </b2b-text>
+		 <div class="invoice_padd" dropDown-Items *ngFor="let i of data.otherdocuments[0] ;let x = index">
+			<a dropdown-items target="blank"  [href]="i" >Other_Documents_{{x+1}}</a>
+			
+		 </div>
+		 </b2b-drop-down-xaxis>
+	</b2b-tdata>
+	<!-- <b2b-tdata trow-body [title]="'-'"></b2b-tdata> -->
+	<b2b-tdata trow-body [title]="data.vendor_quantity"></b2b-tdata>
+	<b2b-tdata trow-body [title]="data.vendor_coating_price"></b2b-tdata>
+	<b2b-tdata trow-body [title]="data.ETA"></b2b-tdata>
+	
+
+	
+</b2b-trow>
+</ng-container>
+</b2b-row>
+</b2b-row>
+<!-- service request document -->
+<b2b-row row-body *ngIf="selectedButton =='Service Request' " flexDirection="column" >
+	<b2b-trow row-body column="10*1fr" margin="0" position="sticky" top="0" height="50px"
+	backgroundTheme="--color-white" colorTheme="--color-drawer-bottom-card" [bold]="true">
+	<ng-container trow-body *ngFor="let column of serviceheading">
+		<b2b-tdata [title]="(user_type == 'ho' || user_type == 'he') && column != 'Hotel Name' ||user_type == 'vu' && column != 'Vendor Details'  ? column : '' " [width]="column == 'Purachase Order' ? '150px' :'100%'" fontSize="12px"></b2b-tdata>
+	</ng-container>
+</b2b-trow>
+<b2b-row row-body overflowY="auto" height="47vh" flexDirection="column">
+<ng-container row-body *ngFor="let data of servisedata.slice().reverse()" >
+	<b2b-trow container-body [HoverBoxShadow]="true" [isExpanded]="true"
+	column="10*1fr"  fontSize="12px" colorTheme="--color-black" backgroundTheme=" --color-lighter-green"
+ fontSize="12px" borderRadius="var(--table-radius)" height="40px" [showExpand2]="false">
+
+	<b2b-tdata trow-body [title]="data.service_request_random"></b2b-tdata>
+	<b2b-tdata trow-body>
+		<img tdata-body [src]="data.products.length > 0 ?  data.products[0].product_image :data.vendor_products.length > 0 ? data.vendor_products[0].product_image:data.temporary_products[0].product_image"  width="30px"/>
+		</b2b-tdata>
+		<b2b-tdata trow-body [title]="transformPlacementData(data.products.length > 0 ? data.products[0].brand_products_name:data.vendor_products.length > 0 ? data.vendor_products[0].name : data.temporary_products[0].name)"></b2b-tdata>
+		
+	<b2b-tdata trow-body>
+		<b2b-drop-down-xaxis tdata-body>
+         <b2b-text select-item class="link" text="Vendor Doc" [colorTheme]="data.vendordocument.length > 0 ?' --color-primary-dark':'--color-redd' " fontSize="11px" (click)="data.vendordocument.length > 0 ? '':showError()"> </b2b-text>
+		 <div dropDown-Items class="invoice_padd" *ngFor="let i of data.vendordocument[0] ;let x = index">
+			<a dropdown-items target="blank"  [href]="i" >vendordocument{{x+1}}</a>
+			
+		 </div>
+		 </b2b-drop-down-xaxis>
+	</b2b-tdata>
+	<b2b-tdata trow-body>
+		<b2b-drop-down-xaxis tdata-body>
+         <b2b-text select-item class="link" text="hoteldocument " [colorTheme]="data.hoteldocument.length > 0 ?' --color-primary-dark':'--color-redd' " fontSize="11px" (click)="data.hoteldocument.length > 0 ? '':showError()"> </b2b-text>
+		 <div dropDown-Items class="invoice_padd" *ngFor="let i of data.hoteldocument[0] ;let x = index">
+			<a dropdown-items target="blank"  [href]="i" >hoteldocument{{x+1}}</a>
+			
+		 </div>
+		 </b2b-drop-down-xaxis>
+	</b2b-tdata>
+	<b2b-tdata trow-body>
+		<b2b-drop-down-xaxis tdata-body>
+         <b2b-text select-item class="link" text="check" [colorTheme]="data.check.length > 0 ?' --color-primary-dark':'--color-redd' " fontSize="11px" (click)="data.check.length > 0 ? '':showError()"> </b2b-text>
+		 <div dropDown-Items class="invoice_padd" *ngFor="let i of data.check[0] ;let x = index">
+			<a dropdown-items target="blank"  [href]="i" >check{{x+1}}</a>
+			
+		 </div>
+		 </b2b-drop-down-xaxis>
+	</b2b-tdata>
+	
+	<b2b-tdata trow-body>
+		<b2b-drop-down-xaxis tdata-body>
+         <b2b-text select-item class="link" text=" extradocument" [colorTheme]="data.extradocument.length > 0 ?' --color-primary-dark':'--color-redd' " fontSize="11px" (click)="data.extradocument.length > 0 ? '':showError()"> </b2b-text>
+		 <div dropDown-Items class="invoice_padd" *ngFor="let i of data.extradocument[0] ;let x = index">
+			<a dropdown-items target="blank"  [href]="i" >extradocument{{x+1}}</a>
+			
+		 </div>
+		 </b2b-drop-down-xaxis>
+	</b2b-tdata>
+	<b2b-tdata trow-body [title]="data.total_cost"></b2b-tdata>
+
+	<b2b-tdata trow-body [title]="data.payment_terms"></b2b-tdata>
+	
+	
+	<b2b-tdata  trow-body>
+		<b2b-icon-button tdata-body style="position: absolute; right: 20px;" row-body icon="more_vert" (click)="vendor_details(data,'SR')" padding="0 0 0 0"
+			colorTheme="--color-dark-grey">
+		</b2b-icon-button>
+	</b2b-tdata>
+	
+</b2b-trow>
+</ng-container>
+
+</b2b-row>
+</b2b-row>
+</b2b-row>
+
+ <!-- vendor details popup -->
+ <b2b-draggable-popup trow-body *ngIf="vendordetails" positionTop="30%" positionLeft="43%">
+	<b2b-row draggable-popup height="25vh" widths="30vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="20px" borderRadius="10px" border="1px solid var(--color-toggle-background) ">
+		<b2b-icon row-body icon="close" left="92%" (click)="close()" top="5%"
+		backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+		position="absolute"></b2b-icon>
+			<b2b-text row-body [bold]="true" [text]="user_type == 'vu'? 'Hotel Details':'Vendor Details' "></b2b-text>
+
+	        <b2b-row row-body *ngIf="user_type != 'vu'">
+			<b2b-text row-body [bold]="true" text="Vendor Name : " margin="8px 0 0 0"></b2b-text>
+	        <b2b-text row-body [text]="vendordata.companyName || vendordata.vendor_name "  margin="8px 0 0 8px"></b2b-text>
+		    </b2b-row>
+			<b2b-row row-body *ngIf="user_type == 'vu'">
+				<b2b-text row-body [bold]="true" text="Hotel Name : " margin="8px 0 0 0"></b2b-text>
+				<b2b-text row-body [text]="vendordata.Hotel_Name"  margin="8px 0 0 8px"></b2b-text>
+				</b2b-row>
+			<b2b-row row-body *ngIf="user_type != 'vu'">
+		    <b2b-text row-body  [bold]="true" text="Vendor ID : " margin="8px 0 0 0"></b2b-text>
+			<b2b-text row-body [text]="vendordata.vendor_id ||vendordata.vender_id "  margin="8px 0 0 8px"></b2b-text>
+			</b2b-row>
+			<b2b-row row-body *ngIf="user_type == 'vu'">
+				<b2b-text row-body  [bold]="true" text="Hotel ID : " margin="8px 0 0 0"></b2b-text>
+				<b2b-text row-body [text]="vendordata.Hotel_Name_id "  margin="8px 0 0 8px"></b2b-text>
+				</b2b-row>
+			<b2b-row row-body *ngIf="user_type != 'vu'">
+				<b2b-text row-body [bold]="true" text="Mobile : " margin="8px 0 0 0"></b2b-text>
+				<b2b-text row-body [text]="vendordata.mobileNumber"  margin="8px 0 0 8px"></b2b-text>
+				</b2b-row>	
+				<b2b-row row-body *ngIf="user_type != 'vu'">
+				<b2b-text row-body [bold]="true" text="Email : " margin="8px 0 0 0"></b2b-text>
+				<b2b-text row-body [text]="vendordata.email"  margin="8px 0 0 8px"></b2b-text>
+				</b2b-row>	
+				<b2b-row row-body *ngIf="user_type != 'vu'">
+				<b2b-text row-body [bold]="true" text="Address : " margin="8px 0 0 0"></b2b-text>
+				<b2b-text row-body [text]="vendordata.city +','+vendordata.state + ','+vendordata.country "  margin="8px 0 0 8px"></b2b-text>
+				</b2b-row>
+				<b2b-row row-body *ngIf="user_type != 'vu'">
+					<b2b-text row-body [bold]="true" text="Zip Code : " margin="8px 0 0 0"></b2b-text>
+					<b2b-text row-body [text]="vendordata.user_zipCode"  margin="8px 0 0 8px"></b2b-text>
+					</b2b-row>	  
+	
+	</b2b-row>
+  </b2b-draggable-popup>
+
+

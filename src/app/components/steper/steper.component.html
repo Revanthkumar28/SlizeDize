@@ -1,0 +1,20 @@
+<div class="stepper-wrapper" [style]="stepperStyle">
+  <div class="stepper-item completed">
+    <div class="step-counter">
+      <div class="step" [style]="stepperStyle1"></div>
+    </div>
+    <div class="step-name" (click)="redirectHotelRegister()" >Registration</div>
+  </div>
+  <div class="stepper-item completed">
+    <div class="step-counter">
+      <div class="step-2"  [style]="stepperStyle2"></div>
+    </div>
+    <div class="step-name" (click)="redirectHotelRoom()" >Detail information</div>
+  </div>
+  <div class="stepper-item active">
+    <div class="step-counter">
+      <div class="step-3" [style]="stepperStyle3"></div>
+    </div>
+    <div class="step-name" (click)="redirectHotelCatalog()" >Catalog creation</div>
+  </div>
+</div>

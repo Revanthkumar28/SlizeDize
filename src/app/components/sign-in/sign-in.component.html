@@ -1,0 +1,123 @@
+<b2b-container row-body [property]="{backgroundTheme: '--color-dim-white', width: 'auto', height: '100%', padding: '40px',borderRadius:'10px'}">
+    <b2b-row container-body>
+        <b2b-text row-body text="Sign In" (click)="isVendor()" colorTheme="--color-white" fontSize="24px"></b2b-text>
+        <b2b-spacer row-body [flex]="1"></b2b-spacer>
+        <!-- <b2b-button row-body title="Hospitality" colorTheme="--color-primary" backgroundTheme="--color-white" width="auto" borderRadius="var(--global-radius)" height="40px" padding="0px 20px"></b2b-button> -->
+    </b2b-row>
+    <b2b-spacer container-body height="35px"></b2b-spacer>
+    
+    <b2b-row container-body backgroundTheme="" borderRadius="5px" width="380px">
+        <b2b-label row-body text="Mobile Number" inputboxPadding="0" fontSize="12px" padding="14px" backgroundTheme="--color-dim-white" height="43px" width="110px" borderRadius="5px 0 0 5px"></b2b-label>
+        
+        <b2b-tdata row-body *ngIf="CountryFlag" backgroundTheme="--color-dim-white" height="43px">
+            <b2b-image tdata-body image="assets/india.jpg" width="40px" margin="5px 0 0 0"></b2b-image>
+            <!-- <b2b-tdata tdata-body [title]="data.flag" *ngFor="let data of countryIndiaFlag" fontSize="25px"></b2b-tdata > -->
+
+            <b2b-spacer tdata-body width="10px"></b2b-spacer>
+            <b2b-tdata tdata-body [title]="'IND'" fontSize="11px" color="--color-white"></b2b-tdata >
+            <!-- <b2b-tdata tdata-body [title]="tests" color="--color-black"></b2b-tdata > -->
+       
+        </b2b-tdata>
+       
+        <b2b-tdata row-body *ngIf="flagArr" backgroundTheme="--color-dim-white" height="43px">
+            <b2b-image tdata-body image="{{flagArr.image}}" width="30px" margin="5px 0 0 0"></b2b-image>
+            <b2b-spacer tdata-body width="5px"></b2b-spacer>
+            <b2b-tdata tdata-body [title]="flagArr.code" fontSize="11px" color="--color-white"></b2b-tdata >
+
+        </b2b-tdata>
+        <b2b-tdata row-body backgroundTheme="--color-dim-white" height="43px">
+            
+            <b2b-dropdown tdata-body margin="1rem 0 0 0" popupWidth="180px" dropdownPosition="right" popupHeight="200px">
+                <div dropdown-selector class="expand-more"></div>
+                <!-- <b2b-icon-button dropdown-selector icon="expand_more" width="40px" iconSize="20px" colorTheme="--color-white"></b2b-icon-button> -->
+                <input #search search type="text" autofocus placeholder="search" [(ngModel)]="flagFilter" (ngModelChange)="flagFilter =$event">
+                <b2b-row dropdown-items  padding="0 0 0 1rem" *ngFor="let data of flag | alphatic: 'name' | searchFilter : flagFilter">
+                    <b2b-tdata row-body (click)="getflag(data)">
+                        <b2b-tdata tdata-body >
+                            <b2b-image tdata-body image="{{data.image}}" width="20px" margin="5px 0 0 0"></b2b-image>
+                        </b2b-tdata>
+                        <!-- <b2b-tdata tdata-body [title]="data['image']" color="--color-black"></b2b-tdata > -->
+
+                        <b2b-spacer tdata-body width="10px"></b2b-spacer>
+                        <b2b-tdata tdata-body [title]="data['name']" textAlign="start" color="--color-black" fontSize="12px"></b2b-tdata >
+                        <b2b-spacer tdata-body width="20px"></b2b-spacer>
+
+                    </b2b-tdata>
+                </b2b-row>                             
+            </b2b-dropdown>
+            <div tdata-body class="spacer"></div>
+
+        </b2b-tdata> 
+        <b2b-tdata row-body *ngIf="CountryFlag" backgroundTheme="--color-dim-white" fontSize="14px"  color="--color-white" height="43px"></b2b-tdata >
+        <!-- <b2b-tdata row-body [title]="flagArr.dial_code" fontSize="14px" backgroundTheme="--color-dim-white" color="--color-white" height="43px"></b2b-tdata > -->
+        <b2b-inputbox row-body inputType="number" [value]="mobileNumber" inputboxPadding="5px" fontSize="16px" (keyup.enter)="sendOTP()" (keypress)="numericOnly($event)" (onChange)="mobileNumber = $event" width="100%" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--flag-input-radius)"  type="tel" colorTheme="--color-white" [border]="validationResult.mobileNumber ? ' ' : '1px solid var(--color-red)'" [title]="validationResult.mobileNumber ? '' : 'Enter your designation'"></b2b-inputbox>
+    </b2b-row>
+    <b2b-row container-body *ngIf="errorText">
+        <b2b-label row-body text="Enter 10 Digit Mobile Number" *ngIf="this.mobileNumber.length < 10" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+    </b2b-row>
+    <b2b-row container-body *ngIf="validNumber">
+        <b2b-label row-body text="You have NOT registered yet. Please create an account"  backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+    </b2b-row>
+    <b2b-row container-body *ngIf="accountErrorMessage">
+        <b2b-label row-body text="Please Check The Phone Number And The Code"  backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="12px"></b2b-label>
+    </b2b-row>
+
+    <b2b-row container-body *ngIf="submit">
+        <b2b-label row-body text="{{errorMessage}}"  backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="11px"></b2b-label>
+    </b2b-row>
+
+    <b2b-spacer container-body height="10px"></b2b-spacer>
+    <b2b-row container-body>
+        <b2b-text row-body text="OTP will be sent to this mobile number" colorTheme="--color-dark-grey" fontSize="12px"></b2b-text>
+    </b2b-row>
+    <b2b-spacer container-body height="15px"></b2b-spacer>
+    <b2b-inputbox container-body [value]="otp" (onChange)="otp = $event" (keyup.enter)="validateOTP()" *ngIf="otpSent" width="100%" height="50px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Enter OTP" colorTheme="--color-white" [border]="validationResult.otp ? ' ' : '1px solid var(--color-red)'" [title]="validationResult.otp ? '' : 'You have entered incorrect otp'"></b2b-inputbox>
+    <b2b-spacer container-body height="10px"></b2b-spacer>
+    <b2b-row container-body>
+        <b2b-text row-body text="Not registered yet?" colorTheme=" --color-drawer-active" fontSize="13px"></b2b-text>
+        <b2b-spacer row-body width="15px"></b2b-spacer>
+        <b2b-text  row-body text="Create an account"  colorTheme="--color-white"  fontSize="13.4px" (click)="navigate('sign-up')"></b2b-text>
+    </b2b-row>
+    <b2b-spacer container-body height="30px"></b2b-spacer>
+    <b2b-row container-body justifyContent="center" *ngIf="!otpSent">
+        
+        <b2b-button row-body  hoverTheme="--color-light-grey" colorTheme="--color-primary" backgroundTheme="--color-white"  width="{{ loading ? '45px' : '120px' }}" borderRadius="{{ loading ? '50%' : 'var(--global-radius)' }}"  height="45px"  width="140px" padding="0px" [bold]="true" (onPressed)="sendOTP()">
+            <span button-body *ngIf="!loading">{{ loading ? '' : 'Send OTP' }}</span> <!-- Show button text when not loading -->
+            <span button-body *ngIf="loading" class="loader"></span>
+        </b2b-button>
+    </b2b-row>
+    <b2b-row container-body justifyContent="center" *ngIf="otpSent">
+        
+        <b2b-button row-body  hoverTheme="--color-dark-grey" colorTheme="--color-primary" backgroundTheme="--color-white" width="{{ loading ? '45px' : '120px' }}"  borderRadius="{{ loading ? '50%' : 'var(--global-radius)' }}"  height="45px" width="140px" padding="0px" [bold]="true" (onPressed)="validateOTP()">
+            <span button-body *ngIf="!loading">{{ loading ? '' : 'Sign In' }}</span> <!-- Show button text when not loading -->
+            <span button-body *ngIf="loading" class="loader"></span>
+        </b2b-button>
+    </b2b-row>
+
+    <b2b-spacer container-body height="40px"></b2b-spacer>
+
+    <b2b-row container-body flexDirection="column"  position="relative" height="7vh" justifyContent="center">      
+    <b2b-row row-body justifyContent="center" position="absolute" positionTop="6px" positionLeft="164px">
+        <b2b-text  row-body text="OR" fontSize="15px" backgroundTheme="--color-drawer-active" colorTheme="--color-white" width="31px" height="24px" borderRadius="50%" padding="11px 2px 6px 10px" ></b2b-text>
+    </b2b-row>
+    <b2b-spacer class="spacer1" row-body height="2px" width="100%" ></b2b-spacer>
+
+    </b2b-row>
+    <b2b-spacer container-body height="20px"></b2b-spacer>
+    <b2b-row container-body justifyContent="space-evenly">
+        <b2b-spacer  row-body  width="40px" ></b2b-spacer>
+        <b2b-image row-body class="Googleimg" image="assets/google.png" width="38px" height="37px" ></b2b-image>
+        <b2b-image row-body image="assets/facebook.png" width="46px"></b2b-image>
+        <b2b-image row-body image="assets/linkedin.png" [isRounded]="true" width="40px"></b2b-image>
+        <b2b-spacer  row-body  width="40px" ></b2b-spacer>
+
+    </b2b-row>
+   
+    
+    
+
+    <b2b-spacer container-body height="140px"></b2b-spacer>
+    <b2b-text container-body text="@2022 Slize Dize All rights reserved" fontSize="14px" colorTheme="--color-white"></b2b-text>
+</b2b-container>
+
+<div id="recaptcha-container"></div>

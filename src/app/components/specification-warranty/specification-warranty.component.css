@@ -1,0 +1,58 @@
+:host {
+    width: 100%;
+    height: auto;
+}
+
+::ng-deep .specification-row .trow{
+    /* height: auto !important; */
+    min-height: 50px !important;
+}
+::ng-deep .specimg img {
+    height: 50px !important;
+    width: 50px !important;
+}
+
+/* EZEEBI CODE DESIGN FOR SPECIFICATION */
+.ez-bg-white{background-color: #ffffff;}
+.ez-border-dark-grey{border: 1px solid rgb(219, 223, 216);}
+.ez-rounded-4 { border-radius: 0.25rem; }
+.ez-font-semibold { font-weight: 600; }
+
+.ez-m-0 { margin: 0; }
+.ez-p-0 { padding: 0px; }
+.ez-flex { display: flex; }
+
+/* .ez-specification p,
+.ez-spec-table > div {    
+    border-bottom: 1px solid rgb(0 0 0 / 15%);
+} */
+
+.ez-fs-1 { font-size: 0.75rem; }  /* 12px */
+
+
+.ez-specification p,
+.ez-spec-table > div {    
+    border-bottom: 1px solid rgb(0 0 0 / 15%);
+}
+.ez-specification p {
+    border-radius: 4px 0 0;
+    padding: 0.5rem 1rem;
+}
+.ez-spec-table > div:last-child {
+    border-bottom: none;
+}
+.ez-spec-table dt {
+    flex-basis: 50%;
+    background: #f8f8f7;
+    border-bottom: none;
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
+    font-weight: 500;
+}
+.ez-spec-table > div:last-child > dt {
+    border-bottom-left-radius: 6px;
+}
+.ez-spec-table dd {
+    margin: 0;
+    padding: 0.5rem 1rem;
+}

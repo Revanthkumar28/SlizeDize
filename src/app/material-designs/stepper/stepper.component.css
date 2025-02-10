@@ -1,0 +1,23 @@
+div.stepper {
+    width: 50px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+span.ball {
+    width: 30px;
+    height: 30px;
+    background-color: var(--color-dark-grey);
+    border-radius: 50%;
+}
+
+span.line {
+    width: 2px;
+    background-color: var(--color-dark-grey);
+}
+
+span.active {
+    background-color: var(--color-toggle-background);
+}

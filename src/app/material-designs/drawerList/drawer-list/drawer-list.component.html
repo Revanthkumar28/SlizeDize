@@ -1,0 +1,24 @@
+<div class="list-tile"  [style]="drawerStyle" [class.active]="active" [style.borderBottomLeftRadius]="childOpen ? '20px' : 'var(--global-radius)'" *ngIf="!isChild; else childBlock">
+    <ng-content select="[list-tile-icon]"></ng-content>
+    <div  (click)="buttonPressed()" style="width: 100%; text-indent: 10px;">
+        <div class="title">{{text}}</div>
+        <div class="address">{{address}}</div>
+    </div>
+    <b2b-spacer [flex]="1"></b2b-spacer>
+    <i class="material-icons" *ngIf="isExpand" [class.open]="childOpen" (click)="openChildren()">chevron_right</i>
+    <!-- <ng-content select="[list-tile-icon]"></ng-content> -->
+    <ng-content select="[edit-icon]"></ng-content>
+</div>
+
+<ng-template #childBlock >
+    <div class="list-tile-child" [class.active-child]="active" b2bGestureDetector (clickedOutside)="outsideElementClicked()" (click)="backround()"  [style.color]="backRound==true?'var(--color-white)':'var(--color-dashboard)'"  [style.backgroundColor]="backRound==true?'var(--color-drawer-bottom-list)':'var(--color-drawer-bottom-list)'">
+        <ng-content select="[list-icon]"></ng-content>
+        <span class="title">{{text}}</span>
+        <b2b-spacer [flex]="1"></b2b-spacer>
+        <b2b-icon-button  icon="more_vert"   [isRounded]="true" iconSize="22px" width="35px"></b2b-icon-button>
+    </div>
+</ng-template>
+
+<ng-container *ngIf="childOpen">
+    <ng-content select="[list-drawer]"></ng-content>
+</ng-container>

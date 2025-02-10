@@ -1,0 +1,9 @@
+<button class="button" [ngStyle]="{ 'background-color': hoverColor }" [style]="buttonStyle" (click)="buttonPressed()" [disabled]="buttonDisabled">
+    <span *ngIf="isNogoLoader == false" class="name">{{title}}</span>
+    <!-- LOADER -->
+    <i *ngIf="isNogoLoader" [class.refreshing]="true" class="material-icons">refresh</i>
+
+    <b2b-spacer [flex]="1" *ngIf="trailingIcon"></b2b-spacer>
+    <b2b-icon [icon]="trailingIcon" *ngIf="trailingIcon" [backgroundTheme]="trailingBgTheme" [isRounded]="trailingIconRounded" colorTheme="--color-black"></b2b-icon>
+    <ng-content select="[button-body]"></ng-content>
+</button>

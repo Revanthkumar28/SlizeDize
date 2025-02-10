@@ -1,0 +1,13 @@
+<div class="dashboard-layout">
+    <div class="appbar">
+        <ng-content select="[dashboard-appbar]"></ng-content>
+    </div>
+    <div class="dashboard-body" >
+        <div class="dashboard-drawer" [ngClass]="{ 'open': side_bar, 'closed': !side_bar }">
+            <ng-content select="[dashboard-drawer]"></ng-content>
+        </div>
+        <div class="dashboard-content" [ngClass]="{ 'open': side_bar, 'closed': !side_bar }">
+            <ng-content select="[vendorCatalog-body]"></ng-content>
+        </div>
+    </div>
+</div>

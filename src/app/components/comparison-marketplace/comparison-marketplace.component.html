@@ -1,0 +1,63 @@
+<b2b-container>
+    <b2b-row class="scroll" container-body alignItem="stretch">
+        <b2b-container row-body [property]="{width: '300px', height: 'auto', backgroundTheme: '--color-light-grey'}">
+            <b2b-row container-body>
+                <b2b-text row-body text="Select Category" [bold]="true"></b2b-text>
+            </b2b-row>
+            
+            <b2b-spacer container-body height="20px"></b2b-spacer>
+
+            <ng-container container-body *ngFor="let item of ['Flatware', 'Action Restaurant', 'Brand', 'Type']">
+                <b2b-list-tile container-body [title]="item" backgroundTheme="--color-white" colorTheme="--color-black">
+                    <b2b-dropdown actions popupWidth="200px" dropdownPosition="right">
+                        <b2b-icon-button dropdown-selector icon="navigate_next"></b2b-icon-button>
+                        <b2b-list-tile dropdown-items title="Push to RFQ" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                        <b2b-list-tile dropdown-items title="Direct Order" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile> 
+                        <b2b-list-tile dropdown-items title="Edit" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile> 
+                        <b2b-list-tile dropdown-items title="Delete" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile> 
+                    </b2b-dropdown>
+                </b2b-list-tile>
+            </ng-container>
+
+            <b2b-list-tile container-body title="Capacity" backgroundTheme="--color-white" colorTheme="--color-black">
+                <b2b-inputbox actions width="60px" height="100%"></b2b-inputbox>
+            </b2b-list-tile>
+
+            <b2b-list-tile container-body title="Color" backgroundTheme="--color-white" colorTheme="--color-black">
+                <b2b-inputbox actions width="45px" height="100%" inputType="color" inputboxPadding="0"></b2b-inputbox>
+            </b2b-list-tile>
+
+            <b2b-list-tile container-body title="Height" backgroundTheme="--color-white" colorTheme="--color-black">
+                <b2b-inputbox actions width="60px" height="100%"></b2b-inputbox>
+            </b2b-list-tile>
+
+            <b2b-list-tile container-body title="Eco Friendly" backgroundTheme="--color-transparent" colorTheme="--color-black">
+                <b2b-toggle actions [toggle]="true"></b2b-toggle>
+            </b2b-list-tile>
+
+            <b2b-list-tile container-body title="Made in India" backgroundTheme="--color-transparent" colorTheme="--color-black">
+                <b2b-toggle actions></b2b-toggle>
+            </b2b-list-tile>
+        </b2b-container>
+
+        <b2b-spacer row-body width="30px"></b2b-spacer>
+
+        <b2b-container row-body [property]="{flex: 1, rootHeight: 'auto', height: '100%', overflowY: 'auto'}">
+            <b2b-row container-body>
+                <b2b-text row-body text="Your Product"></b2b-text>
+                <b2b-spacer row-body width="20px"></b2b-spacer>
+                <b2b-inputbox row-body width="100px" border="1px solid var(--color-dark-grey)" height="40px"></b2b-inputbox>
+                <b2b-spacer row-body width="30px"></b2b-spacer>
+                <b2b-text row-body text="Favorites"></b2b-text>
+                <b2b-spacer row-body width="20px"></b2b-spacer>
+                <b2b-label row-body text="02" [isRounded]="true" backgroundTheme="--color-marketplace-accent"></b2b-label>
+                <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                <b2b-inputbox row-body width="150px" border="1px solid var(--color-dark-grey)" height="70px" inputName="Sort by" [popupOption]="true"></b2b-inputbox>
+            </b2b-row>
+
+            <b2b-spacer container-body height="20px"></b2b-spacer>
+
+            <b2b-row container-body [wrap]="true"></b2b-row>
+        </b2b-container>
+    </b2b-row>
+</b2b-container>

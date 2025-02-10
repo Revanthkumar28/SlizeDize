@@ -1,0 +1,10 @@
+:host {
+    width: 100%;
+    height: auto;
+}
+#w3review{           
+    outline: none;
+    display: flex;
+    flex-direction: row;
+    /* width: 100%; */
+}

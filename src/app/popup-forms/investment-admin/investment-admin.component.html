@@ -1,0 +1,389 @@
+    <b2b-container row-body *ngIf="adminPage" [property]="{padding:'10px',height:'100%',width:'100%',backgroundTheme:'',flex:1,alignItem:'center',position:'relative'}">
+
+    <b2b-row container-body justifyContent="space-between">
+        <b2b-row row-body> </b2b-row>
+        <b2b-row row-body justifyContent="center">
+            <b2b-text row-body text="Admin Screen" fontSize="20px" [bold]="true"></b2b-text>
+
+         </b2b-row>
+         <b2b-row row-body justifyContent="end">
+            <b2b-icon-button row-body icon="add" [tooltiptop]="true" [toolTip]="true" toolTipName="Add New lising"  iconSize="25px" backgroundTheme="--color-light-grey" [isRounded]="true" (click)="addlisting()"  height="30px" width="30px"></b2b-icon-button>
+            <b2b-spacer  row-body width="20px" ></b2b-spacer>
+            <b2b-icon-button row-body icon="close" [toolTip]="true" toolTipName="close"  iconSize="25px" backgroundTheme="--color-light-grey" [isRounded]="true" (click)="closeJobs()"  height="30px" width="30px"></b2b-icon-button>
+            <b2b-spacer  row-body width="20px" ></b2b-spacer>
+
+         </b2b-row>
+       
+
+    </b2b-row>
+   
+  <b2b-spacer container-body height="10px"></b2b-spacer>
+
+  <div container-body class="grid">
+
+    <b2b-row container-body class="boxes" *ngFor="let data of propertylisting" position="relative" flexDirection="column" alignItem="start" margin="0 0 20px 0 "  borderRadius="10px" [mobileview]="true" >
+  <b2b-container row-body [property]="{padding:'10px',height:'100%',width:'100%',backgroundTheme:'',flex:1,alignItem:'center',position:'relative'}">
+  <b2b-badge-image *ngIf="data.sale_type != null" container-body fontSize="12px" [text]="data.sale_type" position="absolute" positionLeft="6%"  positionTop="10%" width="70px" height="25px" colorTheme="--color-white" padding="2px" backgroundTheme="--color-marketplace-accent" borderRadius="20px"  ></b2b-badge-image>
+    <b2b-spacer container-body [flex]="1"></b2b-spacer>
+    <b2b-row container-body position="absolute" positionLeft="84%">
+    <b2b-dropdown row-body popupWidth="100px" dropdownPosition="absolute">
+        <b2b-icon-button dropdown-selector icon="more_vert" colorTheme="--color-dark-grey" width="30px" height="30px" borderRadius="10%" margin="6px 0 0 0" position="absolute" backgroundTheme="--color-light-white"></b2b-icon-button>
+        <b2b-list-tile dropdown-items title="View" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (click)="View(data)"></b2b-list-tile>
+         <b2b-list-tile dropdown-items title="Edit" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (click)="Edit(data)"></b2b-list-tile> 
+        <b2b-list-tile dropdown-items title="Delete" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (click)="alertJobs(data.id)"></b2b-list-tile> 
+    </b2b-dropdown>
+    </b2b-row>
+      <b2b-image container-body [image]="data.images.length > 0 ? data.images[0].file : ''"  width="100%" [isCurved]="true" height="150px"></b2b-image>
+  </b2b-container>
+  <b2b-container row-body  [property]="{padding:'0 20px',alignItem:'start',justifyContent:'flex-start'}">
+  <ng-container container-body >
+          <b2b-row fontSize="13px"  height="100%" colorTheme="--color-black" flexDirection="column"backgroundTheme="--color-white">
+            <b2b-row row-body>
+            <b2b-text row-body text="Property Name:"></b2b-text>
+            <b2b-text row-body [text]="data.property_name" fontSize="15px" colorTheme="--color-sky-blue"></b2b-text>
+            
+        </b2b-row>
+        <b2b-row row-body>
+            <b2b-text row-body text="Country:"></b2b-text>
+            <b2b-text row-body [text]="data.country" fontSize="15px" colorTheme="--color-sky-blue"></b2b-text>
+            
+        </b2b-row>
+              <b2b-container row-body [property]="{justifyContent:'flex-start',alignItem:'flex-start',padding:'0'}">
+                <b2b-row container-body>
+                <b2b-text row-body text="Price:"></b2b-text>
+                  <b2b-text row-body [text]="data.asking_price" fontSize="15px" colorTheme="--color-sky-blue" textAlign="start" justifyContent="flex-start"></b2b-text>
+                  </b2b-row>
+            <b2b-row container-body>
+                <b2b-text row-body text="Square Feet:"></b2b-text>
+           <b2b-tdata row-body [title]="data.square_feet" fontSize="14px" colorTheme="--color-sky-blue" textAlign="start" justifyContent="start"></b2b-tdata>
+           </b2b-row>
+              <b2b-spacer container-body height="5px"></b2b-spacer>
+             
+              </b2b-container>
+                 
+          </b2b-row>
+      </ng-container>
+  </b2b-container>
+ </b2b-row>
+</div>
+  </b2b-container>
+  <!-- view -->
+
+    <b2b-investment-viewproperty *ngIf="!adminPage" container-body [view_property]="share_data" [type]="send_type" (close_view)="close_view()"> </b2b-investment-viewproperty>
+
+  
+<!-- add listing form -->
+<b2b-draggable-popup  *ngIf="openpopup" row-body positionTop="2%" positionLeft="20%">
+    <b2b-container draggable-popup  [property]="{backgroundTheme:'--color-white',width:'60vw',height:'95vh', padding:'15px',border:'1px solid var(--color-toggle-background)'} ">
+        <b2b-text container-body fontSize="18px" [bold]="true" [text]="edit_form ? 'Edit Listing': 'Add Listing'"></b2b-text>
+        <b2b-spacer container-body height="10px"></b2b-spacer>
+        <b2b-icon container-body icon="close" left="94%" (click)="closepopup()" top="10px"
+        backgroundTheme="--color-white" tSize="16px" colorTheme="--color-dark-grey"
+        position="absolute"></b2b-icon>
+        
+        <b2b-row container-body width="60vw" overflowY="scroll"  height="86vh" flexDirection="column" padding="0 20px 0 20px">
+        
+        
+        <b2b-row row-body flexDirection="row">
+            <b2b-inputbox row-body inputName="Property Name" border="2px solid var(--color-light-grey)" inputType="text" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.propertyname" (onChange)="get_job_data.propertyname = $event" colorTheme="--color-black">                   
+            </b2b-inputbox>
+            <b2b-spacer row-body width="14vw"></b2b-spacer> 
+            <b2b-inputbox row-body inputName="Keys" border="2px solid var(--color-light-grey)" inputType="number" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.keys" (onChange)="get_job_data.keys = $event" colorTheme="--color-black">                   
+            </b2b-inputbox>
+        </b2b-row>
+     
+        <b2b-spacer row-body width="15vw"></b2b-spacer>
+
+                <b2b-row row-body flexDirection="row">
+                    <b2b-row row-body flexDirection="column" alignItem="flex-start">
+                    <b2b-text row-body text="Address"  fontSize="15px"></b2b-text>
+
+                    <b2b-spacer row-body height="5px"></b2b-spacer>
+                    <b2b-textarea row-body border="2px solid var(--color-light-grey)" [value]="get_job_data.address"  (onChange)="get_job_data.address = $event" width="24vw"  height="65px" padding="6px" borderRadius="5px"></b2b-textarea>
+                    <b2b-spacer row-body width="14vw"></b2b-spacer> 
+                        </b2b-row>
+                    <b2b-inputbox row-body inputName="Beds" border="2px solid var(--color-light-grey)" inputType="number" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.beds" (onChange)="get_job_data.beds = $event" colorTheme="--color-black">                   
+                    </b2b-inputbox>
+    
+                </b2b-row>
+                <b2b-spacer row-body height="10px"></b2b-spacer>
+
+                <b2b-row row-body flexDirection="row">
+                    <b2b-inputbox row-body inputName="Country" [popupOption]="true"  [readOnly]="true" border="2px solid var(--color-light-grey)" [required]="true" fontSize="15px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.country"  colorTheme="--color-black">                   
+                        <input #search class="countery-inputbox" search type="text" autofocus placeholder="Search" [(ngModel)]="filterData"  (ngModelChange)="filterData =$event">
+                        <ng-container popup-body *ngFor="let country of listcountry | searchFilter : filterData" >
+                            <b2b-list-tile  [title]="country.name"  (tileClicked)="onCountrySelected(country.iso2, country.name, country.currency_symbol)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                            <!-- <b2b-keyup ></b2b-keyup> -->
+                        </ng-container>
+                    </b2b-inputbox>
+                    <b2b-spacer row-body width="14vw"></b2b-spacer> 
+
+                    <b2b-inputbox row-body inputName="year(S) built" border="2px solid var(--color-light-grey)" inputType="number" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.yearsbuild" (onChange)="get_job_data.yearsbuild = $event" colorTheme="--color-black">                   
+                    </b2b-inputbox>
+
+                </b2b-row>
+                <b2b-spacer row-body height="10px"></b2b-spacer>
+
+                <b2b-row row-body flexDirection="row">
+                <b2b-inputbox row-body inputName="State" [popupOption]="true"  [readOnly]="true" border="2px solid var(--color-light-grey)" [required]="true" fontSize="15px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.state"  colorTheme="--color-black">                   
+                    <input #search class="state-inputbox" search type="text" autofocus *ngIf="get_job_data.country !=''?true:false" placeholder="Search" [(ngModel)]="stateFilter" (ngModelChange)="stateFilter =$event">
+                    <ng-container popup-body *ngFor="let state of listState | searchFilter : stateFilter">
+                        <b2b-list-tile   [title]="state.name" (tileClicked)="onStateSelected(state.iso2,state.name)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+                <b2b-spacer row-body width="14vw"></b2b-spacer> 
+
+                <b2b-inputbox row-body inputName="year(S) renovated" border="2px solid var(--color-light-grey)" inputType="number" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.yearsrenovated" (onChange)="get_job_data.yearsrenovated = $event" colorTheme="--color-black">                   
+                </b2b-inputbox>
+           </b2b-row>
+           <b2b-spacer row-body height="10px"></b2b-spacer>
+
+           <b2b-row row-body flexDirection="row">
+                <b2b-inputbox row-body inputName="City" [popupOption]="true"  [readOnly]="true" border="2px solid var(--color-light-grey)" [required]="true" fontSize="15px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.city"  colorTheme="--color-black">                   
+                    <input #search class="city-inputbox"  search type="text" autofocus *ngIf="get_job_data.state !='' && cityData =='' ?true:false" placeholder="Search" [(ngModel)]="cityFilter" (ngModelChange)="cityFilter =$event">
+
+                    <ng-container popup-body *ngFor="let city of listCity | searchFilter : cityFilter" >
+                        <b2b-list-tile   [title]="city.name" (tileClicked)="onStateCity(get_job_data.city = city.name)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    </ng-container> 
+                </b2b-inputbox>
+                <b2b-spacer row-body width="14vw"></b2b-spacer> 
+
+                <b2b-inputbox row-body inputName="Buildings" border="2px solid var(--color-light-grey)" inputType="number" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.buildings" (onChange)="get_job_data.buildings = $event" colorTheme="--color-black">                   
+                </b2b-inputbox>
+            </b2b-row>
+            <b2b-spacer row-body height="10px"></b2b-spacer>
+
+            <b2b-row row-body flexDirection="row">
+                <b2b-inputbox row-body inputName="Asking Price" border="2px solid var(--color-light-grey)" inputType="number" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.askingprice" (onChange)="get_job_data.askingprice = $event" colorTheme="--color-black">                   
+                </b2b-inputbox>
+                <b2b-spacer row-body width="14vw"></b2b-spacer> 
+                <b2b-inputbox row-body inputName="Stories" border="2px solid var(--color-light-grey)" inputType="text" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.stories" (onChange)="get_job_data.stories = $event" colorTheme="--color-black">                   
+                </b2b-inputbox>
+            </b2b-row>
+            <b2b-spacer row-body height="10px"></b2b-spacer>
+
+                <b2b-row row-body flexDirection="row">
+                    <b2b-inputbox row-body inputName="Expiration Date" border="2px solid var(--color-light-grey)" inputType="date" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.expiration_date" (onChange)="get_job_data.expiration_date = $event" colorTheme="--color-black">                   
+                    </b2b-inputbox>
+                    <b2b-spacer row-body width="20vw"></b2b-spacer>
+                    <b2b-row row-body flexDirection="column" alignItem="flex-start">
+                    <b2b-inputbox row-body inputName="Lot Size" border="2px solid var(--color-light-grey)" inputType="number" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.lot_size" (onChange)="get_job_data.lot_size = $event" colorTheme="--color-black">                   
+                    </b2b-inputbox>
+                    <!-- <b2b-row row-body>
+                    <b2b-inputbox row-body inputType="checkbox" width="20px"></b2b-inputbox>
+                    <b2b-text row-body text="range" fontSize="12px"></b2b-text>
+                    </b2b-row> -->
+                    </b2b-row>
+                </b2b-row>
+                <b2b-row row-body>
+                <b2b-inputbox row-body inputName="Send me a reminder(days)" border="2px solid var(--color-light-grey)" inputType="number" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.send_me_reminder" (onChange)="get_job_data.send_me_reminder = $event" colorTheme="--color-black" placeholder="Number of days prior to expiration">                   
+                </b2b-inputbox>
+                <b2b-spacer row-body width="15vw"></b2b-spacer>
+
+                <b2b-inputbox row-body inputName="Parking type" inputType="text" border="2px solid var(--color-light-grey)" fontSize="15px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.parking_type" (onChange)="get_job_data.parking_type = $event" colorTheme="--color-black">                   
+                </b2b-inputbox>
+             </b2b-row>
+             <b2b-row row-body flexDirection="row" alignItem="flex-start">
+                <b2b-inputbox row-body inputName="Square feet" border="2px solid var(--color-light-grey)" inputType="number" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.square_feet" (onChange)="get_job_data.square_feet = $event" colorTheme="--color-black" placeholder="Number of days prior to expiration">                   
+                </b2b-inputbox>
+                <!-- <b2b-row row-body>
+                    <b2b-inputbox row-body inputType="checkbox" width="20px"></b2b-inputbox>
+                    <b2b-text row-body text="range" fontSize="12px"></b2b-text>
+                    </b2b-row> -->
+                    <b2b-spacer row-body width="15vw"></b2b-spacer>
+                    <!-- <b2b-row row-body>
+                        <b2b-inputbox row-body inputName="For Sale(or)Rent" border="2px solid var(--color-light-grey)" inputType="text" [required]="true" fontSize="15px" dropdownHeight="150px" width="25vw" height="60px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.for_sale" (onChange)="get_job_data.for_sale = $event" colorTheme="--color-black">                   
+                       </b2b-inputbox>
+                       </b2b-row> -->
+                       <b2b-inputbox row-body [popupOption]="true" inputName="Sale(or)Rent"  [readOnly]="true" border="1px solid var(--color-dark-grey)" [required]="true" fontSize="15px" width="25vw" height="60px" backgroundTheme="--color-white" [value]="get_job_data.for_sale" (onChange)="get_job_data.for_sale = $event" borderRadius="var(--table-radius)"  colorTheme="--color-black" [twoInputFeild]="true" placeholder="for sale(or)Rent"> 
+                        <ng-container popup-body *ngFor="let i of sale_rent">
+                            <b2b-list-tile [title]="i" (click)="getInput(i)" hoverTheme="--color-light-grey"
+                                colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px"
+                                margin="2px 0"></b2b-list-tile>
+                        </ng-container>
+                    </b2b-inputbox>
+             </b2b-row>
+             
+              
+             <b2b-text row-body fontSize="18px" text="Description"></b2b-text>
+             <b2b-row row-body  flexDirection="column" alignItem="flex-start">
+                <b2b-text row-body text="Description:" fontSize="17px" colorTheme="--color-black" ></b2b-text>
+                <b2b-spacer row-body height="15px"></b2b-spacer>    
+                <b2b-text row-body  width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+
+            </b2b-row>
+            <b2b-row row-body width="100%" height="20vh" border="2px solid var(--color-light-grey)" alignItem="center">
+                <b2b-inputbox row-body inputName="SubHeader" border="2px solid var(--color-light-grey)" inputType="text" fontSize="15px" dropdownHeight="150px" width="100%" height="80px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [value]="get_job_data.sub_header" (onChange)="get_job_data.sub_header = $event" colorTheme="--color-black" placeholder="Number of days prior to expiration" margin="0 10px 0 5px">                   
+                </b2b-inputbox>
+            </b2b-row>
+            <b2b-spacer row-body height="20px"></b2b-spacer>  
+            <b2b-spacer row-body height="30px"></b2b-spacer>  
+            <b2b-row row-body margin="20px 0 0 0" flexDirection="column" alignItem="flex-start">
+                <b2b-text row-body text="Marketing Description"></b2b-text>
+                <b2b-spacer row-body height="5px"></b2b-spacer>
+                <editor class="text_editor" row-body [(ngModel)]="get_job_data.marketing_descrip" [init]="editorConfig"></editor>
+            </b2b-row>
+            <b2b-spacer row-body height="20px"></b2b-spacer>  
+
+            <b2b-row row-body margin="20px 0 0 0" flexDirection="column" alignItem="flex-start">
+                <b2b-text row-body text="Investment Highlight"></b2b-text>
+                <b2b-spacer row-body height="5px"></b2b-spacer>
+                <editor row-body class="text_editor" [(ngModel)]="get_job_data.inves_highlight" [init]="editorConfig"></editor>  
+                </b2b-row>
+            <!-- <b2b-text row-body fontSize="18px" text="Photos and Videos"></b2b-text> -->
+            <b2b-row row-body  flexDirection="column" alignItem="flex-start">
+                <b2b-spacer row-body height="10px"></b2b-spacer>    
+
+                <b2b-text row-body text="Photos and Videos:" fontSize="17px" colorTheme="--color-black" ></b2b-text>
+                <b2b-spacer row-body height="5px"></b2b-spacer>    
+                <b2b-text row-body text="Click below to upload photos and videos" width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+                <b2b-spacer row-body height="5px"></b2b-spacer>    
+
+            </b2b-row>
+
+            <b2b-row row-body>
+                
+                <b2b-row row-body class="picrows" flexDirection="column" height="auto">
+                    <b2b-row row-body height="60%">
+                        <b2b-image row-body image="assets/pc1.png" height="100%" width="90%"></b2b-image>
+                        <b2b-row row-body height="100%" width="100%" flexDirection="column" justifyContent="center" alignItem="start">
+                            <b2b-text row-body text="Add Photos" fontSize="22px" [bold]="true" colorTheme="--color-sky-blue" ></b2b-text>
+                            <b2b-spacer row-body height="1px"></b2b-spacer>
+                <b2b-text row-body *ngIf="uploadimage.length == 0" text="Drop your file here" fontSize="14px" colorTheme="--color-text-color"></b2b-text>
+                <b2b-text row-body *ngIf="uploadimage.length != 0" text="File Uploaded" fontSize="14px" colorTheme="--color-redd"></b2b-text>
+    
+                <b2b-spacer row-body height="10px"></b2b-spacer>
+                            <input row-body class="Hide_input" (change)="uploadphotos($event)" type="file" accept="image/*" [value]="uploadimage" (onChange)="uploadimage = $event" multiple>
+                 
+                </b2b-row>
+                    </b2b-row>
+
+                    <div *ngIf="edit_form" class='grid_design' style="border-top: 1px dotted black; width: 100%;padding-top: 8px;" row-body margin="0 0 0 5px">
+
+                        <ng-container  row-body *ngFor="let i of image_array;  index as x">
+                            <b2b-row row-body  width="50px" position="relative" padding="5px">
+                                <b2b-image row-body [image]="i.file" height="40px" width="40px" (click)="Openfile(i.file)"></b2b-image>
+                                <b2b-icon row-body icon="close" right="0px" (click)="RemoveItems('images', i.id)" top="0px"
+                                backgroundTheme="--color-redd" fontSize="16px" colorTheme="--color-white"
+                                position="absolute"></b2b-icon>
+    
+                            </b2b-row>
+                        </ng-container>
+                        
+        
+        
+                    </div>
+                </b2b-row>
+                
+                <b2b-spacer row-body width="35px"></b2b-spacer>    
+
+                <b2b-row row-body class="picrows" flexDirection="column" height="auto">
+                    <b2b-row row-body height="60%">
+                        <b2b-image row-body image="assets/pc2.png" height="100%" width="90%"></b2b-image>
+                        <b2b-row row-body height="100%" width="100%" flexDirection="column" justifyContent="center" alignItem="start">
+                            <b2b-text row-body text="Add videos" fontSize="22px" [bold]="true" colorTheme="--color-sky-blue" ></b2b-text>
+                            <b2b-spacer row-body height="1px"></b2b-spacer>
+                            <b2b-text row-body *ngIf="uploadvideo.length == 0" text="Drop your file here" fontSize="14px" colorTheme="--color-text-color"></b2b-text>
+                            <b2b-text row-body *ngIf="uploadvideo.length != 0" text="File Uploaded" fontSize="14px" colorTheme="--color-redd"></b2b-text>
+                
+                            <b2b-spacer row-body height="10px"></b2b-spacer>                        
+                            <input row-body class="Hide_input" (change)="uploadvideos($event)" type="file" accept="video/*" multiple>
+    
+                        </b2b-row>
+                    </b2b-row>
+                   
+                    <div *ngIf="edit_form" class='grid_design' style="border-top: 1px dotted black; width: 100%;padding-top: 8px;" row-body margin="0 0 0 5px">
+                        <ng-container  row-body *ngFor="let i of video_array;  index as x">
+                            <b2b-row row-body  width="50px" position="relative" padding="5px" >
+                                <b2b-image row-body [image]="i.thumb" height="40px" width="40px" (click)="Openfile(i.file)"></b2b-image>
+                                <b2b-icon row-body icon="close" right="0px" (click)="RemoveItems('videos', i.id)" top="0px"
+                                backgroundTheme="--color-redd" fontSize="16px" colorTheme="--color-white"
+                                position="absolute"></b2b-icon>
+    
+                            </b2b-row>
+                        </ng-container>
+                        
+        
+        
+                    </div>
+                </b2b-row>
+                
+            </b2b-row>
+           <b2b-row row-body  flexDirection="column" alignItem="flex-start">
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-text row-body text="Confidentiality or Non-Disclosure Agreement:" fontSize="17px" colorTheme="--color-black" ></b2b-text>
+            <b2b-spacer row-body height="5px"></b2b-spacer>    
+            <b2b-text row-body text="Copy and paste your confidentiality or non-disclosure agreement below" width="100%" colorTheme="--color-text-color" fontSize="16px"></b2b-text>
+            <b2b-spacer row-body height="5px"></b2b-spacer>    
+
+        </b2b-row>
+        <b2b-spacer row-body height="5px"></b2b-spacer>
+        <b2b-row row-body padding="20px" flexDirection="column" border="1px solid grey" borderRadius="10px">
+            <b2b-row row-body justifyContent="space-between">
+
+            <b2b-row row-body>
+                <!-- <b2b-inputbox row-body inputType="checkbox" width="20px"></b2b-inputbox> -->
+                <!-- <b2b-text row-body text="Principal and Broker/Agent CA/NDA" fontSize="14px"></b2b-text> -->
+                </b2b-row>
+          
+
+            </b2b-row>
+            <b2b-text row-body text="Confidentiality or Non-Disclosure agreement" fontSize="16px"></b2b-text>
+            <b2b-row row-body height="100px" border="1px dotted grey" borderRadius="10px" backgroundTheme="--color-light-grey" alignItem="center" justifyContent="center" position="relative"flexDirection="column">
+               <b2b-row row-body flexDirection="column" >
+                <b2b-text row-body text="Upload files" fontSize="14px"></b2b-text>
+                <b2b-spacer row-body height="1px"></b2b-spacer>
+            <b2b-text row-body *ngIf="uploadfile.length == 0" text="Drop your file here" fontSize="14px" colorTheme="--color-text-color"></b2b-text>
+            <b2b-text row-body *ngIf="uploadfile.length != 0" text="File Uploaded" fontSize="14px" colorTheme="--color-redd"></b2b-text>
+            
+         
+            <b2b-spacer row-body height="10px"></b2b-spacer>
+                <input row-body class="upload_file" type="file" (change)="uploadfiles($event)" accept="application/pdf"  multiple>
+                </b2b-row>
+                <div *ngIf="edit_form" class='grid_design' style="border-top: 1px dotted black; width: 100%;padding:   8px 0 8px 0;" row-body margin="0 0 0 5px">
+
+                    <ng-container  row-body *ngFor="let i of doc_array;  index as x">
+                        <b2b-row row-body  width="150px" border="1px solid var(--color-black)" borderRadius="20px" backgroundTheme="--color-lighter-green" padding="4px" (click)="Openfile(i.file)">
+                            <b2b-text row-body [text]="'Document-'+ (x+1)"></b2b-text>
+                            <b2b-spacer row-body width="15px"></b2b-spacer>
+        
+                            <b2b-icon row-body icon="close"  (click)="RemoveItems('doc', i.id)" 
+                             fontSize="16px" colorTheme="--color-black"
+                           ></b2b-icon>
+        
+                        </b2b-row>
+                    </ng-container>
+                    </div>
+            </b2b-row>
+            <!-- <b2b-row row-body>
+                <b2b-inputbox row-body inputType="checkbox" width="20px"></b2b-inputbox>
+                <b2b-text row-body text="Do Not include Cooperating Broker/Agent signature Block" fontSize="14px"></b2b-text>
+                </b2b-row> -->
+
+
+        </b2b-row>
+        <b2b-row row-body flexDirection="column">
+            <b2b-spacer row-body height="15px"></b2b-spacer>    
+
+            <b2b-button row-body [title]="edit_form ? 'Edit' : 'ADD' " colorTheme="--color-white" backgroundTheme="--color-green" width="auto" borderRadius="var(--global-radius)" height="40px" padding="0px 30px" [bold]="true" (click)="ADD_listing()"></b2b-button>
+         
+        </b2b-row>
+        </b2b-row>
+    </b2b-container>
+    </b2b-draggable-popup>
+
+    <!-- alert box -->
+<b2b-draggable-popup tdata-body *ngIf="alertpopup" class="blur-overlay" positionTop="30%" positionLeft="43%">
+    <b2b-row draggable-popup height="20vh" widths="30vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="10px 10px 0 10px" borderRadius="10px" border="1px solid var(--color-toggle-background)">
+        <b2b-image row-body height="35px"  [isRounded]="true" width="35px" image="assets/error.png"></b2b-image>
+
+        <b2b-text row-body text="Are You Sure!" margin="5px 0 0 0"></b2b-text>
+    <b2b-text row-body text="This will permently delete the Listing" fontSize="14px" margin="0 0 10px 0"></b2b-text>
+   
+    <div row-body style="display: flex; flex-direction: row; justify-content: space-between;">
+      <b2b-button title="OK" height="25px" width="70px"  backgroundTheme="--color-primary" margin="5px" (click)="Delete()"> </b2b-button>
+      <b2b-button title="CANCEL" height="25px" width="70px" backgroundTheme="--color-redd" margin="5px" (click)="alertpopup = false"> </b2b-button>
+    </div>
+    </b2b-row>
+  </b2b-draggable-popup>

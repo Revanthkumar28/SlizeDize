@@ -1,0 +1,907 @@
+<!-- CP 1 -->
+<b2b-trow container-body *ngIf="HotelId" [column]="catalogheadings" margin="0" zIndex="15" position="sticky" top="0" height="50px"
+backgroundTheme="--color-dashboard" colorTheme="--color-sky-blue" [bold]="true">
+    <ng-container trow-body *ngFor="let column of catelogTable">
+        <b2b-tdata [title]="column" headingWidth="60%" [width]="'auto'" textAlign="center" width="100%" [margin]="column == 'Potential Savings' ? '0 0 0 15px' : '' " fontSize="12px"></b2b-tdata>
+    </ng-container>
+</b2b-trow>
+
+<!-- Filter Inputs - (CP-2)-->
+<b2b-trow container-body *ngIf="filterTable" zIndex="15" position="sticky" top="50px" height="40px"
+backgroundTheme="--color-light-grey" [column]="searchColumnSpacing" colorTheme="--color-drawer-bottom-card"
+[bold]="true">
+<ng-container trow-body>
+
+    <!-- Product Name -->
+    <b2b-tdata trow-body fontSize="12px">
+        <!-- <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('brand_products_name', $event)" [style.outline]="'none'"
+                [style.border]="'none'"/>
+        </b2b-row> -->
+    </b2b-tdata>
+
+    <!-- Product Placement -->
+    <b2b-tdata trow-body fontSize="12px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('brand_products_name', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+
+    <b2b-tdata trow-body>
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('categories_name', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+    
+    <b2b-tdata trow-body fontSize="12px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('sub_categories_name', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+    <b2b-tdata trow-body fontSize="12px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('placement', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+    <b2b-tdata trow-body fontSize="12px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('hotel_wild_usage', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+    <b2b-tdata trow-body fontSize="12px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('order_frequency', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+    <b2b-tdata trow-body fontSize="12px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('brand_or_last_vendor_name', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+    <b2b-tdata trow-body fontSize="12px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('vendor_lead_time_1', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+    <b2b-tdata trow-body fontSize="12px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('last_ordered_quantity_1', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+    <b2b-tdata trow-body fontSize="12px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('last_box_quantity_1', $event)" [style.outline]="'none'"
+                [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+    <b2b-tdata trow-body fontSize="12px" width="100px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('last_ordered_price_1', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+
+    <b2b-tdata trow-body>
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('TAX_1', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+
+    <b2b-tdata trow-body fontSize="12px" margin="0 10px 0 0">
+
+        <b2b-inputbox tdata-body width="100%" height="25px" padding="0 0 0 5px" borderRadius="5px" [popupOption]="true" 
+            (onChange)="fields.ESG" [value]="fields.ESG == '1' ? 'Yes' : fields.ESG == '0' ? 'No'  :'' " dropDownIconMargin="0 .3rem 0 0 " inputDropDownIconWidth="20px" dropdownWidth="100%" popupOverflow="hidden" position="right">
+                <!-- <b2b-text popup-body  text="All" fontSize="14px" (click)="esgDropDown('all')"></b2b-text> -->
+                <b2b-list-tile popup-body title="All" (click)="esgDropDown('all')" (click)="filterProducts('ESG', '','esg')" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="20px" margin="0px" fontSize="13px" ></b2b-list-tile>
+                <b2b-list-tile popup-body title="Yes" (click)="esgDropDown('yes')" (click)="filterProducts('ESG', '1','esg')" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="20px" margin="0px" fontSize="13px"></b2b-list-tile>
+                <b2b-list-tile popup-body title="NO" (click)="esgDropDown('no')" (click)="filterProducts('ESG', '0','esg')" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="20px" margin="0px" fontSize="13px"></b2b-list-tile>
+
+                <!-- <b2b-text popup-body  text="Yes" fontSize="14px" (click)="esgDropDown('yes')"></b2b-text>
+                <b2b-text popup-body  text="NO" fontSize="14px" (click)="esgDropDown('no') "></b2b-text> -->
+        </b2b-inputbox>
+
+    </b2b-tdata>
+
+    <b2b-tdata trow-body fontSize="12px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('selling_at', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+    <b2b-tdata trow-body fontSize="12px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('minValue', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+
+    <b2b-tdata trow-body fontSize="12px">
+        <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+            <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                iconSize="20px"></b2b-icon-button>
+            <input row-body type="text" [style.width]="'100%'" (input)="filterProducts('potencialSaving', $event)"
+                [style.outline]="'none'" [style.border]="'none'" />
+        </b2b-row>
+    </b2b-tdata>
+
+</ng-container>
+</b2b-trow>
+
+<!-- Temporary Products - (CP-3)-->
+<ng-container container-body *ngFor="let add of temp | myFilter : searchText : ['brand_products_name','categories_name','sub_categories_name','placement','hotel_wild_usage','order_frequency','vendor_lead_time_1','brand_or_last_vendor_name','last_ordered_quantity_1','last_box_quantity_1','last_ordered_price_1','TAX_1','selling_at','minValue','potencialSaving']">
+<b2b-trow container-body *ngIf="isTemporaryProduct && (selectedTable == '' || selectedTable == add.id) " [HoverBoxShadow]="true" [id]="add.id" [isExpanded]="selectedTable == add.id" [showExpand]="true" [column]="catelogColumnSpacing2" fontSize="12px"
+    colorTheme="--color-black"  (onExpand)="tableExpand($event,'Temp','')" backgroundTheme="--color-white" borderRadius="var(--table-radius)" height="65px"
+    (click)="testtt(add,add.vendorId,'')">
+
+    <!-- PURCHASE REQUEST, SERVICE REQUEST........... -->
+    <b2b-dropdown *appRoleBasedButton="[162,163,1]" trow-body [ngStyle]="{ 'position': 'absolute','left':'0','top':'30%' }" popupWidth="180px" overflow="hidden" zIndex="100" popupHeight="auto" alignItem="start"
+    dropdownPosition="left">
+        <b2b-icon-button dropdown-selector width="20px" icon="more_vert" padding="0 5px 0 0"
+        colorTheme="--color-dark-grey"></b2b-icon-button>
+         
+        <b2b-list-tile dropdown-items *appRoleBasedButton="[162,1]" [isIcon]="true" icon="construction" [bold]="true" title="Service Request"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="serviceRequest(add.id,'vp')"></b2b-list-tile> 
+        <b2b-list-tile dropdown-items *appRoleBasedButton="[163,1]" [isIcon]="true" icon="shopping_cart" [bold]="true" title="Purchase Request" iconBackgroundTheme="--color-redd" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="purchaseRequest(add.id,addProductLocalData.name,add.last_ordered_price,'Temp',add.vendorId,'','',add.box_quantity,add.vendors,add,'3')"></b2b-list-tile> 
+    </b2b-dropdown>
+
+    <b2b-tdata trow-body margin="0 0 0 25px">
+        <!-- Dropdown outside the loop -->
+         <!-- <b2b-icon-button tdata-body id="image-element" icon="more_vert" (click)="image_mark($event)" padding="0 5px 0 0"
+            colorTheme="--color-dark-grey"></b2b-icon-button> 
+         -->
+
+        <b2b-dropdown tdata-body popupWidth="200px" maxheight="auto" overflow="hidden" zIndex="100" popupHeight="auto"
+            dropdownPosition="left" dropdownTop="35px">
+            
+            <b2b-row dropdown-hover position="relative" zIndex="10">
+                <b2b-text row-body class="temp_new_3" text="H" fontSize="9px" colorTheme="--color-white"></b2b-text>
+                <b2b-image  row-body image="{{add.product_image}}"
+                    (click)="productClick()" width="40px"></b2b-image>
+            </b2b-row>
+
+            <b2b-row dropdown-items zIndex="10" borderRadius="5px" position="relative" height="auto">
+                <b2b-container row-body
+                    [property]="{backgroundTheme: '',flex:1,padding:'0px 0 0 5px',height:'auto'}">
+                    <b2b-row container-body>
+                        <b2b-container row-body
+                            [property]="{backgroundTheme: '--color-white',flex:1,padding:'0px'}">
+                            <b2b-row container-body position="absolute">
+                                <b2b-text row-body class="temp_new_3" text="H" fontSize="10px"
+                                    colorTheme="--color-white"></b2b-text>
+                            </b2b-row>
+                            <b2b-spacer container-body height="30px"></b2b-spacer>
+                            <b2b-row container-body>
+                                <b2b-icon row-body icon="close" left="84%" (click)="cancel()" top="2%"
+                                    backgroundTheme="--color-white" colorTheme="--color-dark-grey"
+                                    position="absolute"></b2b-icon>
+                            </b2b-row>
+                            <b2b-row container-body width="100%">
+                                <b2b-image row-body width="100%"
+                                    image="{{add.product_image}}"></b2b-image>
+                            </b2b-row>
+                            <b2b-row container-body>
+                                <b2b-text row-body colorTheme="--color-black" fontSize="14px" [bold]="true"
+                                    text="{{add.brand_products_name}}"></b2b-text>
+                            </b2b-row>
+                            <b2b-row container-body>
+                                <b2b-text row-body colorTheme="--color-black" fontSize="12px" [bold]="true"
+                                    text="Product added by Hotel"></b2b-text>
+                            </b2b-row>
+                            <b2b-spacer container-body height="10px"></b2b-spacer>
+                        </b2b-container>
+                    </b2b-row>
+                </b2b-container>
+            </b2b-row>
+
+        </b2b-dropdown>
+    </b2b-tdata>
+    <b2b-spacer trow-body ></b2b-spacer>
+
+    <b2b-tdata trow-body title="{{transformPlacementData(add.brand_products_name) | titlecase}}" [toolTip]="true" [toolTipName]="add.brand_products_name"></b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <b2b-tdata trow-body title="{{transformPlacementData(add.categories)}}"  [toolTip]="true" [toolTipName]="add.categories"></b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <b2b-tdata trow-body title="{{transformPlacementData(add.subcategorie_leavel_1)}}" [toolTip]="true" [toolTipName]="add.subcategorie_leavel_1"></b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <!-- <b2b-tdata trow-body [title]="add.placement ==null || add.placement ==undefined ?'Click Here':  add.placement | titlecase  " textWidth="60px"></b2b-tdata> -->
+    <!-- placement -->
+    <b2b-tdata trow-body [toolTip]="add.placement && add.placement != 'undefind' ? true : false" [toolTipName]="add.placement">
+        <b2b-dropdown tdata-body zIndex="100" [isEditPopup]="true" dropdownTop="35px" popupWidth="200px" popupHeight="auto"
+        alertPopWidth="100px" alignItem="start" overflow="hidden" dropdownPosition="left" >
+            <b2b-row dropdown-selector>
+                <b2b-tdata row-body [colorTheme]="add.placement=='undefind' || add.placement==null ?'--color-primary' :'--color-black' " title="{{add.placement==null || add.placement=='undefind' ? 'Click here' : transformPlacementData(add.placement)}}" 
+                    ></b2b-tdata>
+            </b2b-row>
+
+            <b2b-inputbox dropdown-kitchen value="{{add.placement=='undefind' ? '' :add.placement}}" (onChange)="placementData.placement = $event" width="90%" inputboxPadding="3px" height="25px" border="1px solid grey"></b2b-inputbox>
+            <b2b-button dropdown-submit width="45px" (click)="Placement(placementData.placement,add.id,'TP' )" title="Submit" height="25px" fontSize="10px" backgroundTheme="--color-primary"></b2b-button>
+        </b2b-dropdown>
+    </b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <!-- end placement -->
+    <b2b-tdata trow-body title="{{add.hotel_wide_usage !=null && add.hotel_wide_usage!= 'undefined' ? add.hotel_wide_usage:'0'}}"></b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <!-- <b2b-tdata trow-body title="{{add.order_frequency}}"></b2b-tdata> -->
+      <!--order frequency-->
+      <b2b-tdata trow-body>
+        <b2b-dropdown tdata-body popupWidth="150px" overflow="auto" alertPopWidth="150px" popupHeight="auto" zIndex="100"
+            alignItem="start" dropdownPosition="left">
+            <b2b-row dropdown-selector>
+                <b2b-tdata row-body  [colorTheme]="add.order_frequency == null ?'--color-primary' :'--color-black' " [title]="add.order_frequency == null ? 'Click here': add.order_frequency | titlecase"
+                    (click)="orderfrequency_input(add.order_frequency)"></b2b-tdata>
+            </b2b-row>
+
+            <b2b-text dropdown-selector-container text="Click Order Frequency"  fontSize="10px"></b2b-text>
+            <b2b-row dropdown-items>
+                <b2b-container row-body [property]="{padding:'0',borderRadius:'0'}">
+                    <b2b-row container-body padding="0 0 0 7px">
+                        <b2b-text row-body text="Order Frequency"  [bold]="true" fontSize="11px"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="5px"></b2b-spacer>
+                    <b2b-row container-body  *ngFor="let a of order_frequncy_data">
+                        <!-- <b2b-spacer row-body width="10px"></b2b-spacer>  -->
+
+                        <b2b-list-tile class="orderFrequency" padding="2px 0"  row-body hoverTheme="--color-dark-grey" colorTheme="--color-black" height="10px" [title]="a" fontSize="13px"
+                            (click)="orderFrequency(a,add.id,'TP')"></b2b-list-tile>
+                    </b2b-row>
+                    <b2b-spacer container-body height="5px"></b2b-spacer>
+                </b2b-container>
+            </b2b-row>
+        </b2b-dropdown>
+    </b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <!-- end orderfrequency -->
+    <b2b-tdata trow-body title="{{add.vendor_name | titlecase}}"></b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <b2b-tdata trow-body title="{{add.lead_time != null ?add.lead_time:'0'}}"></b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <b2b-tdata trow-body title="{{add.last_ordered_quantity_1}}"></b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <b2b-tdata trow-body title="{{add.box_quantity !=null ?add.box_quantity:'0'}}"></b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <b2b-tdata trow-body title="{{currency_symbol}} {{add.last_ordered_price_1}}"></b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <b2b-tdata trow-body title="0%"></b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <b2b-tdata trow-body [title] = "add.ESG !='1' ?'-' :'' ">
+        <b2b-avatar-image tdata-body *ngIf="add.ESG =='1' "
+            img="https://www.shutterstock.com/image-vector/go-green-icon-ecofriendly-slogan-600w-1736254829.jpg"></b2b-avatar-image>
+        <!-- <b2b-text tdata-body  [text]="data.ESG" fontSize="12px"></b2b-text> -->
+    </b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <b2b-tdata trow-body title="{{add.manufactured != null ? (add.manufactured | titlecase) : '-'}}"></b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <b2b-tdata trow-body fontSize="10px"  (click)="ezeebi_link(add.ezeebi_link)">
+        <b2b-container tdata-body [property]="{backgroundTheme: '',padding:'0',alignItem:'center'}">
+            <b2b-tdata container-body title="High : {{currency_symbol}} {{add.highest_price != null ?add.highest_price :'0'}} "></b2b-tdata>
+            <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+            <b2b-tdata container-body title="Low {{' '}} : {{currency_symbol}} {{add.lowest_price !=null ?add.lowest_price :'0'}}"></b2b-tdata>
+            <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        </b2b-container>
+    </b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <b2b-tdata trow-body title="0%"></b2b-tdata>
+    <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+    <b2b-tdata trow-body justifyContent="flex-end" [ngStyle]="{ 'position': 'absolute','right':'0','top':'17%' }">
+        
+        <b2b-dropdown tdata-body popupWidth="90px" overflow="hidden" popupHeight="auto" alignItem="start" dropdownPosition="right">
+            <b2b-icon-button dropdown-selector icon="edit" padding="0 " iconSize="20px"
+            colorTheme="--color-dark-grey"></b2b-icon-button>
+
+                <b2b-list-tile dropdown-items *appRoleBasedButton="[165,1]" [isIcon]="true" icon="cyclone" title="Add"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="add_new_product()"></b2b-list-tile> 
+                <b2b-list-tile dropdown-items [isIcon]="true" icon="edit" title="Edit" iconBackgroundTheme="--color-primary" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="editTemporaryProduct(add)"></b2b-list-tile> 
+                <b2b-list-tile dropdown-items *appRoleBasedButton="[164,1]"  [isIcon]="true" icon="delete" title="Delete" iconBackgroundTheme="--color-redd" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="delete_temporaryProduct(add.id,add.hotel_id)"></b2b-list-tile> 
+            
+        </b2b-dropdown>
+    </b2b-tdata>
+
+</b2b-trow>
+</ng-container>
+
+<!-- products by hotel - (CP-4)-->
+<!-- <div class="isNoData" *ngIf="(products | myFilter : fields)?.length === 0">
+    No match found
+</div> -->
+
+<!-- loader Style.css-->
+<div class="loader-" style="left: 45%;" *ngIf="isLoading == true"></div>
+<!-- <div container-body (click)="isAllDrop()">testtttttt</div> -->
+<!-- brand product -->
+<ng-container container-body class="product_table" *ngFor="let data of products | myFilter : searchText : ['brand_products_name','categories_name','sub_categories_name','placement','hotel_wild_usage','order_frequency','brand_or_last_vendor_name','vendor_lead_time_1','last_ordered_quantity_1','last_box_quantity_1','last_ordered_price_1','TAX_1','ESG','selling_at','minValue','potencialSaving']; let i=index">
+    <b2b-trow [showExpand]="true" *ngIf="selectedTable == '' || selectedTable == data.id " [HoverBoxShadow]="true"
+    [id]="data.id" fontSize="12px" [isExpanded]="selectedTable == data.id"
+    [column]="catelogColumnSpacing2" colorTheme="--color-black" backgroundTheme="--color-white"
+    borderRadius="var(--table-radius)" height="65px" 
+    (onExpand)="tableExpand($event,'brandProduct',data)" (onExpand2)="testtt(data,data.vendorId,data.vendors)"> 
+        
+        <b2b-dropdown  trow-body *appRoleBasedButton="[162,163,1]" [ngStyle]="{ 'position': 'absolute','left':'0','top':'30%' }" popupWidth="180px" overflow="hidden" zIndex="100" popupHeight="auto" alignItem="start"
+        dropdownPosition="left">
+            <b2b-icon-button dropdown-selector class="tour-purchase-request" icon="more_vert" width="20px" padding="0 5px 0 0"
+                colorTheme="--color-dark-grey"></b2b-icon-button>
+             <ng-container dropdown-items *appRoleBasedButton="[162,1]">   
+            <b2b-list-tile  *ngIf="isLoggedIn" [isIcon]="true"  icon="construction" [bold]="true" title="Service Request"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="serviceRequest(data.id,data.vp)"></b2b-list-tile> 
+             </ng-container>
+            <b2b-list-tile dropdown-items [isIcon]="true" *appRoleBasedButton="[163,1]"  icon="shopping_cart" [bold]="true" title="Purchase Request" iconBackgroundTheme="--color-redd" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="purchaseRequest(data.id,'',data.last_ordered_price_1,'brandProduct',data.vendorId,data.mutivedorList,data.allPreferdVendor,data.last_box_quantity_1,data.vendors,data,data.vp)"></b2b-list-tile> 
+            <!-- <b2b-spacer dropdown-selector class="catalog-spaceline"></b2b-spacer> -->
+        </b2b-dropdown>
+        
+
+        <b2b-tdata trow-body margin="0 0 0 25px">
+            <b2b-dropdown tdata-body popupWidth="200px" maxheight="auto" overflow="hidden" zIndex="100"
+                popupHeight="auto" dropdownPosition="left" dropdownTop="35px">
+                <b2b-row dropdown-hover position="relative" zIndex="10">
+                    <b2b-text row-body *ngIf="data.new_tag == 0 && data.vp == '0'" class="new_2" text="New" fontSize="9px" colorTheme="--color-white"></b2b-text>
+                    <b2b-text row-body *ngIf="data.vp == '1'" class="new_3" text="VP" fontSize="9px" colorTheme="--color-white"></b2b-text>
+
+                    <b2b-image row-body image="{{data.product_image}}" (click)="productClick()"
+                        width="40px"></b2b-image>
+                </b2b-row>
+
+                <!-- Hover product image -->
+                <b2b-row dropdown-items zIndex="10" borderRadius="5px" position="relative">
+                    <b2b-container row-body
+                        [property]="{backgroundTheme: '',flex:1,padding:'0px 0 0 5px',overflowY:'hidden'}">
+                        <b2b-row container-body>
+                            <b2b-container row-body
+                                [property]="{backgroundTheme: '--color-white',flex:1,padding:'0px',overflowY:''}">
+                                <b2b-row container-body position="absolute" *ngIf="data.new_tag == 0">
+                                    <b2b-text row-body [class]="data.vp == '1'? 'new_4' : 'new' " [text]="data.vp == '1'? 'VP':'New' " fontSize="10px" colorTheme="--color-white"></b2b-text>
+
+                                </b2b-row>
+                                <b2b-spacer container-body height="30px"></b2b-spacer>
+
+                                <b2b-row container-body width="100%">
+                                    <b2b-image row-body width="100%"
+                                        image="{{data.product_image}}"></b2b-image>
+                                </b2b-row>
+                                <b2b-row container-body>
+                                    <b2b-text row-body colorTheme="--color-black" fontSize="14px" [bold]="true"
+                                        text="{{data.brand_products_name}}"></b2b-text>
+                                </b2b-row>
+                                <b2b-spacer container-body  height="15px"></b2b-spacer>
+                                
+                                <b2b-spacer container-body height="10px"></b2b-spacer>
+                            </b2b-container>
+                        </b2b-row>
+                    </b2b-container>
+                </b2b-row>
+
+            </b2b-dropdown>
+        </b2b-tdata>
+        <b2b-spacer trow-body ></b2b-spacer>
+
+        <b2b-tdata trow-body [title]="data.sort_brand_prod_name" [toolTip]="true" [toolTipName]="data.brand_products_name"></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <b2b-tdata trow-body [title]="data.sort_categories_name" [toolTip]="true" [toolTipName]="data.categories_name"></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <b2b-tdata trow-body [title]="data.sort_sub_categories_name" [toolTip]="true" [toolTipName]="data.sub_categories_name"></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <!-- <b2b-spacer trow-body class="catalog-spaceline"></b2b-spacer> -->
+        <!-- Placement -->
+        <b2b-tdata *ngIf="isLoggedIn" trow-body [toolTip]="data.placement && data.placement != 'undefind' ? true : false" [toolTipName]="data.placement">
+            <b2b-dropdown tdata-body zIndex="100" [isEditPopup]="true" dropdownTop="35px" popupWidth="200px" popupHeight="auto"
+            alertPopWidth="100px" alignItem="start" overflow="hidden" dropdownPosition="left" >
+                <b2b-row dropdown-selector>
+                    <b2b-tdata row-body [colorTheme]="data.placement=='undefind' || data.placement==null ?'--color-primary' :'--color-black' " title="{{data.placement==null || data.placement=='undefind' ? 'Click here' : transformPlacementData(data.placement)}}" 
+                        ></b2b-tdata>
+                        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+                </b2b-row>
+
+                <b2b-inputbox dropdown-kitchen value="{{data.placement=='undefind' ? '' :data.placement}}" (onChange)="placementData.placement = $event" width="90%" inputboxPadding="3px" height="25px" border="1px solid grey"></b2b-inputbox>
+                <b2b-button dropdown-submit width="45px" (click)="Placement(placementData.placement,data.id,'BP' )" title="Submit" height="25px" fontSize="10px" backgroundTheme="--color-primary"></b2b-button>
+            </b2b-dropdown>
+        </b2b-tdata>
+        <b2b-tdata *ngIf="!isLoggedIn" trow-body colorTheme="--color-black " title="Rooms" 
+                        ></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <!--hotel wide usage-->
+        <b2b-tdata trow-body [title]="data.hotel_wild_usage ? data.hotel_wild_usage : '-'"></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <!--order frequency-->
+        <b2b-tdata trow-body *ngIf="isLoggedIn">
+            <b2b-dropdown tdata-body popupWidth="150px" overflow="auto" alertPopWidth="150px" popupHeight="auto" zIndex="100"
+                alignItem="start" dropdownPosition="left">
+                <b2b-row dropdown-selector>
+                    <b2b-tdata row-body  [colorTheme]="data.order_frequency == null ?'--color-primary' :'--color-black' " [title]="data.order_frequency == null ? 'Click here': data.order_frequency | titlecase"
+                        (click)="orderfrequency_input(data.order_frequency)"></b2b-tdata>
+
+                </b2b-row>
+                <b2b-text dropdown-selector-container text="Click Order Frequency"  fontSize="10px"></b2b-text>
+                <b2b-row dropdown-items>
+                    <b2b-container row-body [property]="{padding:'0',borderRadius:'0'}">
+                        <b2b-row container-body padding="0 0 0 7px">
+                            <b2b-text row-body text="Order Frequency"  [bold]="true" fontSize="11px"></b2b-text>
+                        </b2b-row>
+                        <b2b-spacer container-body height="5px"></b2b-spacer>
+                        <b2b-row container-body  *ngFor="let a of order_frequncy_data">
+                            <!-- <b2b-spacer row-body width="10px"></b2b-spacer>  -->
+                            <b2b-list-tile class="orderFrequency" padding="2px 0"  row-body hoverTheme="--color-dark-grey" colorTheme="--color-black" height="10px" [title]="a" fontSize="13px"
+                                (click)="orderFrequency(a,data.id,'BP')"></b2b-list-tile>
+                        </b2b-row>
+                        <b2b-spacer container-body height="5px"></b2b-spacer>
+
+                    </b2b-container>
+                </b2b-row>
+            </b2b-dropdown>
+        </b2b-tdata>
+        <b2b-tdata *ngIf="!isLoggedIn" trow-body colorTheme="--color-black " title="2 Weeks" 
+        ></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <!-- <b2b-tdata trow-body [title]="data.leadTime"></b2b-tdata> -->
+        <b2b-tdata trow-body [title]="data.brand_or_last_vendor_name" ></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <b2b-tdata trow-body [title]="data.vendor_lead_time_1"></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <b2b-tdata trow-body [title]="data.last_ordered_quantity_1"></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <b2b-tdata trow-body [title]="data.last_box_quantity_1"></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <b2b-tdata trow-body [title]="data.currency_symbol + data.last_ordered_price_1"></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <b2b-tdata trow-body title="{{data.TAX_1}} %"></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <b2b-tdata trow-body>
+            <b2b-avatar-image tdata-body *ngIf="data['ESG'] == '1' "
+                img="https://www.shutterstock.com/image-vector/go-green-icon-ecofriendly-slogan-600w-1736254829.jpg"></b2b-avatar-image>
+             <b2b-text tdata-body *ngIf="data['ESG'] != '1'" text="-" fontSize="12px"></b2b-text> 
+        </b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <!-- <b2b-tdata trow-body title="-"></b2b-tdata> -->
+
+        <b2b-tdata trow-body [title]="data.selling_at"></b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <b2b-tdata trow-body fontSize="10px" (click)="ezeebi_link(data.ezeebi_link)">
+            <b2b-container tdata-body [property]="{backgroundTheme: '',padding:'0',alignItem:'center'}">
+                <b2b-tdata container-body title="High : {{data.currency_symbol}} {{data.maxValue ? data.maxValue :0}} "></b2b-tdata>
+                <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+                <b2b-tdata container-body title="Low {{' '}} : {{data.currency_symbol}} {{data.minValue ? data.minValue : 0}}"></b2b-tdata>
+                <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+            </b2b-container>
+        </b2b-tdata>
+        <b2b-spacer trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <b2b-tdata trow-body title="{{data.potencialSaving ? data.potencialSaving : 0}} %"></b2b-tdata>
+        <b2b-spacer *ngIf="isLoggedIn" trow-body class="catalog-spaceline1"></b2b-spacer>
+
+        <b2b-tdata *ngIf="isLoggedIn" trow-body justifyContent="flex-end" [ngStyle]="{ 'position': 'absolute','right':'0','top':'17%' }">
+
+            <b2b-dropdown *appRoleBasedButton="[165,1]" tdata-body popupWidth="90px" overflow="hidden" popupHeight="auto" alignItem="start" dropdownPosition="right">
+                <b2b-icon-button dropdown-selector icon="edit" padding="0 " iconSize="20px"
+                    colorTheme="--color-dark-grey"></b2b-icon-button>
+
+                <b2b-list-tile dropdown-items [isIcon]="true" icon="cyclone" title="Add"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="add_new_product()"></b2b-list-tile> 
+                <!-- <b2b-list-tile dropdown-items [isIcon]="true" icon="delete" iconBackgroundTheme="--color-redd" title="Delete"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="delete_product_(data.catlog_creations_id)"></b2b-list-tile>  -->
+
+            </b2b-dropdown>
+        </b2b-tdata>
+
+    </b2b-trow>
+</ng-container>
+
+<!-- purchase request - (CP-5)-->
+<ng-container container-body *ngIf="puechaserequest">
+    <b2b-draggable-popup container-body class="blur-overlay" positionTop="0%">
+        <b2b-container draggable-popup class="purchase-form-container" [property]="{backgroundTheme: '',flex:1,padding:'20px 0 0 5px',height:'100vh',overflowY:'auto'}">
+            <b2b-row  container-body>
+                <b2b-container row-body
+                    [property]="{backgroundTheme: '--color-white',border:'1px solid var(--color-toggle-background)',flex:1,padding:'30px'}">
+                    <b2b-row container-body>
+                        <b2b-text row-body text="Purchase Request Number" colorTheme="--color-primary" fontSize="13px" [bold]="true" margin="0 10px 0 0"></b2b-text>
+                        <!-- <b2b-text row-body text="{{purChaseRequest.price_request_preference == 'RFQ-Request' ? 'RFQ -' : 'DO -'}} {{this.base_id}}" fontSize="11px"></b2b-text> -->
+                        <b2b-text row-body text="{{randomId}}" fontSize="11px"></b2b-text>
+                        <!-- <b2b-text row-body *ngIf="purChaseRequest.price_request_preference == 'Direct Order'" text="DO -{{this.base_id}}"  fontSize="11px"></b2b-text> -->
+                    
+                        <b2b-icon row-body icon="close" left="92%" (click)="exit()" top="5%"
+                            backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+                            position="absolute"></b2b-icon>
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"> </b2b-spacer>
+
+                    <!-- COLUMN CONTAINER -->
+                    <div container-body class="column-container">
+                        <!-- COLUMN 1 -->
+                        <div container-body class="purchase-colunm-1">
+                            <b2b-row container-body>
+                                <b2b-inputbox row-body inputType="number" [value]="purChaseRequest.required_quantity"
+                                    [required]="true" (onChange)="requiredQuantity($event)" flexDirection="row" 
+                                    inputboxWidth="50%" [label]="true" title="Please check the case Qty , before requesting"
+                                    inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                                    inputName="Required Quantity"  fontSize="12px" [bold]="true" width="380px" height="35px"
+                                    [errorMsg]="isAllRequireData == true && purChaseRequest.required_quantity == '' ? 'Quantity Is Required':'' " 
+                                    [twoInputFeild]="true" placeholder="70">
+                                </b2b-inputbox>
+                                    
+                            </b2b-row>
+                            <!-- <b2b-spacer container-body height="18px"> </b2b-spacer> -->
+
+                            <b2b-row container-body >
+                                <b2b-inputbox row-body *ngIf="isLoggedIn" [value]="purChaseRequest.requested_on" 
+                                            (onChange)="purChaseRequest.requested_on = $event" [min]="now"
+                                            inputType="ng-date" input_lable_font="12px"
+                                            inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                                            inputName="Required by" position="right" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                                            [required]="true" [errorMsg]="isAllRequireData == true && purChaseRequest.requested_on == '' ? 'This Field Is Required':'' "
+                                            [Input_1]="false" placeholder="70">
+                                        </b2b-inputbox>
+                                 <b2b-inputbox row-body *ngIf="!isLoggedIn" fontSize="12px" inputName="Required by" [bold]="true" [value]="send_date" border="2px solid var(--color-light-grey)"  width="380px" height="35px" [disabled]="true" flexDirection="row"></b2b-inputbox>       
+                            </b2b-row>
+                            <!-- <b2b-text container-body [text]="formetDate" fontSize="12px" colorTheme="--color-dark-grey"></b2b-text> -->
+                            <!-- <b2b-spacer container-body height="18px"> </b2b-spacer> -->
+
+                            <b2b-row container-body>
+                                <b2b-inputbox row-body inputType="text" [readOnly]="true" value="{{price_symbol}} {{oneProductPrice}}"
+                                    inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                                    [label]="true" title="(Per Pcs / Box(Case) / Dozen)" inputboxWidth="50%"
+                                    inputName="Last Ordered Price" position="right" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                                    [twoInputFeild]="true" placeholder="70">
+                                </b2b-inputbox>
+                            </b2b-row>
+                            <!-- <b2b-spacer container-body height="18px"> </b2b-spacer> -->
+
+                            <b2b-row container-body>
+                                <b2b-inputbox row-body inputType="number" [readOnly]="true" [value]="caseQtyCount"
+                                    (onChange)="purChaseRequest.case_quantity=$event" inputboxPadding="0 0 0 10px"
+                                    [label]="true" title="One case/box contains {{baseBoxQuntity}}Pcs" inputboxWidth="50%"
+                                    border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                                    inputName="Box(Case) Quantity" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                                    placeholder="100">
+                                </b2b-inputbox>
+                            </b2b-row>
+                            <!-- <b2b-spacer container-body height="18px"> </b2b-spacer> -->
+
+                            <b2b-row container-body>
+                                <b2b-inputbox row-body value="{{price_symbol}} {{approxPrice}}"
+                                    [readOnly]="true"
+                                    inputName="Last Ordered Price - TOTAL (based on case Quantity)" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                                    [label]="true" title="({{baseBoxQuntity}}  Pcs / Case or Box)" inputboxWidth="50%"
+                                    inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                                    [errorMsg]="isAllRequireData == true && purChaseRequest.approximate_price.length >= 0 ? 'This Feild Is required':'' "
+                                    [twoInputFeild]="true" placeholder="$ 2500"></b2b-inputbox>
+                            </b2b-row>
+                            <!-- <b2b-spacer container-body height="18px"> </b2b-spacer> -->
+
+                            <b2b-row container-body>
+                                <b2b-inputbox row-body value="{{price_symbol}} {{purChaseRequest.approximate_shipping_cost.toFixed(2)}}"
+                                    [readOnly]="true"
+                                    inputName="Approx. Shipping Cost" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                                    inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                                    
+                                    [twoInputFeild]="true" placeholder="250(10% of 2500)"></b2b-inputbox>
+                            </b2b-row>
+                            <!-- <b2b-spacer container-body height="18px"> </b2b-spacer> -->
+                            
+                            <b2b-row container-body>
+                                <b2b-inputbox row-body [value]="purChaseRequest.vednor"
+                                    (onChange)="purChaseRequest.vednor=$event" [popupOption]="true" alignItem="start"
+                                    inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                                    popupAlignItem="flex-start" [readOnly]="true" popupOverflow="auto" popupWidth="100%"
+                                    position="right" [inputName]="'Vendor'" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                                    [errorMsg]="isAllRequireData == true && purChaseRequest.vednor == '' ? 'This Feild Is Required':'' "
+                                    [twoInputFeild]="true" placeholder="Select vendor">
+
+                                    <ng-container popup-body *ngFor="let i of vendor_company"> 
+                                        <b2b-list-tile container-body [title]="i.companyName" (click)="selectedVendor(i.companyName,i.vendor_id)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                                    </ng-container>
+                                    <b2b-list-tile popup-body title="None" (click)="purChaseRequest.vednor = 'None'" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                                </b2b-inputbox>
+                            </b2b-row>
+                            <!-- <b2b-spacer container-body height="18px" *ngIf="purChaseRequest.vednor != '' && purChaseRequest.vednor != '-'  && purChaseRequest.vednor != 'None'"> </b2b-spacer> -->
+                            
+                            <b2b-row container-body *ngIf="purChaseRequest.vednor != '' && purChaseRequest.vednor != '-' && purChaseRequest.vednor != 'None'">
+                                <!-- <b2b-text row-body text="Why this Vendor" fontSize="12px" [bold]="true"></b2b-text> -->
+                                <!-- <b2b-spacer row-body [flex]="1"></b2b-spacer> -->
+                                <b2b-inputbox *ngIf="isLoggedIn" row-body [value]="purChaseRequest.why_this_vendor" popupAlignItem="flex-start"
+                                    (onChange)="purChaseRequest.why_this_vendor=$event" [popupOption]="true" popupOverflow="hidden"
+                                    inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                                    [required]="true" [errorMsg]="isAllRequireData == true && purChaseRequest.why_this_vendor == '' ? 'This Feild Is Required':'' "
+
+                                    position="right" inputName="Why this Vendor" popupWidth="100%" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                                    [twoInputFeild]="true" placeholder="Why this Vendor">
+                                    <ng-container popup-body *ngFor="let i of why_this_vendor">
+                                    <b2b-list-tile  [title]="i.drop_down_value" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="purChaseRequest.why_this_vendor = i.drop_down_value "></b2b-list-tile> 
+                                    </ng-container>
+                                    <!-- <b2b-text popup-body text="Good Service" (click)="purChaseRequest.why_this_vendor = 'Good Service' " fontSize="12px"></b2b-text> -->
+                                </b2b-inputbox>
+                            </b2b-row>
+                        </div>
+
+                        <b2b-spacer container-body height="16px" > </b2b-spacer>
+                        <!-- COLUMN 2 -->
+                        <div container-body class="purchase-colunm-2">
+                            <b2b-row container-body *ngIf="isLoggedIn">
+                                <b2b-inputbox row-body [value]="purChaseRequest.remarks" textTransform="capitalize"
+                                    (onChange)="purChaseRequest.remarks=$event" inputboxPadding="0 0 0 10px"
+                                    border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                                    inputName="Remarks" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                                    [required]="true" [errorMsg]="isAllRequireData == true && purChaseRequest.remarks == '' ? 'This Feild Is Required':'' "
+
+                                    placeholder="Remarks">
+                                </b2b-inputbox>
+                            </b2b-row>
+                            <!-- <b2b-spacer container-body height="18px"> </b2b-spacer> -->
+
+                            <!-- ADMIN DEPARTMENT -->
+                            <b2b-row container-body *ngIf="userType_role != null && userType_role.user_type == 'ho' ">
+                                <b2b-inputbox row-body [readOnly]="true" [value]="department_name"
+                                    [popupOption]="true" popupWidth="100%"
+                                    alignItem="start" popupAlignItem="flex-start" inputboxPadding="0 0 0 10px" popupOverflow="hidden"
+                                    inputName="Department" placeholder="Department" position="right" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                                    [required]="true" [errorMsg]="isAllRequireData == true && purChaseRequest.department_id == '' ? 'This Feild Is Required':'' "
+                                    border="2px solid var(--color-light-grey)" [twoInputFeild]="true">
+
+                                    <b2b-list-tile popup-body  title="{{i.department_name}}" *ngFor="let i of department_details" hoverTheme="--color-dark-grey" [bold]="true" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="admin_department(i)"></b2b-list-tile> 
+                                </b2b-inputbox>
+                            </b2b-row>
+                            <!-- <b2b-spacer container-body height="15px" *ngIf="userType_role != null && userType_role.user_type == 'ho'"> </b2b-spacer> -->
+
+                            <b2b-row container-body>
+                                <b2b-inputbox  row-body [readOnly]="true" [value]="purChaseRequest.price_request_preference"
+                                    (onChange)="purChaseRequest.price_request_preference=$event"  [popupOption]="true" popupWidth="100%"
+                                    alignItem="start" popupAlignItem="flex-start" inputboxPadding="0 0 0 10px" popupOverflow="hidden"
+                                    inputName="Purchase Request Preference" placeholder="RFQ / Direct Order" position="right" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                                    [required]="true" [errorMsg]="isAllRequireData == true && purChaseRequest.price_request_preference == '' ? 'This Feild Is Required':'' "
+                                    border="2px solid var(--color-light-grey)" [twoInputFeild]="true">
+                                    <ng-container popup-body >
+                                    <b2b-list-tile  title="{{i}}" *ngFor="let i of request_type"  hoverTheme="--color-dark-grey" [bold]="true" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="requestType(i) "></b2b-list-tile> 
+                                    </ng-container>
+
+                                </b2b-inputbox>
+                            </b2b-row>
+                        </div>
+                    </div>
+                    
+                   
+                    <b2b-spacer container-body height="15px"> </b2b-spacer>
+
+                    <b2b-row container-body>
+                        <b2b-text row-body text="Requested by" fontSize="12px" [bold]="true"></b2b-text>
+                        <b2b-spacer row-body width="20px"></b2b-spacer>
+                        <b2b-text row-body text="{{i.name | titlecase}}" *ngFor="let i of user_name"
+                            fontSize="12px"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"> </b2b-spacer>
+
+                    <b2b-row container-body>
+                        <b2b-text row-body text="Requested on" fontSize="12px" [bold]="true"></b2b-text>
+                        <b2b-spacer row-body width="20px"></b2b-spacer>
+                        <b2b-text row-body text="{{dateString}}" fontSize="12px"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="15px"> </b2b-spacer>
+
+                    <b2b-row container-body justifyContent="center">
+                        <b2b-button  row-body width="150px" title="Submit for Approval" [apiSubmitDisable]="true" (onPressed)="submit('RFQ')" height="35px"
+                            [backgroundTheme]="PRButtonDisabled == false ? '--color-green' : '--color-light-grey'" [buttonDisabled]="PRButtonDisabled" colorTheme="--color-white"></b2b-button>
+                     
+                        </b2b-row>
+                </b2b-container>
+            </b2b-row>
+        </b2b-container>
+    </b2b-draggable-popup>
+</ng-container>
+
+<!-- PAGINATION - (CP-6)-->
+
+<!-- <b2b-pagination *ngIf="selectedTable == ''"
+  [totalItems]="totalItems" 
+  [pageSize]="pageSize" 
+  [currentPage]="currentPage" 
+  (pageChange)="onPageChange($event)"
+  position="absolute"
+  position_right="35px"
+  position_bottom="20px">
+</b2b-pagination> -->
+
+<!-- <div container-body [class.className]="isDropdown" style="position: fixed;top: 100px;left:300px;width: 100px;height: 100px;background-color: red;"></div> -->
+<!--- service request - (CP-7) -->
+<b2b-draggable-popup container-body class="blur-overlay" *ngIf="servicerequset" positionTop="3%" >
+    <b2b-container draggable-popup [property]="{backgroundTheme: '',flex:1,padding:'10px 0 0 5px'}">
+        <b2b-row container-body>
+            <b2b-container row-body
+                [property]="{backgroundTheme: '--color-white',border:'1px solid var(--color-toggle-background)',flex:1,padding:'10px 30px 30px 30px'}">
+                <b2b-row container-body>
+                    <!-- <b2b-text row-body text="SR -{{base_id}}" fontSize="11px"></b2b-text> -->
+                    <b2b-icon row-body icon="close" left="92%" (click)="serviecrequestcancel()" top="5%"
+                        backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+                        position="absolute"></b2b-icon>
+                </b2b-row>
+                <b2b-spacer container-body height="10px"> </b2b-spacer>
+                <b2b-row container-body >
+                    <b2b-text row-body class="Heading" text="Service Request : SR " fontSize="13px" [bold]="true"></b2b-text>
+                </b2b-row>
+                <b2b-spacer container-body height="10px"> </b2b-spacer>
+                <b2b-row container-body>
+                    <!-- <b2b-text row-body text="Current Condition" fontSize="12px" [bold]="true"></b2b-text> -->
+                    <!-- <b2b-spacer row-body [flex]="1"></b2b-spacer> -->
+                 
+                    <b2b-inputbox row-body [popupOption]="true" [value]="serviceRequest_form.current_condition"
+                        (onChange)="serviceRequest_form.current_condition=$event" alignItem="start" popupAlignItem="flex-start"
+                        inputName="Current Condition" titleWidth="215px" position="right" fontSize="13px" [bold]="true"  width="380px" height="35px" flexDirection="row" 
+                        inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                        [required]="true" [errorMsg]="isSRrequiredData == true && serviceRequest_form.current_condition == '' ? 'This Feild Is Required':'' "
+                        [twoInputFeild]="true" placeholder="Current Codition" popupOverflow="hide">
+
+                        <b2b-list-tile popup-body *ngFor="let i of current_condition_Array" colorTheme="--color-black" height="30px" hoverTheme="--color-dark-grey" title="{{i}}" margin="5px"
+                            (click)="serviceRequest_form.current_condition = i" fontSize="14px"></b2b-list-tile>
+
+                            
+                    </b2b-inputbox>
+                </b2b-row>
+                <b2b-spacer container-body height="18px"> </b2b-spacer>
+                <b2b-row container-body>
+                    <b2b-text row-body text="Pictures /Videos" [required]="true" fontSize="12px" [bold]="true"></b2b-text>
+                    <b2b-spacer row-body [flex]="2"></b2b-spacer>
+                    <div row-body style="margin:0 0 0 90px">
+                        <input style="width:65%" type="file" (change)="serviceRequestImage($event)" accept="image/*,video/*" multiple>
+                        <b2b-text *ngIf="isSRrequiredData == true && uploadImage.length <= 0" text="This Field Is Required" fontSize="10px" colorTheme="--color-red" [bold]="true"></b2b-text>
+                        <b2b-row margin="5px 0 0 0">
+                            <div row-body *ngFor="let file of uploadImage" style="display: inline-block; margin-right: 5px;">
+                                <ng-container *ngIf="file.type.startsWith('image'); else videoThumbnail">
+                                    <img [src]="file.src" alt="Uploaded Image" width="40px">
+                                </ng-container>
+                                <ng-template #videoThumbnail>
+                                    <img [src]="defaultVideoThumbnail" alt="Uploaded Video" width="40px">
+                                </ng-template>
+                            </div>
+                        </b2b-row>
+                    </div>
+                </b2b-row>
+                
+                
+                
+                <!-- <img container-body [src]="uploadImage" alt="Uploaded Image" width="20px"> -->
+
+                <b2b-spacer container-body height="18px"> </b2b-spacer>
+                <b2b-row container-body>
+                    <!-- <b2b-text row-body text="Required by" fontSize="12px" [bold]="true"></b2b-text> -->
+                    <!-- <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                    -->
+                    <div row-body>
+                        <b2b-inputbox  inputType="ng-date" [value]="serviceRequest_form.required_by"
+                        (onChange)="serviceRqtdateFormet($event)" [min]="now" input_lable_font="12px"
+                        inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                        inputName="Required By" titleWidth="215px" position="right" fontSize="12px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                        [required]="true" [errorMsg]="isSRrequiredData == true && serviceRequest_form.required_by == '' ? 'This Feild Is Required':'' "
+                        [Input_1]="false" >
+                        </b2b-inputbox>
+                        <!-- <b2b-text container-body [text]="formetDate" margin="0 0 0 130px" fontSize="12px" colorTheme="--color-dark-grey"></b2b-text> -->
+                    </div>
+                </b2b-row>
+                <b2b-spacer container-body height="18px"> </b2b-spacer>
+
+                <b2b-row container-body>
+                         <b2b-inputbox row-body [value]="serviceRequest_form.Rooms"
+                        (onChange)="serviceRequest_form.Rooms=$event" inputboxPadding="0 0 0 10px"
+                        border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                        inputName="Room Number/Area" titleWidth="215px" position="right" fontSize="13px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                        [required]="true" [errorMsg]="isSRrequiredData == true && serviceRequest_form.Rooms == '' ? 'This Feild Is Required':'' "
+                        placeholder="Room No. 345 / Lobby"></b2b-inputbox>
+                </b2b-row>
+                <b2b-spacer container-body height="18px"> </b2b-spacer>
+
+                <b2b-row container-body>
+                    <!-- <b2b-text row-body text="Remarks" fontSize="12px" [bold]="true"></b2b-text> -->
+                    <!-- <b2b-spacer row-body [flex]="1"></b2b-spacer> -->
+                    <b2b-inputbox row-body [value]="serviceRequest_form.remarks"
+                        (onChange)="serviceRequest_form.remarks=$event" inputboxPadding="0 0 0 10px"
+                        border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                        inputName="Issue/Remarks" titleWidth="215px" position="right" fontSize="13px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                        [required]="true" [errorMsg]="isSRrequiredData == true && serviceRequest_form.remarks == '' ? 'This Feild Is Required':'' "
+                        placeholder="TV Cracked / Water spill"></b2b-inputbox>
+                </b2b-row>
+                <b2b-spacer container-body height="10px"> </b2b-spacer>
+                <b2b-row container-body>
+                       <b2b-inputbox row-body [popupOption]="true" [value]="serviceRequest_form.vendorname"
+                         alignItem="start" popupAlignItem="flex-start"
+                        inputName="Vendor" titleWidth="215px" position="right" fontSize="13px" [bold]="true"  width="380px" height="35px" flexDirection="row" 
+                        inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                        [required]="true" [errorMsg]="isSRrequiredData == true && serviceRequest_form.vendor == '' ? 'This Feild Is Required':'' "
+                        [twoInputFeild]="true" placeholder="Choose Vendor" popupOverflow="hide">
+
+                        <b2b-list-tile popup-body *ngFor="let i of sr_vendor" colorTheme="--color-black" height="30px" hoverTheme="--color-dark-grey" title="{{i.companyName}}" margin="5px"
+                            (click)="selectvendor(i.vendor_id , i.companyName)" fontSize="14px"></b2b-list-tile>
+
+                            
+                    </b2b-inputbox>
+                </b2b-row>
+                <b2b-spacer container-body height="10px"> </b2b-spacer>
+                <b2b-row container-body>
+                    <b2b-text row-body text="Requested By" fontSize="12px" [bold]="true"></b2b-text>
+                    <b2b-spacer row-body width="30px"></b2b-spacer>
+                    <b2b-text row-body text="{{i.name | titlecase}}" *ngFor="let i of user_name"
+                        fontSize="12px"></b2b-text>
+                </b2b-row>
+                <b2b-spacer container-body height="10px"> </b2b-spacer>
+                <b2b-row container-body>
+                    <b2b-text row-body text="Requested On" fontSize="12px" [bold]="true"></b2b-text>
+                    <b2b-spacer row-body width="30px"></b2b-spacer>
+                    <b2b-text row-body text=" {{dateString}}" fontSize="12px"></b2b-text>
+                </b2b-row>
+                <b2b-spacer container-body height="15px"> </b2b-spacer>
+                <b2b-row container-body justifyContent="center">
+                    <b2b-button row-body width="150px" hoverTheme="--color-toggle-background" [apiSubmitDisable]="true" title="Submit For Approval" 
+                        (click)="submitTwo('','Temp')" height="30px" backgroundTheme="--color-green"
+                        colorTheme="--color-white">
+                    </b2b-button>
+                </b2b-row>
+            </b2b-container>
+        </b2b-row>
+    </b2b-container>
+</b2b-draggable-popup>
+<!--- Add or clone product - (CP-8) -->
+<b2b-add-product-vendor container-body *ngIf="isClone_product" formType="vendor_form"></b2b-add-product-vendor>
+
+<b2b-expanded-view *ngIf="selectedTable != ''" [specifcationAndWarrenty]="specifcationAndWarrenty"></b2b-expanded-view>

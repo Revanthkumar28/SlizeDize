@@ -1,0 +1,74 @@
+div.drawer-bottom-card {
+    align-self: start;
+    width: calc(100% - 20px);
+    background-color: var(--color-drawer-bottom-card);
+    border-radius:10px 10px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px  var(--global-padding);
+    box-sizing: border-box;
+    margin:3px 0 0 9px ;
+    /* position: fixed;
+    left: 0px;
+    width: 240px; */
+    transition: max-height 0.6s ease-in-out;
+    
+}
+div.drawer-bottom-card.open{
+    /* bottom: 0px; */
+    max-height: 395px;
+
+}
+div.drawer-bottom-card.closed{
+    /* bottom: -374px; */
+    max-height: 75px;
+
+}
+.drawer{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-x: hidden;
+    position: relative;
+
+}
+
+::ng-deep .bottom-screen_position{
+    position: relative;
+    
+}
+
+::ng-deep .Arrowicon{
+    width: 66px;
+    height: 33px;
+    background-color: #1b2aab;
+    border-radius: 80px 80px 0px 0px;
+    position: absolute;
+    top: -30px;
+    color: white;
+    z-index: 190;
+}
+::ng-deep .Arrowicon.open i{
+    transform: rotate(180deg) !important;
+
+}
+
+::ng-deep .ddd_hover div.list-tile.active:hover{
+   background-color: #1146b0 !important;
+
+}
+
+
+ ::ng-deep .dd_hover div.list-tile.active::before{
+    content: "" !important;
+    width: 5px !important;
+    height: 53px !important;
+    background-color:#e9e9e9 !important;
+    position: absolute;
+    top:0px;
+    left:0px;
+
+} 
+

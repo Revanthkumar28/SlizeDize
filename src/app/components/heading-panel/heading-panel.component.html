@@ -1,0 +1,17 @@
+<div class="heading-panel" [style]="headingPanelStyle">
+    <div class="leading">
+        <ng-content select="[panel-leading]"></ng-content>
+
+    </div>
+   
+    <div class="title" [style]="headingTitlePanel">
+        <p>{{title}}</p>
+    </div>
+    <div >
+        <ng-content select="[panel-para]"></ng-content>
+     </div>
+    <b2b-spacer [flex]="1"></b2b-spacer>
+    <div class="actions">
+        <ng-content select="[panel-actions]"></ng-content>
+    </div>
+</div>

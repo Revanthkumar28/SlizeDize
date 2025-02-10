@@ -1,0 +1,451 @@
+<b2b-row row-body height="100vh" widths="78vw" padding="30px" zIndex="1" backgroundTheme="--color-white"
+    borderRadius="10px" justifyContent="flex-start" border="1px solid var(--color-toggle-background)" position="fixed"
+    positionTop="1%" positionLeft="16%">
+    <b2b-icon row-body icon="close" left="97%" (click)="close_window()" top="2%" backgroundTheme="--color-white"
+        fontSize="20px" colorTheme="--color-dark-grey" position="absolute"></b2b-icon>
+    <b2b-row row-body style="margin-top: -20px;" height="88vh" overflowY="scroll" alignItem="flex-start">
+
+        <b2b-row flexDirection="column" widths="95%" row-body alignItem="flex-start">
+            <b2b-row row-body flexDirection="column">
+                <b2b-inputbox row-body [required]="true" inputName="Product Name" [popupOption]="false"
+                    textTransform="capitalize" [value]="api_json.name" (onChange)="api_json.name = $event"
+                    fontSize="12px" [bold]="true" width="100%" height="60px" flexDirection="column"
+                    [errorMsg]="isSRrequiredData == true && api_json.name == '' ? 'This Feild Is Required':'' "
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" placeholder="Product Name">
+                </b2b-inputbox>
+                <b2b-spacer row-body height="15px"></b2b-spacer>
+
+                <b2b-label row-body text="*Product Name Should Not Exceed 30 Charecter" backgroundTheme="none"
+                    padding="0" colorTheme="--color-dark-grey" fontSize="11px"></b2b-label>
+            </b2b-row>
+            
+            <b2b-row row-body justifyContent="space-between">
+            <b2b-inputbox  row-body [required]="true" inputName="SKU/Item Number" [popupOption]="false" textTransform="capitalize" [value]="api_json.sku"  (onChange)="api_json.sku = $event"
+             fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column" [errorMsg]="isSRrequiredData == true && api_json.sku == '' ? 'This Feild Is Required':'' "
+            inputboxPadding="0 0 0 10px"  popupOverflow="auto"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="SKU/Item Number"> </b2b-inputbox>
+            <div row-body>
+            <b2b-text [bold]="true" text="Product Picture" fontSize="12px" [required]="true" backgroundTheme="none" padding="0 0 3px 0" colorTheme="--color-black" ></b2b-text>
+   
+            <div>
+                <input  style="width:200px" type="file" (change)="serviceRequestImage_pic($event)" accept="image/*,video/" multiple >
+                <br>
+                <div style="display: flex;">
+                    <div *ngFor="let img of productImage;let i=index" style="position: relative;width: 30px;display: flex;" >
+                        <img  [src]="img.product_image" width="30px" style="margin-right: 8px;"> 
+                        <i class="material-icons" (click)="deleteProductImage(i,img.image_id)" style="position: absolute;top: 0;right: 2%;font-size: 18px;color: red;width: 30px;cursor: pointer;">close</i>                    
+                        <!-- <b2b-icon row-body icon="close" left="97%" (click)="close_window()" top="2%" backgroundTheme="--color-white"
+                            fontSize="20px" colorTheme="--color-dark-grey" position="absolute"></b2b-icon> -->
+                    </div>
+                </div>
+                
+            </div>
+            </div>
+                
+             </b2b-row>
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+           
+            <b2b-row row-body flexDirection="column">
+                <b2b-inputbox row-body [required]="true" inputName="Category"
+                    [value]="dropwown_slected_values.catagory_name" [popupOption]="true" [readOnly]="true" textTransform="capitalize"
+                    fontSize="12px" [bold]="true" width="100%" height="60px" flexDirection="column"
+                    [errorMsg]="isSRrequiredData == true && dropwown_slected_values.catagory_name == '' ? 'This Feild Is Required':'' "
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" placeholder="Select Category">
+                    <input #search search type="text" placeholder="Search" [(ngModel)]="filterData" (ngModelChange)="filterData =$event" >
+                    <ng-container popup-body *ngFor="let i of dropdownvalues.category | searchFilter : filterData ">
+                        <b2b-list-tile [title]="i.name" (click)="getInput(i,'category')" hoverTheme="--color-light-grey"
+                            colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px"
+                            margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+                <b2b-spacer row-body height="15px"></b2b-spacer>
+
+                <b2b-inputbox row-body [required]="true" inputName="Sub-Category-Level-1"
+                    [value]="dropwown_slected_values.sub_catagory_name_1" [popupOption]="true" [readOnly]="true"
+                    textTransform="capitalize" fontSize="12px" [bold]="true" width="100%" height="60px"
+                    flexDirection="column"
+                    [errorMsg]="isSRrequiredData == true && dropwown_slected_values.sub_catagory_name_1 == '' ? 'This Feild Is Required':'' "
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" placeholder="Select Sub-Category">
+                    <input #search search type="text" placeholder="Search" [(ngModel)]="filterData" (ngModelChange)="filterData =$event" >
+                    <ng-container popup-body *ngFor="let i of sub_catagory | searchFilter : filterData ">
+                        <b2b-list-tile [title]="i.name" (click)="getInput(i,'sub_category_1')"
+                            hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px"
+                            fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+                <b2b-spacer row-body height="15px"></b2b-spacer>
+
+                <b2b-inputbox row-body [required]="true" inputName="Sub-Category-Level-2"
+                    [value]="dropwown_slected_values.sub_catagory_name_2" [popupOption]="true" [readOnly]="true"
+                    textTransform="capitalize" fontSize="12px" [bold]="true" width="100%" height="60px"
+                    flexDirection="column"
+                    [errorMsg]="isSRrequiredData == true && dropwown_slected_values.sub_catagory_name_2 == '' ? 'This Feild Is Required':'' "
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" placeholder="Select Sub-Category">
+                    <input #search search type="text" placeholder="Search" [(ngModel)]="filterData" (ngModelChange)="filterData =$event" >
+                    <ng-container popup-body *ngFor="let i of sub_catagory_test | searchFilter : filterData ">
+                        <b2b-list-tile [title]="i.name" (click)="getInput(i,'sub_category_2')"
+                            hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px"
+                            fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+            </b2b-row>
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <!-- MANUFACTURE COUNTRY -->
+            <b2b-row row-body justifyContent="space-between">
+                <b2b-inputbox row-body [required]="true" inputName="Manufactured In" [popupOption]="true" [readOnly]="true"
+                    textTransform="capitalize" [value]="dropwown_slected_values.manufacture_name" fontSize="12px"
+                    [bold]="true" width="200px" height="60px" flexDirection="column"
+                    [errorMsg]="isSRrequiredData == true && dropwown_slected_values.manufacture_name == '' ? 'This Feild Is Required':'' "
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" placeholder="USA">
+                    <input #search search type="text" placeholder="Search" [(ngModel)]="filterData" (ngModelChange)="filterData =$event" >
+                    <ng-container popup-body *ngFor="let i of dropdownvalues.manufacture | searchFilter : filterData ">
+                        <b2b-list-tile title="{{i.name}} ({{i.currency_symbol}}) " (click)="getInput(i,'manufacture')"
+                            hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px"
+                            fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+                <b2b-inputbox row-body [required]="true" inputName="Market" [popupOption]="true" [readOnly]="true"
+                    textTransform="capitalize" [value]="dropwown_slected_values.market_name" fontSize="12px"
+                    [bold]="true" width="200px" height="60px" flexDirection="column"
+                    [errorMsg]="isSRrequiredData == true && dropwown_slected_values.market_name == '' ? 'This Feild Is Required':'' "
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" placeholder="USA $">
+                    <input #search search type="text" placeholder="Search" [(ngModel)]="filterData" (ngModelChange)="filterData =$event" >
+                    <ng-container popup-body *ngFor="let i of dropdownvalues.manufacture | searchFilter : filterData ">
+                        <b2b-list-tile [title]="i.name + i.currency_symbol" (click)="getInput(i,'market')"
+                            hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px"
+                            fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+            </b2b-row>
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-row row-body justifyContent="space-between">
+            <b2b-inputbox row-body  [required]="true" inputType="number" inputName="Approximate Price" [popupOption]="false" textTransform="capitalize" [value]="api_json.price"  (onChange)="api_json.price = $event"
+             fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column" [errorMsg]="isSRrequiredData == true && api_json.price == '' ? 'This Feild Is Required':'' "
+            inputboxPadding="0 0 0 10px"  popupOverflow="auto"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="$125"> </b2b-inputbox>
+
+            <b2b-inputbox row-body  [required]="true" inputName="Quantity Price" [popupOption]="true" [readOnly]="true" textTransform="capitalize" [value]="dropwown_slected_values.quantity_price_name"
+             fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column" [errorMsg]="isSRrequiredData == true && dropwown_slected_values.quantity_price_name == '' ? 'This Feild Is Required':'' "
+                inputboxPadding="0 0 0 10px"  popupOverflow="auto"
+                border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                placeholder="Per Piece">
+                <input #search search type="text" placeholder="Search" [(ngModel)]="filterData" (ngModelChange)="filterData =$event" >
+                <ng-container popup-body *ngFor="let i of dropdownvalues.quantity_price  | searchFilter : filterData ">
+                    <b2b-list-tile [title]="i.name" (click)="getInput(i,'quantity_price')" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                </ng-container>
+            </b2b-inputbox>
+        
+
+            </b2b-row>
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-row row-body justifyContent="space-between">
+            <b2b-inputbox  row-body [required]="true" inputType="number" inputName="Box Quantity" [popupOption]="false" textTransform="capitalize" [value]="api_json.box_qty"  (onChange)="api_json.box_qty = $event"
+             fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column" [errorMsg]="isSRrequiredData == true && api_json.box_qty == '' ? 'This Feild Is Required':'' "
+            inputboxPadding="0 0 0 10px"  popupOverflow="auto"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="25"> </b2b-inputbox>
+            <b2b-inputbox row-body  [required]="true" inputName="Quantity Type" [popupOption]="true" [readOnly]="true" textTransform="capitalize" [value]="dropwown_slected_values.quantity_type_name"
+             fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column" [errorMsg]="isSRrequiredData == true && dropwown_slected_values.quantity_type_name == '' ? 'This Feild Is Required':'' "
+            inputboxPadding="0 0 0 10px"  popupOverflow="auto"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="Piece">
+            <input #search search type="text" placeholder="Search" [(ngModel)]="filterData" (ngModelChange)="filterData =$event" >
+            <ng-container popup-body *ngFor="let i of dropdownvalues.quantity_type  | searchFilter : filterData ">
+            <b2b-list-tile [title]="i.name" (click)="getInput(i,'quantity_type')" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+           </ng-container>
+        </b2b-inputbox>
+        
+        
+        </b2b-row>
+
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-row row-body justifyContent="space-between">
+            <b2b-inputbox  row-body [required]="true" inputType="number" inputName="Lead Time" [popupOption]="false" textTransform="capitalize" [value]="api_json.lead_time"  (onChange)="api_json.lead_time = $event"
+             fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column" [errorMsg]="isSRrequiredData == true && api_json.lead_time == '' ? 'This Feild Is Required':'' "
+            inputboxPadding="0 0 0 10px"  popupOverflow="auto"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="2"> </b2b-inputbox>
+            <b2b-inputbox row-body  [required]="true" inputName="Duration" [popupOption]="true" [readOnly]="true" textTransform="capitalize" [value]="dropwown_slected_values.duration_name"
+            fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column" [errorMsg]="isSRrequiredData == true && dropwown_slected_values.duration_name == '' ? 'This Feild Is Required':'' "
+           inputboxPadding="0 0 0 10px"  popupOverflow="auto"
+           border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+           placeholder="Days"> 
+           <input #search search type="text" placeholder="Search" [(ngModel)]="filterData" (ngModelChange)="filterData =$event" >
+           <ng-container popup-body *ngFor="let i of dropdownvalues.duration  | searchFilter : filterData ">
+            <b2b-list-tile [title]="i.name" (click)="getInput(i,'duration')" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+           </ng-container>
+        </b2b-inputbox>
+       
+        
+        </b2b-row>
+
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-row row-body justifyContent="space-between">
+
+         <b2b-inputbox  row-body [required]="true" inputType="number" inputName="Guarrantee/Warrenty" [popupOption]="false" textTransform="capitalize" [value]="api_json.warranty"  (onChange)="api_json.warranty = $event"
+             fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column" [errorMsg]="isSRrequiredData == true && api_json.warranty == '' ? 'This Feild Is Required':'' "
+            inputboxPadding="0 0 0 10px"  popupOverflow="auto"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="2 days"> </b2b-inputbox>
+            <b2b-inputbox  row-body [required]="true" inputName="Guarrantee/Warrenty Duration" [popupOption]="true" [readOnly]="true" textTransform="capitalize" [value]="dropwown_slected_values.warenty_name"
+            fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column" [errorMsg]="isSRrequiredData == true && dropwown_slected_values.warenty_name == '' ? 'This Feild Is Required':'' "
+           inputboxPadding="0 0 0 10px"  popupOverflow="auto"
+           border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+           placeholder="Days">
+           <ng-container popup-body *ngFor="let i of warenty">
+            <b2b-list-tile [title]="i" (click)="getInput(i,'warenty')" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+           </ng-container>
+        </b2b-inputbox>
+        
+        </b2b-row>
+
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-row row-body justifyContent="space-between">
+       <b2b-inputbox row-body  [required]="true" inputName="Tax" [popupOption]="true" [readOnly]="true" textTransform="capitalize" [value]="dropwown_slected_values.tax_name"
+             fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column" [errorMsg]="isSRrequiredData == true && dropwown_slected_values.tax_name == '' ? 'This Feild Is Required':'' "
+            inputboxPadding="0 0 0 10px"  popupOverflow="auto"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="RER (12%)">
+            <input #search search type="text" placeholder="Search" [(ngModel)]="filterData" (ngModelChange)="filterData =$event" >
+            <ng-container popup-body *ngFor="let i of dropdownvalues.tax  | searchFilter : filterData ">
+            <b2b-list-tile [title]="i.name + '('+ i.tax_percentage+'%'+')'" (click)="getInput(i,'tax')" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+           </ng-container>
+        </b2b-inputbox>
+            <b2b-inputbox  row-body [required]="true" inputName="Shipping" [popupOption]="true" [readOnly]="true" textTransform="capitalize" [value]="dropwown_slected_values.shipping_name"
+             fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column" [errorMsg]="isSRrequiredData == true && dropwown_slected_values.shipping_name == '' ? 'This Feild Is Required':'' "
+            inputboxPadding="0 0 0 10px"  popupOverflow="auto"
+            border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+            placeholder="GST (10%)">
+            <input #search search type="text" placeholder="Search" [(ngModel)]="filterData" (ngModelChange)="filterData =$event" >
+            <ng-container popup-body *ngFor="let i of dropdownvalues.shipping  | searchFilter : filterData ">
+            <b2b-list-tile [title]="i.name + '('+ i.tax_percentage+'%'+')' " (click)="getInput(i,'shipping')" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+           </ng-container>
+        </b2b-inputbox>
+        
+        </b2b-row>
+
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-row row-body justifyContent="space-between">
+                <b2b-inputbox row-body [required]="true" inputName="ESG" [popupOption]="true" [readOnly]="true" textTransform="capitalize"
+                    [value]="dropwown_slected_values.esg_name" fontSize="12px" [bold]="true" width="200px" height="60px"
+                    flexDirection="column"
+                    [errorMsg]="isSRrequiredData == true && dropwown_slected_values.esg_name == '' ? 'This Feild Is Required':'' "
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" placeholder="Yes">
+                    <ng-container popup-body *ngFor="let i of input_Values">
+                        <b2b-list-tile [title]="i" (click)="getInput(i,'esg')" hoverTheme="--color-light-grey"
+                            colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px"
+                            margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+                <b2b-multi-select row-body [required]="true" inputName="Corporate Brand" [popupOption]="true" [readOnly]="true"
+                    textTransform="capitalize" [arrayValue]="multiSelectBrand" [value]="dropwown_slected_values.corporate_brand_name" fontSize="12px"
+                    [bold]="true" width="200px" height="auto" flexDirection="column"
+                    
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" placeholder="">
+                    <input #search search type="text" placeholder="Search" [(ngModel)]="filterData" (ngModelChange)="filterData =$event" >
+                    <ng-container popup-body *ngFor="let i of dropdownvalues.corporate_brand">
+                        <b2b-list-tile [title]="i.brand_name" (click)="getInput(i,'corporate')"
+                            hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px"
+                            fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-multi-select>
+
+            </b2b-row>
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-row row-body justifyContent="space-between">
+                <b2b-inputbox row-body [required]="true" inputName="KeyWords" [popupOption]="false"
+                    textTransform="capitalize" [value]="api_json.keyword" (onChange)="api_json.keyword = $event"
+                    fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column"
+                    [errorMsg]="isSRrequiredData == true && api_json.keyword == '' ? 'This Feild Is Required':'' "
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" placeholder=""> </b2b-inputbox>
+                    
+                    <b2b-inputbox row-body [required]="true" inputName="Special Key" [popupOption]="true" [readOnly]="true"
+                    textTransform="capitalize" [value]="dropwown_slected_values.special_key" fontSize="12px"
+                    [bold]="true" width="200px" height="60px" flexDirection="column"
+                    [errorMsg]="isSRrequiredData == true && dropwown_slected_values.special_key == '' ? 'This Feild Is Required':'' "
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" placeholder="cake">
+                    <input #search search type="text" placeholder="Search" [(ngModel)]="filterData" (ngModelChange)="filterData =$event" >
+                    <ng-container popup-body *ngFor="let i of dropdownvalues.special_key | searchFilter : filterData ">
+                        <b2b-list-tile [title]="i.keyword" (click)="getInput(i,'special_key')"
+                            hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px"
+                            fontSize="14px" margin="2px 0"></b2b-list-tile>
+                    </ng-container>
+                </b2b-inputbox>
+            </b2b-row>
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-row row-body flexDirection="column" *ngFor="let desc of product_description;let i=index"
+                alignItem="start">
+                <div row-body style="display: flex; flex-direction: row; align-items: center;">
+                    <b2b-inputbox [required]="true" inputName="Product Description" [popupOption]="false"
+                        textTransform="capitalize" [value]="desc.description_title"
+                        (onChange)="desc.description_title = $event" fontSize="12px" [bold]="true" width="200px"
+                        height="60px" flexDirection="column"
+                        [errorMsg]="isSRrequiredData == true && desc.description_title == '' ? 'This Feild Is Required' : desc.description_title.length > 100 ? 'Limited Charecters only allowed' : ''  "
+                        inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                        [twoInputFeild]="true" placeholder="Title"> 
+                    </b2b-inputbox>
+
+                    <!-- DESCRIPTION IMAGE SELECT -->
+                    <div style="margin-left: 30px;">
+                        <input style="width:200px;" type="file"
+                        (change)="serviceRequestImage_dec($event,desc)" accept="image/*,application/pdf" multiple>
+                        <br>
+                        <img *ngIf="desc.localImage != ''" [src]="desc.localImage" width="30px" style="margin-right: 8px;">
+                    </div>
+                    
+                </div>
+                <b2b-spacer row-body height="15px"></b2b-spacer>
+
+                <textarea style="width: 100%;text-transform: capitalize;" row-body id="myTextarea" name="myTextarea"
+                    rows="2" cols="50" [(ngModel)]="desc.description"></textarea>
+                    <b2b-label row-body text="*Min 150 charecters" backgroundTheme="none"
+                    padding="0" [colorTheme]="desc.description != '' ?'--color-dark-grey':'--color-redd' " fontSize="11px"></b2b-label>
+ 
+                <b2b-button row-body title="Del" margin="5px 0 0 0" height="40px" width="70px" (click)="delproduct(i,desc.description_id)"
+                    backgroundTheme="--color-redd"></b2b-button>
+
+            </b2b-row>
+            <b2b-button row-body title="+ADD" margin="5px 0 0 0" height="40px" width="70px" (click)="product()"
+                backgroundTheme="--color-green"></b2b-button>
+
+        </b2b-row>
+
+        <b2b-row row-body padding="0 30px 0 10px" flexDirection="column">
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-row row-body justifyContent="space-between">
+
+                <div row-body>
+                    <div row-body *ngFor="let pdf of resourcesPDF;let i=index">
+                        <b2b-text text="Resource and Download(PDF)" [bold]="true" [required]="true" backgroundTheme="none" padding="0 0 3px 0"
+                            colorTheme="--color-black" fontSize="12px"></b2b-text>
+                        
+                        <!-- UPLOAD PDF -->
+                        <div>
+                            <input style="width:200px; margin-bottom: 10px;" type="file"
+                            (change)="serviceRequestImage_res($event,pdf)" accept="application/pdf" multiple>
+                            <br>
+                            <img [src]="pdf.pdf_image" width="30px" style="margin-right: 8px;">
+                        </div>
+                        
+                        <b2b-spacer row-body height="15px"></b2b-spacer>
+
+                        <b2b-inputbox row-body [required]="true" [popupOption]="false" textTransform="capitalize"
+                            [value]="pdf.pdf_name" (onChange)="pdf.pdf_name = $event" fontSize="12px"
+                            [bold]="true" width="200px" height="60px" flexDirection="column"
+                            [errorMsg]="isSRrequiredData == true && pdf.pdf_name == '' ? 'This Feild Is Required':'' "
+
+                            inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                            [twoInputFeild]="true" placeholder="PDF Name"> </b2b-inputbox>
+                        <b2b-button row-body title="Del" margin="15px 0 0 0" height="40px" width="70px"
+                            (click)="delresource(i,pdf.pdf_id)" backgroundTheme="--color-redd"></b2b-button>
+
+                    </div>
+
+
+                </div>
+                <b2b-button row-body title="+ADD" height="40px" width="70px" (click)="resource()"
+                    backgroundTheme="--color-green"></b2b-button>
+            </b2b-row>
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-row row-body flexDirection="column">
+
+                <b2b-text row-body text="Product Overview" [required]="true" [bold]="true" backgroundTheme="none" padding="0 0 3px 0"
+                    colorTheme="--color-black" fontSize="12px"></b2b-text>
+
+                <textarea style="width: 100%; margin: 5px 0 0 0;text-transform: capitalize;" row-body
+                    id="myTextarea2" name="myTextarea2" rows="2" cols="50"
+                    [(ngModel)]="api_json.description"></textarea>
+                    <b2b-label row-body text="*Min 150 charecters" backgroundTheme="none"
+                    padding="0" [colorTheme]="api_json.description.length > 200 ?'--color-dark-grey':'--color-redd' " fontSize="11px"></b2b-label>
+ 
+
+            </b2b-row>
+
+            <b2b-spacer row-body height="15px"></b2b-spacer>
+
+            <b2b-text row-body text="Specification" [bold]="true"  [required]="true" margin="5px 0 10px 0" backgroundTheme="none" padding="0 0 3px 0"
+                colorTheme="--color-black" fontSize="12px"></b2b-text>
+
+            <b2b-row row-body *ngFor="let spec of keyValue;let i=index" padding="0 0 5px 0"
+                justifyContent="space-between">
+                <b2b-inputbox row-body [id]="i" [required]="true" [popupOption]="false" textTransform="capitalize"
+                    [value]="spec.key" (onChange)="spec.key = $event" fontSize="12px" [bold]="true" width="140px"
+                    height="40px" flexDirection="column"
+                    [errorMsg]="isSRrequiredData == true && spec.key == '' ? 'This Feild Is Required':'' "
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" placeholder="Key">
+                </b2b-inputbox>
+                <b2b-inputbox row-body [required]="true" [popupOption]="false" textTransform="capitalize"
+                    [value]="spec.value" (onChange)="spec.value = $event" fontSize="12px" [bold]="true" width="140px"
+                    height="40px" flexDirection="column"
+                    [errorMsg]="isSRrequiredData == true && spec.value == '' ? 'This Feild Is Required':'' "
+                    inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+                    [twoInputFeild]="true" placeholder="Description">
+                </b2b-inputbox>
+
+                <b2b-button row-body title="Del" height="40px" width="70px" backgroundTheme="--color-redd"
+                    (click)="deleteInputSpec(i,spec.spec_id)"></b2b-button>
+
+            </b2b-row>
+            <b2b-button row-body title="+ADD" margin="17px 0 10px 0" height="40px" width="70px" (click)="speckeyvalue()"
+                backgroundTheme="--color-green"></b2b-button>
+
+            <b2b-row row-body widths="45%" justifyContent="space-around">
+                <b2b-label row-body text="List in Ezeebi" backgroundTheme="none" padding="0" colorTheme="--color-black"
+                    fontSize="11px"></b2b-label>
+                <b2b-choice row-body class="radio" row-body group="catelog-group1" name="Yes" height="35px"
+                    fontSize="12px" [checked]=true (click)="getchoice('list','1')"></b2b-choice>
+                <b2b-choice row-body class="radio" row-body group="catelog-group1" name="No" height="35px"
+                    fontSize="12px" (click)="getchoice('list','0')"></b2b-choice>
+
+            </b2b-row>
+            <b2b-row row-body widths="45%" justifyContent="space-around">
+                <b2b-label row-body text="Different Type" backgroundTheme="none" padding="0" colorTheme="--color-black"
+                    fontSize="11px"></b2b-label>
+                <b2b-choice row-body class="radio" row-body group="catelog-group2" name="Yes" height="35px"
+                    fontSize="12px" (click)="getchoice('different','0')"></b2b-choice>
+                <b2b-choice row-body class="radio" row-body group="catelog-group2" name="No" height="35px"
+                    fontSize="12px" [checked]=true (click)="getchoice('different','1')"></b2b-choice>
+
+            </b2b-row>
+            <b2b-row row-body widths="45%" justifyContent="space-around">
+                <b2b-label row-body text="Show Full price" backgroundTheme="none" padding="0" colorTheme="--color-black"
+                    fontSize="11px"></b2b-label>
+                <b2b-choice row-body class="radio" row-body group="catelog-group3" name="Yes" height="35px"
+                    fontSize="12px" [checked]=true (click)="getchoice('show_price','1')"></b2b-choice>
+                <b2b-choice row-body class="radio" row-body group="catelog-group3" name="No" height="35px"
+                    fontSize="12px" (click)="getchoice('show_price','0')"></b2b-choice>
+
+            </b2b-row>
+
+          <b2b-button row-body title="SUBMIT" [buttonDisabled]="buttondisable" margin="10px 0 0 0" height="40px" width="70px" [backgroundTheme]=" buttondisable ? '--color-dark-grey'  : '--color-green'" (click)="sumbit()"></b2b-button>
+
+
+        </b2b-row>
+
+    </b2b-row>
+
+</b2b-row>

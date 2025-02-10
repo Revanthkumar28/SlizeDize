@@ -1,0 +1,186 @@
+<b2b-container row-body [property]="{flex:1,padding:'5px',position:'relative'}">
+    <b2b-icon container-body icon="close" left="94%" (click)="closeview_listing()" top="10px"
+    backgroundTheme="--color-white" tSize="16px" colorTheme="--color-dark-grey"
+    position="absolute"></b2b-icon>
+
+    <b2b-text container-body text="Property Listing" fontSize="20px"  [bold]="true"></b2b-text>
+
+    <b2b-row container-body  width="100%" flexDirection="row" justifyContent="space-between" alignItem="start" padding="5px">
+       <b2b-row row-body flexDirection="column"  width="50%">
+        <b2b-row row-body  height="50vh" padding="5px" justifyContent="center" position="relative" borderRadius="10px" border="1px solid var(--color-dark-grey)">
+            <!-- <b2b-image row-body [image]="view_property.images[0].files" height="50vh" width="100%" borderRadius="10px"></b2b-image> -->
+            <div row-body style="text-align: center;">
+                <b2b-icon *ngIf="currentImageIndex > 0" icon="arrow_circle_left" [isRounded]="true" left="1%" top="45%"
+                    backgroundTheme="--color-white" fontSize="30px" colorTheme="--color-dark-grey"
+                    position="absolute" (click)="previousImage()"></b2b-icon>
+    
+                <ng-container *ngIf="isImage(serviceImages[currentImageIndex].file); else videoTemplate">
+                    <b2b-image id="image-element" height="45vh" width="30vw" margin="15px 0 0 0"
+                        [image]="serviceImages[currentImageIndex].file"></b2b-image>
+                </ng-container>
+                <ng-template #videoTemplate>
+                    <video id="video-element" style="height: 45vh; width: 30vw;"  margin="15px 0 0 0" controls>
+                        <source [src]="serviceImages[currentImageIndex].file" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </ng-template>
+    
+                <b2b-icon *ngIf="currentImageIndex < serviceImages.length - 1" icon="arrow_circle_right" [isRounded]="true" left="93%" top="45%"
+                    backgroundTheme="--color-white" fontSize="30px" colorTheme="--color-dark-grey"
+                    position="absolute" (click)="nextImage()"></b2b-icon>
+            </div>
+            
+        
+        </b2b-row>
+        <b2b-row row-body flexDirection="column" alignItem="start">
+            <b2b-spacer row-body height="20px"></b2b-spacer>
+
+            <b2b-text row-body text="Marketing Description" [bold]="true" colorTheme="--color-sky-blue"  fontSize="20px"></b2b-text>
+            <b2b-row row-body width="100%" border="1px solid" colorTheme="--color-medium-grey"></b2b-row>
+            <!-- <b2b-text row-body [text]="view_property.marketing_description " colorTheme="--color-text-color"  fontSize="17px" [bold]="true"></b2b-text> -->
+            <div row-body [innerHTML]="view_property.marketing_description"></div>
+
+        </b2b-row>
+       
+        </b2b-row>
+        <b2b-spacer row-body width="20px"></b2b-spacer>
+
+        <b2b-row row-body flexDirection="column" width="50%" height="80vw">
+            <b2b-row row-body justifyContent="space-between">
+                <b2b-text row-body text="Address" colorTheme="--color-sky-blue"  fontSize="20px" [bold]="true"></b2b-text>
+                <b2b-row row-body  justifyContent="end" height="30px" width="100%" (click)="share()">
+                    <b2b-icon-button  row-body icon="share" iconSize="20px" width="30px" colorTheme="--color-green"></b2b-icon-button>
+                    <b2b-text row-body text="Share" fontSize="17px"  colorTheme="--color-green" ></b2b-text>
+        
+                    <b2b-spacer row-body width="10px"></b2b-spacer>
+        
+                </b2b-row>
+            </b2b-row>
+            <b2b-row row-body width="100%" border="1px solid grey"></b2b-row>
+            <b2b-row row-body>
+                <b2b-text  row-body text="Country:" [bold]="true" fontSize="18px"></b2b-text>
+                <b2b-spacer row-body width="5px"></b2b-spacer>
+    
+                <b2b-text row-body [text]="view_property.country " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+    
+            </b2b-row>
+            <b2b-row row-body>
+                <b2b-text  row-body text="State:" [bold]="true" fontSize="18px"></b2b-text>
+                <b2b-spacer row-body width="5px"></b2b-spacer>
+    
+                <b2b-text row-body [text]="view_property.state " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+    
+            </b2b-row>
+            <b2b-row row-body>
+                <b2b-text  row-body text="City:" [bold]="true" fontSize="18px"></b2b-text>
+                <b2b-spacer row-body width="5px"></b2b-spacer>
+    
+                <b2b-text row-body [text]="view_property.city " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+    
+            </b2b-row>
+            <b2b-row row-body>
+                <b2b-text  row-body text="Street:" [bold]="true" fontSize="18px"></b2b-text>
+                <b2b-spacer row-body width="5px"></b2b-spacer>
+    
+                <b2b-text row-body [text]="view_property.address " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+    
+            </b2b-row>
+
+            <b2b-spacer row-body height="10px"></b2b-spacer>
+            <b2b-row row-body>
+                <b2b-text row-body text="Details" colorTheme="--color-sky-blue"  fontSize="20px" [bold]="true"></b2b-text>
+            </b2b-row>
+            <b2b-row row-body width="100%" border="1px solid grey"></b2b-row>
+            <b2b-row row-body>
+            <b2b-text  row-body text="Property Name:" [bold]="true" fontSize="18px"></b2b-text>
+            <b2b-spacer row-body width="5px"></b2b-spacer>
+
+            <b2b-text row-body [text]="view_property.property_name " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+
+        </b2b-row>
+        <b2b-row row-body>
+            <b2b-text  row-body text="Country:" [bold]="true" fontSize="18px"></b2b-text>
+            <b2b-spacer row-body width="5px"></b2b-spacer>
+
+            <b2b-text row-body [text]="view_property.country " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+
+        </b2b-row>
+        <b2b-row row-body>
+            <b2b-text  row-body text="Asking Price:" [bold]="true" fontSize="18px"></b2b-text>
+            <b2b-spacer row-body width="5px"></b2b-spacer>
+
+            <b2b-text row-body [text]="view_property.asking_price " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+
+        </b2b-row>
+        <b2b-row row-body>
+            <b2b-text  row-body text="Square feet:" [bold]="true" fontSize="18px"></b2b-text>
+            <b2b-spacer row-body width="5px"></b2b-spacer>
+
+            <b2b-text row-body [text]="view_property.square_feet " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+
+        </b2b-row>
+        <b2b-row row-body>
+            <b2b-text  row-body text="keys:" [bold]="true" fontSize="18px"></b2b-text>
+            <b2b-spacer row-body width="5px"></b2b-spacer>
+
+            <b2b-text row-body [text]="view_property.keys " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+
+        </b2b-row>
+        <b2b-row row-body>
+            <b2b-text  row-body text="Years Build:" [bold]="true" fontSize="18px"></b2b-text>
+            <b2b-spacer row-body width="5px"></b2b-spacer>
+
+            <b2b-text row-body [text]="view_property.years_build " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+
+        </b2b-row>
+        <b2b-row row-body>
+            <b2b-text  row-body text="Year Renovated:" [bold]="true" fontSize="18px"></b2b-text>
+            <b2b-spacer row-body width="5px"></b2b-spacer>
+
+            <b2b-text row-body [text]="view_property.yours_renovated " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+
+        </b2b-row>
+        <b2b-row row-body>
+            <b2b-text  row-body text="Lot Size (acres):" [bold]="true" fontSize="18px"></b2b-text>
+            <b2b-spacer row-body width="5px"></b2b-spacer>
+
+            <b2b-text row-body [text]="view_property.lot_size " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+
+        </b2b-row>
+        <b2b-row row-body>
+            <b2b-text  row-body text="Property:" [bold]="true" fontSize="18px"></b2b-text>
+            <b2b-spacer row-body width="5px"></b2b-spacer>
+
+            <b2b-text row-body [text]="view_property.sale_type " colorTheme="--color-text-color" [bold]="true" fontSize="17px"></b2b-text>
+
+        </b2b-row>
+        <b2b-spacer row-body height="10px"></b2b-spacer>
+        <b2b-row row-body flexDirection="column" alignItem="start">
+            <b2b-text row-body text="Investment Highlights" colorTheme="--color-sky-blue"  [bold]="true" fontSize="20px"></b2b-text>
+            <b2b-row row-body width="100%" border="1px solid" colorTheme="--color-medium-grey"></b2b-row>
+            <!-- <b2b-text row-body [text]="view_property.investment_highlights " colorTheme="--color-text-color" fontSize="17px" [bold]="true"></b2b-text> -->
+            <div row-body [innerHTML]="view_property.investment_highlights"></div>
+
+        </b2b-row>
+        <b2b-spacer row-body height="20px"></b2b-spacer>
+        <b2b-row row-body flexDirection="column" alignItem="start">
+            <b2b-text row-body text="Documents" colorTheme="--color-sky-blue"  [bold]="true" fontSize="20px"></b2b-text>
+            <b2b-row row-body width="100%" border="1px solid" colorTheme="--color-medium-grey"></b2b-row>
+            <b2b-spacer row-body height="10px"></b2b-spacer>
+            <div class="grid" row-body>
+                <div   *ngFor="let i of view_property.document; index as c" >
+                    <b2b-row row-body flexDirection="column" alignItem="start" (click)="Openfile(i.file)">
+                        <b2b-image row-body [image]="document_img" height="70px" width="70px"></b2b-image>
+                        <b2b-text row-body [text]="'Documents-'+[c+1]" fontSize="10px"></b2b-text>
+                    </b2b-row>
+                </div>
+            </div>
+          
+        </b2b-row>
+        
+      
+       
+
+        </b2b-row>
+    </b2b-row>
+</b2b-container>

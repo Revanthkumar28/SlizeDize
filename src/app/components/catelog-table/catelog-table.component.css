@@ -1,0 +1,283 @@
+:host {
+    width: 100%;
+}
+
+.isNoData{
+    position: absolute;
+    color: lightslategray;
+    top: 50%;
+    left: 42%;
+}
+
+/* brand products tag green ................................................ */
+.new {
+    background: var(--color-toggle-background);
+    padding: 7px;
+    color:white;
+    text-transform: uppercase;
+    position: absolute;
+    top: 12px;
+    left: 1px;
+    z-index: 1;
+    transform: rotate(-45deg);
+}
+
+
+.new::before{
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    transform: rotate(45deg);
+    border-width: 20px 20px 0px 20px;
+    border-color: var(--color-toggle-background) transparent transparent transparent ;
+    position: absolute;
+    right: -26px;
+    bottom: -3px;
+
+}
+
+.new::after{
+    content: "";
+    width: 0;
+    height: 0;
+       border-style: solid;
+       transform: rotate(-45deg);
+       border-width: 20px 20px 0 20px;
+       border-color: var(--color-toggle-background) transparent transparent transparent;
+       position: absolute;
+       left: -26px;
+       bottom: -3px;
+
+}
+.new_4 {
+    background: var(--color-orange);
+    padding: 7px;
+    color:white;
+    text-transform: uppercase;
+    position: absolute;
+    top: 12px;
+    left: 1px;
+    z-index: 1;
+    transform: rotate(-45deg);
+}
+
+
+.new_4::before{
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    transform: rotate(45deg);
+    border-width: 20px 20px 0px 20px;
+    border-color: var(--color-orange) transparent transparent transparent ;
+    position: absolute;
+    right: -26px;
+    bottom: -3px;
+
+}
+
+.new_4::after{
+    content: "";
+    width: 0;
+    height: 0;
+       border-style: solid;
+       transform: rotate(-45deg);
+       border-width: 20px 20px 0 20px;
+       border-color: var(--color-orange) transparent transparent transparent;
+       position: absolute;
+       left: -26px;
+       bottom: -3px;
+
+}
+
+.new_2 {
+    background: var(--color-toggle-background);
+    padding: 0px;
+    color:white;
+    text-transform: uppercase;
+    position: absolute;
+    top: 0px;
+    left: -5px;
+    z-index: 0;
+    transform: rotate(-45deg);
+}
+.new_3 {
+    background: var(--color-orange);
+    padding: 0px;
+    color:white;
+    text-transform: uppercase;
+    position: absolute;
+    top: 0px;
+    left: -5px;
+    z-index: 0;
+    transform: rotate(-45deg);
+}
+.className{
+    z-index: 100000;
+}
+
+.new_2::before{
+    content: "";
+    width: 0;
+       height: 0;
+       border-style: solid;
+       transform: rotate(45deg);
+       border-width: 10px 10px 0px 10px;
+       border-color: var(--color-toggle-background) transparent transparent transparent ;
+       position: absolute;
+       right: -13px;
+       bottom: -1.3px;
+}
+.new_2::after{
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    transform: rotate(-45deg);
+    border-width: 10px 10px 0px 10px;
+    border-color: var(--color-toggle-background) transparent transparent transparent;
+    position: absolute;
+    left: -13px;
+    bottom: -1.5px;
+}
+.new_3::before{
+    content: "";
+    width: 0;
+       height: 0;
+       border-style: solid;
+       transform: rotate(45deg);
+       border-width: 10px 10px 0px 10px;
+       border-color: var(--color-orange) transparent transparent transparent ;
+       position: absolute;
+       right: -13px;
+       bottom: -1.3px;
+}
+.new_3::after{
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    transform: rotate(-45deg);
+    border-width: 10px 10px 0px 10px;
+    border-color: var(--color-orange) transparent transparent transparent;
+    position: absolute;
+    left: -13px;
+    bottom: -1.5px;
+}
+
+/* brand products tag green ...................................................................... */
+
+
+
+/* Temporary Product tag orange .............................................................. */
+
+.temp_new_3 {
+    background: orange;
+    padding: 0px;
+    color:white;
+    text-transform: uppercase;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+    transform: rotate(-45deg);
+}
+
+.temp_new_3::before{
+    content: "";
+    width: 0;
+       height: 0;
+       border-style: solid;
+       transform: rotate(45deg);
+       border-width: 10px 10px 0px 10px;
+       border-color: orange transparent transparent transparent ;
+       position: absolute;
+       right: -13px;
+       bottom: -1.3px;
+}
+.temp_new_3::after{
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    transform: rotate(-45deg);
+    border-width: 10px 10px 0px 10px;
+    border-color: orange transparent transparent transparent;
+    position: absolute;
+    left: -13px;
+    bottom: -1.5px;
+}
+
+.Heading{
+    z-index: 100;
+}
+input[type="file"] {
+    color: white;
+}
+
+/* PAGINATION */
+.items-list {
+    margin-bottom: 20px;
+  }
+  
+  .pagination button {
+    margin: 0 5px;
+  }
+
+/* Temporary Product tag orange .............................................................. */
+
+
+
+/* PURCHASE REQUEST FORM COLUMN */
+.column-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+.purchase-colunm-2{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.purchase-colunm-1{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+
+/* @media only screen and (max-width: 1200px) {
+    .column-container {
+        display: flex;
+        flex-direction: row;
+        gap: 0px;    
+    }
+    .purchase-colunm-1 {
+        margin-right: 20px;
+    }
+} */
+
+
+
+::ng-deep .catalog-spaceline1{
+    width: 1.5px !important;
+    height: 35px !important;
+    background-color: rgb(230, 230, 230) !important;
+    margin-top: 18px;
+}
+  
+.blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Light black shadow effect */
+  backdrop-filter: blur(5px);
+  /* You can adjust the blur amount */
+  z-index: 999;
+  /* Make sure it's above other elements */
+}
+  

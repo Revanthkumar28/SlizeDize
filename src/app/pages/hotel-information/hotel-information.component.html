@@ -1,0 +1,173 @@
+<b2b-container [property]="{padding: '0', height: '100%', borderRadius: '0',overflowY:'hidden',backgroundTheme:'--color-light-grey' }">
+    <b2b-row container-body backgroundImage="--color-stepper" justifyContent="center" width="100%" height="70px">
+        <b2b-steper row-body ></b2b-steper>
+    </b2b-row>
+    <b2b-row class="scrollmobile" container-body width="90%" height="100%" padding="20px" alignItem="flex-start" [mobileview]="true" >
+        <b2b-container row-body [property]="{padding:'0',height:'100%',width:'100%',backgroundTheme:'',flex:1}">
+            <b2b-image class="catalogimg" container-body image="https://images.adsttc.com/media/images/5c5d/6521/284d/d18d/d600/0527/large_jpg/ARIA_Hotel_and_Casino.jpg?1549624591" width="100%" height="95%"  [isCurved]="false"></b2b-image>
+        </b2b-container>
+        <b2b-container class="scrollweb" row-body [property]="{padding:'0 26px',width:'380px',backgroundTheme:'none',borderRadius:'0',height:'80vh',alignItem:'center'}">
+           
+            <!-- <b2b-row container-body margin="10px 0 0 0">
+                <b2b-menu-dropdown row-body text="Guest Rooms" height="55px" [active]="true" margin="0px 0px 0px 0px" [isExpand]="true">
+                    <svg svg-icon width="60"  height="45" viewBox="0 0 60 60" class="css-1nm09y4"><defs><path id="cat-casegoods-outlined_svg__a" d="M50 19c2.205 0 4 1.794 4 4v16a.8.8 0 01-.8.8h-.8v.8a.8.8 0 11-1.6 0v-.8H9.2v.8a.8.8 0 11-1.6 0v-.8h-.8A.8.8 0 016 39V23c0-2.206 1.795-4 4-4zm0 1.6H30v17.6h22.4V23c0-1.323-1.077-2.4-2.4-2.4zm-21.6 9.6H7.6v8h20.8v-8zM20.167 34c.46 0 .833.448.833 1 0 .513-.322.935-.736.993l-.097.007h-3.334c-.46 0-.833-.448-.833-1 0-.513.322-.935.736-.993l.097-.007h3.334zM33 26c.51 0 .93.286.992.656l.008.094v1.5c0 .414-.448.75-1 .75-.51 0-.93-.286-.992-.656L32 28.25v-1.5c0-.414.448-.75 1-.75zm-4.6-5.4H10A2.403 2.403 0 007.6 23v5.6h20.8v-8zM20.167 24c.46 0 .833.448.833 1 0 .513-.322.935-.736.993l-.097.007h-3.334c-.46 0-.833-.448-.833-1 0-.513.322-.935.736-.993l.097-.007h3.334z"></path></defs><use fill="#000" xlink:href="#cat-casegoods-outlined_svg__a" fill-rule="evenodd"></use></svg> 
+                    <b2b-container list-child [property]="{backgroundTheme:'--color-white',padding:'0px 10px 10px 10px',borderRadius:'none',overflowX:'hidden'}">
+                        <b2b-row container-body>
+                            <b2b-text row-body text="Please add the number of Bed in your Hotel" fontSize="13px" colorTheme="--color-dark-grey" (click)="test()"></b2b-text>
+                        </b2b-row>
+                       <b2b-row container-body   margin='8px 0 0 0' borderRadius="">
+                            <b2b-label row-body  text="Single Beds"  colorTheme="--color-black" border="2px solid var(--color-light-grey)" backgroundTheme="--color-white" fontSize="13px" height="40px" width="100%" borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.single_bed" (onChange)="informationDetail.single_bed = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>
+                        <b2b-row container-body   margin='8px 0 0 0' borderRadius="">
+                            <b2b-label row-body  text="Double Beds"  [isCurved]="false" colorTheme="--color-black" backgroundTheme="--color-white" border="2px solid var(--color-light-grey)" fontSize="13px" height="40px" width="100%" borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.queen_bed"  (onChange)="informationDetail.queen_bed = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white" title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>
+                        <b2b-row container-body   margin='8px 0 0 0' borderRadius="">
+                            <b2b-label row-body  text="Queen Beds"  [isCurved]="false" colorTheme="--color-black" border="2px solid var(--color-light-grey)" backgroundTheme="--color-white" fontSize="13px" height="40px" width="100%" borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.touble_bed "  (onChange)="informationDetail.touble_bed = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>
+                        <b2b-row container-body   margin='8px 0 0 0' borderRadius="">
+                            <b2b-label row-body  text="King Beds"  [isCurved]="false" colorTheme="--color-black" backgroundTheme="--color-white" fontSize="13px" height="40px" width="100%" border="2px solid var(--color-light-grey)" borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.king_bed"   (onChange)="informationDetail.king_bed = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>
+                        <b2b-row container-body   margin='8px 0 0 0' borderRadius="">
+                            <b2b-label row-body  text="California King Beds"  [isCurved]="false" colorTheme="--color-black" backgroundTheme="--color-white" fontSize="13px" height="40px" width="100%" border="2px solid var(--color-light-grey)" borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.California_King_bed"  (onChange)="informationDetail.California_King_bed = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>
+                        <b2b-row container-body   margin='8px 0 0 0' borderRadius="">
+                            <b2b-label row-body  text="Rollaway Beds"  [isCurved]="false" colorTheme="--color-black" backgroundTheme="--color-white" fontSize="13px" height="40px" width="100%" border="2px solid var(--color-light-grey)" borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.Rollaway_bed" (onChange)="informationDetail.Rollaway_bed = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>
+                    </b2b-container>
+                </b2b-menu-dropdown>
+            </b2b-row> -->
+            <!-- <b2b-row container-body margin="10px 0 0 0">
+                <b2b-menu-dropdown row-body text="Kitchen" height="55px" [active]="true" margin="0px 0px 0px 0px"  [isExpand]="true">
+                    <svg svg-icon width="60" height="37" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25"><g data-name="Restaurant"><path fill="#2b3344" d="M14.734,21.606a1.494,1.494,0,0,1-1.256-.7,64.446,64.446,0,0,1-3.913-7.1L9.131,13.7A2.794,2.794,0,0,1,7.257,12L5.377,7.065a2.782,2.782,0,0,1,.194-2.411l.238-.41a.969.969,0,0,1,.842-.48h.012a.975.975,0,0,1,.846.5l8.544,15.164a1.4,1.4,0,0,1,.115,1.113,1.509,1.509,0,0,1-.7.869A1.487,1.487,0,0,1,14.734,21.606ZM6.651,4.514a.223.223,0,0,0-.195.11l-.237.408A2.037,2.037,0,0,0,6.078,6.8l1.881,4.936a2.037,2.037,0,0,0,1.368,1.243l.6.158a.38.38,0,0,1,.243.2,64.576,64.576,0,0,0,3.94,7.165.737.737,0,0,0,.99.257.748.748,0,0,0,.354-.436A.657.657,0,0,0,15.4,19.8L6.856,4.634A.219.219,0,0,0,6.651,4.514Z"/><path fill="#2b3344" d="M8.444 21.606a1.44 1.44 0 0 1-.767-.219 1.479 1.479 0 0 1-.542-1.975c.856-1.575 1.878-3.281 2.956-4.938a.375.375 0 0 1 .629.41C9.653 16.523 8.641 18.213 7.8 19.768a.734.734 0 0 0 .272.979.717.717 0 0 0 .982-.22c.719-1.086 1.479-2.321 2.262-3.675a.375.375 0 0 1 .649.375c-.791 1.367-1.558 2.615-2.282 3.709A1.463 1.463 0 0 1 8.444 21.606zM11.776 12.979a.371.371 0 0 1-.375-.37V12.6a.381.381 0 0 1 .065-.212c.555-.808 1.03-1.483 1.382-1.982A1.592 1.592 0 0 1 12.5 8.377l2.88-4.8a.376.376 0 0 1 .644.387l-2.88 4.8a.831.831 0 0 0 .292 1.146l.133.082a.374.374 0 0 1 .17.244.371.371 0 0 1-.061.291l-.1.15c-.356.5-.868 1.229-1.478 2.118A.377.377 0 0 1 11.776 12.979zM12.945 15.045A.378.378 0 0 1 12.768 15a.375.375 0 0 1-.153-.507c.757-1.413 1.434-2.728 1.812-3.516a.375.375 0 0 1 .233-.2.365.365 0 0 1 .3.04l.13.08a.831.831 0 0 0 .633.1.82.82 0 0 0 .508-.379l2.88-4.8a.376.376 0 0 1 .644.387L16.877 11a1.567 1.567 0 0 1-.97.72 1.6 1.6 0 0 1-.976-.068c-.4.807-1 1.963-1.655 3.191A.374.374 0 0 1 12.945 15.045z"/><path fill="#2b3344" d="M14.767 8.53a.378.378 0 0 1-.193-.054.375.375 0 0 1-.129-.513l2.181-3.638a.375.375 0 0 1 .644.385L15.089 8.347A.372.372 0 0 1 14.767 8.53zM16.01 9.275a.368.368 0 0 1-.192-.054.374.374 0 0 1-.129-.513L17.87 5.07a.375.375 0 1 1 .643.385l-2.18 3.637A.374.374 0 0 1 16.01 9.275z"/></g></svg>
+                    <b2b-container list-child [property]="{backgroundTheme:'--color-white',padding:'0px 10px 10px 10px',borderRadius:'none',overflowX:'hidden'}">
+                        <b2b-row container-body>
+                            <b2b-text row-body text="Please add the number of Kitchen in your Hotel" fontSize="13px" colorTheme="--color-dark-grey"></b2b-text>
+                        </b2b-row>
+                        <b2b-row container-body  margin='8px 0px 0px 0px' borderRadius="">
+                            <b2b-label row-body text="No of Kitchen"  [isCurved]="false" colorTheme="--color-black" border="2px solid var(--color-light-grey)" height="40px" backgroundTheme="--color-white" fontSize="13px" width="100%"  borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.no_of_kitchen" (onChange)="informationDetail.no_of_kitchen = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>
+                        <b2b-row container-body  margin='8px 0px 0px 0px' borderRadius="">
+                            <b2b-label row-body text="PAX Food Preparation"  [isCurved]="false" border="2px solid var(--color-light-grey)" colorTheme="--color-black" backgroundTheme="--color-white" height="40px"  fontSize="13px" width="100%"  borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.pax_food_preparation" (onChange)="informationDetail.pax_food_preparation = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>       
+                    </b2b-container>
+                </b2b-menu-dropdown>
+            </b2b-row> -->
+            <!-- <b2b-row container-body margin="10px 0 0 0">
+                <b2b-menu-dropdown row-body text="Restaurant" [active]="true" height="55px" margin="0px 0px 0px 0px"  [isExpand]="true">
+                    <svg svg-icon width="60" height="35" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 512 512"><path d="M63 270a7 7 0 0 1 7-7h86a7 7 0 0 1 7 7V381h18V245H70a7 7 0 0 1-7-7V110H45V381H63zM490 395H22v26H490z"/><rect width="22" height="213" x="244" y="168"/><rect width="272" height="28" x="120" y="126"/><path d="M329,381h18V270a7,7,0,0,1,7-7h86a7,7,0,0,1,7,7V381h18V110H447V238a7,7,0,0,1-7,7H329Z"/></svg>
+                    <b2b-container list-child [property]="{backgroundTheme:'--color-white',padding:'0px 10px 10px 10px',borderRadius:'none',overflowX:'hidden'}">
+                        <b2b-row container-body   margin='0' borderRadius="">
+                           
+                            <b2b-label row-body  text="Chinese"  [isCurved]="false" colorTheme="--color-black" border="2px solid var(--color-light-grey)" height="40px" backgroundTheme="--color-white" fontSize="13px" width="100%"  borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.chinese" (onChange)="informationDetail.chinese = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>
+                        <b2b-row container-body   margin='0' borderRadius="">
+                           
+                            <b2b-label row-body  text="Indian"  [isCurved]="false" colorTheme="--color-black" height="45px" backgroundTheme="--color-white" fontSize="13px" width="100%" border="2px solid var(--color-light-grey)" borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.indian" (onChange)="informationDetail.indian = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>
+                        <b2b-row container-body   margin='0' borderRadius="">
+                         
+                            <b2b-label row-body  text="Italian"  [isCurved]="false" height="40px" colorTheme="--color-black" border="2px solid var(--color-light-grey)" backgroundTheme="--color-white" fontSize="13px" width="100%"  borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" [value]="informationDetail.italian" (onChange)="informationDetail.italian = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>
+                        <b2b-row container-body   margin='0' borderRadius="">
+                          
+                            <b2b-label row-body  text="Coffee Shop"  [isCurved]="false" height="40px" colorTheme="--color-black" border="2px solid var(--color-light-grey)" backgroundTheme="--color-white" fontSize="13px" width="100%"  borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.coffee_shop" (onChange)="informationDetail.coffee_shop = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row> 
+                        <b2b-row container-body   margin='0' borderRadius="">
+                         
+                            <b2b-label row-body  text="QSR/Fast Food List"  [isCurved]="false" height="40px" colorTheme="--color-black" backgroundTheme="--color-white" fontSize="13px" width="100%" border="2px solid var(--color-light-grey)" borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.qsr_fast_food_list" (onChange)="informationDetail.qsr_fast_food_list = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>                  
+                    </b2b-container>
+                   </b2b-menu-dropdown>
+                </b2b-row> -->
+            <!-- <b2b-row container-body margin="10px 0 0 0" >
+                <b2b-menu-dropdown row-body text="SPA" [active]="true" margin="0" height="55px" [isExpand]="true">
+                    <svg svg-icon width="60" height="35" xmlns="http://www.w3.org/2000/svg" data-name="Layer 2" viewBox="0 0 24 24"><path d="M15.91,11.41a11,11,0,0,0-3.2-8.19L12,2.52l-.71.7A10.89,10.89,0,0,0,8.07,11c0,.14,0,.28,0,.41A9.92,9.92,0,0,0,3,10H2v1a10,10,0,0,0,9,9.95V21h2v-.05A10,10,0,0,0,22,11V10H21A9.92,9.92,0,0,0,15.91,11.41ZM12,5.43a9,9,0,0,1,1.63,7.84A10,10,0,0,0,12,15.67a10,10,0,0,0-1.63-2.4,9.07,9.07,0,0,1-.3-2.27A8.91,8.91,0,0,1,12,5.43ZM4.07,12.07a8,8,0,0,1,6.86,6.86A8,8,0,0,1,4.07,12.07Zm9,6.86a8,8,0,0,1,6.86-6.86A8,8,0,0,1,13.07,18.93Z"/></svg>
+                    <b2b-container list-child [property]="{backgroundTheme:'--color-white',padding:'0px 10px 10px 10px',borderRadius:'none',overflowX:'hidden'}">
+                        <b2b-row container-body   margin='0' borderRadius="">
+                          
+                            <b2b-label row-body text="SPA"  [isCurved]="false" colorTheme="--color-black" height="40px" backgroundTheme="--color-white" fontSize="13px" width="100%" border="2px solid var(--color-light-grey)" borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.spa_count" (onChange)="informationDetail.spa_count = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>    
+                    </b2b-container>
+                </b2b-menu-dropdown>
+                </b2b-row> -->
+            <!-- <b2b-row container-body margin="10px 0 0 0">
+                <b2b-menu-dropdown row-body text="Wet Bar" height="55px" [active]="true" margin="0px 0px 0px 0px"  [isExpand]="true">
+                    <svg svg-icon xmlns="http://www.w3.org/2000/svg" width="60" height="25"><path fill="none" d="M0 0h48v48H0z"/><path d="M22 26v12H12v4h24v-4H26V26l16-16V6H6v4l16 16zm-7-12-4-4h26l-4 4H15z"/></svg>
+                    <b2b-container list-child [property]="{backgroundTheme:'--color-white',padding:'0px 10px 10px 10px',borderRadius:'none',overflowX:'hidden'}">
+                        <b2b-row container-body   margin='0' borderRadius="">
+                          
+                            <b2b-label row-body  text="BAR"  [isCurved]="false" colorTheme="--color-black" height="40px" backgroundTheme="--color-white" fontSize="13px" width="100%" border="2px solid var(--color-light-grey)" borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)"  [value]="informationDetail.bar_count" (onChange)="informationDetail.bar_count = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>    
+                    </b2b-container>
+                </b2b-menu-dropdown>
+                </b2b-row> -->
+            <!-- <b2b-row container-body margin="10px 0 150px 0">
+                <b2b-menu-dropdown row-body text="Salon" [active]="true" height="55px" [isExpand]="true">
+                    <svg svg-icon width="60" height="35" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 53 53"><path d="M40.66 16.66h-2.08a1 1 0 0 0-1 1v9.28a3.34 3.34 0 0 0-1.15-.27l-2.1-21.81a2.61 2.61 0 0 0-2.6-2.36H21.27a2.61 2.61 0 0 0-2.6 2.36l-2.1 21.81a3.34 3.34 0 0 0-1.15.27v-9.28a1 1 0 0 0-1-1h-2.08a1 1 0 0 0 0 2h1.08V30a3.34 3.34 0 0 0 3.34 3.33h7v6a1 1 0 0 0 1 1h.88V43l-7.15 5.74a1 1 0 0 0-.15 1.41 1 1 0 0 0 1.4.15l5.9-4.74v4a1 1 0 0 0 2 0v-4l5.9 4.74a1 1 0 0 0 .62.22 1 1 0 0 0 .78-.37 1 1 0 0 0-.15-1.41L27.67 43v-2.63h.89a1 1 0 0 0 1-1v-6h6.68A3.34 3.34 0 0 0 39.58 30V18.66h1.08a1 1 0 0 0 0-2Zm-20-11.61a.61.61 0 0 1 .61-.55h10.46a.61.61 0 0 1 .61.55l2.08 21.61H18.58Zm6.9 33.32h-1.77v-5h1.77Zm8.68-7H16.76a1.34 1.34 0 1 1 0-2.67h19.48a1.34 1.34 0 1 1 0 2.67Z"/></svg>
+                    <b2b-container list-child [property]="{backgroundTheme:'--color-white',padding:'0px 10px 10px 10px',borderRadius:'none',overflowX:'hidden'}">
+                        <b2b-row container-body   margin='0' borderRadius="">
+                            
+                            <b2b-label row-body  text="Salon"  [isCurved]="false" colorTheme="--color-black" height="40px" backgroundTheme="--color-white" fontSize="13px" width="100%" border="2px solid var(--color-light-grey)" borderRadius="2px" margin="2px"></b2b-label>
+                            <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" placeholder="0" (keypress)="numericOnly($event)" [value]="informationDetail.salon_count" (onChange)="informationDetail.salon_count = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  title="Enter the type of industry" width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>    
+                    </b2b-container>
+                </b2b-menu-dropdown>            
+            </b2b-row> -->
+            <b2b-row [mobilewidth]="true" container-body margin="10px 0 0 0" *ngFor="let i of data1">
+                <b2b-menu-dropdown row-body class="hotel-name-icon" [text]="i.type" height="55px"  icon="arrow_drop_down" [active]="true" margin="0px 0px 0px 0px" [isExpand]="true">
+                   <b2b-icon-button svg-icon  [icon]="i.icon"></b2b-icon-button>
+                    <b2b-container list-child [property]="{backgroundTheme:'--color-white',padding:'0px 10px 10px 10px',borderRadius:'none'}">
+                        <b2b-row container-body>
+                            <b2b-text row-body text="Please add the number of {{i.roomType}} in your Hotel" fontSize="13px" colorTheme="--color-dark-grey" (click)="test()"></b2b-text>
+                        </b2b-row>
+                       <b2b-row container-body  *ngFor="let j of i.room" margin='8px 0 0 0' borderRadius="">
+                            <b2b-label row-body  [text]="j.room_Name"  colorTheme="--color-black" border="2px solid var(--color-light-grey)" backgroundTheme="--color-white" fontSize="13px" height="40px" width="100%" borderRadius="2px" margin="2px"></b2b-label>
+
+                            <b2b-inputbox row-body inputType="number" [twoInputFeild]="true" [readOnly]="viewHotelDetailes.Hotel_Name_id == '' ? false : true" placeholder="0" (keypress)="numericOnly($event)" [value]="j.room_count" (onChange)="j.room_count = $event" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white"  width="80px" height="40px" padding="0px 20px 0px 0px" backgroundTheme="--color-light-grey"></b2b-inputbox>
+                        </b2b-row>
+                        
+                    </b2b-container>
+                </b2b-menu-dropdown>
+            </b2b-row>
+
+            <b2b-row container-body position="fixed"   padding="0"  positionBottom="8px" backgroundTheme="--color-light-grey" width="100%" >
+                <b2b-button row-body title="Previous"  (click)="updateI()" width="140px" height="40px" borderColor="--color-dark-grey" [apiSubmitDisable]="true" borderRadius="10px" backgroundTheme="--color-light-dark" colorTheme="--color-white"></b2b-button>
+                <b2b-spacer row-body width="10px"></b2b-spacer>
+                <b2b-button row-body title="Continue" *ngIf="this.edit_hotel_details.Hotel_Name_id == '' && this.viewHotelDetailes.Hotel_Name_id == '' " (onPressed)="register()" [apiSubmitDisable]="true"  width="150px" height="40px"  borderRadius="10px" backgroundTheme="--color-primary" colorTheme="--color-white"></b2b-button>
+                <b2b-button row-body *ngIf="this.edit_hotel_details.Hotel_Name_id != '' " title="Update" (onPressed)="register()" [apiSubmitDisable]="true"  width="185px" height="40px"  borderRadius="10px" backgroundTheme="--color-dark-Blue" colorTheme="--color-white"></b2b-button>
+                <b2b-button row-body *ngIf="this.viewHotelDetailes.Hotel_Name_id != '' " title="Next" (onPressed)="view()" [apiSubmitDisable]="true"  width="150px" height="40px"  borderRadius="10px" backgroundTheme="--color-dark-Blue" colorTheme="--color-white"></b2b-button>
+
+            </b2b-row>
+               
+            </b2b-container>
+</b2b-row>
+
+
+</b2b-container>
+
+<!-- routerLink="/creation" -->

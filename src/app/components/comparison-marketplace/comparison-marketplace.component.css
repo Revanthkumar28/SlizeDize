@@ -1,0 +1,7 @@
+:host {
+    width: 100%;
+}
+::ng-deep .scroll{
+    overflow-y: scroll !important;
+    height: 54vh !important;
+}

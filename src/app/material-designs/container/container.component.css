@@ -1,0 +1,23 @@
+:host {
+    width: 100%;
+}
+
+div.container {
+    width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* position: relative; */
+}
+
+/* div.remove-userselect {
+    user-select: none;
+    cursor: pointer;
+} */
+
+/* div.remove-userselect::-webkit-scrollbar {
+    height: 0;
+    width: 6px;
+} */

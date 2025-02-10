@@ -1,0 +1,238 @@
+<!-- <div class="toggle-container">
+    <div
+      class="toggle-switch"
+      [class.active]="selectedOption === 'Hotelier'"
+      (click)="toggle('Hotelier')"
+    >
+      Hotelier
+    </div>
+    <div
+      class="toggle-switch"
+      [class.active]="selectedOption === 'Supplier'"
+      (click)="toggle('Supplier')"
+    >
+      Supplier
+    </div>
+  </div> -->
+
+<!-- SIGN UP FORM -->
+<!-- <b2b-container row-body  [property]="{backgroundTheme: '--color-dim-white', width: 'auto', height: '100%', padding: '20px 35px 20px 35px'}">
+    <b2b-row container-body >
+        <b2b-text row-body text="Sign Up" colorTheme="--color-white" fontSize="20px"></b2b-text>
+    </b2b-row>
+    <b2b-spacer container-body height="15px"></b2b-spacer> -->
+    
+    <b2b-inputbox container-body [value]="signupDetails.contactPersonName" textTransform="capitalize" (onChange)="signupDetails.contactPersonName = $event" width="380px" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Contact Name" colorTheme="--color-white"></b2b-inputbox>
+    <b2b-row container-body *ngIf="errorText">
+        <b2b-label row-body text="Enter Your Name" *ngIf="signupDetails.contactPersonName ==''?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="12px"></b2b-label>
+    </b2b-row>
+
+    <b2b-inputbox container-body [value]="signupDetails.email"  (onChange)="signupDetails.email = $event" width="380px" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Email" colorTheme="--color-white" [errorMsg]="errorText && signupDetails.email == '' ? 'Enter valid Email' : '' "></b2b-inputbox>
+
+    
+    <b2b-row container-body backgroundTheme="" borderRadius="5px" width="380px">
+        <b2b-label row-body text="Mobile number" inputboxPadding="0" fontSize="12px" padding="14px" backgroundTheme="--color-dim-white" height="43px" width="110px" borderRadius="5px 0 0 5px"></b2b-label>
+        
+        <b2b-tdata row-body *ngIf="CountryFlag" backgroundTheme="--color-dim-white" height="43px">
+            <b2b-image tdata-body image="assets/india.jpg" width="40px" margin="5px 0 0 0"></b2b-image>
+            <b2b-spacer tdata-body width="10px"></b2b-spacer>
+            <b2b-tdata tdata-body [title]="'IND'" fontSize="11px" color="--color-white"></b2b-tdata >
+        </b2b-tdata>
+       
+        <b2b-tdata row-body *ngIf="flagArr" backgroundTheme="--color-dim-white" height="43px">
+            <b2b-image tdata-body #img image="{{flagArr.image}}" width="30px" margin="5px 0 0 0"></b2b-image>
+            <b2b-spacer tdata-body width="5px"></b2b-spacer>
+            <b2b-tdata tdata-body [title]="flagArr.code" fontSize="11px" color="--color-white"></b2b-tdata >
+
+        </b2b-tdata>
+        <b2b-tdata row-body backgroundTheme="--color-dim-white" height="43px">
+            
+            <b2b-dropdown tdata-body popupWidth="180px" dropdownPosition="right" popupHeight="200px">
+                <div dropdown-selector class="expand-more"></div>
+                <!-- <b2b-icon-button dropdown-selector icon="expand_more" width="40px" iconSize="20px" colorTheme="--color-white"></b2b-icon-button> -->
+                <input #search search type="text" autofocus placeholder="search" [(ngModel)]="flagFilter" (ngModelChange)="flagFilter =$event">
+
+                <b2b-row dropdown-items padding="0 0 0 1rem" *ngFor="let data of flag | alphatic: 'name' | searchFilter : flagFilter">
+                    <b2b-tdata row-body (click)="getflag(data)">
+                        <b2b-tdata tdata-body >
+                            <b2b-image tdata-body image="{{data.image}}" width="20px" margin="5px 0 0 0"></b2b-image>
+                        </b2b-tdata>
+                        <b2b-spacer tdata-body width="10px"></b2b-spacer>
+                        <b2b-tdata tdata-body [title]="data['name']" color="--color-black" fontSize="14px" alignItem="flex-start" justifyContent="flex-start" textAlign="start"></b2b-tdata >
+                        <b2b-spacer tdata-body width="30px"></b2b-spacer>
+
+                    </b2b-tdata>
+                </b2b-row>                             
+            </b2b-dropdown>
+            <div tdata-body class="spacer"></div>
+
+        </b2b-tdata> 
+        <b2b-tdata row-body *ngIf="CountryFlag" backgroundTheme="--color-dim-white" fontSize="14px"  color="--color-white" height="43px"></b2b-tdata >
+        <!-- <b2b-tdata row-body [title]="flagArr.dial_code" fontSize="14px" backgroundTheme="--color-dim-white" color="--color-white" height="43px"></b2b-tdata > -->
+        <b2b-inputbox row-body inputType="number" [value]="mobileNumber" inputboxPadding="5px" fontSize="16px" (keypress)="numericOnly($event)" (onChange)="mobileNumber = $event"  width="100%" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--flag-input-radius)"  type="tel" colorTheme="--color-white" ></b2b-inputbox>
+    </b2b-row>
+    <b2b-row container-body *ngIf="errorText">
+        <b2b-label row-body text="Enter Valid Mobile Number" *ngIf="mobileNumber.length < 10 || mobileNumber.length > 10?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="12px"></b2b-label>
+    </b2b-row>
+    
+    <b2b-row container-body *ngIf="accountErrorMessage">
+        <b2b-label row-body text="Please check the phone number and the code" *ngIf="mobileNumber.length == 10?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="12px"></b2b-label>
+    </b2b-row>
+    
+    <b2b-container container-body *ngIf="isRegister" [property]="{backgroundTheme: 'none', width: '380px', height: 'auto', padding: '0',justifyContent:'flex-start',alignItem:'flex-start'}">
+        <b2b-label container-body [text]="'The mobile number is already registered - please click'  " backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+        <b2b-row container-body>
+            <b2b-label row-body text='"Sign in"' (click)="navigate('sign-in')" backgroundTheme="none" padding="0" colorTheme="--color-green" fontSize="13px"></b2b-label>
+            <b2b-spacer row-body width='5px'></b2b-spacer>
+            <b2b-label row-body [text]="'button to login'  " backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+        </b2b-row>
+    </b2b-container>
+   
+    
+    <b2b-row container-body alignItem="center" justifyContent="center">
+        <b2b-text row-body text="OTP will be sent to this mobile number" colorTheme="--color-dark-grey" fontSize="13px"></b2b-text>
+    </b2b-row>
+    
+    <b2b-inputbox class="Sigin-inputdesign" container-body [value]="signupDetails.typeOfIndustry"  (onChange)="signupDetails.typeOfIndustry = $event" popupHeight="250px"  placeholderColor="--color-white" width="380px" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Industry Type" colorTheme="--color-white" [expandMore]="true" [popupOption]="false" position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white" >
+        <b2b-row search padding="5px 10px 5px 20px">
+            <input #search  row-body type="text" autofocus placeholder="Search / Add Industry if not found" [(ngModel)]="postIndustri.typeOfIndustry"  (ngModelChange)="postIndustri.typeOfIndustry =$event">
+            <b2b-button row-body  title="ADD" colorTheme="--color-white" backgroundTheme="--color-primary" width="auto" borderRadius="4px" height="30px" padding="0px 30px" [bold]="true" (onPressed)="IndustryType()"></b2b-button>
+        </b2b-row>
+        <b2b-container popup-body  [property]="{padding:'0'}" *ngFor="let industryType of typeOfIndustry | filter : postIndustri.typeOfIndustry | alphatic: 'typeOfIndustry'" >            
+            <b2b-list-tile container-body [title]="industryType.typeOfIndustry" (click)="getIndustry(industryType.typeOfIndustry)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+        </b2b-container>
+        <b2b-list-tile  popup-body [title]="instantValue" (click)="getIndustry(instantValue)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+
+    </b2b-inputbox>
+    <b2b-row container-body *ngIf="errorText">
+        <b2b-label row-body text="Enter Your Industry" *ngIf="signupDetails.typeOfIndustry ==''?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="12px"></b2b-label>
+    </b2b-row>
+
+    
+    <b2b-inputbox container-body [showDropdown]="false" textTransform="capitalize" [value]="signupDetails.companyName"  (onChange)="signupDetails.companyName = $event" width="380px" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Company Name" [popupOption]="false"  colorTheme="--color-white" ></b2b-inputbox>
+    <b2b-row container-body *ngIf="errorText">
+        <b2b-label row-body text="Enter Your Company Name" *ngIf="signupDetails.companyName ==''?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="12px"></b2b-label>
+    </b2b-row>
+
+    
+    <b2b-inputbox class="Sigin-inputdesign" container-body  [value]="signupDetails.country" (onChange)="signupDetails.country = $event"  [readOnly]="true" width="380px" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Country" colorTheme="--color-white" [expandMore]="true" [popupOption]="false"  position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white">
+        <input #search search type="text" autofocus placeholder="Search" [(ngModel)]="filterData"  (ngModelChange)="filterData =$event">
+        <ng-container popup-body *ngFor="let country of listcountry | searchFilter : filterData" >
+            <b2b-list-tile  [title]="country.name"  (tileClicked)="onCountrySelected(country.iso2, country.name)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+            <!-- <b2b-keyup ></b2b-keyup> -->
+        </ng-container>
+    </b2b-inputbox>
+    <b2b-row container-body *ngIf="errorText">
+        <b2b-label row-body text="Select Country" *ngIf="signupDetails.country ==''?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="12px"></b2b-label>
+    </b2b-row>
+    
+    <b2b-inputbox container-body class="Sigin-inputdesign" [value]="signupDetails.state"  [readOnly]="true" (onChange)="signupDetails.state = $event" width="380px" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="State" colorTheme="--color-white"  [expandMore]="true" [popupOption]="false"  position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white">
+        <input #search search type="text" autofocus *ngIf="signupDetails.country !=''?true:false" placeholder="Search" [(ngModel)]="stateFilter" (ngModelChange)="stateFilter =$event">
+        <ng-container popup-body *ngFor="let state of listState | alphatic: 'name' | searchFilter : stateFilter">
+            <b2b-list-tile   [title]="state.name" (tileClicked)="onStateSelected(state.iso2,state.name)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+        </ng-container>
+    </b2b-inputbox>
+    <b2b-row container-body *ngIf="errorText">
+        <b2b-label row-body text="Select State" *ngIf="signupDetails.state ==''?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="12px"></b2b-label>
+    </b2b-row>
+
+    
+    <b2b-inputbox container-body class="Sigin-inputdesign" [value]="signupDetails.city"  [readOnly]="signupDetails.country == 'United Kingdom' ?false : true" (onChange)="signupDetails.city = $event"  width="380px" height="43px" popupHeight="175px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="City" colorTheme="--color-white"  [expandMore]="true" [popupOption]="false"  position="right" triggerBackgroundTheme="--color-dark-dim-white" triggerColorTheme="--color-white">
+        <input #search search type="text" autofocus *ngIf="signupDetails.state !='' && cityData =='' ?true:false" placeholder="Search" [(ngModel)]="cityFilter" (ngModelChange)="cityFilter =$event">
+
+        <ng-container popup-body *ngFor="let city of listCity | searchFilter : cityFilter" >
+            <b2b-list-tile   [title]="city.name" (tileClicked)="onStateCity(signupDetails.city = city.name)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+        </ng-container> 
+    </b2b-inputbox>
+    <b2b-row container-body *ngIf="errorText">
+        <b2b-label row-body [text]="signupDetails.country == 'United Kingdom'? 'Please type in ,in case if you donot fine your city':'Select City'" *ngIf="signupDetails.city ==''?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="12px"></b2b-label>
+    </b2b-row>
+
+    
+    <!-- <b2b-inputbox container-body [inputType]="signupDetails.country == 'United Kingdom' ||this.signupDetails.country == 'Canada'||this.signupDetails.country == 'Ireland'|| this.signupDetails.country == 'Brunei'|| this.signupDetails.country == 'Netherlands'?'text' :'number'"  [value]="signupDetails.zipCode" (onChange)="signupDetails.zipCode = $event" width="380px" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Zip / Pin code" colorTheme="--color-white"></b2b-inputbox> -->
+    <b2b-inputbox container-body inputType="text" *ngIf="alphanumeric" [value]="signupDetails.zipcode"  (onChange)="signupDetails.zipcode = $event" width="380px" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Zip / Pin Code" colorTheme="--color-white" ></b2b-inputbox>
+    <b2b-inputbox container-body inputType="number" *ngIf="numeric" (keypress)="numericOnly($event)"  [value]="signupDetails.zipcode"  (onChange)="signupDetails.zipcode = $event" width="380px" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Zip / Pin Code" colorTheme="--color-white"></b2b-inputbox> 
+
+    <b2b-row container-body *ngIf="errorText">
+        <b2b-label row-body text="Enter PinCode" *ngIf="signupDetails.zipcode ==''?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="12px"></b2b-label>
+    </b2b-row>
+
+    
+    <!-- POSITION (EX).Dealer -->
+    <b2b-row container-body alignItem="center" justifyContent="center" flexDirection="column">
+        <!-- DEPARTENT -->
+        <b2b-inputbox row-body [value]="signupDetails.position" (onChange)="signupDetails.position = $event" width="380px" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Position" colorTheme="--color-white"  ></b2b-inputbox>
+        <b2b-row row-body *ngIf="errorText">
+            <b2b-label row-body text="Enter Position" *ngIf="signupDetails.position ==''?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="12px"></b2b-label>
+        </b2b-row>
+        <!-- <b2b-spacer row-body width="5px"></b2b-spacer>
+        <b2b-inputbox row-body [value]="signupDetails.position" (onChange)="signupDetails.position = $event" width="173px" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Designation" colorTheme="--color-white" ></b2b-inputbox> -->
+    </b2b-row>
+    <!-- <b2b-inputbox container-body [value]="signupDetails.position" (onChange)="signupDetails.position = $event" [expandMore]="true" [popupOption]="false" width="380px" height="43px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="position" colorTheme="--color-white" >
+
+    </b2b-inputbox> -->
+
+    <!-- Service - purchase request -->
+    <b2b-row container-body alignItem="flex-end" justifyContent="flex-end">
+        <b2b-row row-body justifyContent="flex-end" width="auto">
+            <input row-body type="checkbox" [checked]="true" (change)="checkedPurchase($event,'sales')" style="width: auto;"/>
+            <b2b-spacer row-body width="5px"></b2b-spacer>
+            <b2b-text row-body text="Purchase" fontSize="13px" colorTheme="--color-white"></b2b-text>
+        </b2b-row>
+
+        <b2b-row row-body justifyContent="flex-end" width="auto">
+            <input row-body type="checkbox" (change)="checkedPurchase($event,'service')" style="width: auto;"/>
+            <b2b-spacer row-body width="5px"></b2b-spacer>
+            <b2b-text row-body text="Service" fontSize="13px" colorTheme="--color-white"></b2b-text>
+        </b2b-row>
+    </b2b-row>
+
+    
+    <b2b-row container-body alignItem="center" justifyContent="center">
+       <b2b-spacer row-body [flex]=1></b2b-spacer>
+       <!-- <b2b-row row-body>
+            <b2b-text row-body text="Already have an Account?" colorTheme="--color-white" fontSize="13.4px"></b2b-text>
+            <b2b-spacer row-body width="15px"></b2b-spacer>
+            <b2b-text row-body text="Sign In" borderBottom="1px solid var(--color-white)" colorTheme="--color-white"  fontSize="13.4px" (click)="navigate('sign-in')"></b2b-text>
+        </b2b-row> -->
+
+        <!-- <b2b-button row-body title="Sign In" colorTheme="--color-white" backgroundTheme="--color-transparent" width="auto" borderRadius="var(--global-radius)" height="40px" padding="0px 30px" (onPressed)="navigate('sign-in')"></b2b-button> -->
+        <!-- <div class="loader" row-body *ngIf="loading"></div> -->
+        <b2b-spacer row-body width="150px"></b2b-spacer>
+        <b2b-text row-body text="Sign In"  colorTheme="--color-white"  fontSize="13.4px" (click)="navigate('sign-in')"></b2b-text>
+        <b2b-spacer row-body width="20px"></b2b-spacer>
+
+        <b2b-button row-body  hoverTheme="--color-dark-grey" colorTheme="--color-primary" backgroundTheme="--color-white"  width="auto" borderRadius="var(--global-radius)" height="40px" padding="0px 30px" [bold]="true" (onPressed)="register()">
+            <span button-body *ngIf="!loading">{{ loading ? '' : 'Register' }}</span> <!-- Show button text when not loading -->
+            <span button-body *ngIf="loading" class="loader"></span>
+        </b2b-button>
+    
+    </b2b-row>
+<!-- </b2b-container> -->
+
+<b2b-row *ngIf="popup" position="fixed" positionTop="2%" positionLeft="80%" height="40px">
+    <b2b-container row-body class="popup" container-body [property]="{backgroundTheme: '--color-white', width: '300px', height: 'auto',position:'absolute',boxShadow:'0 0 10px var(--color-black)' }">
+        <b2b-row container-body>
+           <b2b-icon-button row-body icon="thumb_up"  backgroundTheme="--color-light-grey" colorTheme="--color-dark-grey" [isRounded]="true"></b2b-icon-button>
+        </b2b-row>
+        <b2b-row container-body>
+            <b2b-container row-body>
+                <b2b-text container-body text="Thank you very much for signing up for our DEMO." fontSize="14px"></b2b-text>
+                <b2b-spacer container-body height="10px" ></b2b-spacer>
+                <b2b-text container-body fontSize="12px" text="--  We are in the alpha stage of Development and we shall keep you posted when it opens up."></b2b-text>
+                <b2b-spacer container-body height="10px" ></b2b-spacer>
+                <b2b-text container-body fontSize="12px" text="--  We are excited too… to see how transformative the process of procurement might be !"></b2b-text>
+            </b2b-container>    
+        </b2b-row>
+    </b2b-container>
+</b2b-row>
+
+<div id="recaptcha-container"></div>
+
+<!-- <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading> -->
+
+<!-- verify OTP -->
+
+<!-- <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading> -->
+
+<!-- verify OTP -->

@@ -1,0 +1,14 @@
+<div class="appbar">
+    
+    <div [ngClass]="{ 'open': side_bar, 'closed': !side_bar }" class="brand-info web">
+        <ng-content select="[appbar-logo]"></ng-content>
+        <img [src]="leading_img" alt="">
+    </div>
+   
+   
+    <div [ngClass]="{ 'open': side_bar, 'closed': !side_bar }" class="appbar-main">
+        <ng-content select="[appbar-body]"></ng-content>
+        <b2b-spacer [flex]="1"></b2b-spacer>
+        <ng-content select="[appbar-actions]"></ng-content>
+    </div>
+</div>

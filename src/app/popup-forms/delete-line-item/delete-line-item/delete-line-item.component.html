@@ -1,0 +1,53 @@
+<!-- cancel popup -->
+<b2b-draggable-popup container-body positionTop="20%" positionLeft="50%">
+    
+    <b2b-container draggable-popup [property]="{backgroundTheme: '',flex:1,padding:'10px 0 0 5px'}">
+        
+        <b2b-row container-body>
+            
+            <b2b-container row-body
+                [property]="{backgroundTheme: '--color-lighter-grey',border:'1px solid var(--color-toggle-background)',flex:1,padding:'0px 30px 30px 30px'}">
+                <b2b-row container-body backgroundTheme="--color-primary" justifyContent="center" padding='4px' widths='40%' position='absolute' height='25px'positionLeft='33px' borderRadius='0 0 150px 150px'>
+                    <b2b-text row-body *ngIf="type.type != 'Purchase order'" [text]="type.screen== 'Vendor-page'?'Reject Item?':'Delete Item?' " fontSize="16px" colorTheme="--color-white" [bold]="true" ></b2b-text>
+                    <b2b-text row-body *ngIf="type.type == 'Purchase order'" [text]="type.screen=='Vendor-page'?'REJECT PO?':'DELETE PO?' " fontSize="16px" colorTheme="--color-white" [bold]="true" ></b2b-text>
+
+                </b2b-row>
+                <b2b-row container-body>
+                    <!-- <b2b-text row-body text="SR -{{base_id}}" fontSize="11px"></b2b-text> -->
+                    <b2b-icon row-body icon="close" left="92%" (click)="clocecancelpopup()" top="5%"
+                        backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+                        position="absolute"></b2b-icon>
+                </b2b-row>
+                        <b2b-spacer container-body height="10px"> </b2b-spacer>
+                    <b2b-row container-body >
+                        <b2b-text row-body *ngIf="type.type == 'Item'" [text]="type.screen== 'Vendor-page'?'This will Reject The Selected Item From The PO':'This will Delete The Selected Item From The PO' " fontSize="13px" [bold]="true"></b2b-text>
+                        <b2b-text row-body *ngIf="type.type == 'Purchase order'" [text]="type.screen== 'Vendor-page'?'This will Reject The Entire Purchase Order':'This will Delete The Entire Purchase Order' "  fontSize="13px" [bold]="true"></b2b-text>
+                        <b2b-text row-body *ngIf="type.type == 'Pipeline'" text="This will Delete The Selected Item" fontSize="13px" [bold]="true"></b2b-text>
+
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"> </b2b-spacer>
+                    <b2b-row container-body >
+                        <b2b-text row-body [text]="type.screen == 'Vendor-page' ? 'Are You Sure Do You Want To Reject?':'Are You Sure Do You Want To Delete?' " fontSize="13px" [bold]="true"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="15px"> </b2b-spacer>
+                    <b2b-row container-body border="2px solid var(--color-black)" borderRadius="5px" padding="10px 10px 10px 10px">
+                        <!-- <b2b-text row-body text="Current Condition" fontSize="12px" [bold]="true"></b2b-text> -->
+                        <!-- <b2b-spacer row-body [flex]="1"></b2b-spacer> -->
+
+                        <b2b-inputbox row-body   alignItem="start" 
+                            inputName="Provide Reason For Cancellation" titleWidth="200px" position="right" fontSize="13px" [bold]="true"  width="380px" height="55px" 
+                            inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                            (onChange)="remarks = $event"
+                            [twoInputFeild]="true" placeholder="Type Here.." popupOverflow="hide">
+                                
+                        </b2b-inputbox>
+                    </b2b-row>
+                    <b2b-spacer container-body height="35px"> </b2b-spacer>
+                    <div container-body class="deletebutton">
+                        <b2b-button [title]="type.screen == 'Vendor-page' ?'Reject':'Delete' " width="100px" height="30px" [buttonDisabled]="remarks.length == 0 ? true : false" [backgroundTheme]="remarks.length == 0 ?'--color-dark-grey' :'--color-primary'" (click)="rejectProductOrder()"></b2b-button>
+                        <b2b-button title="Cancel" width="100px" height="30px" backgroundTheme="--color-primary"></b2b-button>
+                    </div>
+            </b2b-container>
+        </b2b-row>
+    </b2b-container>
+</b2b-draggable-popup>

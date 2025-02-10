@@ -1,0 +1,33 @@
+:host {
+    width: 100%;
+}
+
+div.list-tile {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 5px 0;
+    /* padding: 0 10px; */
+    box-sizing: border-box;
+
+    cursor: pointer;
+    transition: 0.4s all;
+}
+.list-tile:hover {
+    /* Hover styles */
+    /* Define the hover effect properties */
+    background-color: var(--color-dark-grey);
+  }
+
+
+div.list-tile p.title {
+    margin: 0;
+    margin-right: 10px;
+    /* white-space: nowrap; */
+}
+
+div.leading {
+    margin-right: 10px;
+}

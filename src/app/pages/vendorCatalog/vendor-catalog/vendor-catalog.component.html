@@ -1,0 +1,454 @@
+<b2b-vendor-layout>
+    <b2b-dashboard-appbar dashboard-appbar [currentUser]="VendorProfileName"
+        [vendorProfile]="vendorName"></b2b-dashboard-appbar>
+
+    <!-- Dashboard drawer -->
+    <b2b-drawer dashboard-drawer  backgroundSecondary="--color-gradient-dark" >
+        <div drawer-body class="drawer">
+            <div [style]="'height:100%;'">
+                <ng-container>
+                    <b2b-drawer-list-tile sidenavhotel text="Dashboard"></b2b-drawer-list-tile>
+
+                    <b2b-sidenav menu="menu">
+
+                        <b2b-drawer-list sidenavhotel [text]="vendorName.companyName" margin="0px 0 0 0" [active]="true"
+                            [isExpand]="false" (click)="allProducts()">
+                            <b2b-icon list-tile-icon icon="home" padding="10px"></b2b-icon>
+                        </b2b-drawer-list>
+                    </b2b-sidenav>
+                </ng-container>
+            </div>
+        </div>
+
+        <div drawer-body class="drawer-traking" [style]="'display:flex;flex-direction:column;overflow-y: auto;'">
+            <div class="drawer-bottom-card">
+                <ng-container *ngFor="let item of bottomCardList ; let i = index">
+                    <b2b-label text="{{item.type}}" [isCurved]="true" width="100%" fontSize="11.5px"
+                        justifyContent="center"
+                        [backgroundTheme]="(i == activeIndex-1) ? '--color-drawer-active' : '--color-drawer-bottom-list'"
+                        [colorTheme]="(i == activeIndex-1) ? '--color-white' : '--color-white'"
+                        (click)="orderProcess(item.requestOrder,i+1,item.orderTypeTraccking,item.urlId,item.directOrder,'buttonNav')">
+                        <b2b-spacer centerText width="5px"></b2b-spacer>
+                        <b2b-text centerText text="{{item.centerText}}" [colorTheme]="item.color"
+                            fontSize="11.5px"></b2b-text>
+                        <b2b-spacer centerText width="5px"></b2b-spacer>
+                        <b2b-text endText text="({{item.count}})" colorTheme="--color-white"
+                            fontSize="11.5px"></b2b-text>
+                    </b2b-label>
+                    <b2b-spacer [height]="item.id == '4' || item.id == '8'   ? '30px' : '10px' "></b2b-spacer>
+                </ng-container>
+            </div>
+
+            <!-- <div class="drawer-bottom-card" style="width:100%; font-size :11.5px;color:white;padding:5px;" *ngFor="let item of bottomCardList ; let i = index" [style.background-color]="(i == activeIndex-1) ? 'var(--color-drawer-active)' : 'var(--color-drawer-bottom-list)'" (click)="orderProcess(item.arr,i+1)">
+                <p>{{item.type}} - <span class="status">Approved</span> (3/70)</p>
+            </div> -->
+        </div>
+    </b2b-drawer>
+
+    <b2b-container vendorCatalog-body [property]="{padding:'10px'}">
+
+        <!-- Filter Hotel Heading -->
+        <!-- HERE Search HEADING -->
+
+        <!-- MULTIPLE SEARCH FEILDS -->
+        <b2b-row container-body alignItem="center" alignItem="center" justifyContent="center" height="25px">
+
+            <b2b-container row-body [property]="{padding:'0',backgroundTheme:'none'}">
+                <b2b-row container-body alignItem="center" justifyContent="space-evenly" position="relative">
+                    <b2b-inputbox row-body [twoInputFeild]="true" inputType="multi-search" [value]="textLength"
+                        (onChange)="filterProducts('name', $event)" [iconClick]="true" icon="search"
+                        boxShadow="0 0 5px darkgrey" placeholder="Search" width="470px" borderRadius="7px"
+                        inputSize="11px" height="30px">
+                    
+                        <b2b-row popup-body *ngIf="textLength.length > 0"
+                            alignItem="center"
+                            margin="10px 0 0 0" borderRadius="5px" boxShadow="0 0 10px darkGrey" position="absolute"
+                            justifyContent="center" backgroundTheme="--color-white" zIndex="200">
+                            
+                            <b2b-container row-body
+                                [property]="{width:'470px',padding: '0',alignItem:'flex-start',height:'500px',overflowY:'scroll',overflowX:'hidden'}">
+                                <!-- ROW 1 -->
+                                <table container-body style="border-collapse: collapse; width: 100%;">
+                                    <tbody>
+                                        <tr *ngFor="let search of multipleSearch"
+                                            style="border-bottom: 1px solid var(--color-dark-grey);">
+                                            <td
+                                                style="width: 100px;text-align: start; padding: 10px; font-weight: bold; font-size: 13px; background-color: var(--color-light-grey);vertical-align: top; text-align: left;">
+                                                {{ search.type }}
+                                            </td>
+        
+                                            <!-- VENDOR PRODUCTS -->
+                                            <td *ngIf="search.id == 1" style="padding: 10px; background-color: white;">
+                                                <tr *ngFor="let i of search.data | myFilter : searchText : ['name','keyword'] ; ;let inx = index">
+                                                    <td class="t-row"
+                                                        style="padding: 5px; font-weight: bold; font-size: 13px; background-color: white;">
+                                                    <tr>
+                                                        <td
+                                                            style="width: 100px;display: flex;justify-content: space-between;background-color: 'none';">
+                                                            <span>Product Img</span>
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td><img [src]="i.img" width="35px" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td 
+                                                            style="width: 100px;display: flex;justify-content: space-between;background-color: 'none';">
+                                                            <span>Product Name</span>
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td>{{i.name}}</td>
+                                                    </tr>
+                                                    </td>
+                                                </tr>
+                                            </td>
+        
+                                        <!-- HOTELS ORDERS & BRAND PRODUCTS-->
+                                        <td *ngIf="search.id == 2" style="padding: 10px; background-color: white;">
+                                            <table style="border-collapse: collapse; width: 100%;">
+                                                <tbody>
+                                                    <tr *ngFor="let i of search.data | myFilter : searchText : ['name']"
+                                                        (click)="searchedFuc(i)">
+                                                        <!-- <img *ngIf="search.id == 2" [src]="i.img" width="20px"/> -->
+                                                        <td class="t-row"
+                                                            style="padding: 5px; font-weight: bold; font-size: 13px; background-color: white;border-bottom: 1px solid var(--color-dark-grey);">
+                                                    <tr>
+                                                        <td
+                                                            style="width: 100px;display: flex;justify-content: space-between;background-color: 'none';">
+                                                            <span>Product Img</span>
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td><img [src]="i.img" width="35px" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style="width: 100px;display: flex;justify-content: space-between;background-color: '';">
+                                                            <span>Product Name</span>
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td>{{i.name.split('--')[0]}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style="width: 100px;display: flex;justify-content: space-between;background-color: '';">
+                                                            <span>Hotel Name</span>
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td>{{i.name.split('--')[1]}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style="width: 100px;display: flex;justify-content: space-between;background-color: '';">
+                                                            <span>Order ID</span>
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td> {{i.name.split('--')[2]}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style="width: 100px;display: flex;justify-content: space-between;background-color: '';">
+                                                            <span>Required By</span>
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td> {{i.name.split('--')[3]}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style="width: 100px;display: flex;justify-content: space-between;background-color: '';">
+                                                            <span>Order Status</span>
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td> {{i.name.split('--')[5]}}</td>
+                                                    </tr>
+                                        </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </td>
+                                </tr>
+                                </tbody>
+                                </table>
+        
+        
+        
+                                <b2b-spacer container-body height="15px"></b2b-spacer>
+                                <!-- ROW 2 -->
+                                <!-- <b2b-row container-body alignItem="flex-start" justifyContent="flex-start">
+                                    <b2b-row row-body width="200px">
+                                        <b2b-text row-body  text="Purchase order Number" [bold]="true"  fontSize="13px" ></b2b-text>  
+                                    </b2b-row>
+                                    <b2b-spacer row-body width="60px"></b2b-spacer>
+                                    <b2b-container row-body [property]="{padding:'0'}">
+                                        <b2b-container container-body [property]="{padding:'0',alignItem:'flex-start'}">
+                                            <b2b-text container-body *ngFor="let id of Purchase_order | myFilter : searchText : ['name']" [text]="id.name" padding="5px" [bold]="true" fontSize="13px" ></b2b-text>  
+                                        </b2b-container>
+                                    </b2b-container>
+                                </b2b-row> -->
+                            </b2b-container>
+                        </b2b-row>
+                    </b2b-inputbox>
+                    <b2b-button row-body  title="Chat & Email" height="25px" width="93px" backgroundTheme="--color-green" (click)="openchat()" ></b2b-button>
+                </b2b-row>
+                
+
+            </b2b-container>
+        </b2b-row>
+        <!-- MULTIPLE SEARCH FEILDS -->
+
+        <b2b-spacer container-body height="20px"></b2b-spacer>
+
+        <!-- All Products -->
+        <b2b-row container-body boxShadow="0 0 10px darkGrey" borderRadius='10px'>
+            <b2b-container row-body [property]="{padding:'5px',backgroundTheme:'--color-dashboard',borderRadius:'0'}">
+                <!-- Table Heading for All Products -->
+                <b2b-trow container-body *ngIf="isRfq == false" [column]="catelogColumnSpacing_vendor" margin="0"
+                    zIndex="1" position="sticky" top="0" height="40px" backgroundTheme="--color-dashboard"
+                    colorTheme="--color-drawer-bottom-card" [bold]="true">
+                    <ng-container trow-body *ngFor="let column of catelogTable">
+                        <b2b-tdata [title]="column" width="100%" fontSize="12px"></b2b-tdata>
+                    </ng-container>
+                </b2b-trow>
+
+
+
+                <!-- Filter Inputs -->
+                <b2b-trow container-body zIndex="1" *ngIf="filter" position="sticky" top="50px" height="0px"
+                    backgroundTheme="--color-light-grey" [column]="catelogColumnSpacing"
+                    colorTheme="--color-drawer-bottom-card" [bold]="true">
+                    <ng-container trow-body>
+                        <b2b-tdata trow-body fontSize="12px">
+                            <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px"
+                                height="25px">
+                                <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey"
+                                    [isRounded]="true" width="" iconSize="20px"></b2b-icon-button>
+                                <input row-body type="text" [style.width]="'100%'" [(ngModel)]="fields.product_name"
+                                    [style.outline]="'none'" [style.border]="'none'" />
+                            </b2b-row>
+                        </b2b-tdata>
+
+                        <b2b-tdata trow-body fontSize="12px">
+                            <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px"
+                                height="25px">
+                                <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey"
+                                    [isRounded]="true" width="" iconSize="20px"></b2b-icon-button>
+                                <input row-body type="text" [style.width]="'100%'" [(ngModel)]="fields.shortDiscription"
+                                    [style.outline]="'none'" [style.border]="'none'" />
+                            </b2b-row>
+                        </b2b-tdata>
+
+                        <!-- <b2b-tdata trow-body fontSize="12px">
+                            <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+                                <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                                    iconSize="20px"></b2b-icon-button>
+                                <input row-body type="text" [style.width]="'100%'" [(ngModel)]="fields.price"
+                                    [style.outline]="'none'" [style.border]="'none'" />
+                            </b2b-row>
+                        </b2b-tdata> -->
+
+                        <b2b-tdata trow-body fontSize="12px">
+                            <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px"
+                                height="25px">
+                                <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey"
+                                    [isRounded]="true" width="" iconSize="20px"></b2b-icon-button>
+                                <input row-body type="text" [style.width]="'100%'" [(ngModel)]="fields.leadTime"
+                                    [style.outline]="'none'" [style.border]="'none'" />
+                            </b2b-row>
+                        </b2b-tdata>
+
+                        <b2b-tdata trow-body fontSize="12px">
+                            <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px"
+                                height="25px">
+                                <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey"
+                                    [isRounded]="true" width="" iconSize="20px"></b2b-icon-button>
+                                <input row-body type="text" [style.width]="'100%'" [(ngModel)]="fields.boxQuantity"
+                                    [style.outline]="'none'" [style.border]="'none'" />
+                            </b2b-row>
+                        </b2b-tdata>
+
+                        <b2b-tdata trow-body fontSize="12px">
+                            <!-- <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px" height="25px">
+                                <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey" [isRounded]="true" width=""
+                                    iconSize="20px"></b2b-icon-button>
+                                <input row-body type="text" [style.width]="'100%'" [(ngModel)]="fields.ESG"
+                                    [style.outline]="'none'" [style.border]="'none'" />
+                            </b2b-row> -->
+                        </b2b-tdata>
+
+                        <b2b-tdata trow-body fontSize="12px">
+                            <b2b-row tdata-body backgroundTheme="--color-white" margin="0 5px 0 0" borderRadius="5px"
+                                height="25px">
+                                <b2b-icon-button row-body icon="search" colorTheme="--color-dark-grey"
+                                    [isRounded]="true" width="" iconSize="20px"></b2b-icon-button>
+                                <input row-body type="text" [style.width]="'100%'" [(ngModel)]="fields.manufactured"
+                                    [style.outline]="'none'" [style.border]="'none'" />
+                            </b2b-row>
+                        </b2b-tdata>
+                    </ng-container>
+                </b2b-trow>
+
+                <!-- Veodor Products -->
+                <!-- <ng-container container-body *ngFor="let data of vendorProductsArr | myFilter : fields"> -->
+                <ng-container container-body *ngIf="isRfq == false">
+                    <ng-container container-body *ngFor="let data of vendorProductsArr.slice().reverse()">
+                        <b2b-trow container-body *ngIf="selectedTable == '' || selectedTable == data.product_id "
+                            [id]="data.product_id" [isExpanded]="selectedTable == data.product_id" fontSize="12px"
+                            [column]="catelogColumnSpacing_vendor" colorTheme="--color-black"
+                            backgroundTheme="--color-white" borderRadius="var(--table-radius)" height="60px"
+                            (onExpand)="tableExpand($event)" [showExpand]="false">
+
+                            <b2b-tdata trow-body justifyContent="center" height="100%" alignItem="center">
+
+                                <b2b-dropdown tdata-body popupWidth="200px" maxheight="auto" overflow="hidden"
+                                    zIndex="100" popupHeight="auto" dropdownPosition="left" dropdownTop="35px">
+                                    <b2b-row dropdown-hover position="relative">
+                                        <!-- <b2b-text row-body class="new_2" text="new" fontSize="9px"
+                                    colorTheme="--color-white"></b2b-text> -->
+                                        <b2b-image row-body [image]="data['product_image']" width="40px"></b2b-image>
+                                    </b2b-row>
+
+                                    <b2b-row dropdown-items zIndex="10" borderRadius="5px" position="relative">
+                                        <b2b-container row-body
+                                            [property]="{backgroundTheme: '',flex:1,padding:'0px 0 0 5px',overflowY:'hidden'}">
+                                            <b2b-row container-body>
+                                                <b2b-container row-body
+                                                    [property]="{backgroundTheme: '--color-white',flex:1,padding:'0px',overflowY:''}">
+                                                    <b2b-row container-body position="absolute">
+                                                        <b2b-text row-body class="new" text="new" fontSize="10px"
+                                                            colorTheme="--color-white"></b2b-text>
+                                                    </b2b-row>
+                                                    <b2b-spacer container-body height="30px"></b2b-spacer>
+                                                    <b2b-row container-body>
+                                                        <b2b-icon row-body icon="close" left="84%" top="2%"
+                                                            backgroundTheme="--color-white"
+                                                            colorTheme="--color-dark-grey"
+                                                            position="absolute"></b2b-icon>
+                                                    </b2b-row>
+                                                    <b2b-row container-body width="100%">
+                                                        <b2b-image row-body width="100%"
+                                                            [image]="data['product_image']"></b2b-image>
+                                                    </b2b-row>
+                                                    <b2b-row container-body margin="0 0 10px 0">
+                                                        <b2b-text row-body colorTheme="--color-black" fontSize="14px"
+                                                            [bold]="true" [text]="data['name']"></b2b-text>
+                                                    </b2b-row>
+
+                                                    <b2b-spacer container-body height="10px"></b2b-spacer>
+                                                </b2b-container>
+                                            </b2b-row>
+                                        </b2b-container>
+                                    </b2b-row>
+                                </b2b-dropdown>
+                            </b2b-tdata>
+                            <b2b-tdata trow-body [title]="data['name']"></b2b-tdata>
+
+                            <b2b-tdata trow-body [title]="data.Category"></b2b-tdata>
+
+                            <!-- <b2b-tdata trow-body title="$ {{data['price']}}"></b2b-tdata> -->
+                            <b2b-tdata trow-body [title]="data.sub_category_name"></b2b-tdata>
+                            <b2b-tdata trow-body>
+                                <a tdata-body target="blank" href="" (click)="openLink(data.vendor_products_id)">{{
+                                    data.sku }}</a>
+
+                            </b2b-tdata>
+
+                            <b2b-tdata trow-body justifyContent="flex-end"
+                                [ngStyle]="{ 'position': 'absolute','right':'0','top':'17%' }">
+                                <b2b-dropdown tdata-body popupWidth="90px" overflow="hidden" popupHeight="auto"
+                                    alignItem="start" dropdownPosition="right">
+                                    <b2b-icon-button dropdown-selector icon="edit" padding="0 " iconSize="20px"
+                                        colorTheme="--color-dark-grey"></b2b-icon-button>
+                                    <b2b-list-tile dropdown-items [isIcon]="true" icon="cyclone" title="Add"
+                                        hoverTheme="--color-dark-grey" colorTheme="--color-black"
+                                        (click)="addVendorProduct()" borderRadius="8px" height="30px" fontSize="12px"
+                                        margin="2px 0"></b2b-list-tile>
+                                    <b2b-list-tile dropdown-items [isIcon]="true" icon="edit" title="Edit"
+                                        (click)="editVendorProduct(data.vendor_products_id)"
+                                        hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                                        height="30px" fontSize="12px" margin="2px 0"></b2b-list-tile>
+                                    <b2b-list-tile dropdown-items [isIcon]="true" icon="delete" title="Delete"
+                                        (click)="opendeletepopup(data.vendor_products_id)"
+                                        hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px"
+                                        height="30px" fontSize="12px" margin="2px 0"></b2b-list-tile>
+
+                                </b2b-dropdown>
+                            </b2b-tdata>
+                        </b2b-trow>
+                    </ng-container>
+
+                </ng-container>
+
+
+                <!-- RFQ Heading product..................-->
+                <b2b-trow container-body *ngIf="isPurchaseOrder == true && isRfq == true"
+                    [column]="catelogColumnSpacing_count" margin="0" zIndex="1" position="sticky" top="0" height="40px"
+                    backgroundTheme="--color-dashboard" colorTheme="--color-drawer-bottom-card" [bold]="true">
+                    <ng-container trow-body *ngFor="let column of rfqTable">
+                        <b2b-tdata [title]="column" width="100%" fontSize="12px"></b2b-tdata>
+                    </ng-container>
+                </b2b-trow>
+
+                <!-- RFQ Values product....................-->
+                <ng-container container-body *ngIf="isPurchaseOrder == true && isRfq == true">
+                    <ng-container container-body *ngFor="let data of rfqHotelProducts">
+                        <b2b-trow container-body *ngIf="selectedTable == '' || selectedTable == data.product_id"
+                            [id]="data.product_id" [isExpanded]="selectedTable == data.product_id" fontSize="12px"
+                            [column]="catelogColumnSpacing_count" colorTheme="--color-black"
+                            backgroundTheme="--color-white" borderRadius="var(--table-radius)" height="60px"
+                            (onExpand)="tableExpand($event)" [showExpand]="true">
+
+                            <b2b-tdata trow-body>
+                                <b2b-image tdata-body [image]="data['product_image']" width="40px"></b2b-image>
+                            </b2b-tdata>
+
+                            <b2b-tdata trow-body [title]="data.brand_products_name || data.name"></b2b-tdata>
+                            <b2b-tdata trow-body [title]="data.count"></b2b-tdata>
+
+                            <b2b-tdata trow-body [title]="data.category_name"></b2b-tdata>
+                            <b2b-tdata trow-body [title]="data.sub_category_name"></b2b-tdata>
+                        </b2b-trow>
+                    </ng-container>
+                </ng-container>
+
+            </b2b-container>
+        </b2b-row>
+        <!-- <b2b-spacer container-body height="30px"></b2b-spacer> -->
+        <b2b-vendor-body container-body *ngIf="selectedTable != ''" [vendor_id]="vendor_id" [rfqRequrest]="rfqArray"
+            [directOrderArray]="directOrderArray" [vendorAllProductsArr]="vendorAllProductsArr"></b2b-vendor-body>
+
+        <!--  popup side button filter -->
+        <!-- <b2b-row container-body position="fixed" positionLeft="97%" positionTop="40%" zIndex="1">
+            <b2b-icon-button row-body icon="settings" backgroundTheme=" --color-marketplace-accent" borderRadius="4px" colorTheme="--color-white" ></b2b-icon-button>
+        </b2b-row>
+        <b2b-row container-body position="fixed" positionLeft="97%" positionTop="46%" zIndex="1">
+            <b2b-icon-button row-body icon="filter_alt" backgroundTheme="--color-drawer-bottom-card" (click)="fliter()" borderRadius="4px" colorTheme="--color-dark-yellow" ></b2b-icon-button>
+        </b2b-row>
+        <b2b-row container-body position="fixed" positionLeft="97%" positionTop="52%" zIndex="1">
+            <b2b-icon-button row-body icon="add_chart" backgroundTheme="--color-drawer-active"  borderRadius="4px" colorTheme="--color-white" ></b2b-icon-button>
+        </b2b-row> -->
+
+    </b2b-container>
+</b2b-vendor-layout>
+
+<!-- alert popup -->
+<b2b-draggable-popup tdata-body *ngIf="alertpopup" class="blur-overlay" positionTop="30%" positionLeft="43%">
+    <b2b-row draggable-popup height="15vh" widths="30vw" backgroundTheme="--color-white" justifyContent="center"
+        flexDirection="column" padding="10px 10px 0 10px" borderRadius="10px"
+        border="1px solid var(--color-toggle-background)">
+        <b2b-image row-body height="35px" [isRounded]="true" width="35px" image="assets/error.png"></b2b-image>
+
+        <b2b-text row-body text="Are You Sure!" margin="5px 0 0 0"></b2b-text>
+        <b2b-text row-body text="This Will Permently Delete the Product" fontSize="14px" margin="0 0 10px 0"></b2b-text>
+
+        <div row-body style="display: flex; flex-direction: row; justify-content: space-between;">
+            <b2b-button title="OK" height="25px" width="70px" backgroundTheme="--color-primary" margin="5px"
+                (click)="deletevendorproduct(delete_productid)"> </b2b-button>
+            <b2b-button title="CANCEL" height="25px" width="70px" backgroundTheme="--color-redd" margin="5px"
+                (click)="alertpopup = false"> </b2b-button>
+        </div>
+    </b2b-row>
+</b2b-draggable-popup>
+
+<!-- ADD VENDOR PRODUCT AND EDIT -->
+<b2b-add-vendor-products *ngIf="isAdd_vendor_product"
+    (cancelpopup)="isAdd_vendor_product = $event"></b2b-add-vendor-products>
+    <!-- chat and email -->
+<b2b-chat-email *ngIf="open_chat" (cancelpopup)="open_chat = $event" screen="owner"  ></b2b-chat-email>

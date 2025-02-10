@@ -1,0 +1,36 @@
+:host {
+  width: 100%;
+}
+table {
+  border-collapse: collapse; /* Merge borders */
+  width: 100%;
+  font-size: 13px;
+}
+.head{
+  background-color: var(--color-primary);
+  -webkit-text-fill-color: aliceblue;
+}
+table, th, td {
+  border: 1px solid black; /* Add borders */
+}
+
+th, td {
+  padding: 4px;
+  text-align: center;
+}
+.checkbox{
+  height: 20px;
+  width:20px;
+}
+.Relese{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.button{
+  margin-left: 5px;
+}
+.picture{
+  height: 25px;
+  width: 30px;
+}

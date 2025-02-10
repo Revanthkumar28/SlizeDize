@@ -1,0 +1,23 @@
+<div class="trow" [style]="trowStyles" [class.mobileview]="mobileview" (mouseenter)="rfqExpandHover()" (mouseleave)="rfqStay()" [style.boxShadow]="HoverBoxShadow == true ? hoverColor: '' ">
+    <ng-content select="[trow-body]"></ng-content>
+    <div class="expandBadge" *ngIf="showExpand" >
+        <b2b-list-tile [title]="isExpanded ? 'Close' : 'Expand'" backgroundTheme=" --color-sky-blue" borderRadius="0 0 5px 5px" fontSize="12px" width="auto" height="20px" (click)="expand()" (click)="expandClicked()">
+            <b2b-icon actions [icon]="isExpanded ? 'expand_less' : 'expand_more'" [fontSize]="18"></b2b-icon>
+        </b2b-list-tile>
+    </div>
+
+    <div class="expandBadge" *ngIf="showExpand2" >
+        <b2b-list-tile [title]="isExpanded ? 'Close' : 'Expand'" backgroundTheme="--color-sky-blue" borderRadius="0 0 5px 5px" fontSize="12px" width="auto" height="20px" (click)="expand()" (click)="expandClicked2()">
+            <b2b-icon actions [icon]="isExpanded ? 'expand_less' : 'expand_more'" [fontSize]="18"></b2b-icon>
+        </b2b-list-tile>
+    </div>
+
+    <!-- RFQ Expand -->
+    <ng-container *ngIf="hoverExpand == true" >
+        <div class="expandBadge" *ngIf="RfqExpand" (click)="expand()">
+            <b2b-list-tile [title]="isExpanded ? 'Close' : ExpandName " backgroundTheme="--color-sky-blue" borderRadius="0 0 5px 5px" fontSize="10px" [width]=Expandwidth height="18px" (click)="expandClicked2()">
+                <b2b-icon actions [icon]="isExpanded ? 'expand_less' : 'expand_more'" [fontSize]="18"></b2b-icon>
+            </b2b-list-tile>
+        </div>
+    </ng-container>
+</div>

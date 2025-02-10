@@ -1,0 +1,4 @@
+.under{
+    text-decoration: underline;
+    text-decoration-color: var(--color-primary);
+  }

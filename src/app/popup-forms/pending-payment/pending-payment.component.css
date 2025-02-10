@@ -1,0 +1,63 @@
+.calender{
+    width: 60vw;
+    height: 66vh;
+    position: absolute;
+    top: 17%;
+    left: 5%;
+}
+table {
+    border-collapse: collapse; /* Merge borders */
+    width: 100%;
+    font-size: 13px;
+  }
+  .head{
+    background-color: var(--color-primary);
+    -webkit-text-fill-color: aliceblue;
+  }
+  table, th, td {
+    border: 1px solid black; /* Add borders */
+  }
+  
+  th, td {
+    padding: 4px;
+    text-align: center;
+  }
+  .text{
+    font-size: 15px;
+    
+    
+    position: absolute;
+    top:25px;
+    left:43px;
+  }
+  .pointer-cursor {
+    cursor: pointer;
+  }
+  .buttonrow{
+    display: flex;
+    flex-direction: row;
+  }
+  .filtericon{
+position: absolute;
+top:3.4%;
+left: 21%;
+  }
+  .weeklytotal{
+    position: absolute;
+    top: 26%;
+    right: 7%;
+    width: 9vw;
+    height: 58vh;
+  }
+  .weektd{
+      size: 20px;
+  }
+  .weeklytotal table, th, td{
+    border: 1px solid gainsboro; /* Add borders */
+
+  }
+  .monthtotal{
+    position: absolute;
+    bottom: 5%;
+    right:11%;
+  }

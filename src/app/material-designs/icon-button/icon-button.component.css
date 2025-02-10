@@ -1,0 +1,47 @@
+div.icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+div.icon-button i {
+    font-size: 28px;
+}
+
+div.icon-button span#icon-text {
+    font-weight: bold;
+}
+
+
+/* Informaton text */
+/* Define the tooltip text style */
+.icon-button .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: white;
+    color: black;
+    /* text-align: center; */
+    font-size: 13px;
+    border: 1px solid lightgrey;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    /* bottom: 30px; /* Position the tooltip above the text */
+    /* left: 50%;  */
+    /* left:250%; */
+    bottom: 5px;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 100;
+}
+
+/* Show the tooltip text when hovering over the paragraph */
+.icon-button:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    z-index: 100;
+}

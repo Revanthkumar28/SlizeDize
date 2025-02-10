@@ -1,0 +1,55 @@
+<b2b-container class="hover_product" [property]="{padding: '0', backgroundTheme: '--color-transparent', overflowY: 'hidden', alignItem: 'flex-start'}">
+    <b2b-trow container-body [column]="tableColumnSpacing" colorTheme="--color-drawer-bottom-card" [bold]="true" fontSize="14px" width="auto">
+        <ng-container trow-body *ngFor="let column of tableHeading">
+            <b2b-tdata [title]="column" fontSize="11px" textTransform="capitalize"></b2b-tdata>
+        </ng-container>
+    </b2b-trow>
+    
+    <b2b-trow container-body id="1" [column]="tableColumnSpacing" fontSize="10.7px" colorTheme="--color-black" backgroundTheme="--color-light-grey" borderRadius="var(--table-radius)" width="auto">
+        <b2b-tdata trow-body title='{{product_name}}' textAlign="center"  borderColor="--color-white"></b2b-tdata>
+       
+        <b2b-tdata trow-body  borderColor="--color-white">
+            <b2b-inputbox tdata-body [twoInputFeild]="true"  [inputType]="productDetails.req_date" (onChange)="ngOnChang(productDetails.req_date=$event)" [min]="now" backgroundTheme="" inputboxTextalign="center" inputboxMargin="0 0 0 10px" inputboxPadding="0" inputboxWidth="75px" inputboxFontSize="9px" width="100px" height="auto"></b2b-inputbox>
+        </b2b-tdata>
+        <b2b-tdata trow-body  borderColor="--color-white" textAlign="center" justifyContent="center" alignItem="center">
+            <b2b-inputbox tdata-body  [twoInputFeild]="true" [inputType]="productDetails.delivery" (onChange)="ngOnChang(productDetails.delivery=$event)" backgroundTheme=""  [min]="now" inputboxMargin="0 0 0 12px" inputboxPadding="0" inputboxWidth="75px" inputboxFontSize="9px" width="100px" height="auto"></b2b-inputbox>
+        </b2b-tdata>
+        <b2b-tdata trow-body  borderColor="--color-white" >
+            <b2b-inputbox tdata-body [value]="productDetails.lead_time" (onChange)="ngOnChang(productDetails.lead_time=$event)" [twoInputFeild]="true"  placeholder="04 days" inputboxPadding="15px"  backgroundTheme="" inputboxTextalign="center" width="80px" height="auto" inputboxFontSize="10px"></b2b-inputbox>
+        </b2b-tdata>
+        <b2b-tdata trow-body borderColor="--color-white" >
+            <b2b-inputbox tdata-body  [value]="productDetails.dept" (onChange)="ngOnChang(productDetails.dept=$event)" [twoInputFeild]="true" placeholder="F $ B" inputboxPadding="0" backgroundTheme="" inputboxTextalign="center" width="80px" height="" inputboxFontSize="10px"></b2b-inputbox>
+        </b2b-tdata>
+        <b2b-tdata trow-body  borderColor="--color-white">
+            <b2b-inputbox tdata-body [value]="productDetails.qty" (onChange)="ngOnChang(productDetails.qty = $event)" [twoInputFeild]="true" placeholder="4 Pcs" inputboxPadding="0" backgroundTheme="" inputboxTextalign="center" width="80px" height="" inputboxFontSize="10px"></b2b-inputbox>
+        </b2b-tdata>
+        <b2b-tdata trow-body borderColor="--color-white">
+            <b2b-inputbox tdata-body [value]="productDetails.price"  (onChange)="productDetails.price = $event" (onChange)="productDetails.qty = $event" [twoInputFeild]="true" placeholder="10" inputboxPadding="0" backgroundTheme="" inputboxTextalign="center" width="80px" height="" inputboxFontSize="10px"></b2b-inputbox>
+        </b2b-tdata>
+        <b2b-tdata trow-body  borderColor="--color-white">
+            <b2b-inputbox tdata-body [value]="productDetails.tax" (onChange)="ngOnChang(productDetails.tax = $event)" [twoInputFeild]="true" placeholder="0.90" inputboxPadding="0" backgroundTheme="" inputboxTextalign="center" width="80px" height="" inputboxFontSize="10px"></b2b-inputbox>
+        </b2b-tdata>
+        <b2b-tdata trow-body  borderColor="--color-white">
+            <b2b-inputbox tdata-body [value]="productDetails.shipping_cost" (onChange)="ngOnChang(productDetails.shipping_cost = $event)" [twoInputFeild]="true" placeholder="00" inputboxPadding="0" backgroundTheme="" inputboxTextalign="center" width="80px" height="" inputboxFontSize="10px"></b2b-inputbox>
+        </b2b-tdata>
+        <b2b-tdata trow-body borderColor="--color-white">
+            <b2b-inputbox tdata-body [value]="productDetails.total_amount" (onChange)="ngOnChang(productDetails.total_amount = $event)" [twoInputFeild]="true" placeholder="76" inputboxPadding="0" backgroundTheme="" inputboxTextalign="center" width="80px" height="" inputboxFontSize="10px"></b2b-inputbox>
+        </b2b-tdata>
+        <b2b-tdata trow-body borderColor="--color-white">
+            <b2b-inputbox tdata-body [value]="productDetails.price_comparison" (onChange)="ngOnChang(productDetails.price_comparison = $event)" (onChange)="productDetails.qty = $event" inputboxPadding="0" [twoInputFeild]="true" placeholder="-" backgroundTheme="" inputboxTextalign="center" width="80px" height="" inputboxFontSize="10px"></b2b-inputbox>
+        </b2b-tdata>
+        <b2b-tdata trow-body borderColor="--color-white">
+            <b2b-inputbox tdata-body [value]="productDetails.shipment_status" (onChange)="ngOnChang(productDetails.shipment_status = $event)" [twoInputFeild]="true" placeholder="Not Sent" inputboxPadding="0" backgroundTheme="" inputboxTextalign="center" width="80px" height="" inputboxFontSize="10px"></b2b-inputbox>
+        </b2b-tdata>
+        <b2b-tdata trow-body borderColor="--color-white">
+            <b2b-inputbox tdata-body [value]="productDetails.po_stage" (onChange)="ngOnChang(productDetails.po_stage = $event)" [twoInputFeild]="true" placeholder="-" inputboxPadding="0" backgroundTheme="" inputboxTextalign="center" width="80px" height="" inputboxFontSize="10px"></b2b-inputbox>
+        </b2b-tdata>
+        <b2b-tdata trow-body borderColor="--color-white">
+            <b2b-inputbox tdata-body [value]="productDetails.supplier" (onChange)="ngOnChang(productDetails.supplier = $event)" [twoInputFeild]="true" placeholder="N/A" inputboxPadding="0" backgroundTheme="" inputboxTextalign="center" width="80px" height="" inputboxFontSize="10px"></b2b-inputbox>
+        </b2b-tdata>
+    </b2b-trow>
+    <!-- <b2b-row container-body justifyContent="center" *ngIf="continueButton">
+        <b2b-button row-body title="Continue with RFQ" (click)="continute()"  backgroundTheme="--color-toggle-background" colorTheme="--color-white" width="170px" borderRadius="var(--global-radius)" margin="0 12px"></b2b-button>
+        <b2b-button row-body title="Push to order"  backgroundTheme="--color-toggle-background" colorTheme="--color-white" width="170px" borderRadius="var(--global-radius)"></b2b-button>
+    </b2b-row> -->
+</b2b-container>

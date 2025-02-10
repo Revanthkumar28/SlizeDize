@@ -1,0 +1,31 @@
+<div class="dropdownContainer" b2bGestureDetector [detectInsideClicks]="isPopupOpen" (clickedOutside)="outsideElementClicked()" [style]="dropdownContainerStyle" >
+    <div  class="dropdown-trigger"  (mouseover)="openClick()" (mouseleave)="closeClick()"  (click)="dropdownClicked()">
+        <ng-content select="[dropdown-hover]"></ng-content>
+    </div>
+
+    <ng-container *ngIf="hedaing">
+
+        <div class="dropdown-hover"  [style]="dropdownStyles_hover" >
+            <b2b-popup top="-50px" [width]="alertPopWidth" position="absolute"  >
+              <b2b-row popup-content >
+                    <ng-content row-body select="[dropdown-hover-content]"></ng-content>
+                </b2b-row>
+             </b2b-popup>
+         </div>
+
+    </ng-container>
+    
+    <div class="dropdown" *ngIf="isPopupOpen" [style]="dropdownStyles" >
+       <b2b-popup [width]="popupWidth" [padding]="popupPadding" overflow="hidden" [alignItem]="alignItem" [height]="popupHeight"  >
+          <b2b-row popup-content >
+            <b2b-spacer row-body [flex]="1"></b2b-spacer>
+            <b2b-icon row-body icon="cancel" (click)="dropdownItemsClicked()"></b2b-icon>
+           </b2b-row>
+           <b2b-spacer popup-content height="5px"></b2b-spacer>
+            <b2b-row popup-content justifyContent="center">
+                <ng-content  row-body select="[dropdown-items]"></ng-content>
+                <ng-content  row-body select="[submit-button]" (click)="dropdownItemsClicked()"></ng-content>
+           </b2b-row>
+        </b2b-popup>
+    </div>
+</div>

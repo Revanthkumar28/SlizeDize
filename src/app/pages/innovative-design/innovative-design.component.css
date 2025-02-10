@@ -1,0 +1,45 @@
+.share-design{
+    font-weight: 700;
+}
+.innovative_post{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    font-weight: 700;
+}
+.innovative_post2{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    width: 100%;
+}
+.innovative_post3{
+    background-color: #ed9209;
+    width: 20px;
+    padding: 0px 7px 0px 7px;
+    border-radius: 20px;
+}
+
+@media (max-width: 500px){
+    .Hotel_card{
+        width: 85%;
+    }
+    ::ng-deep .innovative_post2{
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        width: 100% !important;
+    }
+    .fav_likes{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .upload_image{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        width: 100%;
+    }
+}

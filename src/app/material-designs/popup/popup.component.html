@@ -1,0 +1,11 @@
+<div class="popup" [style]="popupStyles">
+    <ng-content select="[popup-content]"></ng-content>
+
+    <ul class="dropdown-list" *ngIf="popUpValues.length > 0">
+        <li
+            *ngFor="let option of popUpValues; let i = index" (click)="seletedValue(option)"
+            [ngClass]="{ 'selected': i === selectedIndex }">
+            {{ option }}
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,496 @@
+<b2b-row container-body  zIndex="18" borderRadius="5px"     widths="35vw"  position="fixed"
+backgroundTheme="--color-lighter-grey" height="100%" positionRight="0" positionTop="0">
+<b2b-container row-body [property]="{backgroundTheme: '',flex:1,padding:'5px 0 0 5px'}">
+    <b2b-row container-body>
+        <b2b-container row-body [property]="{width:'100%',backgroundTheme: '',padding:'0px 30px 5px 30px'}">
+            <b2b-row container-body flexDirection="column" >
+                <b2b-icon row-body icon="close" left="92%" (click)="closeButton()" top="2%"
+                        backgroundTheme="--color-white" colorTheme="--color-dark-grey" position="absolute"></b2b-icon>
+    
+                    <b2b-row row-body>
+                        <ng-container row-body *ngFor="let button of button_name">
+                            <b2b-button [title]="button['name']" boxShadow="0 0 10px lightGrey" borderRadius="3px" [borderBottom]="button['name'] == selectedButton ? '--color-orange' : '--color-white'" [colorTheme]="button['name'] == selectedButton ? '--color-black' : '--color-dark-grey'" padding="5px 10px" margin="10px 10px 15px 0" height="auto" width="auto" (onPressed)="buttonclicked($event)" margin="10px"></b2b-button>
+                        </ng-container>
+                       
+                    </b2b-row>
+                    <!-- chat start -->
+                    <b2b-row *ngIf="openchat" row-body flexDirection="column">
+                    <b2b-row *ngIf="open_one_chat" row-body flexDirection="column" height="85vh" position="relative"  >
+                        <b2b-row row-body class="head" height="10vh">
+                            <b2b-icon row-body icon="arrow_back_ios"  class="Button" (click)="backButton('chat')" fontSize="23px" margin="0px 0px 0px 20px"></b2b-icon>
+                           <b2b-image row-body [image]="chat_img" [isRounded]="true" height="50px" width="50px" margin="0 15px 0 20px"></b2b-image>
+                             <b2b-text row-body [text]="chat_name" margin="0 40px 0 40px"></b2b-text>
+                        </b2b-row>
+                        <!-- MASSAGE -->
+                        <b2b-row  row-body class="body" [ngStyle]="{'overflow-y': chatArray.length > 5 ? 'scroll' : 'hidden'}" height="70vh" flexDirection="column" overFlowY="scroll">
+                            <b2b-container  row-body *ngFor="let ms of chatArray" [property]="{backgroundTheme:'none',width:'100%',alignItem: ms.msg_id == 1 ? 'flex-end' : 'flex-start',justifyContent: ms.id == 1 ? 'flex-end' : 'flex-start',position:'relative'}">
+                                <b2b-row *ngIf="ms.msg !=null && ms.msg !=''" container-body backgroundTheme="--color-white" alignItem="flex-end" height="auto"  width="auto" borderRadius="10px" margin="3px" padding="5px" maxWidth="15vw" >
+                                    <b2b-text  row-body [text]="ms.msg" ></b2b-text>
+                                    <!-- <b2b-row  row-body >
+                                        <b2b-drop-down-xaxis row-body popupWidth="100px">
+                                            <b2b-icon-button select-item icon="more_vert" 
+                                            colorTheme="--color-dark-grey" height="20px">
+                                            </b2b-icon-button>
+                                            <div dropDown-Items>
+                                                    <b2b-list-tile dropdown-items  [isIcon]="true" icon="delete" [bold]="true" iconWidth="10px" iconsize="14px" title="Delete msg" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="delete_chat(ms.chat_id)"></b2b-list-tile> 
+                                             </div>
+                                             </b2b-drop-down-xaxis>
+
+                                     </b2b-row> -->
+                                </b2b-row>
+                                <b2b-row *ngIf="ms.image !=null " container-body backgroundTheme="--color-white" alignItem="flex-end" height="auto"  width="auto" borderRadius="10px" margin="3px" padding="5px" maxWidth="15vw" >
+                                   <b2b-row row-body >
+                                    <ng-container row-body [ngSwitch]="isImage2(ms.image)">
+                                        <ng-container *ngSwitchCase="'image'">
+                                            <b2b-image class="file" row-body height="11vh" width="10vw" [image]="ms.image" (click)="openpdf(ms.image)"></b2b-image>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'video'">
+                                            <b2b-image class="file" row-body height="11vh" width="10vw" [image]="videoimg" (click)="openpdf(ms.image)"></b2b-image>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'pdf'">
+                                            <b2b-image  class="file" row-body height="6vh" width="4vw" [image]="docimg" (click)="openpdf(ms.image)"></b2b-image>
+
+                                        </ng-container>
+                                    </ng-container>
+                                </b2b-row>
+                                <!-- <b2b-row  row-body >
+                                    <b2b-drop-down-xaxis row-body popupWidth="100px">
+                                        <b2b-icon-button select-item icon="more_vert" 
+                                        colorTheme="--color-dark-grey" height="20px">
+                                        </b2b-icon-button>
+                                        <div dropDown-Items>
+                                                <b2b-list-tile dropdown-items  [isIcon]="true" icon="delete" [bold]="true" iconWidth="10px" iconsize="14px" title="Delete msg" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="delete_chat(ms.chat_id)"></b2b-list-tile> 
+                                         </div>
+                                         </b2b-drop-down-xaxis>
+
+                                 </b2b-row> -->
+                                
+                            </b2b-row>
+                             <!-- del_popup -->
+                             <!-- <b2b-row *ngIf="del_pop" container-body  position="absolute" positionBottom="73px" positionLeft="10px" borderRadius="15px" backgroundTheme="--color-white">
+                                <b2b-text row-body text="Delete msg" (click)="delete_chat()"></b2b-text>
+
+                             </b2b-row> -->
+                            </b2b-container>
+                             
+
+                            <!-- <b2b-container row-body [property]="{backgroundTheme:'none',width:'100%',alignItem:'flex-start',justifyContent:'flex-start'}">
+                                <b2b-row container-body backgroundTheme="--color-white" alignItem="flex-end" height="auto"  width="auto" borderRadius="10px" margin="10px" padding="5px" maxWidth="15vw">
+                                    <b2b-text row-body text="storemsg" ></b2b-text>
+                                </b2b-row>
+                            </b2b-container> -->
+
+                        </b2b-row>
+                        <b2b-row row-body class="foot" height="10vh">
+                            <b2b-icon row-body [icon]="upload == false ?'add': 'close' "  class="Button" (click)="addButton('chat')" fontSize="30px" margin="10px 15px 10px 20px" ></b2b-icon>
+
+                            <b2b-inputbox row-body [twoInputFeild]="true" placeholder="Type a message" height="50px" width="80%" borderRadius="10px" margin="15px 0 15px 0px" (onChange)="message = $event" [value]="message" (keyup.enter)="sendButton()"></b2b-inputbox>
+                           <b2b-icon row-body icon="send"  class="Button" (click)="sendButton()" fontSize="30px" margin="10px 35px 10px 0"></b2b-icon>
+       
+                        </b2b-row>
+                        <b2b-row row-body *ngIf="upload" flexDirection="column"  borderRadius="15px" backgroundTheme="--color-white" position="absolute" positionBottom="73px" positionLeft="10px" widths="200px" >
+                            <!-- <b2b-list-tile row-body  [isIcon]="true" icon="description" [bold]="true" iconWidth="10px" iconsize="14px" title="Documents" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" ></b2b-list-tile> 
+                            <b2b-spacer row-body height="5px"></b2b-spacer> -->
+                           <b2b-row row-body position="absolute" minheight="2vh" positionTop="7px">
+                            <b2b-list-tile row-body  [isIcon]="true" icon="photo_library" [bold]="true" iconWidth="10px" iconsize="14px" title="Photos & Videos/Documents" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" ></b2b-list-tile> 
+
+                           </b2b-row>
+                            <b2b-spacer row-body height="5px"></b2b-spacer>
+                            <b2b-row row-body   flexDirection="column">
+                                <b2b-inputbox row-body class="upload" inputType="file"  position="absolute" width="100px" height="15px" backgroundTheme="" inputboxPadding="0" (change)="serviceRequestImage($event,'chat')" padding="0" multiple></b2b-inputbox> 
+                                <!-- <input row-body style="width:65%" type="file" (change)="serviceRequestImage($event)" accept="image/*,video/*" multiple> -->
+
+                                <b2b-row row-body margin="0 0 0 5px">
+                                    <div row-body *ngFor="let file of uploadImage" style="display: inline-block; margin-right: 5px;">
+                                        <ng-container *ngIf="file.type.startsWith('image'); ">
+                                            <img [src]="file.src" alt="Uploaded Image" width="40px">
+                                        </ng-container>
+                                         <ng-container *ngIf="file.type.startsWith('video'); ">
+                                            <img [src]="videoimg" alt="Uploaded Image" width="40px">
+                                        </ng-container>
+                                        <ng-container *ngIf="file.type.startsWith('application'); ">
+                                            <img  [src]="docimg" alt="Uploaded Video" width="40px">
+                                        </ng-container>
+                                    </div>
+                                </b2b-row>
+                            </b2b-row>
+            
+                        </b2b-row>
+                       
+
+
+                    </b2b-row>
+                    <!-- home -->
+                    <b2b-row *ngIf="hide_one_chat" row-body flexDirection="column" height="85vh" position="relative"  >
+                        <b2b-row row-body class="head2" height="10vh" justifyContent="space-between">
+                            <b2b-row row-body>
+                            <b2b-image row-body [image]="owner_img" [isRounded]="true" height="50px" width="50px" margin="0 20px 0 20px"></b2b-image>
+                            <b2b-text row-body [text]="owner_name" margin="0 40px 0 40px"></b2b-text>
+                            </b2b-row>
+                            <b2b-icon-button row-body icon="add"  class="Button2" (click)="addcontacts()" fontSize="30px" margin="0px 40px 0px 40px" ></b2b-icon-button>
+
+                        </b2b-row>
+                        <b2b-row row-body class="body" height="77vh" flexDirection="column" overFlowY="scroll">
+                          <!-- <b2b-inputbox row-body height="30px" width="90%" [twoInputFeild]="true"  placeholder="search" borderRadius="5px" margin="5px 0 5px 0"></b2b-inputbox> -->
+                          <input row-body type="text" [(ngModel)]="search_chat_user" placeholder="Search" style="width: 90%;height:30px; outline: none;border-radius: 5px;margin:5px 0 5px 0" >
+
+                          <div row-body class="line"></div>
+                          <ng-container row-body *ngFor="let note of show_chat | filter : search_chat_user : 'name' ">
+                          <b2b-row row-body height="10vh"  class="card" flexDirection="column" (click)="opensinglechat(note.id,note.name,note.image)">
+                                 <b2b-row row-body padding="8px 0 8px 0">
+                            <b2b-image row-body class="dpimage" [image]="note.image" [isRounded]="true" height="50px" width="50px" margin="0 20px 0 20px" ></b2b-image>
+                            <b2b-row row-body flexDirection="column" alignItem="start" margin="0 40px 0 40px">
+                                <b2b-text row-body [text]="note.name" ></b2b-text>
+                                <b2b-text row-body [text]="note.message" fontSize="12px"></b2b-text>
+                            </b2b-row>
+                            </b2b-row> 
+                            <div row-body class="line"></div>
+                        </b2b-row>
+                        </ng-container>
+                        </b2b-row>
+                    </b2b-row>
+                    <!-- add contact -->
+                    <b2b-row *ngIf="open_contact" class="contact" row-body flexDirection="column" height="80vh" position="relative"  >
+                        <b2b-row row-body class="head" height="10vh" >
+                            <b2b-icon row-body icon="arrow_back_ios"  class="Button" (click)="backButton('contact')" fontSize="23px" margin="0px 20px 0px 20px"></b2b-icon>
+                            <b2b-text row-body text="New Chat" ></b2b-text>
+
+
+                        </b2b-row>
+                        <b2b-row row-body class="body" height="70vh" flexDirection="column" overflowY="auto">
+                         <b2b-row row-body justifyContent="space-around">
+                            <!-- <b2b-inputbox row-body height="30px" width="80%" [twoInputFeild]="true"  placeholder="search" (onChange)="mobileNumber = $event" borderRadius="5px" margin="5px 0 5px 0"></b2b-inputbox> -->
+                           <!-- mobile -->
+                            <b2b-row row-body alignItem="center" backgroundTheme="--color-white"
+                        border="2px solid var(--color-light-grey)" borderRadius="5px" width="350px">
+                        <!-- <b2b-label row-body text="Mobile No" inputboxPadding="0" fontSize="12px"
+                            colorTheme="" padding="14px" backgroundTheme="--color-dim-white" height="33px"
+                            width="90px" borderRadius="5px 0 0 5px"></b2b-label> -->
+    
+                        <b2b-tdata row-body *ngIf="CountryFlag" backgroundTheme="--color-dim-white"
+                            height="33px">
+                            <b2b-image tdata-body
+                                image="https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/IN.svg"
+                                width="40px" margin="5px 0 0 0"></b2b-image>
+                            <b2b-spacer tdata-body width="10px"></b2b-spacer>
+                            <b2b-tdata tdata-body [title]="'IN'" fontSize="12px"
+                                color="--color-black"></b2b-tdata>
+                        </b2b-tdata>
+    
+                        <b2b-tdata row-body *ngIf="flagArr" backgroundTheme="--color-dim-white"
+                            height="40px">
+                            <b2b-image tdata-body #img image="{{flagArr.image}}" width="30px"
+                                margin="5px 0 0 0"></b2b-image>
+                            <b2b-spacer tdata-body width="5px"></b2b-spacer>
+                            <b2b-tdata tdata-body [title]="flagArr.code" color="--color-black"></b2b-tdata>
+                        </b2b-tdata>
+                        <b2b-tdata row-body backgroundTheme="" height="33px">
+                            <b2b-dropdown tdata-body popupWidth="200px" dropdownPosition="left"
+                                dropdownTop="35px" popupHeight="200px">
+                                <b2b-icon-button dropdown-selector icon="expand_more" width="40px"
+                                    iconSize="20px" colorTheme="--color-dark-grey"></b2b-icon-button>
+                                <input #search search type="text" autofocus placeholder="search"
+                                    [(ngModel)]="flagFilter" (ngModelChange)="flagFilter =$event">
+    
+                                <b2b-row dropdown-items
+                                    *ngFor="let data of flag | alphatic: 'name' | searchFilter : flagFilter">
+                                    <b2b-tdata row-body (click)="getflag(data)">
+                                        <b2b-tdata tdata-body>
+                                            <b2b-image tdata-body image="{{data.image}}" width="20px"
+                                                margin="5px 0 0 0"></b2b-image>
+                                        </b2b-tdata>
+                                        <b2b-spacer tdata-body width="10px"></b2b-spacer>
+                                        <b2b-tdata tdata-body [title]="data['name']" color="--color-black"
+                                            fontSize="14px" alignItem="flex-start"
+                                            justifyContent="flex-start" textAlign="start"></b2b-tdata>
+                                        <b2b-spacer tdata-body width="30px"></b2b-spacer>
+    
+                                    </b2b-tdata>
+                                </b2b-row>
+                            </b2b-dropdown>
+                        </b2b-tdata>
+                        <b2b-tdata row-body *ngIf="CountryFlag" backgroundTheme="--color-dim-white"
+                            fontSize="14px" [title]="defaultCountryCode" color="--color-black" height="33px"></b2b-tdata>
+                        <b2b-tdata row-body [title]="flagArr.dial_code" fontSize="14px"
+                            colorTheme="--color-black" height="33px"></b2b-tdata>
+    
+                        <b2b-inputbox row-body inputType="number" [value]="mobileNumber"
+                            inputboxPadding="5px" fontSize="16px" 
+                            (onChange)="mobileNumber=$event" width="100%" height="33px"
+                            backgroundTheme="--color-dim-white" borderRadius="var(--flag-input-radius)"
+                            type="tel" colorTheme="" 
+                            [border]="mobileNumber ? ' ' : '1px solid var(--color-light-grey)'"
+                            [title]="mobileNumber ? '' : 'Enter your designation'"></b2b-inputbox>
+    
+                        <!-- <b2b-button row-body title="Find" width="80px" height="32px" backgroundTheme="--color-primary" margin="0 0 0 10px" (click)="findVendor(add_product_table.mobileNumber)"></b2b-button>     -->
+                    </b2b-row>
+                            <b2b-button row-body title="Add" height="20px" width="60px" (click)="search_contact(mobileNumber)" backgroundTheme="--color-primary"></b2b-button>
+                         </b2b-row>
+                         
+                          <div row-body class="line"></div>
+
+                          <ng-container row-body *ngFor="let note of show_cotact">
+                            <b2b-row row-body height="10vh"  class="card" flexDirection="column" (click)="opensinglechat(note.id,note.name,note.profile)">
+                                   <b2b-row row-body padding="8px 0 8px 0">
+                              <b2b-image row-body class="dpimage" [image]="note.profile" [isRounded]="true" height="50px" width="50px" margin="0 20px 0 20px" ></b2b-image>
+                              <b2b-row row-body flexDirection="column" alignItem="start" margin="0 40px 0 40px">
+                                  <b2b-text row-body [text]="note.name+'-'+note.type" ></b2b-text>
+                                  <!-- <b2b-text row-body [text]="note.type" fontSize="12px"></b2b-text> -->
+                              </b2b-row>
+                              </b2b-row> 
+                              <div row-body class="line"></div>
+                          </b2b-row>
+                          </ng-container>
+                        </b2b-row>
+                    </b2b-row>
+                    
+                </b2b-row>
+                <!-- chat end -->
+             <!-- Email start -->
+             <b2b-row *ngIf="openemail" row-body  flexDirection="column">
+             <b2b-row *ngIf="emailhome" row-body class="emailbody" height="80vh" flexDirection="column"  padding="5px" position="relative">
+               <b2b-row row-body justifyContent="space-around">
+                <input row-body type="text" [(ngModel)]="search_mail_user" placeholder="Search" style="width: 90%;height:30px; outline: none;border-radius: 5px;margin:5px 0 5px 0" >
+                <b2b-icon row-body icon="menu" (click)="Menu()" fontSize="23px" margin="0px 10px 0px 0px"></b2b-icon>
+                </b2b-row>
+                <b2b-spacer row-body height="10px"></b2b-spacer>
+                 <div row-body class="line"></div>
+                 <!-- email -->
+                 <b2b-row row-body padding="8px 0 8px 0" flexDirection="column" overflowX="hidden" height="70vh" overFlowY="scroll">
+                  
+                    <ng-container row-body *ngFor="let note of show_mail| filter : search_mail_user : 'name' ">
+                        <b2b-row row-body height="10vh"  class="card_mail" flexDirection="column" (click)="viewsinglemail(note.id)">
+                               <b2b-row row-body padding="8px 0 8px 0">
+                          <b2b-image row-body class="dpimage" [image]="image" [isRounded]="true" height="50px" width="50px" margin="0 20px 0 20px" ></b2b-image>
+                          <b2b-row row-body flexDirection="column" alignItem="start" margin="0 40px 0 40px">
+                              <b2b-text row-body [text]="note.name" ></b2b-text>
+                              <b2b-text row-body [text]="note.message" fontSize="12px"></b2b-text>
+                          </b2b-row>
+                          <b2b-icon row-body icon="star"  fontSize="23px" margin="0px 20px 0px 0px"></b2b-icon> 
+
+                          </b2b-row> 
+                          <div row-body class="line"></div>
+                      </b2b-row>
+                      </ng-container>
+                    </b2b-row> 
+                    <!-- compose email button -->
+                     <b2b-row class="compose" row-body backgroundTheme="--color-primary" padding="5px" height="30px" widths="30px" borderRadius="6px" position="absolute" positionBottom="6%" positionRight="5%" (click)="composemail()"> 
+                        <b2b-icon row-body icon="edit"  fontSize="23px" ></b2b-icon>
+                     </b2b-row>
+                    </b2b-row>
+                      <!-- compose email screen -->
+                      <b2b-row *ngIf="compose_email" row-body padding="8px" flexDirection="column">
+                        <b2b-row row-body class="emailhead" height="10vh" justifyContent="space-between">
+                            <b2b-icon row-body icon="arrow_back_ios"   (click)="backButton('email')" fontSize="23px" margin="0px 20px 0px 20px"></b2b-icon>
+                            <b2b-row row-body width="10vw">
+                                <b2b-row row-body position="relative">
+                                    <b2b-icon row-body icon="attachment"    fontSize="23px" margin="0px 20px 0px 20px"></b2b-icon>
+                                    <b2b-inputbox row-body class="upload1" inputType="file"  position="absolute"  width="30px" height="15px" backgroundTheme="" boxPadding="0" (change)="serviceRequestImage($event,'compose')" padding="0" multiple></b2b-inputbox> 
+    
+                                </b2b-row>
+                                
+                                <b2b-icon row-body icon="send"   (click)="sendmail('compose')" fontSize="23px" margin="0px 20px 0px 20px"></b2b-icon>
+                            </b2b-row>
+
+                        </b2b-row>
+                        <b2b-row row-body class="emailbody" height="82vh" padding="15px" flexDirection="column" overflowX="hidden" overflowY="auto">
+                            <b2b-row row-body margin="0 0 0 8px">
+                             <b2b-text row-body text="From:"></b2b-text>   
+                             <b2b-inputbox row-body height="30px" width="auto"  backgroundTheme="--color-transparent" flexDirection="row" [twoInputFeild]="true" [value]="owner_email" borderRadius="5px" margin="5px 0 5px 0" [disabled]="true"></b2b-inputbox>
+                             </b2b-row>
+                             <hr row-body class="line">
+                             <b2b-row row-body margin="0 0 0 8px" >
+                                <b2b-text row-body text="To:"></b2b-text>   
+                                <b2b-multi-select row-body height="auto" width="25vw"  backgroundTheme="--color-transparent" flexDirection="row" [twoInputFeild]="true"
+                                  borderRadius="5px" margin="5px 0 5px 0" [popupOption]="true" [value]="To_mail" [arrayValue]="multiSelect_To">
+                                    <ng-container popup-body *ngFor="let i of showcontact_array ">
+                                        <b2b-list-tile title="{{i.new_mail}}" (click)="getInput_mail(i.new_mail,i.id,'To')"
+                                            hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px"
+                                            fontSize="14px" margin="2px 0"></b2b-list-tile>
+                                    </ng-container>
+                                </b2b-multi-select>
+                            </b2b-row>
+                            <hr row-body class="line">
+                            <b2b-row row-body margin="0 0 0 8px" >
+                                <b2b-text row-body text="CC:"></b2b-text>   
+                                <b2b-multi-select row-body height="auto" width="25vw"   backgroundTheme="--color-transparent" flexDirection="row" [twoInputFeild]="true" 
+                                 borderRadius="5px" margin="5px 0 5px 0" [popupOption]="true" [value]="CC_mail"  [arrayValue]="multiSelect_CC">
+                                    <ng-container popup-body *ngFor="let i of showcontact_array ">
+                                        <b2b-list-tile title="{{i.new_mail}}" (click)="getInput_mail(i.new_mail,i.id,'CC')"
+                                            hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px"
+                                            fontSize="14px" margin="2px 0"></b2b-list-tile>
+                                    </ng-container>
+                                </b2b-multi-select>
+                            </b2b-row>
+                            <hr row-body class="line">
+                            <b2b-inputbox row-body height="30px" width="100%"  backgroundTheme="--color-transparent" flexDirection="row" [twoInputFeild]="true" placeholder="Subject" borderRadius="5px" margin="5px 0 5px 0" (onChange)="subject= $event"></b2b-inputbox>
+                            <hr row-body class="line">
+                            <textarea class="textarea" row-body  placeholder="Compose email"  [(ngModel)]="mail_message"></textarea>
+                            <b2b-row row-body margin="0 0 0 5px" padding="10px">
+                                <div row-body *ngFor="let file of uploadImage_compose" style="display: inline-block; margin-right: 5px;">
+                                    <ng-container *ngIf="file.type.startsWith('image'); ">
+                                        <img [src]="file.src" alt="Uploaded Image" width="40px">
+                                    </ng-container>
+                                     <ng-container *ngIf="file.type.startsWith('video'); ">
+                                        <img [src]="videoimg" alt="Uploaded Image" width="40px">
+                                    </ng-container>
+                                    <ng-container *ngIf="file.type.startsWith('application'); ">
+                                        <img  [src]="docimg" alt="Uploaded Video" width="40px">
+                                    </ng-container>
+                                </div>
+                            </b2b-row>
+
+                        </b2b-row>
+
+                    </b2b-row>
+                    <!-- opensinglemail -->
+                    <b2b-row *ngIf="open_one_mail" row-body flexDirection="column" height="85vh" position="relative"  >
+                        <b2b-row row-body class="emailhead" height="5vh">
+                            <b2b-icon row-body icon="arrow_back_ios"   (click)="backButton('single_mail')" fontSize="23px" margin="0px 0px 0px 20px"></b2b-icon>
+                           </b2b-row>
+                        <!--view mail -->
+                        <b2b-row row-body class="emailbody"  height="70vh" flexDirection="column" overflowX="hidden" overFlowY="scroll">
+                           <b2b-row row-body height="5vh" justifyContent="space-between" >
+                            <b2b-row row-body >
+                            <b2b-row row-body widths="auto">
+                            <b2b-text row-body [text]="mail_subject" margin="0 0 0 20px" [bold]="true" fontSize="18px" > </b2b-text>
+                            </b2b-row>    
+                          <b2b-row row-body border="1px solid black" padding="5px" height="5px"  widths="30px" margin="0 0 0 10px">
+                            <b2b-text row-body text="Inbox" fontSize="11px"> </b2b-text>
+                           </b2b-row>
+                           </b2b-row>
+                           <b2b-icon row-body icon="star" style="color: green;" fontSize="23px" margin="0px 20px 0px 0px"></b2b-icon> 
+
+                        </b2b-row>
+
+                            <ng-container row-body *ngFor="let i of showmail_array">
+                                <b2b-row  row-body flexDirection="column" padding="5px">
+                                <b2b-row row-body padding="8px 0 8px 0" justifyContent="space-between">
+                                    <b2b-row row-body>
+                                    <b2b-image row-body class="dpimage" [image]="image" [isRounded]="true" height="50px" width="50px" margin="0 20px 0 20px" ></b2b-image>
+                                    <b2b-row row-body flexDirection="column" alignItem="start" margin="0 40px 0 40px" widths="auto">
+                                        <b2b-text row-body [text]="i.send_name" ></b2b-text>
+                                        <b2b-row row-body>
+                                            <b2b-text row-body [text]="i.to_name[0].name" fontSize="12px"></b2b-text>
+                                            <b2b-icon row-body [icon]="i.dropdown ?'arrow_drop_up' :'arrow_drop_down'  "  fontSize="18px" (click)="i.dropdown = !i.dropdown"></b2b-icon> 
+
+                                        </b2b-row>
+                                    </b2b-row>
+                                   </b2b-row>
+                                    <!-- <b2b-row  row-body widths="15px" width="80px">
+                                        <b2b-drop-down-xaxis row-body popupWidth="100px">
+                                            <b2b-icon-button select-item icon="more_vert" 
+                                            colorTheme="--color-dark-grey" height="20px">
+                                            </b2b-icon-button>
+                                            <div dropDown-Items>
+                                                    <b2b-list-tile dropdown-items  [isIcon]="true" icon="delete" [bold]="true" iconWidth="10px" iconsize="14px" title="Delete mail" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="delete_mail(i.id)"></b2b-list-tile> 
+                                             </div>
+                                             </b2b-drop-down-xaxis>
+
+                                     </b2b-row> -->
+                                    </b2b-row> 
+                                    <b2b-row row-body *ngIf="i.dropdown == true" margin="15px" padding="5px" borderRadius="5px" border="1px solid black" flexDirection="column">
+                                    <b2b-row row-body margin="0 0 5px 0" alignItem="start">
+                                        <b2b-text row-body text="From:" width="3.5vw"></b2b-text>
+                                        <b2b-row row-body flexDirection="column" alignItem="start" margin="0 0 0 10px">
+                                            <!-- <b2b-text row-body [text]="i.send_name"></b2b-text> -->
+                                            <b2b-text row-body [text]="i.send_email"></b2b-text>
+                                        </b2b-row>
+                                    </b2b-row>
+                                    <b2b-row row-body  margin="0 0 5px 0" alignItem="start">
+                                        <b2b-text row-body text="To :" width="3.5vw"></b2b-text>
+                                        <b2b-row row-body flexDirection="column">
+                                        <ng-container row-body *ngFor="let x of i.to_name">
+                                        <b2b-row row-body  flexDirection="column" alignItem="start" margin="0 0 0 10px">
+                                            <!-- <b2b-text row-body [text]="x.name"></b2b-text> -->
+                                            <b2b-text row-body [text]="x.email"></b2b-text>
+                                        </b2b-row>
+                                    </ng-container>
+                                     </b2b-row>
+                                    </b2b-row>
+                                    <b2b-row row-body  margin="0 0 5px 0" alignItem="start">
+                                        <b2b-text row-body text="CC :" width="3.5vw"></b2b-text>
+                                         <b2b-row row-body flexDirection="column">
+                                        <ng-container row-body *ngFor="let x of i.cc_name">
+                                        <b2b-row row-body  flexDirection="column" alignItem="start" margin="0 0 0 10px">
+                                            <!-- <b2b-text row-body [text]="x.name"></b2b-text> -->
+                                            <b2b-text row-body [text]="x.email"></b2b-text>
+                                        </b2b-row>
+                                        </ng-container>
+                                        </b2b-row>
+                                    </b2b-row>
+                                    </b2b-row>
+                                    <b2b-row row-body>
+                                        <b2b-text row-body [text]="i.message" fontSize="12px" margin="0 0 0 1.5vw"></b2b-text>
+
+                                    </b2b-row>
+                                    <b2b-row row-body margin="0 0 0 20px">
+                                        <ng-container row-body [ngSwitch]="isImage2(i.image)">
+                                            <ng-container *ngSwitchCase="'image'">
+                                                <b2b-image class="file" row-body height="11vh" width="10vw" [image]="i.image" (click)="openpdf(i.image)"></b2b-image>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'video'">
+                                                <b2b-image class="file" row-body height="11vh" width="10vw" [image]="videoimg" (click)="openpdf(i.image)"></b2b-image>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'pdf'">
+                                                <b2b-image  class="file" row-body height="6vh" width="4vw" [image]="docimg" (click)="openpdf(i.image)"></b2b-image>
+    
+                                            </ng-container>
+                                        </ng-container>
+                                    </b2b-row>
+                                </b2b-row>
+                                <hr row-body class="line">
+
+                            </ng-container>
+
+
+                       
+
+                        </b2b-row>
+                        <b2b-row row-body class="emailhead" height="10vh" flexDirection="column">
+                           <b2b-row row-body>
+                            <b2b-icon row-body icon="attachment"   (click)="addButton('mail')" fontSize="30px" margin="10px 15px 10px 20px" ></b2b-icon>
+
+                            <b2b-inputbox row-body [twoInputFeild]="true" placeholder="Replay All" height="50px" width="80%" borderRadius="10px" margin="15px 0 15px 0px" (onChange)="mail_replay = $event" [value]="mail_replay"></b2b-inputbox>
+                           <b2b-icon row-body icon="send"  (click)="sendmail('replay')" fontSize="30px" margin="10px 35px 10px 0"></b2b-icon>
+                         
+                           </b2b-row>
+                            <!-- popup -->
+                           <b2b-row row-body *ngIf="upload_mail" flexDirection="column"  borderRadius="15px" backgroundTheme="--color-white" position="absolute" positionBottom="73px" positionLeft="10px" widths="200px" >
+                            <b2b-row row-body position="absolute" minheight="2vh" positionTop="7px">
+                            <b2b-list-tile row-body  [isIcon]="true" icon="photo_library" [bold]="true" iconWidth="10px" iconsize="14px" title="Photos & Videos/Documents" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" ></b2b-list-tile> 
+
+                           </b2b-row>
+                            <b2b-spacer row-body height="5px"></b2b-spacer>
+                            <b2b-row row-body   flexDirection="column">
+                                <b2b-inputbox row-body class="upload" inputType="file"  position="absolute" width="100px" height="15px" backgroundTheme="" inputboxPadding="0" (change)="serviceRequestImage($event,'replay')" padding="0" multiple></b2b-inputbox> 
+
+                                <b2b-row row-body margin="0 0 0 5px">
+                                    <div row-body *ngFor="let file of uploadImage_replay" style="display: inline-block; margin-right: 5px;">
+                                        <ng-container *ngIf="file.type.startsWith('image'); ">
+                                            <img [src]="file.src" alt="Uploaded Image" width="40px">
+                                        </ng-container>
+                                         <ng-container *ngIf="file.type.startsWith('video'); ">
+                                            <img [src]="videoimg" alt="Uploaded Image" width="40px">
+                                        </ng-container>
+                                        <ng-container *ngIf="file.type.startsWith('application'); ">
+                                            <img  [src]="docimg" alt="Uploaded Video" width="40px">
+                                        </ng-container>
+                                    </div>
+                                </b2b-row>
+                            </b2b-row>
+            
+                        </b2b-row>
+                        </b2b-row>
+                    </b2b-row>
+
+             </b2b-row>
+
+                   
+            </b2b-row>
+            </b2b-container>
+            </b2b-row>
+            </b2b-container>
+            </b2b-row>
+
+           

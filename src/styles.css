@@ -1,0 +1,245 @@
+/* B2B Theme */
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-primary: #466ead;
+
+  --color-dark-grey: #b4b4b4;
+  --color-light-grey: #f5f5f5;
+  --color-medium-grey: #cec9c9fe;
+  --color-lighter-grey: #eaedf0;
+  --color-white: white;
+  --color-light-white: rgba(255, 255, 255, 0.744);
+
+  --color-black: black;
+  --color-transparent: transparent;
+  --color-yellow: rgb(231, 212, 43);
+  --color-dark-yellow: rgb(238, 230, 123);
+  --color-marketplace-accent: #f48534;
+  --color-dim-white: rgba(255, 255, 255, 0.2);
+  --color-dark-dim-white: rgba(255, 255, 255, 0.4);
+  --color-red: #EF9A9A;
+  --color-light-red: #eea982;
+  --color-redd: #dd1010;
+  --color-light-dark: rgb(100, 116, 139);
+  --color-primary-dark: rgb(30, 64, 175);
+  --color-button-navbar: rgb(226, 232, 240);
+  --color-dashboard: rgb(241, 245, 249);
+  --color-lighter-green: rgb(187, 235, 198);
+  --color-light-green: rgb(150, 212, 183);
+  --color-green: rgb(68, 134, 68);
+  --color-light-green: rgb(75 235 62);
+
+  --color-dark-dim-dark: rgba(255, 255, 255, 0.3);
+
+  --color-login-gradient: #1e345a;
+  --color-login-gradient-2: #2b5db2;
+
+  --color-gradient-dark: #1a54b8;
+
+  --color-drawer-light: #6999e7;
+  --color-drawer-dark: #1453bb;
+  --color-drawer-active: #6d9deb;
+  --color-drawer-bottom-card: #183f93;
+  --color-drawer-bottom-list: #254a9b;
+
+  --color-toggle-background: #8baf8a;
+  --color-process-card: #f0f7f0;
+
+  --color-yellow-1: yellow;
+  --color-yellow: #ffbf06;
+  --color-red: #EF9A9A;
+  --color-brown: brown;
+  --color-purple: #cd99fe;
+  --color-pink: #fe9bce;
+  --color-pink-1: #f86a9a;
+  --color-pink-2: #fe989b;
+  --color-green: #7ab557;
+  --color-orange: #fd8c73;
+
+
+  --global-padding: 15px;
+  --container-padding: 15px;
+  --global-radius: 22px;
+  --drawer-width: 276px;
+  --list-tile-padding: 12px;
+  --table-radius: 8px;
+  --color-stepper: linear-gradient(to right, #122851, #2D69CC);
+  /* --fonts-primary: 'Noto Sans', sans-serif; */
+  --color-menu-grey: lightgrey;
+  --flag-input-radius: 0 5px 5px 0;
+  --color-dark-blue: rgb(54, 54, 168);
+  --color-dark-bluee: rgba(8, 8, 173, 0.452);
+  --color-dark-Blue: #002C55;
+  --color-creation-badge: rgba(0, 0, 0, 0.4);
+  --color-notify-backgroundColor: #FFFCE9;
+  --color-box-sadow: 0 0 10px darkGrey;
+  /* //newly added */
+  --color-sky-blue: #466fdf;
+  --color-new-grey:#cdcccc;
+  --color-nav:#474d6a;
+  --color-text-color:#666666;
+
+}
+
+/* :root.dark{
+  --color-primary : black;
+} */
+
+.dark {
+  --color-primary: black;
+  --color-dashboard: black;
+  --color-drawer-bottom-card: white;
+}
+
+
+/* Loading design .................................. */
+.loader- {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  border: 6px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 6px solid #3498db;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 0.5s linear infinite;
+  /* Safari */
+  animation: spin 0.5s linear infinite;
+  text-align: center;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* loading design .................................. */
+
+/* * {
+   font-family: var(--fonts-primary); 
+
+} */
+
+
+body {
+  height: 100vh;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-family: Poppins;
+  overflow: hidden;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-track {
+  background-color: lightgray;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(165, 162, 159);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 10px;
+}
+
+/* 
+::-webkit-scrollbar-thumb:hover {
+  background-color: lightgrey;
+} */
+
+::-webkit-scrollbar-thumb:active {
+  background-color: rgb(165, 162, 159);
+}
+
+/* Buttons */
+::-webkit-scrollbar-button:single-button {
+  background-color: lightgrey;
+
+  display: block;
+  background-size: 10px;
+  background-repeat: no-repeat;
+}
+
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+  height: 12px;
+  width: 16px;
+  background-position: center 4px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='50,0 0,50 100,50'/></svg>");
+}
+
+/* Down */
+::-webkit-scrollbar-button:single-button:vertical:increment {
+  height: 12px;
+  width: 16px;
+  background-position: center 4px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,0 100,0 50,50'/></svg>");
+}
+
+/* Left (horizontal decrement) */
+::-webkit-scrollbar-button:single-button:horizontal:decrement {
+  height: 16px;
+  width: 12px;
+  background-position: 4px center;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,50 50,0 50,100'/></svg>");
+}
+
+/* Right (horizontal increment) with space on the right */
+::-webkit-scrollbar-button:single-button:horizontal:increment {
+  height: 16px;
+  width: 12px;
+  background-position: center;
+  /* Adjust the 4px value as needed */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='100,50 50,0 50,100'/></svg>");
+}
+
+@media (max-width: 600px) {
+  .scrollmobile {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  :root {
+    --global-padding: 5px;
+    --container-padding: 5px;
+  }
+
+
+}
+
+@media (min-width: 600px) {
+  .scrollweb {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+}
+
+/* poiner*/
+.pointer {
+  cursor: pointer;
+}
+
+/* container component also use sroll bar related code  */

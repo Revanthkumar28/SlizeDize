@@ -1,0 +1,156 @@
+.diagonal-line {
+	width: 2vw;
+	height:0.052vw;
+	background-color: var(--color-dark-grey);
+	transform: rotate(140deg);
+	transform-origin: 0 0;
+	position: absolute;
+	top: 1.8vw;
+	left: 7.1vw;
+  }
+  
+  .diagonal-line-2{
+	width: 2vw;
+	height:0.052vw;
+	background-color: var(--color-dark-grey);
+	transform: rotate(401deg);
+	transform-origin: 0 0;
+	position: absolute;
+	top: 3.1vw;
+	left: 5.6vw;
+  }
+  .diagonal-line-2-5{
+	width: 1.5vw;
+	height:0.052vw;
+	background-color: var(--color-dark-grey);
+	transform: rotate(401deg);
+	transform-origin: 0 0;
+	position: absolute;
+	top: 3.1vw;
+	left: 5.6vw;
+  }
+  
+  /* Scheduled order ... */
+  
+  .diagonal-line-3{
+	width: 1.8vw;
+	height: 0.052vw;
+	background-color: var(--color-dark-grey);
+	transform: rotate(140deg);
+	transform-origin: 0 0;
+	position: absolute;
+	top: 2vw;
+	right: 3.6vw;
+  }
+  .diagonal-line-3-1{
+	width:0.9vw;
+	height: 0.052vw;
+	background-color: var(--color-dark-grey);
+	transform-origin: 0 0;
+	position: absolute;
+	top: 3vw;
+	right: 11.8vw;
+  }
+  
+  .diagonal-line-3-2{
+	width: 1.7vw;
+	height: 0.052vw;
+	background-color: var(--color-dark-grey);
+	transform: rotate(401deg);
+	transform-origin: 0 0;
+	position: absolute;
+	top:3.1vw;
+	right:5.1vw;
+  }
+  .diagonal-line-4{
+	width: 2.2vw;
+	height: 0.052vw;
+	background-color: var(--color-dark-grey);
+	transform: rotate(124deg);
+	transform-origin: 0 0;
+	position: absolute;
+	top: 1.5vw;
+	right: 3.3vw;
+  }
+  .diagonal-line-4-1{
+	width: 1.3vw;
+	height: 0.052vw;
+	background-color: var(--color-dark-grey);
+	transform-origin: 0 0;
+	position: absolute;
+	top: 3.4vw;
+	right: 5.5vw;
+  }
+  
+  .diagonal-line-4-2{
+	width: 2.1vw;
+	height: 0.052vw;
+	background-color: var(--color-dark-grey);
+	transform: rotate(413deg);
+	transform-origin: 0 0;
+	position: absolute;
+	top:3.5vw;
+	right:4.6vw;
+  }
+  .diagonal-line-4-3{
+	width: 1vw;
+	height: 0.052vw;
+	background-color: var(--color-dark-grey);
+	transform-origin: 0 0;
+	position: absolute;
+	top: 3.4vw;
+	right: 11.8vw;
+  }
+  .diagonal-line-5-1{
+	width:0.9vw;
+	height: 0.052vw;
+	background-color: var(--color-dark-grey);
+	transform-origin: 0 0;
+	position: absolute;
+	top: 2.8vw;
+	right: 11.8vw;
+  }
+  .diagonal-line-5-2{
+	width:0.6vw;
+	height: 0.052vw;
+	background-color: var(--color-dark-grey);
+	transform-origin: 0 0;
+	position: absolute;
+	top: 1.3vw;
+	right: 5.6vw;
+  }
+  .diagonal-line-5-3{
+	width:1.1vw;
+	height: 0.052vw;
+	background-color: var(--color-dark-grey);
+	transform-origin: 0 0;
+	position: absolute;
+	top: 2.8vw;
+	right: 5.7vw;
+  }
+  .refresh{
+	cursor: pointer;
+  }
+  .modified{
+	height: 6vh;
+  }
+  .infotext{
+	position: absolute;
+	top: 35%;
+	left: 35%;
+  }
+
+
+  /* BACKGROUND BLUR */
+.blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Light black shadow effect */
+    backdrop-filter: blur(5px);
+    /* You can adjust the blur amount */
+    z-index: 999;
+    /* Make sure it's above other elements */
+  }

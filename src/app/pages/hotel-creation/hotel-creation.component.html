@@ -1,0 +1,546 @@
+<b2b-container  [property]="{padding: '0', height: '100%', borderRadius: '0',overflowY:'hidden',backgroundTheme:'--color-light-grey'}">
+
+    <!-- Steper -->
+    <b2b-row container-body backgroundImage="--color-stepper" justifyContent="center" width="100%" height="70px">
+        <b2b-steper row-body class="stepper" ></b2b-steper>
+    </b2b-row>
+
+    <b2b-row class="scrollmobile" container-body borderRadius="12px" width="100%" height="100%" padding="0px" backgroundTheme="--color-light-grey" [mobileview]="true">
+        <b2b-container  row-body *ngIf="changeImages" [property]="{padding:'0',height:'100%',width:'100%',backgroundTheme:'',flex:1,position:'relative'}">
+            
+            <!-- Hotel image dropdown rooms (Lobby , king room, kitchen ,bed room) -- CC-1-->
+            <b2b-row container-body *ngIf="room_type" padding="0" zIndex="10" position="absolute" backgroundTheme="none"  positionTop="5%"  positionLeft="42%" width="100%" >
+                <b2b-dropdown row-body popupWidth="160px" [text]="roomType" [dropdownWithLable]="true" backgroundTheme="--color-white" [overflow]="select_brand_room_type.length > 5 ? 'scroll' : 'hidden'" width="160px" height="35px" dropdownPosition="right">
+                    <b2b-icon-button dropdown-selector-container [class.opens]="dropdown" iconSize="20px" (click)="rotate()" icon="expand_more"></b2b-icon-button>
+                    <b2b-button search *ngIf="edit_hotel_details.Hotel_Name_id != '' " title="Create Rooms" width="93px" height="20px" fontSize="12px" margin="0 0 8px 0" backgroundTheme="--color-primary" (click)="isCreateBrandRooms = true"></b2b-button>
+                    <b2b-container dropdown-items [property]="{padding:'5px 13px 0 13px',borderRadius:'8px'}">
+                        <b2b-list-tile container-body class="shadow" title="Hotel" (click)="hotelUniqImg()" height="15px" [bold]="true" fontSize="11px" width="100%" backgroundTheme="--color-white"  borderRadius="4px" colorTheme="--color-black" padding="0"></b2b-list-tile>
+                        <b2b-list-tile container-body class="fake" title="{{i.room_name}}" height="15px" *ngFor="let i of select_brand_room_type" [bold]="true" fontSize="11px" width="100%" backgroundTheme="--color-white" (click)="select_room(i.hotel_room_id,i.id,i,'dropdown-select')" borderRadius="4px" colorTheme="--color-black" margin="10px 0"></b2b-list-tile>
+                    </b2b-container>
+                </b2b-dropdown>
+            </b2b-row>
+
+            <!-- HIDE & SHOW (CC-2)-->
+            <b2b-row container-body *ngIf="roomProduct != '' " position="absolute" positionTop="5%"  positionLeft="4%" backgroundTheme="--color-white" borderRadius="8px 8px 8px 8px">
+                <b2b-toggle row-body [isToggleValue]="lable_button" [is_apiError]="false" (onChange)="showHideProductMark($event)" margin="0 0 0 10px"></b2b-toggle>
+                <b2b-badge-image row-body [text]="lable_button == true?'Hide Labels':'Show Labels'" hoverWidths="auto" padding="4.5px" height="15px" fontSize='12px' width="180px" colorTheme="--color-black" backgroundTheme="--color-white" borderRadius="0 8px 8px 0" borderRadiuss="50%" backgroundThemee="--color-white"></b2b-badge-image>
+            </b2b-row>
+           
+            <ng-container container-body *ngIf="isImage" >
+                <!-- RED MARK IMAGE (CC-3.1) -->
+                 <b2b-row container-body id="image-element" (click)="image_mark($event)" height="100vh" padding="20px">
+                    <b2b-image row-body class="Brandimg"  image="{{brand_image}}" width="100%"  height="100%" [isCurved]="false" ></b2b-image>
+
+                 </b2b-row>
+                <ng-container container-body *ngIf="lable_button">
+                    <ng-container container-body *ngFor="let i of roomProduct.mapping">
+                        <b2b-badge-image *ngIf="i.lable != 'null' && roomImageId == i.hotel_room_image_id" position="absolute" iconSize="13px" iconpadding="2px" iconWeight="900" positionLeft="{{i.product_location_x}}" positionTop="{{i.product_location_y}}" icon="check" text="{{i.lable | titlecase}}"  hoverWidths="auto" width="30px" height="30px"  colorTheme="--color-redd" backgroundTheme="--color-creation-badge" borderRadius="30px" borderRadiuss="50%" backgroundThemee="--color-white" (click)="click_mark(i.product_id,i)" ></b2b-badge-image>
+                    </ng-container>
+                </ng-container>
+
+                <!-- Add / Edit Item button (CC-3)-->
+                <b2b-row container-body *ngIf="roomProduct != '' " position="absolute" positionTop="5%"  positionRight="5%" backgroundTheme="--color-white" borderRadius="8px 8px 8px 8px">
+                    <b2b-toggle row-body [isToggleValue]="image_mark_show" (onChange)="edit_image_mark($event)" margin="0 0 0 10px"></b2b-toggle>
+                    <b2b-badge-image row-body text="Add / Edit Item" hoverWidths="auto" padding="4.5px" height="15px" fontSize='12px' width="180px" colorTheme="--color-black" backgroundTheme="--color-white" borderRadius="0 8px 8px 0" borderRadiuss="50%" backgroundThemee="--color-white"></b2b-badge-image>
+                </b2b-row>
+
+                <!-- Product Image mark left side big image (CC-4)-->
+                <div *ngIf="admin_access_redMark" id="marker-element" >
+                    <div class="redMark"></div>
+                    <b2b-text text="Pick an Item" fontSize="11px" borderRadius="15px" padding="3px 8px 3px 8px" margin=" 0 0 0 8px" colorTheme="--color-black" backgroundTheme="--color-dark-dim-white"></b2b-text>
+                </div>
+                
+                <!-- SAMBLE IMAGE IN BOTTOM (CC-5) -->
+                <ng-container container-body *ngIf="ismitubleImage">
+                    <b2b-row container-body *ngIf="brand_sample_images.length > 1 ? true : false" position="absolute" positionBottom="11%" widths="100%" backgroundTheme="--color-dark-dim-dark">
+                        <b2b-container row-body [property]="{width:'100%',height:'100px',backgroundTheme:'--color-light-black',borderRadius:'0'}">
+                            
+                        <b2b-row container-body justifyContent="center">
+                                <ng-container row-body *ngFor="let i of brand_sample_images">
+                                    <b2b-image class="sample-images" image="{{i.room_image || i.image_url}}" (click)="select_room(i.hotel_room_id,i.id,i,'image-select')" width="100px" height="60px"></b2b-image>                            
+                                    <b2b-spacer width="10px"></b2b-spacer>
+                                </ng-container>
+                            <b2b-spacer row-body width="10px"></b2b-spacer>
+
+                        </b2b-row>
+
+                        <b2b-row container-body position="absolute" positionTop="8%" positionRight="5%">
+                            <b2b-icon row-body  icon="close"  backgroundTheme="--color-white" colorTheme="--color-dark-grey" (click)="ismitubleImageCancel()"></b2b-icon>
+                        </b2b-row>
+
+                    </b2b-container>
+                    </b2b-row>
+                </ng-container>
+
+            </ng-container>
+        </b2b-container>
+       
+        <!-- RIGHT SIDE FORM DESIGN - (CC-6) -->
+        <b2b-container class="scrollweb" row-body [property]="{padding:'0',width:'450px',height:'100%',backgroundTheme:'none'}">
+            <b2b-row class="rowsize" container-body *ngIf="brandSelectBox && viewProductHotel.Hotel_Name_id == ''"  margin="20px 30px 15px 30px"  boxShadow="0 0 5px darkgrey" backgroundTheme="--color-white" borderRadius="10px">          
+                <b2b-container row-body [property]="{alignItem:'start',padding:'5px 0 0 10px',backgroundTheme:'none'}">
+                    <b2b-text container-body text="Select your Brand" fontSize="13px" [bold]="true"></b2b-text>
+                    <b2b-row container-body >
+                        <!-- CHOOSE HOTEL TYPE - (CC-7)-->
+                        <b2b-container row-body  [property]="{padding:'0'}">
+                            <b2b-row container-body>
+                                <b2b-choice row-body class="radio" row-body colorTheme="--color-black" group="catelog-group1"  name="Branded Hotels" (click)="brand()" height="35px" fontSize="12px" [checked]="isRadioButtonBranded"></b2b-choice>
+                                <b2b-spacer row-body width="17px"></b2b-spacer>
+                                <b2b-choice class="radio" row-body colorTheme="--color-black" group="catelog-group1" name="Custom Brand" (click)="customBrand()" [checked]="isRadioButtonCustom" (click)="brand_items(4,'')" height="35px" fontSize="12px" ></b2b-choice>
+                            </b2b-row>     
+                        </b2b-container>
+                    </b2b-row>
+                </b2b-container>
+            </b2b-row>
+
+            <!-- Clone Hotel - (CC-8) -->
+            <b2b-row class="rowsize" container-body *ngIf="brandSelectBox && viewProductHotel.Hotel_Name_id == '' "  padding="0"  margin="0 30px 20px 30px" boxShadow="0 0 5px darkgrey" backgroundTheme="--color-white" borderRadius="10px">
+                <b2b-container row-body [property]="{backgroundTheme:'none',padding:'10px'}">
+                    <b2b-row container-body>
+                        <b2b-text row-body  fontSize="13px" [bold]="true" text="Create Catalog"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="5px"></b2b-spacer>
+                    <b2b-row container-body   borderRadius="5px" border="2px solid var(--color-light-grey)" boxShadow="--color-boxShadow">  
+                    <!-- (CC-8.2) -->
+                    <b2b-container row-body [property]="{padding:'0'}">
+                        <b2b-row container-body>
+                            <b2b-spacer row-body width="20px"></b2b-spacer>
+                            <b2b-choice row-body  group="catelog-group2" name="Generate new catalog" [checked]="cloneCatalog == false && admin_access_redMarkContainer == false ? true : false"  fontSize="13px" height="40px" (click)="cloneNewcatalog()"></b2b-choice>
+                            <!-- <b2b-text row-body text="Generate new catalog" fontSize="12px"></b2b-text> -->
+                        </b2b-row>
+                    </b2b-container>
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"></b2b-spacer>
+
+                    <!-- (CC-8.3) -->
+                    <b2b-row container-body  border="2px solid var(--color-light-grey)"  borderRadius="5px">
+                        <b2b-container row-body [property]="{padding:'0'}">
+                            <b2b-row container-body>
+                                <b2b-spacer row-body width="20px"></b2b-spacer>
+                                <b2b-choice row-body  group="catelog-group2" name="Clone from previous catalog" [checked]="cloneCatalog == true ? true :false" fontSize="13px" height="40px" (click)="clonecatalog()"></b2b-choice>
+                                <!-- <b2b-text row-body text="Clone from previous catalog" fontSize="12px"></b2b-text> -->
+                                <b2b-icon-button row-body icon="help" [toolTip]="true" toolTipName="Already existing hotel products clone" colorTheme="--color-green" [isRounded]="true" iconSize="17px" width="30px" margin="5px 0 0 0"></b2b-icon-button>
+                            </b2b-row>
+                        </b2b-container>
+                    </b2b-row>
+                </b2b-container>
+            </b2b-row>
+        
+            <!-- (CC-8.4) -->
+            <b2b-row class="rowsize" flexDirection="column" container-body padding="10px" *ngIf="cloneCatalog" margin="0 30px 20px 30px" backgroundTheme="--color-white" borderRadius="10px" boxShadow="0 0 10px darkgrey" justifyContent="center">
+                <b2b-row row-body>
+                    <b2b-text row-body  fontSize="13px" [bold]="true" text="Clone From Previous Catalog"></b2b-text>
+                </b2b-row>
+                <b2b-inputbox row-body value="{{clone_hotel_name_input}}" textTransform="capitalize" (onChange)="clone_hotel_name_input = $event" [twoInputFeild]="true" [border]="validationResult.corporateBrand ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-dark-grey)'" triggerBackgroundTheme="--color-light-grey" triggerColorTheme="--color-dark-grey" colorTheme="--color-black" placeholder="Hotel" borderRadius="var(--table-radius)"   [bold]="false"   labelFontSize="12px"  
+                [popupOption]="true" height="40px" margin="10px"
+                [errorMsg]="isClocneHotelExsit">
+                    <b2b-list-tile popup-body [title]="pro.Hotel_Name | titlecase" *ngFor="let pro of clone_hotel "  hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" padding="10px 0 10px 0" (click)="clone_hotel_product(pro)"></b2b-list-tile>                        
+                </b2b-inputbox>
+            </b2b-row>
+
+            <!-- BRAND INPUT FORM - (CC-8.1)-->
+            <b2b-spacer container-body *ngIf="edit_hotel_details.Hotel_Name_id != '' " height="10px"></b2b-spacer>
+        
+            <b2b-row class="rowsize" container-body padding="10px 0 20px 0" *ngIf="brandItem" margin="10px 30px 20px 30px" backgroundTheme="--color-white" borderRadius="10px" boxShadow="0 0 10px darkgrey" justifyContent="center">
+                <b2b-container row-body [property]="{alignItem:'center',backgroundTheme:'none',width:'90%',padding:'0'}">
+                    <b2b-row container-body>
+                        <b2b-text row-body  fontSize="13px" [bold]="true" [text]="edit_hotel_details.Hotel_Name_id != '' ? 'Edit Catalog (' + signupDetails.hotel + ')': 'Generate new catalog'"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body *ngIf="unSelectedProduct.custom_brand != '1' " height="5px"></b2b-spacer>
+
+                    <!-- CORPORATE BRAND - (CC-9)-->
+                    <b2b-inputbox class="rowsize" container-body  textTransform="capitalize" *ngIf="unSelectedProduct.custom_brand != '1' " [value]="signupDetails.corporateBrand" [twoInputFeild]="true" [readOnly]="viewProductHotel.Hotel_Name_id == '' && edit_hotel_details.Hotel_Name_id == '' ? false : true" (onChange)="signupDetails.corporateBrand = $event" [border]="validationResult.corporateBrand ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-dark-grey)'" triggerBackgroundTheme="--color-light-grey" triggerColorTheme="--color-dark-grey" colorTheme="--color-black"  [title]="validationResult.corporateBrand? '' : 'Enter your department'"  [placeholder]="brand_hotel_number == '1'  ? 'Custom brand*':'Corporate brand*'" borderRadius="var(--table-radius)" [bold]="false" labelFontSize="14px" [popupOption]="edit_hotel_details.Hotel_Name_id == '' && viewProductHotel.Hotel_Name_id == '' ?true:false" height="40px" margin="0px 15px 0 0">  
+                        <ng-container popup-body *ngFor="let pro of select_brand | alphatic :'name'">
+                            <b2b-list-tile [title]="pro.brand_name" (click)="brand_select(pro)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0"></b2b-list-tile>           
+                        </ng-container>
+                    </b2b-inputbox>
+            
+                    <b2b-row container-body *ngIf="errorText && unSelectedProduct.custom_brand != '1' " >
+                        <b2b-label row-body text="Corporate brand required" *ngIf="signupDetails.corporateBrand =='' ?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px" *ngIf="unSelectedProduct.custom_brand != '1' "></b2b-spacer>
+
+                    <!-- SUB BRAND - (CC-10)-->
+                    <b2b-inputbox class="rowsize"  textTransform="capitalize" container-body *ngIf="unSelectedProduct.custom_brand != '1' " [value]="signupDetails.hotel" [twoInputFeild]="true" [readOnly]="viewProductHotel.Hotel_Name_id == '' && edit_hotel_details.Hotel_Name_id == '' ? false : true" (onChange)="signupDetails.hotel = $event" [border]="validationResult.hotel ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-dark-grey)'" colorTheme="--color-black" triggerBackgroundTheme="--color-light-grey" triggerColorTheme="--color-dark-grey"  [title]="validationResult.hotel? '' : 'Enter your department'"  placeholder="Hotel Brand*" borderRadius="var(--table-radius)"   [bold]="false" labelFontSize="14px" height="40px" [popupOption]="edit_hotel_details.Hotel_Name_id == '' && viewProductHotel.Hotel_Name_id == '' ?true:false" margin="7px 15px 0 0">
+                        <b2b-list-tile popup-body title="{{pro.hotel_name}} ({{pro.code}})" *ngFor="let pro of hotel ; let i=index" (click)="brand_items(pro.brand_id,pro)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0"></b2b-list-tile>           
+                    </b2b-inputbox>
+                        
+                    <b2b-row container-body *ngIf="errorText">
+                        <b2b-label row-body text="Hotel brand required" *ngIf="signupDetails.hotel =='' ?true:false" backgroundTheme="none" padding="5px 0 0 0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+                    </b2b-row>
+                    <b2b-spacer container-body *ngIf="sheme_data != '' " height="10px"></b2b-spacer>
+
+                    <!-- STYLE SCHEMA - (CC-11)-->
+                    <b2b-inputbox container-body *ngIf="sheme_data != '' " placeholder="Style / Scheme" textTransform="capitalize" [twoInputFeild]="true" [readOnly]="viewProductHotel.Hotel_Name_id == '' && edit_hotel_details.Hotel_Name_id == '' ? false : true" [value]="signupDetails.styleScheme"  (onChange)="signupDetails.styleScheme = $event" [border]="validationResult.styleScheme ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" triggerBackgroundTheme="--color-light-grey" triggerColorTheme="--color-dark-grey" colorTheme="--color-black"  [title]="validationResult.styleScheme? '' : 'Enter your department'" borderRadius="var(--table-radius)"   [bold]="false"  labelFontSize="14px" colorTheme="--color-input-lable"  colorThemee="--color-dark-grey"   height="40px" [popupOption]="edit_hotel_details.Hotel_Name_id == '' && viewProductHotel.Hotel_Name_id == '' ?true:false" margin="10px 15px 0 0">
+                        <b2b-list-tile popup-body title="{{pro.hotel_style_name}}" (click)="scheme(pro)" *ngFor="let pro of sheme_data" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0"></b2b-list-tile>           
+                    </b2b-inputbox>
+                    <b2b-spacer container-body *ngIf="brand_hotel_number == '1' " height="15px" ></b2b-spacer>
+                </b2b-container> 
+            </b2b-row>
+
+            <b2b-row class="rowsize"  flexDirection="column" container-body margin="0 30px 20px 30px">
+
+                <!-- Select Item text -->
+                <b2b-container row-body [property]="{backgroundTheme:'none',padding:'0 26PX 26PX 26PX',position:'relative'}" class="product-list">
+                    <b2b-row container-body>
+                        <b2b-text row-body  text="Select items for your {{roomType}}" fontSize="15px" colorTheme="--color-dark-grey" margin="7px 0px 0px 0px"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="5px"></b2b-spacer>
+                    <b2b-row container-body>
+                        <b2b-text row-body  text="{{select_item_text}}" fontSize="10px"></b2b-text>
+                    </b2b-row>
+                    <b2b-row container-body>
+                        <b2b-text row-body *ngIf="summary > 0" text="TOTAL PRODUCTS SELECTED : {{summary}}" fontSize="12px" colorTheme="--color-orange" [bold]="true" margin="7px 0px 0px 0px"></b2b-text>
+                    </b2b-row>
+
+                <!-- Menu CATAGORY Drop down products - (CC-12)-->
+                    <b2b-spacer container-body height="10px"></b2b-spacer>
+                    <b2b-row container-body>
+                        <b2b-container row-body [property]="{backgroundTheme:'none',padding:'0',width:'100%',borderRadius:'8px',margin:'0 0 10px 0'}" >
+                            
+                            <ng-container container-body *ngFor="let a of amazCart_product_list">
+                                <b2b-menu-dropdown class="hotel-name-icon" container-body [childOpen]="isOpen" text="{{a.type}} ({{a.count}}/{{a.allCount}})" height="55px" fontSize="13px" icon="arrow_drop_down"  [active]="true" colorTheme="--color-black" [isExpand]="true" paddingg="0 0 0 10px" margin="10px 0 0px 0" (onPressed)="emitOpen($event,'')">
+                                    <b2b-icon-button svg-icon [icon]="a.icon" backgroundTheme="--color-light-grey" colorTheme="--color-black" [isRounded]="true" iconSize="22px" width="35px"></b2b-icon-button>
+                                    <b2b-container list-child [property]="{backgroundTheme:'--color-new-grey',padding:'0 0 10px 0px',maxHeight:'300px',overflowY:'auto', borderRadius:'0 0 0 0',position:'relative'}">
+                                    
+                                        <b2b-container container-body *ngFor="let y of a.list" [property]="{padding:'15px 0 0 0',backgroundTheme:'--color-new-grey'}">
+                                            <b2b-row container-body *ngIf="y.category == a.catagory_id" borderBottom="1px solid var(--color-dark-grey)" backgroundTheme="--color-white" class="product-item" alignItem="center" borderRadius="10px" >
+                                                <ng-container row-body>
+                                                    <b2b-container row-body  [property]="{backgroundTheme:'--color-white',padding:'2px',width:'40px'}">
+                                                        <b2b-row container-body>
+                                                            <input row-body type="checkbox" *ngIf="isCheck_box && viewProductHotel.Hotel_Name_id == ''" class="custom-control-input" [value]="y.id" (change)="getCheckedCount($event,a,y.id)" (click)="editHotelData(y)" [checked]="y.isChecked"/>                                
+                                                        </b2b-row>
+                                                    </b2b-container>
+                                                    <b2b-container row-body [property]="{backgroundTheme:'--color-white',padding:'2px',width:'200px'}">
+                                                        <b2b-image container-body image="{{y.product_image}}" width="90%" height="90%" class="pro-image"></b2b-image>
+                                                    </b2b-container>   
+                                                            
+                                                    <b2b-container class="product-details" row-body [property]="{backgroundTheme:'--color-white',alignItem:'flex-start',padding:'0px 10px 10px 10px',width:'100%'}">
+                                                        <b2b-row container-body width="100%" justifyContent="flex-end" margin="0 40px 0 0">
+                                                            <b2b-text row-body text="Compare" *ngIf="viewProductHotel.Hotel_Name_id == ''" fontSize="11px" colorTheme="--color-primary" class="product-name" (click)="compareVariantProduct(y.id,y.category,y.skuId)"></b2b-text>
+                                                        </b2b-row>
+                                                        <b2b-spacer container-body height="10px"></b2b-spacer>
+                                                        <b2b-row container-body>
+                                                            <b2b-text row-body text="{{y.brand_products_name}}" fontSize="13px" class="product-name"></b2b-text>
+                                                        </b2b-row>
+                                                        <b2b-spacer container-body height="5px"></b2b-spacer>
+            
+                                                        <b2b-row container-body>
+                                                            <b2b-text row-body text="{{y.Approximate_price ? currency_symbol : ''}} {{y.Approximate_price}}" fontSize="13px" class="price"></b2b-text>
+                                                        </b2b-row>
+                                                                
+                                                        <b2b-view-spec container-body [spec]="y.brand_product_specs"></b2b-view-spec>
+                                                                
+                                                    </b2b-container> 
+                                                </ng-container>
+                                            </b2b-row>
+                                        </b2b-container>
+            
+                                    </b2b-container>
+                                </b2b-menu-dropdown>
+                            </ng-container>
+                            
+                        </b2b-container>
+                    </b2b-row>
+                <b2b-spacer container-body height="90px"></b2b-spacer>
+
+                <!-- SUBMIT BUTTON - (CC-13) -->
+                <b2b-row  container-body position="fixed"  margin="0 0 0 20px" borderRadius="15px" positionBottom="10px" backgroundTheme="" width="100%" height="auto">
+                    <b2b-button row-body class="shadows" [title]="viewProductHotel.Hotel_Name_id == '' ? 'Previous' : 'User Details' " width="100px" height="45px" fontSize="13px"  borderRadius="5px"  backgroundTheme="--color-light-dark" colorTheme="--color-white" (click)="previous()" ></b2b-button>
+                    <b2b-spacer row-body width="5px"></b2b-spacer>     
+                    <b2b-button row-body *ngIf="edit_hotel_details.Hotel_Name_id == '' && viewProductHotel.Hotel_Name_id == '' " title="CREATE MASTER CATALOG"  width="250px" height="45px" fontSize="13px" borderRadius="5px" [backgroundTheme]="submitButtonDisabled ?'--color-dark-grey':'--color-primary'" colorTheme="--color-white" [buttonDisabled]="submitButtonDisabled" (onPressed)='register()'>
+                    </b2b-button>
+                    <b2b-button row-body *ngIf="edit_hotel_details.Hotel_Name_id != '' " title="UPDATE" width="252px" [apiSubmitDisable]="true" height="45px" fontSize="13px"  borderRadius="5px" backgroundTheme="--color-dark-Blue" colorTheme="--color-white" (onPressed)='editHotelProducts()'></b2b-button>
+                    <b2b-button row-body *ngIf="viewProductHotel.Hotel_Name_id != '' && edit_hotel_details.Hotel_Name_id == '' " title="Catalog" width="230px" height="45px" fontSize="13px"  borderRadius="5px" backgroundTheme="--color-dark-Blue" colorTheme="--color-white" (onPressed)='catalogAfterView()'></b2b-button>
+                </b2b-row>
+                </b2b-container>
+                
+                <!-- EXTRA COMPARE-->
+                <!-- <b2b-container class="trans-bg" row-body *ngIf="showBg" [property]="{padding:'20px 20px 20px 20px',width:'450px',overflowY:'scroll',height:'100%',backgroundTheme:'none'}">
+                    <b2b-row container-body backgroundTheme="--color-primary" borderRadius="0" border="2px solid var(--color-light-greenn)" alignItem="center" justifyContent="center">
+                        <b2b-text row-body text="{{uniqeData.heading}}" textAlign="center" colorTheme="--color-white" [bold]="true" fontSize="13px" class="price"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"></b2b-spacer>
+                    <b2b-row container-body class="row_1" margin="0"  padding="0"  *ngFor="let y of uniqeData.product" height="100px"  positionBottom="0" backgroundTheme="none" [border]="y.rowBorder==true?'2px solid var(--color-yellow)':'1px solid var(--color-dark-grey)'">
+                    <b2b-container row-body  [property]="{backgroundTheme:'--color-white',padding:'2px',width:'200px'}">
+                            <b2b-image container-body image="{{y.variant_image}}" width="80px"  class="pro-image"></b2b-image>
+                        </b2b-container>
+                        <b2b-container class="product-details" row-body [property]="{backgroundTheme:'--color-white',padding:'0px',width:'100%' }">
+                            <b2b-row container-body>
+                                <b2b-text row-body text="{{y.productName}}" fontSize="13px" class="product-name"></b2b-text>
+                            </b2b-row>
+                            <b2b-row container-body>
+                                <b2b-text row-body text="{{y.price | currency}}" fontSize="10px" class="price"></b2b-text>
+                            </b2b-row>
+                            <b2b-row container-body margin="15px 0px 0px 0px">
+                                <b2b-text row-body text="View product details" fontSize="9px" class="pro-link"></b2b-text>
+                            </b2b-row>
+                        </b2b-container>
+                        
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"></b2b-spacer>
+                    <b2b-row container-body backgroundTheme="--color-primary" borderRadius="0" border="2px solid var(--color-light-greenn)"  padding="0 0 0 60px" alignItem="center">
+                        <b2b-text row-body text="{{uniqeData.heading_2}}" textAlign="center" colorTheme="--color-white" [bold]="true" fontSize="14px" class="price"></b2b-text>
+                    </b2b-row>
+                    
+                    <b2b-spacer container-body height="10px"></b2b-spacer>
+                    <b2b-row container-body class="row_1" margin="0"  padding="0"  *ngFor="let y of uniqeData.product_list2" height="100px"  positionBottom="0" backgroundTheme="none" [border]="'1px solid var(--color-light-grey)'">
+                    <b2b-container row-body  [property]="{backgroundTheme:'--color-white',padding:'2px',width:'200px'}">
+                            <b2b-image container-body image="{{y.image}}" width="80px" class="pro-image"></b2b-image>
+                        </b2b-container>
+                        <b2b-container class="product-details" row-body [property]="{backgroundTheme:'--color-white',padding:'0px',width:'100%' }">
+                            <b2b-row container-body>
+                                <b2b-text row-body text="{{y.productName}}" fontSize="13px" class="product-name"></b2b-text>
+                            </b2b-row>
+                            <b2b-row container-body>
+                                <b2b-text row-body text="{{y.price | currency}}" fontSize="10px" class="price"></b2b-text>
+                            </b2b-row>
+                            <b2b-row container-body margin="15px 0px 0px 0px">
+                                <b2b-text row-body text="View product details" fontSize="9px" class="pro-link"></b2b-text>
+                            </b2b-row>
+                        </b2b-container>
+                    </b2b-row>
+                
+                    <b2b-row container-body position="fixed" padding="0 0 0 40px" alignItem="center" positionBottom="2%"> 
+                        <b2b-button row-body width="150px" title="Cancel" (click)="cancel()" borderRadius="10px" backgroundTheme="--color-dark-grey"></b2b-button>
+                        <b2b-spacer row-body width="10px"></b2b-spacer>
+                        <b2b-button  row-body width="150px" title="Select"  backgroundTheme="--color-primary"></b2b-button>   
+                    </b2b-row>
+                        
+                </b2b-container>  -->
+
+                <!-- //Brand Compare - (CC-14) -->
+                <b2b-container class="trans-bg"  row-body *ngIf="showCompare" [property]="{padding:'20px 20px 20px 20px',height:'100%',backgroundTheme:'none'}">
+
+                    <b2b-row container-body backgroundTheme="--color-primary"  borderRadius="0" border="2px solid var(--color-light-greenn)"  alignItem="center" justifyContent="center">
+                        <b2b-text row-body text="Brand Approved Products" colorTheme="--color-white" textAlign="center" [bold]="true" fontSize="13px" class="price"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"></b2b-spacer>
+
+                    <b2b-container container-body [property]="{backgroundTheme:' --color-white',padding:'0',height:'auto', borderRadius:'0 0 0 0' }">
+                        <b2b-row container-body class="row_1" *ngFor="let v of variantColor.variantProduct; let idx=index" height="100px" [style.display]="'flex'"  [style.width]="'100%'" [style.border]="rowClicked == v.skuId  ? '2px solid var(--color-primary)' : '1px solid var(--color-dark-grey)'" (click)="different_color_product(v,idx)">
+                                <b2b-container row-body  [property]="{backgroundTheme:'none',padding:'2px',width:'200px'}">
+                                    <b2b-image container-body image="{{v.product_image}}" width="80px" class="pro-image"></b2b-image>
+                                </b2b-container>
+                                <b2b-container class="product-details" row-body [property]="{backgroundTheme:'--color-white',alignItem:'flex-start',padding:'0px',width:'100%' }">
+                                    <b2b-row container-body>
+                                        <b2b-text row-body text="{{v.brand_products_name}}" fontSize="13px" class="product-name"></b2b-text>
+                                    </b2b-row>
+                                    <b2b-row container-body>
+                                        <b2b-text row-body text="{{v.Approximate_price ? currency_symbol : ''}} {{v.Approximate_price}}" fontSize="10px" class="price"></b2b-text>
+                                    </b2b-row>
+                                    <b2b-view-spec container-body [spec]="v.brand_product_specs"></b2b-view-spec>
+
+                                </b2b-container>
+                        </b2b-row>
+                    </b2b-container>
+
+                <b2b-spacer container-body height="10px"></b2b-spacer>
+                    <b2b-row container-body backgroundTheme="--color-primary" colorTheme="--color-white" borderRadius="0" border="2px solid var(--color-light-greenn)" alignItem="center" justifyContent="center">
+                        <b2b-text row-body text="Similar product in the marketplace" colorTheme="--color-white" textAlign="center" [bold]="true" fontSize="13px" class="price"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"></b2b-spacer>
+
+                    <!--  Similar product -->
+                    <b2b-container class="scrollweb" container-body  [property]="{backgroundTheme:' --color-white',padding:'0 0 100px 0',height:'45vh', borderRadius:'0 0 0 0' }">
+                        <b2b-row container-body class="row_1" *ngFor="let v of variantColor.similarProduct" margin="0"  padding="0"  height="100px"  positionBottom="0" backgroundTheme="none" [border]="'1px solid var(--color-dark-grey)'">
+                            <b2b-container row-body  [property]="{backgroundTheme:'--color-white',padding:'2px',width:'200px'}">
+                                <b2b-image container-body image="{{v.product_image}}" width="80px" class="pro-image"></b2b-image>
+                            </b2b-container>
+                            <b2b-container class="product-details" row-body [property]="{backgroundTheme:'--color-white',alignItem:'flex-start',padding:'0px',width:'100%' }">
+                                <b2b-row container-body>
+                                    <b2b-text row-body text="{{v.brand_products_name}}" fontSize="13px" class="product-name"></b2b-text>
+                                </b2b-row>
+                                <b2b-row container-body>
+                                    <b2b-text row-body text="{{v.Approximate_price ? currency_symbol : ''}} {{v.Approximate_price}}" fontSize="10px" class="price"></b2b-text>
+                                </b2b-row>
+
+                                <b2b-view-spec container-body [spec]="v.brand_product_specs"></b2b-view-spec>
+
+                            </b2b-container>
+                        </b2b-row>       
+                        
+                    </b2b-container>
+                
+                    <b2b-row container-body position="fixed" class="paddingweb" alignItem="center" positionBottom="2%"> 
+                        <b2b-button row-body width="150px" title="Cancel" (click)="cancel()" borderRadius="10px" backgroundTheme="--color-dark-grey"></b2b-button>
+                        <b2b-spacer row-body width="10px"></b2b-spacer>
+                        <b2b-button row-body *ngIf="showvarentproduct"  width="150px" title="Select" (click)="select()" backgroundTheme="--color-primary"></b2b-button>   
+                    </b2b-row>
+                        
+                </b2b-container> 
+
+                <!-- Admin choose mark open right side container (SELECT & UNSELECT PRODUCTS)- (CC-15) -->
+                <b2b-container class="trans-bg" row-body *ngIf="admin_access_redMarkContainer" [property]="{padding:'20px 20px 20px 20px',width:'450px',height:'100%',backgroundTheme:'none'}">
+                    <b2b-row container-body width="100%" alignItem="flex-end" justifyContent="flex-end">
+                        <b2b-icon row-body  icon="close" (click)="cancel()" backgroundTheme="--color-white" colorTheme="--color-dark-grey"></b2b-icon>
+                    </b2b-row>
+
+                    <b2b-text *ngIf="admin_unMapped_products.length > 0" container-body text="Please move your mouse and click on a item for selection ." fontSize="14px" colorTheme="--color-primary" padding="10px"></b2b-text>
+                    <b2b-spacer container-body height="20px"></b2b-spacer>
+                
+                    <b2b-row *ngIf="admin_unMapped_products.length > 0" container-body padding="10px 0 10px 0" margin="0 0 20px 0" backgroundTheme="--color-white" borderRadius="10px" boxShadow="0 0 5px darkgrey" justifyContent="center">
+                        <b2b-container row-body [property]="{alignItem:'flex-start',justifyContent:'flex-start',backgroundTheme:'none',width:'auto',padding:'0'}">
+                            <b2b-inputbox container-body class="itemName" [Input_3]="true" textTransform="capitalize" inputName="Item Name" [value]="image_map_mark.lable" (onChange)="label_mark($event)" fontSize="14px"  width="350px" height="65px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Enter the item name" colorTheme="--color-black" [popupOption]="false" position="right"  triggerBackgroundTheme="--color-dark-grey" triggerColorTheme="--color-white" [border]="'2px solid var(--color-dark-grey)'" [title]="'Enter the type of industry'">
+                            </b2b-inputbox>
+                            <b2b-text container-body *ngIf="submitSelectedProduc" text="There is no item selected" colorTheme="--color-red" fontSize="12px"></b2b-text>
+                            <b2b-spacer container-body height="5px"></b2b-spacer>
+
+                            <b2b-button container-body title="Submit" [buttonDisabled]="image_map_mark.lable != '' && image_map_mark.product_location_x != '' && image_map_mark.product_id != '' ? false : true" [colorTheme]="image_map_mark.lable != '' && image_map_mark.product_location_x != '' && image_map_mark.product_id != '' ? '--color-white':'--color-dark-grey' " [backgroundTheme]="image_map_mark.lable != '' && image_map_mark.product_location_x != '' && image_map_mark.product_id != '' ? '--color-primary':'--color-light-grey' " height="30px" width="100px" (click)="selected_location(admin_choose_product)"></b2b-button>
+                        </b2b-container> 
+                    </b2b-row>
+
+                    <!-- Custom Brand Image upload -->
+                    <b2b-row container-body *ngIf="unSelectedProduct.custom_brand == '1' " padding="10px 0 10px 30px" margin="0 0 20px 0" backgroundTheme="--color-white" borderRadius="10px" boxShadow="0 0 5px darkgrey" justifyContent="flex-start">
+                        <b2b-container row-body [property]="{alignItem:'flex-start',justifyContent:'flex-start',backgroundTheme:'none',width:'auto',padding:'0'}">
+                            <b2b-text container-body text="Update Room Image" colorTheme="--color-black" fontSize="14px"></b2b-text>
+                            <b2b-spacer container-body  height="10px" ></b2b-spacer>
+
+                            <b2b-row container-body width="" >
+                                <!-- <b2b-button row-body title="Add Room" *ngIf="customAddRoom == true && signupDetails.hotel == 'Custom Brand' " [backgroundTheme]="'--color-primary' " height="30px" width="100px" (click)="selected_location(admin_choose_product)"></b2b-button> -->
+                                <input row-body type="file" (change)="onFileSelecteddd($event)"/>
+                            </b2b-row>
+
+                            <b2b-spacer container-body  height="5px" ></b2b-spacer>
+                            <b2b-button container-body title="Upload" *ngIf="custom_brandId != '' " (click)="custom_imageUpload()" [backgroundTheme]="'--color-primary'" height="30px" width="100px" ></b2b-button>
+                        </b2b-container> 
+                    </b2b-row>
+
+                    <b2b-container container-body [property]="{position: 'relative',padding:'20px 20px 230px 20px',width:'450px',overflowY:'scroll',height:'78%',backgroundTheme:'none'}">
+                        <div container-body *ngIf="admin_mapped_products.length == 0 && admin_unMapped_products == 0" style="position: absolute;top: 40%;left: 20%;">No product in this Brand</div>
+                        <!-- select product blue -->
+                        <b2b-row container-body *ngIf="admin_mapped_products != '' " margin="0 0 10px 0" backgroundTheme="--color-primary" borderRadius="0" border="2px solid var(--color-light-greenn)" alignItem="center" justifyContent="center">
+                            <b2b-text row-body text="MAPPED ITEMS for this room" textAlign="center" colorTheme="--color-white" [bold]="true" fontSize="13px" class="price"></b2b-text>
+                        </b2b-row>
+                        <b2b-spacer container-body height="15px"></b2b-spacer>
+
+                        <b2b-row container-body *ngFor="let v of admin_mapped_products">
+                            <b2b-container row-body  [property]="{padding:'0',margin:'0 0 15px 0'}">
+                                <b2b-row container-body >
+                                    <!-- <b2b-choice row-body group="catelog-group2" (click)="location_based_product(v.id)"></b2b-choice> -->
+                                    <b2b-row row-body [style.display]="'flex'" height="90px" [style.width]="'100%'" [style.border]="v.order =='DEF' ?'2px solid var(--color-dark-grey)':'2px solid var(--color-primary)' " >
+                                        <b2b-container row-body  [property]="{backgroundTheme:'--color-white',padding:'2px',width:'200px'}">
+                                            <b2b-image container-body image="{{v.product_image}}" width="80px" class="pro-image"></b2b-image>
+                                        </b2b-container>
+                                        <b2b-container class="product-details" row-body [property]="{backgroundTheme:'--color-white',alignItem:'flex-start',padding:'0px',width:'100%' }">
+                                            <b2b-row container-body>
+                                                <b2b-text row-body text="{{v.brand_products_name}}" fontSize="13px" class="product-name"></b2b-text>
+                                            </b2b-row>
+                                            <b2b-row container-body>
+                                                <b2b-text row-body text="{{v.Approximate_price ? currency_symbol : ''}} {{v.Approximate_price}}" fontSize="11.5px" class="price"></b2b-text>
+                                            </b2b-row>
+                                            <b2b-view-spec container-body [spec]="v.brand_product_specs"></b2b-view-spec>
+
+                                        </b2b-container>
+                                    </b2b-row> 
+                                </b2b-row>
+                            </b2b-container> 
+                                        
+                        </b2b-row>
+                        <!-- unselect product grey -->
+
+                        <b2b-row container-body *ngIf="admin_unMapped_products != '' " margin="0 0 10px 0" backgroundTheme="--color-primary" borderRadius="0" border="2px solid var(--color-light-greenn)" alignItem="center" justifyContent="center">
+                            <b2b-text row-body text="Pick an item which matches your ITEM selection (UNMAPPED ITEMs)" textAlign="center" colorTheme="--color-white" [bold]="true" fontSize="12px" class="price"></b2b-text>
+                        </b2b-row>
+                        <b2b-spacer container-body height="15px"></b2b-spacer>
+                        
+                        <b2b-row container-body *ngFor="let v of admin_unMapped_products" >
+                            <b2b-container row-body  [property]="{padding:'0',margin:'0 0 15px 0'}">
+                                <b2b-row container-body >
+                                    <b2b-choice row-body group="catelog-group2" (click)="location_based_product(v.id)"></b2b-choice>
+                                    <b2b-row row-body [style.display]="'flex'" height="90px" [style.width]="'100%'" [style.border]="'2px solid var(--color-dark-grey)'" >
+                                        <b2b-container row-body  [property]="{backgroundTheme:'--color-white',padding:'2px',width:'200px'}">
+                                            <b2b-image container-body image="{{v.product_image}}" width="80px" class="pro-image"></b2b-image>
+                                        </b2b-container>
+                                        <b2b-container class="product-details" row-body [property]="{backgroundTheme:'--color-white',alignItem:'flex-start',padding:'0px',width:'100%' }">
+                                            <b2b-row container-body>
+                                                <b2b-text row-body text="{{v.brand_products_name}}" fontSize="13px" class="product-name"></b2b-text>
+                                            </b2b-row>
+                                            <b2b-row container-body>
+                                                <b2b-text row-body text="{{v.Approximate_price ? currency_symbol : ''}} {{v.Approximate_price}}" fontSize="11.5px" class="price"></b2b-text>
+                                            </b2b-row>
+                                            <b2b-view-spec container-body [spec]="v.brand_product_specs"></b2b-view-spec>
+
+                                        </b2b-container>
+                                    </b2b-row> 
+                                </b2b-row>
+                            </b2b-container>                            
+                        </b2b-row>
+                        
+                    </b2b-container>
+                </b2b-container>
+
+                <!--After product mark open right side container - (CC-16) -->
+                <b2b-container class="trans-bg"  row-body *ngIf="location_product" [property]="{padding:'20px 20px 20px 20px',width:'450px',height:'100%',backgroundTheme:'none'}">
+                    <b2b-row container-body width="100%" alignItem="flex-end" justifyContent="flex-end">
+                        <b2b-text row-body *ngIf="click_mark_product != '' && viewProductHotel.Hotel_Name_id == '' " text="Edit" (click)="edit_lable()"></b2b-text>
+                        <b2b-spacer row-body width="3px"></b2b-spacer>
+                        <b2b-icon row-body  icon="close" (click)="cancel()" backgroundTheme="--color-white" colorTheme="--color-dark-grey"></b2b-icon>
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"></b2b-spacer>  
+
+                    <b2b-row container-body *ngIf="isEdit_lable_name" padding="10px 0 10px 0" margin="0 0 20px 0" backgroundTheme="--color-white" borderRadius="10px" boxShadow="0 0 10px darkgrey" justifyContent="center">
+                        <b2b-container row-body [property]="{alignItem:'flex-start',justifyContent:'flex-start',backgroundTheme:'none',width:'auto',padding:'0'}">
+                            <b2b-inputbox container-body [twoInputFeild]="true" inputName="Lable Name" [value]="edit_lable_name" (onChange)="edit_lable_name = $event" fontSize="14px"  width="350px" height="65px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Lable Name" colorTheme="--color-black" [popupOption]="false" position="right" [border]="'2px solid var(--color-dark-grey'" [title]="'Enter the type of industry'">
+                            </b2b-inputbox>  
+                            <b2b-spacer container-body height="10px"></b2b-spacer> 
+                            <b2b-row container-body>
+                                <b2b-button row-body title="Update" [apiSubmitDisable]="true" width="60px" height="30px" backgroundTheme="--color-primary" (click)="chenge_lable_name()"></b2b-button> 
+                                <b2b-spacer row-body width="15px"></b2b-spacer> 
+                                <b2b-button row-body *ngIf="edit_lable_name == edit_lable_name_p.lable" title="Delete" width="60px" height="30px" backgroundTheme="--color-primary" (click)="delete_mark()"></b2b-button>       
+                            </b2b-row>
+                        </b2b-container> 
+                    </b2b-row>      
+
+                    <b2b-row container-body class="row_1" *ngFor="let v of click_mark_product.product; let idx=index"  [style.display]="'flex'"  [style.width]="'100%'" [style.border]="(idx == rowClicked)  ? '2px solid var(--color-primary)' : '1px solid var(--color-dark-grey)'" (click)="different_color_product(v,idx)">
+                        <b2b-container row-body  [property]="{backgroundTheme:'--color-white',padding:'2px',width:'200px'}">
+                            <b2b-image container-body image="{{v.product_image}}" width="80px" class="pro-image"></b2b-image>
+                        </b2b-container>
+                        <b2b-container class="product-details" row-body [property]="{backgroundTheme:'--color-white',alignItem:'flex-start',padding:'0px',width:'100%' }">
+                            <b2b-row container-body>
+                                <b2b-text row-body text="{{v.brand_products_name}}" fontSize="13px" class="product-name"></b2b-text>
+                            </b2b-row>
+                            <b2b-row container-body>
+                                <b2b-text row-body text="{{v.Approximate_price ? currency_symbol : ''}} {{v.Approximate_price}}" fontSize="11.5px" class="price"></b2b-text>
+                            </b2b-row>
+                            <b2b-view-spec container-body [spec]="v.brand_product_specs"></b2b-view-spec>
+
+                        </b2b-container>
+                    </b2b-row>
+                </b2b-container>
+                
+                <!-- Register Loading popup - (CC-17) -->
+                <b2b-row row-body class="blur-overlay" height="100vh" *ngIf="loading">
+                    <b2b-row  row-body height="18vh" widths="25vw" backgroundTheme="--color-white"  flexDirection="column" padding="10px 10px 10px 10px" borderRadius="10px" justifyContent="center" border="3px solid var(--color-dashboard) " position="fixed"  positionTop="30%" positionLeft="43%">
+                        <b2b-text row-body text="Please Wait!" colorTheme="--color-redd" margin="5px 0 0 0"></b2b-text>
+                        <b2b-text row-body text="Your Hotel Is Creating..." fontSize="14px" margin="10px 0 10px 0"></b2b-text>
+                        <div row-body  class="loader"></div>
+                    </b2b-row>
+                </b2b-row>
+
+                <!-- CREATE BRAND ROOMS - (CC-18) -->
+                <b2b-row row-body class="blur-overlay" height="100vh" *ngIf="isCreateBrandRooms">
+                    <b2b-row row-body class="create-rooms" height="30vh" alignItem="flex-start" widths="30vw" backgroundTheme="--color-white"  flexDirection="column" padding="10px 10px 10px 10px" borderRadius="10px" border="1px solid var(--color-toggle-background) " position="fixed"  positionTop="30%" positionLeft="30%">
+                        <b2b-icon row-body icon="close" left="92%" (click)="isCreateBrandRooms = false" top="2%"
+                        backgroundTheme="--color-white" fontSize="20px" colorTheme="--color-dark-grey"
+                        position="absolute"></b2b-icon>
+
+                        <b2b-text row-body text="Create New Room" colorTheme="--color-primary" margin="5px 0 0 0"></b2b-text>
+                        <b2b-inputbox row-body class="itemName" (onChange)="createBrandRooms.hotel_room_name = $event" [Input_3]="true" placeholder="Create Rooms" textTransform="capitalize" inputName="Create Room" fontSize="14px"  width="350px" height="65px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" colorTheme="--color-black" [popupOption]="false" position="right"  triggerBackgroundTheme="--color-dark-grey" triggerColorTheme="--color-white" [border]="'2px solid var(--color-dark-grey)'" [title]="'Enter the type of industry'">
+                        </b2b-inputbox>
+
+                        <ng-container row-body>
+                            <b2b-text text="Select Image"></b2b-text>
+                            <input type="file" (change)="onFileSelecteRooms($event)" accept="image/*" multiple/>
+
+                            <b2b-spacer height="10px"></b2b-spacer>
+                            <b2b-row justifyContent="center">
+                                <b2b-button row-body title="Submit" [apiSubmitDisable]="true" height="28px" width="65px" backgroundTheme="--color-primary" (click)="submitRoomData()"></b2b-button>
+                            </b2b-row>
+                        </ng-container>
+                    </b2b-row>
+                </b2b-row>
+            </b2b-row>
+        </b2b-container>
+    </b2b-row>    
+</b2b-container>

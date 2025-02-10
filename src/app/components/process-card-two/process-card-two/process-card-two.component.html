@@ -1,0 +1,28 @@
+
+<b2b-row row-body *ngIf="this.screen == 'service'">
+    <ng-container row-body *ngFor="let button of button_name">
+        <b2b-button [title]="button['name']" boxShadow="0 0 10px lightGrey" borderRadius="3px" [borderBottom]="button['name'] == selectedButton ? '--color-orange' : '--color-white'" [colorTheme]="button['name'] == selectedButton ? '--color-black' : '--color-dark-grey'" padding="5px 10px" margin="10px 10px 15px 0" height="auto" width="auto" (onPressed)="buttonclicked($event)" margin="10px"></b2b-button>
+    </ng-container>
+</b2b-row>
+
+<b2b-row container-body >
+    <b2b-text row-body text="Order Process" fontSize="13px" [bold]="true"></b2b-text>
+
+</b2b-row>
+
+<b2b-row container-body alignItem="flex-start" padding="10px 0 0 0">
+    <b2b-container row-body [property]="{width: 'auto', height: '100%', padding: '0'}">
+        <b2b-stepper container-body lineHeight="110px" [stepperCount]="4" [active]="trackingPoint"></b2b-stepper>
+    </b2b-container>
+    <b2b-spacer row-body width="10px"></b2b-spacer>
+    <b2b-container row-body [property]="{padding: '0', backgroundTheme: '--color-transparent', height: 'auto'}">
+        <ng-container container-body *ngFor="let cardData of cardDataList">
+            <b2b-process-card [processCardData]="cardData"></b2b-process-card>
+            <b2b-spacer minHeight="20px"></b2b-spacer>
+        </ng-container>
+    </b2b-container>
+</b2b-row>
+<b2b-row *ngIf="selectedButton =='History' " container-body justifyContent="space-between">
+    <button row-body (click)="previousGroup()" [disabled]="currentGroupIndex === 0">Previous</button>
+    <button row-body (click)="nextGroup()" [disabled]="currentGroupIndex === servicehistory.length - 1">Next</button>
+</b2b-row>

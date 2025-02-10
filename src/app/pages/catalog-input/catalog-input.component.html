@@ -1,0 +1,170 @@
+<b2b-container  [property]="{padding:'0',borderRadius:'0', height:'100%',overflowX:'hidden',overflowY:'hidden',backgroundTheme:'--color-light-grey'}">
+    <!-- <i container-body style="position: fixed;top: 20px;left: 10px;color: white;" class="material-icons" >arrow_back</i> -->
+    <b2b-row container-body height="70px" width="100%" justifyContent="center" alignItem="center" backgroundImage="--color-stepper">
+        <b2b-steper  row-body [step_1_backgroundTheme]="steper == true ?'--color-green':'rgb(128 188 69)'"></b2b-steper>
+    </b2b-row>
+
+    <b2b-row class="scrollmobile " container-body width="90%" height="100%"  padding="0 0 0px 0px" alignItem="flex-start" justifyContent="center" [mobileview]="true">
+        <b2b-container row-body [property]="{padding:'0',height:'100%',width:'100%',backgroundTheme:'',flex:1 }">
+            <b2b-image class="catalogimg" container-body image="https://images.adsttc.com/media/images/5c5d/6521/284d/d18d/d600/0527/large_jpg/ARIA_Hotel_and_Casino.jpg?1549624591" width="100%" height="100%"  ></b2b-image>
+        </b2b-container>        
+        <b2b-container class="scrollweb" row-body [property]="{padding:'0 0px',width:'400px',backgroundTheme:'none',borderRadius:'0',position:'relative',height:'80vh',alignItem:'center'}">
+            <b2b-row class="rowsize" container-body backgroundTheme='--color-white'  borderRadius="10px" boxShadow="0 0 5px darkgrey" margin="10px 25px 25px 25px" justifyContent="center">           
+                <b2b-container row-body [property]="{padding:'20px 20px 20px 20px',height:'100%',width:'90%'}">                    
+                    
+                    <b2b-inputbox container-body [twoInputFeild]="true"  textTransform="capitalize" inputName="Industry Type" dropdownWidth="100%" [required]="true" [value]="vendorDetail.Industry_Type"  (onChange)="vendorDetail.Industry_Type = $event" fontSize="14px" dropdownHeight="150px" width="100%" height="65px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Ex: Full Service Hotel" colorTheme="--color-black"  [popupOption]="viewHotelDetailes.Hotel_Name_id != '' ? false : true" position="right"  triggerBackgroundTheme="--color-dark-grey" triggerColorTheme="--color-white" [border]="vendorDetailVadidation.Industry_Type ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" [title]="vendorDetailVadidation.Industry_Type ? '' : 'Enter the type of industry'">
+                        <input #search search type="text" placeholder="Search" [(ngModel)]="industrySeach"  (ngModelChange)="industrySeach =$event">
+                        <ng-container popup-body *ngFor="let hotel of typeOfIndustry | filter : industrySeach" >
+                            <b2b-list-tile [title]="hotel.typeOfIndustry" (click)="getHotel(hotel.typeOfIndustry)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                        </ng-container>
+                    </b2b-inputbox>
+
+                    <b2b-row container-body *ngIf="errorText">
+                        <b2b-label row-body text="Industry Type Required" *ngIf="vendorDetail.Industry_Type =='' ?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+                    </b2b-row>
+                  <b2b-spacer container-body height="5px"></b2b-spacer>
+
+                    <b2b-inputbox container-body [twoInputFeild]="true" textTransform="capitalize" inputName="Group Name" [value]="vendorDetail.Group_Name" (onChange)="vendorDetail.Group_Name = $event" fontSize="14px"  width="100%" height="65px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Ex: GRT Hotel Pvt. Ltd.," colorTheme="--color-black" [popupOption]="false" triggerBackgroundTheme="--color-dark-grey" triggerColorTheme="--color-white" [border]="vendorDetailVadidation.Group_Name ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" [title]="vendorDetailVadidation.Group_Name ? '' : 'Enter the type of industry'">
+                        <!-- <ng-container popup-body *ngFor="let group of groupName" >
+                            <b2b-list-tile   [title]="group" (click)="groupNames(group)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                        </ng-container> -->
+                    </b2b-inputbox>
+
+                    <!-- <b2b-row container-body *ngIf="errorText">
+                        <b2b-label row-body text="Enter Industry Type" *ngIf="vendorDetail.group_name =='' ?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="11px"></b2b-label>
+                    </b2b-row> -->
+
+                    <b2b-spacer container-body height="5px"></b2b-spacer>
+
+                    <b2b-inputbox container-body [twoInputFeild]="true" textTransform="capitalize" inputName="Hotel Name" [required]="true" [value]="vendorDetail.Hotel_Name"  (onChange)="vendorDetail.Hotel_Name = $event" fontSize="14px" width="100%" height="65px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Ex: GRT Grand-Chennai-TN" colorTheme="--color-black" [popupOption]="false" position="right"  triggerBackgroundTheme="--color-dark-grey" triggerColorTheme="--color-white" [border]="vendorDetailVadidation.Hotel_Name ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" [title]="vendorDetailVadidation.Hotel_Name ? '' : 'Enter the type of industry'">
+
+                    </b2b-inputbox>
+
+                    <b2b-row container-body *ngIf="errorText">
+                        <b2b-label row-body text="Hotel Name Required" *ngIf="vendorDetail.Hotel_Name =='' ?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+                    </b2b-row>
+
+                    <b2b-spacer container-body height="5px"></b2b-spacer>
+
+                    <b2b-inputbox container-body [twoInputFeild]="true" inputType="number" [required]="true" inputName="Number of Room / Keys" [value]="vendorDetail.Number_Of_Rooms_Keys"  (onChange)="vendorDetail.Number_Of_Rooms_Keys = $event" (keypress)="numericOnly($event)" fontSize="14px" width="100%" height="65px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Ex: 11" colorTheme="--color-black"  position="right"  triggerBackgroundTheme="--color-dark-grey" triggerColorTheme="--color-white" [border]="vendorDetailVadidation.Number_Of_Rooms_Keys ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" [title]="vendorDetailVadidation.Number_Of_Rooms_Keys ? '' : 'Enter the type of industry'">
+                        <!-- <ng-container popup-body *ngFor="let hotel of hotelName" >
+                            <b2b-list-tile   [title]="hotel" (click)="getHotel(hotel)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                        </ng-container> -->
+                    </b2b-inputbox>
+
+                    <b2b-row container-body *ngIf="errorText_rooms">
+                        <b2b-label row-body text="0 Is Not Accepted And MAX Number Is 10000"  backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+                    </b2b-row>
+                    <!-- <b2b-row container-body *ngIf="errorKeys">
+                        <b2b-label row-body text="Enter  Room?Keys" *ngIf="vendorDetail.number_of_room_key == 0  ?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="11px"></b2b-label>
+                    </b2b-row> -->
+                </b2b-container>
+                
+            </b2b-row>
+
+
+            <!-- Address -->
+
+            <b2b-row class="rowsize" container-body backgroundTheme='--color-white' borderRadius="10px" boxShadow="0 0 5px darkgrey" margin="0 30px 0px 30px">
+                <b2b-drawer-list-tile row-body class="color" [required]="true" text="Address" [active]="false" [isExpand]="true" width="100%" (click)="addressError1()">    
+                    <b2b-container list-child [property]="{height:'100%',padding:'0 26px 26px 26px'}">
+                        <b2b-inputbox container-body textTransform="capitalize" [twoInputFeild]="true" [readOnly]="false" [value]="vendorDetail.Street_1" (onChange)="vendorDetail.Street_1 = $event"  width="100%" height="40px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Street" colorTheme="--color-black" [popupOption]="false" position="right"  triggerBackgroundTheme="--color-dark-grey" triggerColorTheme="--color-white" [border]="vendorDetailVadidation.Country ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" [title]="vendorDetailVadidation.Country ? '' : 'Enter the type of industry'">
+                        </b2b-inputbox>
+                        <b2b-row container-body *ngIf="errorText" padding="0 0 0 0px">
+                            <b2b-label row-body text="Enter Your Street" *ngIf="vendorDetail.Street_1 =='' ?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+                        </b2b-row>
+                        <b2b-spacer container-body height="15px"></b2b-spacer>
+    
+                        <b2b-inputbox container-body [twoInputFeild]="true"  [readOnly]="false" [value]="vendorDetail.Street_2" textTransform="capitalize" (onChange)="vendorDetail.Street_2 = $event"  width="100%" height="40px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Street" colorTheme="--color-black" [popupOption]="false" position="right"  triggerBackgroundTheme="--color-dark-grey" triggerColorTheme="--color-white" [border]="vendorDetailVadidation.Country ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" [title]="vendorDetailVadidation.Country ? '' : 'Enter the type of industry'">
+                        </b2b-inputbox>
+                        <!-- <b2b-row container-body *ngIf="errorText" padding="0 0 0 0px">
+                            <b2b-label row-body text="Enter your street" *ngIf="vendorDetail.street =='' ?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+                        </b2b-row> -->
+                        <b2b-spacer container-body height="15px"></b2b-spacer>
+    
+                        <b2b-inputbox container-body [twoInputFeild]="true" [readOnly]="true" [value]="vendorDetail.Country" (onChange)="vendorDetail.Country = $event" height="40px" backgroundTheme="--color-dim-white" dropdownWidth="100%" borderRadius="var(--table-radius)" placeholder="Country" colorTheme="--color-black" [popupOption]="viewHotelDetailes.Hotel_Name_id != '' ? false : true" position="right"  triggerBackgroundTheme="--color-dark-grey" triggerColorTheme="--color-white" [border]="vendorDetailVadidation.Country ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" [title]="vendorDetailVadidation.Country ? '' : 'Enter the type of industry'">
+                            <input #search search type="text" placeholder="Search" [(ngModel)]="filterData"  (ngModelChange)="filterData =$event">
+                            <ng-container popup-body *ngFor="let country of listcountry | searchFilter : filterData" >
+                                <b2b-list-tile  [title]="country.name"  (tileClicked)="onCountrySelected(country)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                            </ng-container>
+                        </b2b-inputbox>
+    
+                        <b2b-row container-body *ngIf="errorText" padding="0 0 0 0px">
+                            <b2b-label row-body text="Select Country" *ngIf="vendorDetail.Country =='' ?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+                        </b2b-row>
+                        <b2b-spacer container-body height="15px"></b2b-spacer>
+    
+                        <b2b-inputbox container-body [twoInputFeild]="true" [readOnly]="true" [value]="vendorDetail.state_full_name" dropdownWidth="100%" (onChange)="vendorDetail.state_full_name = $event"  width="100%" height="40px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="state" colorTheme="--color-black" [popupOption]="viewHotelDetailes.Hotel_Name_id != '' ? false : true" position="right"  triggerBackgroundTheme="--color-dark-grey" triggerColorTheme="--color-white" [border]="vendorDetailVadidation.State ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" [title]="vendorDetailVadidation.State ? '' : 'Enter the type of industry'">
+                            <input #search search type="text" *ngIf="vendorDetail.Country !=''?true:false" placeholder="Search" [(ngModel)]="stateData"  (ngModelChange)="stateData =$event">
+                            <ng-container popup-body *ngFor="let state of listState | searchFilter : stateData | alphatic :'name'">
+                                <b2b-list-tile   [title]="state.name" (tileClicked)="onStateSelected(state)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                            </ng-container>
+                        </b2b-inputbox>
+    
+                        <b2b-row container-body *ngIf="errorText" padding="0 0 0 0px">
+                            <b2b-label row-body text="Select State" *ngIf="vendorDetail.State =='' ?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+                        </b2b-row>
+                        <b2b-spacer container-body height="15px"></b2b-spacer>
+    
+                        <b2b-inputbox container-body [twoInputFeild]="true" [readOnly]="vendorDetail.country == 'United Kingdom' ?false : true" [value]="vendorDetail.City" dropdownWidth="100%"  (onChange)="vendorDetail.City = $event" width="100%" height="40px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="City" colorTheme="--color-black" [popupOption]="viewHotelDetailes.Hotel_Name_id != '' ? false : true" position="right"  triggerBackgroundTheme="--color-dark-grey" triggerColorTheme="--color-white" [border]="vendorDetailVadidation.City ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" [title]="vendorDetailVadidation.City ? '' : 'Enter the type of industry'">
+                            <input #search search type="text" *ngIf="vendorDetail.State !=''?true:false" placeholder="Search" [(ngModel)]="cityData"  (ngModelChange)="cityData =$event">
+    
+                            <ng-container popup-body *ngFor="let city of listCity | searchFilter : cityData" >
+                                <b2b-list-tile   [title]="city.name" (tileClicked)="onStateCity(city.name)" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+                            </ng-container> 
+                        </b2b-inputbox>
+    
+                        <b2b-row container-body *ngIf="errorText" padding="0 0 0 0px">
+                            <b2b-label row-body text="Select City" *ngIf="vendorDetail.City =='' ?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+                        </b2b-row>
+                        <b2b-spacer container-body height="15px"></b2b-spacer>
+    
+                        <b2b-inputbox container-body [twoInputFeild]="true" inputType="text" *ngIf="alphanumeric" [value]="vendorDetail.Zip_Code"  (onChange)="vendorDetail.Zip_Code = $event" width="100%" height="40px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Zip Code" colorTheme="--color-black"  position="right"  triggerBackgroundTheme="--color-light-grey" triggerColorTheme="--color-white" [border]="vendorDetailVadidation.Zip_Code ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" [title]="vendorDetailVadidation.Zip_Code ? '' : 'Enter the type of industry'">
+                        </b2b-inputbox>
+                        <b2b-inputbox container-body [twoInputFeild]="true" inputType="number" *ngIf="numeric" [value]="vendorDetail.Zip_Code" (keypress)="numericOnly($event)"  (onChange)="vendorDetail.Zip_Code = $event" width="100%" height="40px" backgroundTheme="--color-dim-white" borderRadius="var(--table-radius)" placeholder="Zip Code" colorTheme="--color-black"  position="right"  triggerBackgroundTheme="--color-dark-grey" triggerColorTheme="--color-white" [border]="vendorDetailVadidation.Zip_Code ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" [title]="vendorDetailVadidation.Zip_Code ? '' : 'Enter the type of industry'">
+                        </b2b-inputbox>
+    
+                        <b2b-row container-body *ngIf="errorText" padding="0 0 0 0px">
+                            <b2b-label row-body text="Enter PinCode" *ngIf="vendorDetail.Zip_Code =='' ?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+                        </b2b-row>
+                    </b2b-container>
+                </b2b-drawer-list-tile>
+                        
+            </b2b-row>
+            <b2b-row container-body *ngIf="addressError" margin="0 0 0 30px">
+                <b2b-label row-body text="Enter Your Address" *ngIf="vendorDetail.Zip_Code =='' ?true:false" backgroundTheme="none" padding="0" colorTheme="--color-red" fontSize="13px"></b2b-label>
+            </b2b-row>
+          
+            <b2b-spacer container-body height="15px"></b2b-spacer>
+            
+            <b2b-row  class="rowsize" container-body  margin="20px 30px 20px 30px" >
+                <b2b-inputbox class="rowsize" row-body  [value]="vendorDetail.PAN" (onChange)="vendorDetail.PAN = $event" [twoInputFeild]="true" width="80%" height="45px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [border]="vendorDetailVadidation.Zip_Code ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" placeholder="PAN" colorTheme="--color-black"  position="right"  >
+                </b2b-inputbox>
+                <b2b-inputbox class="rowsize" row-body [value]="vendorDetail.GST" (onChange)="vendorDetail.GST = $event" [twoInputFeild]="true"  width="80%" height="45px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [border]="vendorDetailVadidation.Zip_Code ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" placeholder="GST" colorTheme="--color-black"  position="right" >               
+                </b2b-inputbox>
+                <b2b-label row-body text="Validate" backgroundTheme="--color-green" borderRadius="20px"></b2b-label>            
+            </b2b-row>
+            <!-- <b2b-row class="rowsize" container-body  margin="0 30px 160px 30px" >
+                <b2b-inputbox class="rowsize" row-body [value]="vendorDetail.GST" (onChange)="vendorDetail.GST = $event" [twoInputFeild]="true"  width="80%" height="45px" backgroundTheme="--color-white" borderRadius="var(--table-radius)" [border]="vendorDetailVadidation.Zip_Code ? '1px solid var(--color-dark-grey) ' : '2px solid var(--color-red)'" placeholder="GST" colorTheme="--color-black"  position="right" >               
+                </b2b-inputbox>
+                <b2b-label row-body text="Validate" backgroundTheme="--color-green" borderRadius="20px"></b2b-label>            
+            </b2b-row> -->
+
+
+
+            <b2b-row class="rowsize" container-body *ngIf="edit_hotel_details.Hotel_Name_id != '' || viewHotelDetailes.Hotel_Name_id != '' "  position="fixed"  width="100%" positionBottom="8px"   justifyContent="center"  backgroundTheme="" margin="0 0px 0 0px">
+                <b2b-button row-body title="Catalog" (click)="previousCatalog()" width="155px" margin="0 0 0 30px" height="40px" borderColor="--color-dark-grey" borderRadius="10px" backgroundTheme="--color-dark-grey" colorTheme="--color-white"></b2b-button>
+
+                <b2b-button row-body [title]="viewHotelDetailes.Hotel_Name_id != '' ? 'View' : 'Update' " fontSize="18px" (onPressed)="update(vendorDetail.room_Name)"  backgroundTheme="--color-dark-Blue" height="40px" width="180px" borderRadius="10px" margin="0 0 0 20px"></b2b-button> 
+            </b2b-row>       
+            <b2b-row container-body  position="fixed" *ngIf="edit_hotel_details.Hotel_Name_id == '' && viewHotelDetailes.Hotel_Name_id == '' " width="100%" positionBottom="8px"   justifyContent="center"  backgroundTheme="" margin="0 0 0 75px">
+                <b2b-button row-body title="Catalog" (onPressed)="back()"  width="150px" height="40px" borderColor="--color-dark-grey"  borderRadius="10px" backgroundTheme="--color-light-dark" colorTheme="--color-white" ></b2b-button>
+
+                <b2b-button row-body title="Continue" (onPressed)="register()" [apiSubmitDisable]="true" backgroundTheme="--color-primary" height="40px" width="150px" borderRadius="10px" margin="0 0 0 10px"></b2b-button> 
+            </b2b-row>          
+
+        </b2b-container>
+    </b2b-row>  
+</b2b-container> 
+ 
+ 

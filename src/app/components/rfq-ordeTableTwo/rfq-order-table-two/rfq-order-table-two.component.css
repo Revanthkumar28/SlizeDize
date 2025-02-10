@@ -1,0 +1,12 @@
+:host{
+    width:100%;
+}
+.deletebutton{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 60%;
+  }
+  ::ng-deep .avatar_margin{
+    margin-right: 10px !important;
+}

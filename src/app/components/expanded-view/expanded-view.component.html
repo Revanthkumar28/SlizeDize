@@ -1,0 +1,16 @@
+<b2b-container [property]="{backgroundTheme: '--color-transparent', margin: '5px 0 0 0', borderRadius: '0', padding: '0'}">
+    <b2b-row container-body justifyContent="space-around" backgroundTheme="--color-button-navbar" borderTopLeftRadius="5px" borderTopRightRadius="5px">
+        <ng-container row-body *ngFor="let button of buttons">
+            <b2b-button [title]="button['name']" width="auto" height="35px" [bold]="true" fontSize="0.75rem" padding="20px" [backgroundTheme]="button['name'] == selectedButton ? '--color-white' : '--color-transparent'" borderRadius="3px" [colorTheme]="button['name'] == selectedButton ? ' --color-primary-dark' : '--color-light-dark'" borderRadius="0" borderTopLeftRadius="10px" borderTopRightRadius="10px" (onPressed)="buttonClicked($event)"></b2b-button>
+        </ng-container>
+    </b2b-row>
+    
+    <ng-container container-body [ngSwitch]="selectedButton">
+        <b2b-ordered-products *ngSwitchCase="'Order Cycle'"></b2b-ordered-products>
+        <b2b-all-documents *ngSwitchCase="'All Documents'" style="margin:5px;"></b2b-all-documents>
+        <b2b-specification-warranty *ngSwitchCase="'Specification & Warranty'" [specifcationAndWarrenty]="specifcationAndWarrenty"></b2b-specification-warranty>
+        <b2b-lifecycle-usage-management *ngSwitchCase="'Lifecycle / Usage Management'"></b2b-lifecycle-usage-management>
+        <b2b-comparison-marketplace *ngSwitchCase="'Copilot - Comparison Marketplace'"></b2b-comparison-marketplace>
+        <b2b-add-vendar *ngSwitchCase="'All Vendors'"></b2b-add-vendar>
+    </ng-container>
+</b2b-container>

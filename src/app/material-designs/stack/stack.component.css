@@ -1,0 +1,9 @@
+:host {
+    width: 100%;
+}
+
+div.stack {
+    position: relative;
+    top: 0;
+    left: 0;    
+}

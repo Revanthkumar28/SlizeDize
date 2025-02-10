@@ -1,0 +1,51 @@
+<b2b-draggable-popup container-body positionTop="20%" positionLeft="50%">
+
+
+    <b2b-container draggable-popup [property]="{padding:'20px', border:'1px solid var(--color-toggle-background)'}">
+        <b2b-row container-body>
+            <!-- <b2b-text row-body text="SR -{{base_id}}" fontSize="11px"></b2b-text> -->
+            <b2b-icon row-body icon="close" left="92%" (click)="clocecancelpopup()" top="3px"
+                backgroundTheme="--color-redd" fontSize="16px" colorTheme="--color-white"
+                position="absolute"></b2b-icon>
+            <b2b-icon row-body icon="edit" left="88%"  top="3px"
+                backgroundTheme="--color-primary" fontSize="16px" colorTheme="--color-white"
+                position="absolute"></b2b-icon>
+             <b2b-icon row-body icon="add" left="84%"  top="3px"
+                backgroundTheme="--color-green" fontSize="16px" colorTheme="--color-white"
+                position="absolute"></b2b-icon>   
+        </b2b-row>
+<table container-body>
+    <thead>
+      <tr>
+        <th style="background-color: #e5e0e0;" colspan="4">2024</th>
+      </tr>
+      <tr class="head">
+       
+        <th>Budgeted</th>
+        <th>Spent</th>
+        <th>Budget Remaining</th>
+      </tr>
+
+    </thead>
+    
+    <tbody>
+      <!-- Loop through existing rows -->
+      <ng-container *ngFor="let row of tableData; let i = index">
+       
+        <!-- Display existing rows except "Hotel-Wide Budget(Total)" -->
+        <ng-container *ngIf="row.column1 !== 'Hotel-Wide Budget(Total)'">
+          <tr>
+            <td><input type="number" [(ngModel)]="row.column2"  [disabled]="row.column1 === 'Hotel-Wide Budget(Total)'"></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </ng-container>
+      </ng-container>
+    </tbody>
+   
+    
+  </table><br>
+  <div container-body class="button">
+  <b2b-button title="Submit" width="100px" height="30px" backgroundTheme="--color-primary" (click)="submit()"></b2b-button>
+  </div>
+</b2b-container>

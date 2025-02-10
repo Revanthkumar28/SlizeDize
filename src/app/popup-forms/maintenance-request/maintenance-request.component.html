@@ -1,0 +1,270 @@
+<b2b-row  row-body height="87vh" widths="79vw" zIndex="15" backgroundTheme="--color-dashboard"  flexDirection="column" padding="30px 10px 10px 10px" borderRadius="10px" justifyContent="flex-start" border="1px solid var(--color-toggle-background)" position="fixed"  positionTop="7%" positionLeft="16%">
+    <b2b-icon row-body icon="close" left="97%" (click)="cancel_popup()" top="2%"
+    backgroundTheme="--color-white" fontSize="20px" colorTheme="--color-dark-grey"
+    position="absolute"></b2b-icon>
+    <b2b-text  row-body class="text" fontSize="20px"  [bold]="true" text="Maintenance Request"></b2b-text>
+    <b2b-label *appRoleBasedButton="[275,1]" row-body class="add" [isRounded]="true" height="30px" width="140px" padding="0" backgroundTheme="--color-primary" (click)="open()">
+        <b2b-spacer label-leading width="10px"></b2b-spacer>    
+        <b2b-icon-button label-leading icon="add" width="20px" iconSize="20px" backgroundTheme="--color-drawer-light" [isRounded]="true"></b2b-icon-button>
+        <b2b-spacer label-leading width="10px"></b2b-spacer>
+        <b2b-text label-leading text="New Request" colorTheme="--color-white" fontSize="12px"></b2b-text>
+    </b2b-label>
+    <b2b-spacer row-body height="20px"></b2b-spacer>    
+
+    <b2b-row row-body backgroundTheme="--color-white" padding="30px" flexDirection="column" alignItem="flex-start" height="72vh" widths="70vw" margin="0 0 0 3vw" borderRadius="20px">
+        <b2b-row row-body >
+            <ng-container row-body *ngFor="let button of button_name">
+                <b2b-button [title]="button['name']" boxShadow="0 0 10px lightGrey" borderRadius="3px" [borderBottom]="button['name'] == selectedButton ? '--color-orange' : '--color-white'" [colorTheme]="button['name'] == selectedButton ? '--color-black' : '--color-dark-grey'" padding="5px 10px" margin="10px 10px 15px 0" height="auto" width="auto" (onPressed)="buttonclicked($event)" margin="10px"></b2b-button>
+            </ng-container>
+        </b2b-row>
+        <b2b-spacer row-body height="20px"></b2b-spacer>    
+
+    <!-- service request -->
+        <b2b-row row-body *ngIf="selectedButton == 'Requests' " boxShadow="0 0 10px darkGrey" style="position: relative;" borderRadius="10px"
+        border="2.3px solid var(--color-primary)" padding="5px"overflowY="hidden">
+
+                <b2b-container row-body [property]="{padding:'0',alignItem:'start',overflowX:'auto',overflowY:'auto',maxHeight:'50vh'}">
+                       
+                        <b2b-trow container-body display="flex" colorTheme="--color-drawer-bottom-card" [bold]="true" margin="18px 0 0 0">
+                                <ng-container trow-body *ngFor="let column of maintainRequest">
+                                        <b2b-tdata [title]="column"  flexDirection="column"
+                                                [toolTip]="false" fontSize="11px"
+                                                width="150px"></b2b-tdata>
+                                </ng-container>
+                        </b2b-trow>
+                        
+                
+                        <!-- Value -->
+                        <b2b-trow container-body id="1" *ngFor="let data of completedorder.slice().reverse()" fontSize="10px" display="flex" margin="6px 0 6px 0" colorTheme="--color-black"
+                        backgroundTheme="--color-light-grey" width="null" borderRadius="5px" height="40px"
+                        [showExpand]="false">
+
+                        <b2b-tdata trow-body [title]="data.request_id" width="150px"></b2b-tdata>
+
+                        <b2b-tdata trow-body [title]="data.name" width="150px"></b2b-tdata>
+                        <b2b-tdata trow-body [title]="formatDate(data.created_at)" width="150px"></b2b-tdata>
+
+                        <b2b-tdata trow-body width="150px" (click)="ServiceIMG(data.images)">
+                            <b2b-badge tdata-body height="18px" width="18px" backgroundTheme="--color-green" fontSize="13px" [text]="data.images.length"> 
+                                <ng-container badge-body *ngIf="isImage2(data.image); else videoThumbnail">
+                                    <b2b-image  id="image-element" height="2.5vw" width="3.2vw" [image]="data.image"></b2b-image>
+                                </ng-container>
+                                <ng-template badge-body #videoThumbnail>
+                                    <b2b-image  id="image-element" height="2.5vw" width="3.2vw" [image]="defaultVideoThumbnail"></b2b-image>
+                                </ng-template>
+                            </b2b-badge>
+
+                        </b2b-tdata> 
+                
+
+                        <b2b-tdata trow-body [title]="data.room_area" width="150px"></b2b-tdata>
+                        <b2b-tdata trow-body [bold]="true" [title]="data.priority_full" width="150px"></b2b-tdata>
+                        <b2b-tdata trow-body [title]="data.description" width="150px"></b2b-tdata>
+                        <b2b-tdata *appRoleBasedButton="[273]" trow-body [title]="data.work_status" [colorTheme]="data.status == '2' ? '--color-green' : data.status == '3' ? '--color-redd' : '--color-black' " [bold]="true" width="150px"></b2b-tdata>
+
+                        <b2b-tdata *appRoleBasedButton="[274,1]" trow-body  width="150px">
+                            <b2b-drop-down-xaxis tdata-body >
+                                <div select-item style="display: flex; align-items: center;background-color: white;height: 20px; width:90px; padding: 5px; border:1px solid blue ">
+                                    <b2b-text id="selectedValue" [text]="data.work_status" fontSize="11px"></b2b-text>
+                                    <b2b-icon-button style="position: absolute; right: 3px;" width="18px" icon="expand_more" padding="0 0 0 0"
+                                                     
+                                    colorTheme="--color-dark-grey">
+                                    </b2b-icon-button>
+                               </div>
+                                <div dropDown-Items>
+                                    <b2b-list-tile container-body title="Not Started"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('0',data.id,data)"></b2b-list-tile> 
+                                    <b2b-list-tile container-body title="Under process"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('1',data.id,data)"></b2b-list-tile> 
+                                    <b2b-list-tile container-body title="Completed"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('2',data.id,data)"></b2b-list-tile> 
+                                    <b2b-list-tile container-body title="Cancelled"  hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0" (click)="DropDown('3',data.id,data)"></b2b-list-tile> 
+                                    </div> 
+                        </b2b-drop-down-xaxis>
+                        </b2b-tdata>
+                        <b2b-tdata trow-body width="150px">
+                            <b2b-toggle tdata-body  (onChange)="togglePost(data.Hotel_Name_id,data.id)"></b2b-toggle>
+                        </b2b-tdata>
+
+                        </b2b-trow>
+                </b2b-container>
+        </b2b-row>
+
+
+         <!-- service request history -->
+         <b2b-row row-body *ngIf="selectedButton == 'History' " boxShadow="0 0 10px darkGrey" style="position: relative;" borderRadius="10px"
+         border="2.3px solid var(--color-primary)" padding="5px"overflowY="hidden">
+ 
+                 <b2b-container row-body [property]="{padding:'0',alignItem:'start',overflowX:'auto',overflowY:'auto',maxHeight:'50vh'}">
+                        
+                         <b2b-trow container-body display="flex" colorTheme="--color-drawer-bottom-card" [bold]="true" margin="18px 0 0 0">
+                                 <ng-container trow-body *ngFor="let column of maintainRequestHistory">
+                                         <b2b-tdata [title]="column"  flexDirection="column"
+                                                 [toolTip]="false" fontSize="11px"
+                                                 width="155px"></b2b-tdata>
+                                 </ng-container>
+                         </b2b-trow>
+                         
+                 
+                         <!-- Value -->
+                         <b2b-trow container-body id="1" *ngFor="let data of maintainhistory.slice().reverse()" fontSize="10px" display="flex" margin="6px 0 6px 0" colorTheme="--color-black"
+                         backgroundTheme="--color-light-grey" width="null" borderRadius="5px" height="40px"
+                         [showExpand]="false">
+ 
+                         <b2b-tdata trow-body [title]="data.request_id" width="155px"></b2b-tdata>
+ 
+                         <b2b-tdata trow-body [title]="data.name" width="155px"></b2b-tdata>
+                         <b2b-tdata trow-body [title]="formatDate(data.created_at)" width="150px"></b2b-tdata>
+
+                         <b2b-tdata trow-body width="155px" (click)="ServiceIMG(data.imagearray)">
+                            <b2b-badge tdata-body height="18px" width="18px" backgroundTheme="--color-green" fontSize="13px" [text]="data.imagearray.length"> 
+                                <ng-container badge-body *ngIf="isImage2(data.image); else videoThumbnail">
+                                    <b2b-image  id="image-element" height="2.5vw" width="3.2vw" [image]="data.image"></b2b-image>
+                                </ng-container>
+                                <ng-template badge-body #videoThumbnail>
+                                    <b2b-image  id="image-element" height="2.5vw" width="3.2vw" [image]="defaultVideoThumbnail"></b2b-image>
+                                </ng-template>
+                            </b2b-badge>
+ 
+                         </b2b-tdata> 
+                 
+ 
+                         <b2b-tdata trow-body [title]="data.room_area" width="155px"></b2b-tdata>
+                         <b2b-tdata trow-body [title]="data.priority_full" width="155px"></b2b-tdata>
+                         <b2b-tdata trow-body [title]="data.description" width="155px"></b2b-tdata>
+                         <b2b-tdata trow-body [title]="data.work_status" [colorTheme]="data.status == '2' ? '--color-green' : data.status == '3' ? '--color-redd' : '--color-black' " [bold]="true" width="155px"></b2b-tdata>
+
+                       
+                       
+                         </b2b-trow>
+                 </b2b-container>
+         </b2b-row>
+
+
+    
+    </b2b-row>
+
+</b2b-row>
+
+
+    <!-- service form -->
+    <b2b-draggable-popup container-body *ngIf="openform" positionTop="3%" class="blur-overlay">
+        <b2b-container draggable-popup [property]="{backgroundTheme: '',flex:1,padding:'10px 0 0 5px'}">
+            <b2b-row container-body>
+                <b2b-container row-body
+                    [property]="{backgroundTheme: '--color-white',border:'1px solid var(--color-toggle-background)',flex:1,padding:'10px 30px 30px 30px'}">
+                    <b2b-row container-body>
+                        <!-- <b2b-text row-body text="SR -{{base_id}}" fontSize="11px"></b2b-text> -->
+                        <b2b-icon row-body icon="close" left="92%" (click)="closepopup()" top="5%"
+                            backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+                            position="absolute"></b2b-icon>
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"> </b2b-spacer>
+                    <b2b-row container-body >
+                        <b2b-text row-body class="Heading" text="Maintenance Request" fontSize="13px" [bold]="true"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"> </b2b-spacer>
+                    <b2b-row container-body>
+                        <b2b-inputbox row-body [value]="maintence.rooms"
+                       (onChange)="maintence.rooms=$event" inputboxPadding="0 0 0 10px"
+                       border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                       inputName="Room Number/Area" titleWidth="215px" position="right" fontSize="13px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                       [required]="true" [errorMsg]="isSRrequiredData == true && maintence.rooms == '' ? 'This Feild Is Required':'' "
+                       placeholder="Room No. 345 / Lobby"></b2b-inputbox>
+                   </b2b-row>
+                   <b2b-spacer container-body height="18px"> </b2b-spacer>
+                   <b2b-row container-body>
+                    <b2b-inputbox row-body [value]="maintence.description"
+                    (onChange)="maintence.description=$event" inputboxPadding="0 0 0 10px"
+                    border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+                    inputName="Issue/Remarks" titleWidth="215px" position="right" fontSize="13px" [bold]="true" width="380px" height="35px" flexDirection="row" 
+                    [required]="true" [errorMsg]="isSRrequiredData == true && maintence.description == '' ? 'This Feild Is Required':'' "
+                    placeholder="TV Cracked / Water spill"></b2b-inputbox>
+                   </b2b-row>
+                   <b2b-spacer container-body height="10px"> </b2b-spacer>
+
+                    <b2b-row container-body>
+                        <b2b-text row-body text="Pictures /Videos" [required]="true" fontSize="12px" [bold]="true"></b2b-text>
+                        <b2b-spacer row-body [flex]="2"></b2b-spacer>
+                        <div row-body style="margin:0 0 0 90px">
+                            <input style="width:65%" type="file" (change)="serviceRequestImage($event)" accept="image/*,video/*" multiple>
+                            <b2b-text  *ngIf="isSRrequiredData == true && uploadImage.length <= 0" text="This Feild Is Required" fontSize="10px" colorTheme="--color-red" [bold]="true"></b2b-text>
+                            <b2b-row margin="5px 0 0 0">
+                                <div row-body *ngFor="let file of uploadImage" style="display: inline-block; margin-right: 5px;">
+                                    <ng-container *ngIf="file.type.startsWith('image'); else videoThumbnail">
+                                        <img [src]="file.src" alt="Uploaded Image" width="40px">
+                                    </ng-container>
+                                    <ng-template #videoThumbnail>
+                                        <img [src]="defaultVideoThumbnail" alt="Uploaded Video" width="40px">
+                                    </ng-template>
+                                </div>
+                            </b2b-row>
+                        </div>
+                    </b2b-row>
+                    
+    
+                    <b2b-spacer container-body height="18px"> </b2b-spacer>
+                        <b2b-row container-body>
+                           <b2b-inputbox row-body [popupOption]="true" [value]="maintence.priorityname"
+                             alignItem="start" popupAlignItem="flex-start"
+                            inputName="Priority" titleWidth="215px" position="right" fontSize="13px" [bold]="true"  width="380px" height="35px" flexDirection="row" 
+                            inputboxPadding="0 0 0 10px" border="2px solid var(--color-light-grey)"
+                            [required]="true" [errorMsg]="isSRrequiredData == true && maintence.priorityname == '' ? 'This Feild Is Required':'' "
+                            [twoInputFeild]="true" placeholder="Choose Priority" popupOverflow="hide">
+    
+                            <b2b-list-tile popup-body *ngFor="let i of mr_priorit" colorTheme="--color-black" height="30px" hoverTheme="--color-dark-grey" title="{{i.Name}}" margin="5px"
+                                (click)="select(i.Name , i.value)" fontSize="14px"></b2b-list-tile>
+    
+                                
+                        </b2b-inputbox>
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"> </b2b-spacer>
+                    <!-- <b2b-row container-body>
+                        <b2b-text row-body text="Requested By" fontSize="12px" [bold]="true"></b2b-text>
+                        <b2b-spacer row-body width="30px"></b2b-spacer>
+                        <b2b-text row-body text="{{i.name | titlecase}}" *ngFor="let i of user_name"
+                            fontSize="12px"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="10px"> </b2b-spacer>
+                    <b2b-row container-body>
+                        <b2b-text row-body text="Requested On" fontSize="12px" [bold]="true"></b2b-text>
+                        <b2b-spacer row-body width="30px"></b2b-spacer>
+                        <b2b-text row-body text=" {{dateString}}" fontSize="12px"></b2b-text>
+                    </b2b-row>
+                    <b2b-spacer container-body height="15px"> </b2b-spacer> -->
+                    <b2b-row container-body justifyContent="center">
+                        <b2b-button row-body width="150px" hoverTheme="--color-toggle-background"  title="Submit For Approval" 
+                            (click)="submit()" height="30px" backgroundTheme="--color-green"
+                            colorTheme="--color-white">
+                        </b2b-button>
+                    </b2b-row>
+                </b2b-container>
+            </b2b-row>
+        </b2b-container>
+    </b2b-draggable-popup>
+<!-- image popup -->
+ <!-- draggable-popup for images in service request -->
+ <b2b-draggable-popup *ngIf="serviceimg" positionTop="20%" positionLeft="50%">
+    <b2b-container draggable-popup [property]="{backgroundTheme: '--color-white', height:'65vh',width1:'39vw',padding:'10px'}">
+        <b2b-icon container-body icon="close" left="92%" (click)="closeimg()" top="2%"
+            backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+            position="absolute"></b2b-icon>
+        <div container-body>
+            <b2b-icon *ngIf="currentImageIndex > 0" icon="arrow_circle_left" [isRounded]="true" left="1%" top="45%"
+                backgroundTheme="--color-white" fontSize="30px" colorTheme="--color-dark-grey"
+                position="absolute" (click)="previousImage()"></b2b-icon>
+
+            <ng-container *ngIf="isImage(serviceImages[currentImageIndex]); else videoTemplate">
+                <b2b-image id="image-element" height="400px" width="400px" margin="15px 0 0 0"
+                    [image]="serviceImages[currentImageIndex]"></b2b-image>
+            </ng-container>
+            <ng-template #videoTemplate>
+                <video id="video-element" height="400px" width="400px" margin="15px 0 0 0" controls>
+                    <source [src]="serviceImages[currentImageIndex]" type="video/mp4">
+                    <!-- Your browser does not support the video tag. -->
+                </video>
+            </ng-template>
+
+            <b2b-icon *ngIf="currentImageIndex < serviceImages.length - 1" icon="arrow_circle_right" [isRounded]="true" left="93%" top="45%"
+                backgroundTheme="--color-white" fontSize="30px" colorTheme="--color-dark-grey"
+                position="absolute" (click)="nextImage()"></b2b-icon>
+        </div>
+    </b2b-container>
+</b2b-draggable-popup>

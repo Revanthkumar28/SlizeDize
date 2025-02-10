@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="row">
+    <div class="tree" [style]="adjustwidth ">
+      <ul>
+        <ng-container *ngFor="let node of treeData">
+          <ng-template [ngTemplateOutlet]="recursiveList" [ngTemplateOutletContext]="{ $implicit: node }"></ng-template>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<ng-template #recursiveList let-node>
+  <li>
+    <a>
+      <div style="display: flex; flex-direction: row; cursor: pointer;">
+        <img [src]="node.image" alt="{{ node.name }}">
+        <div style="display: flex; flex-direction: column; margin: 0 0 0 8px; text-align: start;">
+          <span>{{ node.name }}</span>
+          <span>{{ node.title }}</span>
+          <span>{{'Id:'+ node.key+' '+(node.parent !=0 ? 'Boss:'+ node.parent:''  ) }}</span>
+        </div>
+      </div>
+    </a>
+    <ng-container *ngIf="node.children && node.children.length">
+      <ul>
+        <ng-container *ngFor="let child of node.children">
+          <ng-template [ngTemplateOutlet]="recursiveList"
+            [ngTemplateOutletContext]="{ $implicit: child }"></ng-template>
+
+        </ng-container>
+      </ul>
+    </ng-container>
+  </li>
+</ng-template>
+
+<b2b-draggable-popup *ngIf="openuser" container-body positionTop="20%" positionLeft="50%">
+  <b2b-row draggable-popup flexDirection="column" backgroundTheme="--color-white" height="27vh" width="25vw"
+    padding="15px" border='2px solid var(--color-toggle-background)' borderRadius="20px">
+    <b2b-spacer row-body height="15px"></b2b-spacer>
+
+    <b2b-inputbox row-body inputName="Name" [popupOption]="false" textTransform="capitalize" [value]="username"
+      (onChange)="username = $event" fontSize="12px" [bold]="true" width="100%" height="60px" flexDirection="column"
+      inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+      [twoInputFeild]="true" placeholder="Name">
+    </b2b-inputbox>
+    <b2b-spacer row-body height="15px"></b2b-spacer>
+
+    <b2b-inputbox row-body inputName="Boss" [popupOption]="false" textTransform="capitalize" [value]="userboss"
+      (onChange)="userboss = $event" fontSize="12px" [bold]="true" width="100%" height="60px" flexDirection="column"
+      inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)"
+      [twoInputFeild]="true" placeholder="Boss">
+    </b2b-inputbox>
+    <b2b-spacer row-body height="22px"></b2b-spacer>
+
+    <b2b-button row-body title="Submit" (click)="openuser = false" height="30px" width="130px"
+      backgroundTheme="--color-primary"></b2b-button>
+
+  </b2b-row>
+</b2b-draggable-popup>
+
+<b2b-inputbox class="input" [required]="true" inputName="Choose Hotel" [popupOption]="true" textTransform="capitalize"
+  [value]="hotel_name" fontSize="12px" [bold]="true" width="200px" height="60px" flexDirection="column"
+  inputboxPadding="0 0 0 10px" popupOverflow="auto" border="2px solid var(--color-light-grey)" [twoInputFeild]="true"
+  placeholder="Choose Hotel">
+  <ng-container popup-body *ngFor="let i of hotels">
+    <b2b-list-tile [title]="i.Hotel_Name" (click)="getInput(i.Hotel_Name,i.Hotel_Name_id)"
+      hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px"
+      margin="2px 0"></b2b-list-tile>
+  </ng-container>
+</b2b-inputbox>

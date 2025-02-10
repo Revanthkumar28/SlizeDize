@@ -1,0 +1,368 @@
+<!-- loader  -->
+<div class="loader-" style="top:55%;" *ngIf="isLoader == true && expandTable.length === 0"></div>
+<!-- loader  -->
+
+<div class="noRequest" *ngIf="isLoader == false && expandTable.length === 0">No Request</div>
+
+<b2b-container [property]="{padding:'0',alignItem:'start',justifyContent:'start'}">
+
+  <!-- Total Count -->
+  <b2b-row container-body>
+    <b2b-row row-body [width]="count.width" *ngFor="let count of totalValue" colorTheme="--color-primary"
+      border="1px solid grey" margin="10px" padding="5px" borderRadius="5px" fontSize="12px">
+      <b2b-tdata row-body [title]="count.TOTAL"></b2b-tdata>
+      <b2b-spacer row-body width="10px"></b2b-spacer>
+      <b2b-tdata row-body title="{{count.Total_Quantity}}"></b2b-tdata>
+    </b2b-row>
+  </b2b-row>
+
+  <!-- <b2b-button container-body title="Reload" backgroundTheme="--color-green" width="70px" height="30px" (click)="reloadRfq()"></b2b-button> -->
+
+  <b2b-row container-body boxShadow="0 0 5px darkGrey">
+    <b2b-container row-body [property]="{padding:'0',backgroundTheme:'--color-light-grey'}">
+      <b2b-row container-body>
+        <!-- Heading -->
+        <b2b-trow row-body [column]="catelogColumnSpacing" margin="0" position="sticky" top="0" height="50px"
+          backgroundTheme="--color-light-grey" colorTheme="--color-drawer-bottom-card" [bold]="true">
+          <ng-container trow-body *ngFor="let column of catelogTable">
+            <b2b-tdata [title]="column" width="100%" fontSize="12px"></b2b-tdata>
+          </ng-container>
+        </b2b-trow>
+      </b2b-row>
+
+      <!-- Rfq listed -->
+      <b2b-row container-body *ngFor="let data of expandTable.slice().reverse()">
+        <b2b-trow row-body *ngIf="selectedTable == '' || selectedTable == data.mv_id " [HoverBoxShadow]="true"
+          [id]="data.mv_id" [isExpanded]="selectedTable == data.mv_id" [column]="catelogColumnSpacing" fontSize="12px"
+          colorTheme="--color-black"
+          [backgroundTheme]=" data.isResponse == 1 ? ' --color-lighter-green' : '--color-white' "
+          borderRadius="var(--table-radius)" height="40px" [hoverExpand]="Roleexpand" (onExpand)="isLoggedIn ?tableExpand($event):'' "
+          (click)="isLoggedIn? mvId(data):'' ">
+
+          <!-- <b2b-tdata trow-body width="100%" fontSize="9px">
+            <b2b-text tdata-body fontSize="9px"
+              [text]="data.rfq_id"></b2b-text>
+          </b2b-tdata> -->
+          <b2b-tdata trow-body title="{{data.PR_id}}"></b2b-tdata>
+          <b2b-tdata trow-body [title]="data.user_name + '('+ data.department_name + ')' "></b2b-tdata>
+
+          <b2b-tdata trow-body title="{{price_symbol}} 100"></b2b-tdata>
+          <b2b-tdata trow-body [title]="data.riquredQty"></b2b-tdata>
+          <b2b-tdata trow-body title="{{data.case_quantity ? data.case_quantity :'-' }}"></b2b-tdata>
+
+          <b2b-tdata trow-body title="{{price_symbol}} {{data.approximate_price? data.approximate_price :'-' }}"></b2b-tdata>
+          <b2b-tdata trow-body title="{{price_symbol}} {{data.approximate_shipping_cost ? data.approximate_shipping_cost :'-' }}"></b2b-tdata>
+          <b2b-tdata trow-body
+            title="{{price_symbol}} {{data.approximate_price ? (+data.approximate_price) + (+data.approximate_shipping_cost)  : 0}}"></b2b-tdata>
+          <b2b-tdata trow-body [title]="data.requested_on"></b2b-tdata>
+          <b2b-tdata trow-body [title]="data.vednor"></b2b-tdata>
+
+          <b2b-tdata trow-body [title]="data.reason? data.reason:'-' "></b2b-tdata>
+          <b2b-tdata *ngIf="isLoggedIn" trow-body [title]="data.remarks ? data.remarks:'-' "></b2b-tdata>
+          <b2b-tdata *ngIf="!isLoggedIn" trow-body  >
+            <b2b-toggle tdata-body  (onChange)="toggleClick(data)"></b2b-toggle>
+        </b2b-tdata>
+        </b2b-trow>
+      </b2b-row>
+
+    </b2b-container>
+  </b2b-row>
+
+  <!---   table  -->
+  <b2b-row container-body *ngIf="selectedTable != '' " position="relative" height="80vh" alignItem="stretch"
+    padding="20px 0 0 0">
+
+    <b2b-container row-body
+      [property]="{borderRadius: '0',margin:'0 5px 0 0',width:'auto',padding: '0', rootHeight: 'auto', height: '100%', alignItem: 'flex-start'}">
+
+      <b2b-container container-body [property]="{padding:'0px',height:'4.3rem'}">
+
+      </b2b-container>
+
+      <ng-container container-body>
+        <b2b-trow border="2px solid var(--color-light-grey)" colorTheme="--color-black" height="100%"
+          style="height:'100%'" width="130px" column="1*1fr" margin="0 0 0 0">
+          <b2b-tdata trow-body *ngFor="let specData of specificationDatas.items"
+            borderBottom="3px solid var(--color-light-grey)" height="100%" fontSize="9px" [bold]="true"
+            [title]="specData['key']"></b2b-tdata>
+        </b2b-trow>
+      </ng-container>
+    </b2b-container>
+
+    <ng-container row-body>
+      <ng-container *ngFor="let i of vendorQuoted.vendorArray; let x=index">
+        <b2b-container style="margin: 0 10px 0 0;border-radius: 15px;"
+          [style.border]="selectVedorIdForOrder == x ? '2px solid var(--color-green)' : '2px solid var(--color-light-grey)' "
+          [property]="{padding:'0',position:'relative',rootHeight: 'auto' ,height: '100%',width:'300px'}">
+
+          <!--- Table icon container -->
+          <ng-container container-body>
+            <b2b-container [property]="{padding:'0px',height:'4.3rem'}">
+              <b2b-row container-body [style]="i.value" padding="10px" width="auto" justifyContent="center">
+                <b2b-text row-body [text]="i['heading']" fontSize="12px" [bold]="true"
+                  colorTheme="--color-white"></b2b-text>
+              </b2b-row>
+
+              <!-- company name -->
+              <b2b-row container-body backgroundTheme="--color-lighter-green" padding="5px" height="35px">
+                <!-- <ng-container row-body *ngFor="let img of vendor_image_arr">
+                <b2b-image row-body *ngIf="i.vendor_id == img.vendor_id" [image]="img.vendor_product_images[0]" width="30px" backgroundTheme="--color-white" padding="0 5px 0 5px"></b2b-image>
+              </ng-container> -->
+                <b2b-spacer row-body width="20px"></b2b-spacer>
+                <b2b-text row-body padding="0 0 0 2px" [text]="i.companyName" fontSize="11px" [bold]="true"></b2b-text>
+                <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                <!-- <b2b-button row-body title="Compare" (click)="compare()" backgroundTheme="--color-yellow" colorTheme="--color-black" width="70px" height="30px" ></b2b-button> -->
+                <b2b-spacer row-body width="4px"></b2b-spacer>
+                <ng-container row-body *appRoleBasedButton="[190,1]">
+                  <b2b-button *ngIf="i.vendor_response" title="Negotiate" [isNogoLoader]="toggleIndex == x"
+                    (click)="negotiateData(i,vendorQuoted.data,x)"
+                    [backgroundTheme]="i.negotiations == '2' ? '--color-green' : '--color-yellow' "
+                    colorTheme="--color-black" width="80px" height="30px"></b2b-button>
+                </ng-container>
+
+                <b2b-spacer row-body width="5px"></b2b-spacer>
+                <ng-container row-body *appRoleBasedButton="[191,1]">
+                  <b2b-tdata *ngIf="i.vendor_response" [toolTip]="true" toolTipName="Download Quatation"
+                    (click)="downloadpdf(i.id)">
+                    <b2b-icon tdata-body icon="download"></b2b-icon>
+                  </b2b-tdata>
+                </ng-container>
+
+              </b2b-row>
+            </b2b-container>
+
+            <div container-body *ngIf="vendorQuoted.data.length == 0 " style="position: absolute;top:50%;">
+              <div>Not response </div>
+            </div>
+
+            <!-- VENDOR RESPONCE ...................... -->
+            <ng-container container-body *ngFor="let s of vendorQuoted.data">
+              <ng-container *ngIf="i.vendor_id == s.vendorId">
+                <b2b-trow *ngFor="let specData of s.item"
+                  (click)="selectVedorForOrder(x,s.product_id,s.mv_id,s.vendorId,specData,i)" position="relative"
+                  colorTheme="--color-black" height="100%" style="height:'100%'">
+                  <b2b-tdata trow-body [title]="specData['RFQ_Number']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData.Hotel_Name" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['location']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['vender_ref_num'] ? specData['vender_ref_num'] : '-' "
+                    height="100%" borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body height="100%" borderBottom="3px solid var(--color-light-grey)"
+                    color="--color-black-grey" fontSize="11px">
+                    <a tdata-body target="blank" href="" (click)="openLink_brand(specData.products_id)">View-spec</a>
+                  </b2b-tdata>
+
+                  <b2b-tdata trow-body height="100%" borderBottom="3px solid var(--color-light-grey)"
+                    color="--color-black-grey" fontSize="11px">
+                    <a tdata-body target="blank" href=""
+                      (click)="openLink_brand(specData.vendor_product_id)">{{specData['vendor_sku'] }}</a>
+                  </b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['initialQuatity']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['qtyQuoted']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['box_quantity']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['box_items1']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+
+                  <b2b-tdata trow-body [title]="specData['before_required_date']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['vendor_shipping_date']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['trasitTime']" [colorTheme]="specData['transitColor']"
+                    height="100%" borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['ETA']" [colorTheme]="specData['checkETA']"
+                    [bold]="specData['checkETA'] ? true: false " height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+
+                  <b2b-tdata trow-body [title]="price_symbol + specData['costPiece']" [colorTheme]="specData['color']"
+                    height="100%" borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+
+                  <b2b-tdata trow-body [title]="specData['product_total']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['sales_tax_gst_per']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['total_sales_gst']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['shipping_per']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['shippingCost']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['Shiping_Sales_Tax_per']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['Shiping_Sales_Tax']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['totalAmount']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                  <b2b-tdata trow-body [title]="specData['payment_terms'] != null ? specData['payment_terms'] : '-'"
+                    height="100%" borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+
+                  <b2b-tdata trow-body [title]="specData['remarksVendor']" height="100%"
+                    borderBottom="3px solid var(--color-light-grey)" color="--color-black-grey"
+                    fontSize="11px"></b2b-tdata>
+                </b2b-trow>
+              </ng-container>
+
+
+            </ng-container>
+
+          </ng-container>
+
+          <!-- <b2b-dropdown container-body style="position: absolute; bottom: -40px;" popupHeight="auto">
+          <b2b-label dropdown-selector  height="30px"  padding="0 5px 0 0" backgroundTheme="--color-green">
+          <b2b-spacer label-leading width="10px"></b2b-spacer>
+          <b2b-text label-leading text="Award Order" [bold]="true" colorTheme="--color-white" fontSize="11px"></b2b-text>
+          <b2b-spacer label-leading width="10px"></b2b-spacer>    
+          <b2b-icon-button label-leading icon="expand_more" width="20px" colorTheme="--color-black" iconSize="20px" backgroundTheme="--color-white" ></b2b-icon-button>
+        </b2b-label>
+        <b2b-text dropdown-items text="Reason for award" fontSize="11px"></b2b-text>
+      </b2b-dropdown> -->
+
+        <ng-container container-body *ngIf="i.vendor_response">
+          <b2b-dropdown *appRoleBasedButton="[193,194,1]" style="position: absolute; bottom: -40px;"
+          overflow="hidden" [isInsideClickFalsePopup]="false" popupHeight="auto" position="absolute"
+          dropdownTop="-220px">
+          <b2b-label dropdown-selector height="30px" padding="0 5px 0 0"
+            [backgroundTheme]="selectVedorIdForOrder == x ? '--color-green' : '--color-redd'">
+            <b2b-spacer label-leading width="10px"></b2b-spacer>
+            <b2b-text label-leading [text]="selectVedorIdForOrder == x ? 'Awarded' : i.awarded " [bold]="true"
+              colorTheme="--color-white" fontSize="11px"></b2b-text>
+            <b2b-spacer label-leading width="10px"></b2b-spacer>
+            <b2b-icon-button label-leading icon="expand_more" width="20px"
+              colorTheme="--color-black" iconSize="20px" backgroundTheme="--color-white"></b2b-icon-button>
+          </b2b-label>
+
+          <ng-container dropdown-items *ngFor="let d of i.awarded_reasons">
+              <b2b-row >
+                <b2b-choice row-body radioType="checkbox" [checked]="d.IsChecked"
+                  (change)="awardedCheckBox($event,d,i.awarded_reasons)"></b2b-choice>
+                <b2b-text row-body text="{{d.reason}}" fontSize="11px"></b2b-text>
+              </b2b-row>
+          </ng-container>
+
+        </b2b-dropdown>
+        </ng-container>
+          
+
+        </b2b-container>
+      </ng-container>
+
+    </ng-container>
+    <!-- <b2b-button row-body style="position: absolute; bottom: -100px;left: 50%;" (click)="submitOrder()" title="Continue" backgroundTheme="--color-toggle-background" colorTheme="--color-white" width="100px" height="43px" fontSize="14px" borderRadius="var(--global-radius)"></b2b-button> -->
+
+  </b2b-row>
+
+  <b2b-spacer container-body height="100px"></b2b-spacer>
+
+  <b2b-row *ngIf="selectedTable != '' " container-body justifyContent="center" padding="20px  0 0 0">
+    <b2b-button row-body *appRoleBasedButton="[193,1]" title="Schedule" hoverTheme="--color-toggle-background"
+      backgroundTheme="--color-primary" (click)="Schedule_rfq()" colorTheme="--color-white" width="130px" height="43px"
+      fontSize="14px" borderRadius="var(--global-radius)" margin="0 10px 0 0"></b2b-button>
+    <b2b-button row-body *appRoleBasedButton="[194,1]" title="Send Now" hoverTheme="--color-toggle-background"
+      backgroundTheme="--color-primary" (click)="submitOrder()" colorTheme="--color-white" width="130px" height="43px"
+      fontSize="14px" borderRadius="var(--global-radius)"></b2b-button>
+  </b2b-row>
+
+
+</b2b-container>
+
+<b2b-renegotiate-table *ngIf="isNegotiate" [negotiateValue]="negotiateId" (cancelpopup)="isNegotiate = $event"
+  (loader)="toggleIndex = 500"></b2b-renegotiate-table>
+<!-- popup_compare -->
+<b2b-draggable-popup *ngIf="product_compare" container-body positionTop="20%" positionLeft="50%">
+
+  <b2b-container draggable-popup [property]="{backgroundTheme: '',flex:1,padding:'10px 0 0 10px'}">
+
+    <b2b-row container-body>
+      <b2b-container row-body
+        [property]="{backgroundTheme: '--color-lighter-grey',border:'1px solid var(--color-toggle-background)',flex:1,padding:'10px 10px 10px 10px'}">
+
+        <b2b-row container-body>
+          <b2b-text row-body text="Brand Product" fontSize="11px"></b2b-text>
+          <b2b-icon row-body icon="close" left="92%" (click)="clocecancelpopup()" top="3%"
+            backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+            position="absolute"></b2b-icon>
+        </b2b-row>
+        <b2b-spacer container-body height="10px"> </b2b-spacer>
+        <div container-body class="box">
+          <b2b-row container-body width="20vw" flexDirection="column">
+
+            <b2b-image row-body image="assets/chair.jpg" height="200px" width="200px"></b2b-image>
+            <b2b-spacer row-body height="10px"> </b2b-spacer>
+            <b2b-text row-body text="Brand Product" fontSize="11px"></b2b-text>
+
+
+            <b2b-spacer row-body height="10px"> </b2b-spacer>
+            <table row-body>
+              <thead>
+                <tr class="head">
+                  <th colspan="7">Specification</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let row of tableData; let i = index">
+                  <tr>
+                    <td>{{ row.column1 }}</td>
+                    <td>{{ row.column2 }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </b2b-row>
+          <b2b-spacer container-body width="10px"> </b2b-spacer>
+          <b2b-row container-body width="20vw" flexDirection="column">
+
+            <b2b-image row-body image="assets/chair.jpg" height="200px" width="200px"></b2b-image>
+            <b2b-spacer row-body height="10px"> </b2b-spacer>
+            <b2b-text row-body text="Brand Product" fontSize="11px"></b2b-text>
+
+
+            <b2b-spacer row-body height="10px"> </b2b-spacer>
+            <table row-body>
+              <thead>
+                <tr class="head">
+                  <th colspan="7">Specification</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let row of tableData; let i = index">
+                  <tr>
+                    <td>{{ row.column1 }}</td>
+                    <td>{{ row.column2 }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </b2b-row>
+        </div>
+
+
+      </b2b-container>
+    </b2b-row>
+  </b2b-container>
+</b2b-draggable-popup>

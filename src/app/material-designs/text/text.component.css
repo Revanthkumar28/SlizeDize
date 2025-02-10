@@ -1,0 +1,13 @@
+p {
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+* {
+    user-select: none;
+    cursor: pointer;
+} 
+
+p span{
+    color: #EF9A9A;
+}

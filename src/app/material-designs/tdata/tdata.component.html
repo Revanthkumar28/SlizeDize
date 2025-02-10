@@ -1,0 +1,10 @@
+<div class="tdata" [style]="dataStyles" >
+    <p class="title" *ngIf="title" [style]="textStyles" [attr.contenteditable]="contenteditable" (input)="onContentChange($event)" (click)="editableIcon()">{{title}}</p>
+    <p class="title text" *ngIf="title2" [style]="textStyles" >{{title2}}</p>
+
+    <span *ngIf="toolTip" class="tooltiptext">{{toolTipName}}</span>
+
+    <!-- <i class="material-icons" (click)="submitIcon()" *ngIf="doneIcon" >done_outline</i> -->
+
+    <ng-content select="[tdata-body]"></ng-content>
+</div>

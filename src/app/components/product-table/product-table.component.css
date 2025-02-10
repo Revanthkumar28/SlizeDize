@@ -1,0 +1,6 @@
+:host {
+    width: 100%;
+}
+::ng-deep.hover_product:hover{
+    border: 2px solid blue;
+}

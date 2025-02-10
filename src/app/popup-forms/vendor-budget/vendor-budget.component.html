@@ -1,0 +1,116 @@
+<b2b-draggable-popup container-body class="blur-overlay" positionTop="20%" positionLeft="30%">
+  <b2b-container draggable-popup [property]="{padding:'20px',border:'1px solid var(--color-toggle-background)'}">
+    <b2b-row container-body>
+      <!-- <b2b-text row-body text="SR -{{base_id}}" fontSize="11px"></b2b-text> -->
+      <b2b-icon row-body icon="close" left="92%" (click)="clocecancelpopup()" top="3px" backgroundTheme="--color-redd"
+        fontSize="16px" colorTheme="--color-white" position="absolute"></b2b-icon>
+      <b2b-icon *ngIf="type.button !== 'saw'" row-body icon="edit" left="89%" top="3px"
+        backgroundTheme="--color-primary" fontSize="16px" colorTheme="--color-white" position="absolute"></b2b-icon>
+      <b2b-icon *ngIf="type.button !== 'saw'" row-body icon="add" left="86%" (click)="nextYear()" top="3px"
+        backgroundTheme="--color-green" fontSize="16px" colorTheme="--color-white" position="absolute"></b2b-icon>
+    </b2b-row>
+    <table container-body>
+      <thead>
+        <tr class="head">
+          <th>{{year}}</th>
+          <th>Budgeted({{price_symbol}})</th>
+          <th>Spent({{price_symbol}})</th>
+          <th>Budget Remaining({{price_symbol}})</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- Loop through existing rows -->
+        <ng-container *ngFor="let row of tableData1; let i = index">
+          <!-- Display the "Add" button before "Hotel-Wide Budget(Total)" row -->
+          <!-- Display existing rows except "Hotel-Wide Budget(Total)" -->
+          <ng-container *ngIf="row.column1 !== 'Hotel-Wide Budget(Total)'">
+            <tr>
+              <td>
+                <input class="input" type="text" [(ngModel)]="row.column1">
+                <!-- <span >{{row.column1}}</span> -->
+
+              </td>
+              <td><input class="input" type="number" [value]="row.column2" (blur)="disableInput(row)"
+                  (change)="addBudgetTotal($event,row.id,row.amount,row.department_id)"
+                  [disabled]="type.button === 'saw' || row.inputDisabled"></td>
+              <td class="new" (click)="openreport(row)">{{ row.column3 }}</td>
+              <td>{{ row.column4 }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+      <!-- <tr *ngIf=" tableData[tableData.length - 1].column1 === 'Hotel-Wide Budget(Total)' && type.button !== 'saw'">
+    <td >
+      <button style="background-color: rgb(68, 134, 68);width: 60px;font-size: 10px;" (click)="addRow()">Add Row</button>
+      <button style="background-color:#dd1010;margin: 0 0 0 18px;width: 69px;font-size: 10px;" (click)=" deleteRow()">Delete Row</button>
+    </td>
+    <td></td>
+    <td></td>
+  </tr> -->
+      <!-- Always render the "Hotel-Wide Budget(Total)" row at the end -->
+      <tr *ngIf="tableData.length > 0 && tableData[tableData.length - 1].column1 === 'Hotel-Wide Budget(Total)'"
+        [ngStyle]="{'background-color': '#AEAEAE'}">
+        <td>{{ tableData[tableData.length - 1].column1 }}</td>
+        <td>
+          {{ budgeted}}
+        </td>
+        <td>{{ spend_total }}</td>
+        <td>{{  remaining_total }}</td>
+      </tr>
+
+    </table><br>
+    <div container-body class="button">
+      <b2b-button title="Submit" width="100px" height="30px" backgroundTheme="--color-primary"
+        (click)="submit()"></b2b-button>
+    </div>
+  </b2b-container>
+  <div *ngIf="type.button !== 'saw'" draggable-popup class="right" (click)="nextYear()">
+    <div class="rectangle">
+      <p class="next">Next</p>
+    </div>
+    <div class="triangle-right"></div>
+  </div>
+
+  <div *ngIf="type.button !== 'saw'" draggable-popup class="left" (click)="preYear()">
+    <div class="triangle-left"></div>
+    <div class="rectangle2">
+      <p class="next">Previous</p>
+    </div>
+
+  </div>
+</b2b-draggable-popup>
+ <!-- //view report -->
+ <b2b-draggable-popup row-body *ngIf="details" positionTop="0"  zIndex="150" positionLeft="40%">
+  <b2b-row draggable-popup height="auto" widths="25vw" backgroundTheme="--color-white" justifyContent="center" flexDirection="column" padding="30px 10px 10px 10px" borderRadius="10px" border="1px solid var(--color-toggle-background) ">
+   <b2b-icon row-body icon="close" left="92%" (click)="details = false" top="2%"
+          backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+          position="absolute"></b2b-icon>
+          <b2b-row row-body >
+              <table row-body>
+                  <thead>
+                      <tr class="head">
+                          <th >Purchase Order Number</th>
+                          <th >Total Amount</th>
+
+                         
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <ng-container *ngFor="let row of loopprice; let i = index">
+                          <tr >
+                             <td class="new" (click)="filterproduct(row.product_id)">{{ row.Id}}</td>
+                             <td>{{row.price}}</td>
+                          </tr>
+                      </ng-container>
+                  </tbody>
+              </table>
+                           
+          </b2b-row>
+         
+  </b2b-row>
+</b2b-draggable-popup>
+
+
+
+<b2b-add-budget *ngIf="add_budget" (cancelpopup)="add_budget = $event"></b2b-add-budget>

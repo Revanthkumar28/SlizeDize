@@ -1,0 +1,63 @@
+div.tdata {
+    height: 100%;
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* display: inline-block; */
+    cursor: pointer;
+}
+
+div.tdata p {
+    margin: 0;
+    
+}
+
+div.tdata i {
+    /* position: absolute; */
+    /* right: -60%; */
+    font-size: 14px;
+    color: green;
+    margin-left: 5px;
+}
+* {
+    user-select: none;
+    /* cursor: pointer; */
+} 
+
+
+/* Tooltip .............................................................................................. */
+/* .tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+} */
+
+/* Define the tooltip text style */
+.tdata .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    bottom: 75%; /* Position the tooltip above the text */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 100;
+
+}
+
+/* Show the tooltip text when hovering over the paragraph */
+.tdata:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    z-index: 100000;
+}
+
+/* Tooltip .............................................................................................. */

@@ -1,0 +1,275 @@
+<b2b-dashboard-body backgroundTheme="--color-dashboard">
+    <b2b-row body-content alignItem="center" alignItem="center" justifyContent="center" height="25px">
+
+        <b2b-container row-body [property]="{padding:'0',backgroundTheme:'none'}">
+            <b2b-row container-body alignItem="center" justifyContent="space-evenly" position="relative">
+                <div row-body>
+                     <b2b-text row-body class="Hotel_name" *ngIf="hotel != ''" style="text-transform: capitalize;" colorTheme="--color-black" text="{{hotel.Hotel_Name}}"
+                    position="absolute" positionLeft="10px" positionTop="0px"></b2b-text>
+                    <b2b-text row-body class="Hotel_name" *ngIf="hotel != ''" style="text-transform: capitalize;" colorTheme="--color-black" fontSize="10px" text="{{hotel.State}} - {{hotel.Country}}"
+                    position="absolute" positionLeft="10px" positionTop="18px"></b2b-text> 
+                </div>
+                    
+                <b2b-icon-button *ngIf="filerproduct" class="filtericon" row-body icon="filter_alt" [toolTip]="true"
+                    toolTipName="Cancel Filter" iconSize="23px" (click)="closefilter()"></b2b-icon-button>
+                <b2b-inputbox *appRoleBasedButton="[153,1]" row-body inputType="multi-search" [twoInputFeild]="true" [value]="search"
+                    (onChange)="filterProducts('name',$event)" [iconClick]="true" icon="search" boxShadow="0 0 5px darkgrey"
+                    placeholder="Search" width="460px" borderRadius="7px" inputSize="11px" height="30px">
+                
+                    <!-- MULTIBLE SEARCH START-->
+                    <b2b-row popup-body *ngIf="searchText.length > 0" alignItem="center" margin="10px 0 0 0" borderRadius="5px"
+                    boxShadow="0 0 10px darkGrey" position="absolute" justifyContent="center"
+                    backgroundTheme="--color-white" zIndex="200" overflowY="auto">
+                        <b2b-container row-body [property]="{width:'460px',alignItem:'flex-start',maxHeight:'80vh'}">
+                            <table class="curser" container-body style="border-collapse: collapse; width: 100%;">
+                                <tbody>
+                                    <tr *ngFor="let search of multipleSearch ; let i = index"
+                                        style="border-bottom: 1px solid var(--color-dark-grey);">
+                                        <ng-container>
+                                            <td
+                                                style="width: 100px;text-align: start; padding: 10px; font-weight: bold; font-size: 13px; background-color: var(--color-light-grey);vertical-align: top; text-align: left;">
+                                                {{ search.type }}
+                                            </td>
+        
+                                            <!-- HOTEL PRODUCTS START -->
+                                            <td *ngIf="search.id == 1" style="padding: 10px;  background-color: white;" >
+                                                <tr *ngFor="let i of search.data | myFilter : searchText : ['name'] ;let inx = index" (click)="open_multiSelectProduct(i)" style="cursor: pointer;border-bottom: 1px solid lightgrey;margin-bottom: 8px;">
+                                                    <td class="t-row"
+                                                        style="padding: 5px; font-weight: bold; font-size: 13px; background-color: white;">
+                                                    <tr>
+                                                        <td
+                                                            style="width: 100px;display: flex;justify-content: space-between;background-color: 'none';">
+                                                            <span>Product Img</span>
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td><img [src]="i.img" width="35px" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style="width: 100px;display: flex;justify-content: space-between;background-color: 'none';">
+                                                            <span>Product Name</span>
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td>{{i.productName}}</td>
+                                                    </tr>
+                                                    </td>
+                                                </tr>
+                                            </td>
+                                            <!-- HOTEL PRODUCTS END -->
+        
+                                            <!-- HOTEL CATAGORY START-->
+                                            <td *ngIf="search.id == 2" style="padding: 10px; background-color: white;">
+                                                <tr *ngFor="let i of search.data | myFilter : searchText : ['name','keyword'] ;let inx = index" (click)="open_multiSelectProduct(i)" style="cursor: pointer;border-bottom: 1px solid lightgrey;margin-bottom: 8px;">
+                                                    <td class="t-row"
+                                                        style="padding: 5px; font-weight: bold; font-size: 13px; background-color: white;">
+                                                    <tr>
+                                                        <td
+                                                            style="width: 100px;display: flex;justify-content: space-between;background-color: 'none';">
+                                                            <span>Product Img</span>
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td><img [src]="i.img" width="35px" /></td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td
+                                                            style="width: 100px;display: flex;justify-content: space-between;background-color: 'none';">
+                                                            <span>Catagoty Name</span>
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td>{{i.catagorytName}}</td>
+                                                    </tr>
+                                                    </td>
+                                                </tr>
+                                            </td>
+                                            <!-- HOTEL CATAGORY END-->
+                                            
+                                        </ng-container>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </b2b-container>
+                    </b2b-row>
+                </b2b-inputbox>
+
+                <!-- <b2b-button row-body *appRoleBasedButton="[154,1]" title="Group-order" height="25px" width="93px" backgroundTheme="--color-green" (click)="grouping_orders()" ></b2b-button>
+                <b2b-button row-body *appRoleBasedButton="[273,274,275,1]" title="Maintenance Request" height="25px" width="150px" backgroundTheme="--color-orange" (click)="openmain()" ></b2b-button> -->
+                <b2b-row *appRoleBasedButton="[154,273,274,275,276,1]" row-body position="relative" width="50px" b2bGestureDetector [detectInsideClicks]="menu_option" (clickedOutside)="outsideElementClicked()">
+                <b2b-icon *ngIf="isLoggedIn" row-body icon="menu" class="tour-group-order tour-maintanence-req" (click)="Menu()"
+                    fontSize="23px" margin="0px 10px 0px 0px"></b2b-icon>
+                    <ng-container row-body *ngIf="menu_option">
+                        <b2b-row flexDirection="column" position="absolute" positionTop="95%"
+                        positionRight="-75%" backgroundTheme="--color-white" zIndex="100"
+                        border="1px solid var(--color-toggle-background) " borderRadius="5px" widths="140px">
+                            <b2b-list-tile row-body *appRoleBasedButton="[154,1]" title="Group-order" hoverTheme="--color-dark-grey"
+                                colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="12px" margin="2px 0"
+                                (click)="grouping_orders()"></b2b-list-tile>
+                            <b2b-list-tile row-body *appRoleBasedButton="[273,274,275,1]" title="Maintenance Request"
+                                hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="30px"
+                                fontSize="12px" margin="2px 0" (click)="openmain()"></b2b-list-tile>
+                            <b2b-list-tile row-body *appRoleBasedButton="[276,1]" title="Chat & Email" hoverTheme="--color-dark-grey" colorTheme="--color-black"
+                                borderRadius="8px" height="30px" fontSize="12px" margin="2px 0"
+                                (click)="openchat()"></b2b-list-tile>
+        
+                        </b2b-row>
+                    </ng-container>
+                </b2b-row>   
+            </b2b-row>
+        </b2b-container>
+    </b2b-row>
+    <b2b-spacer body-content minHeight="5px"></b2b-spacer>
+
+    <b2b-container body-content [property]="{margin:'10px 0 0 0',position:'relative',padding:'0 10px 10px 10px' }">
+        <!--  setting icons popup   -->
+        <b2b-row container-body *ngIf="pichartpopUp" zIndex="18" borderRadius="5px" position="fixed" positionRight="5%"
+            positionTop="10%">
+            <b2b-container row-body [property]="{backgroundTheme: '',flex:1,padding:'20px 0 0 5px'}">
+                <b2b-row container-body>
+                    <b2b-container row-body [property]="{backgroundTheme: '--color-primary',flex:1,padding:'30px'}">
+                        <b2b-row container-body flexDirection="column">
+                            <b2b-icon row-body icon="close" left="92%" (click)="closeButton()" top="10%"
+                                backgroundTheme="--color-white" colorTheme="--color-dark-grey"
+                                position="absolute"></b2b-icon>
+                            <b2b-pie-chart1 row-body></b2b-pie-chart1>
+                            <b2b-pie-chart2 row-body></b2b-pie-chart2>
+                        </b2b-row>
+                    </b2b-container>
+                </b2b-row>
+            </b2b-container>
+        </b2b-row>
+
+        <!-- <b2b-container container-body *ngIf="isProcurementStage" [property]="{backgroundTheme: '--color-white',maxWidth:'65%',position:'fixed',positionTop:'2%',positionRight:'1%',zIndex:'100'}">
+        <b2b-icon container-body icon="close" style="position: absolute;top: 1.5%;right: 1%;" (click)="isProcurementStage = false"></b2b-icon> -->
+        <b2b-procurement-stage container-body *ngIf="isProcurementStage" [hotelid]="Hotel_Name_id"
+            (onPressed)="isProcurementStage = false">
+        </b2b-procurement-stage>
+        <!-- </b2b-container> -->
+
+        <!--  Popup side button  -->
+        <b2b-row container-body flexDirection="column" position="absolute" positionLeft="97%" positionTop="40%"
+            zIndex="11">
+            <b2b-row row-body class="tour-procurement-stage" *appRoleBasedButton="[183,1]">
+                <b2b-tdata row-body [toolTip]="true" toolTipName="Filter">
+                    <b2b-icon-button tdata-body icon="settings" backgroundTheme=" --color-marketplace-accent"
+                        (click)="procurementStage()" borderRadius="4px" colorTheme="--color-white"
+                        margin="0 0 5px 0"></b2b-icon-button>
+                </b2b-tdata>
+            </b2b-row>
+            <b2b-row row-body class="tour-filter-products" *appRoleBasedButton="[184,1]">
+                <b2b-tdata row-body [toolTip]="true" toolTipName="Search">
+                    <b2b-icon-button tdata-body icon="filter_alt" backgroundTheme="--color-drawer-bottom-card"
+                        (click)="fliter()" borderRadius="4px" colorTheme="--color-dark-yellow"
+                        margin="0 0 5px 0"></b2b-icon-button>
+                </b2b-tdata>
+            </b2b-row>
+            <!-- <b2b-row row-body *appRoleBasedButton="[185,1]" (click)="popup()" zIndex="11">
+                <b2b-tdata row-body [toolTip]="true" toolTipName="Chart">
+                    <b2b-icon-button tdata-body icon="add_chart" backgroundTheme="--color-drawer-active"
+                        borderRadius="4px" colorTheme="--color-white" margin="0 0 5px 0"></b2b-icon-button>
+                </b2b-tdata>
+            </b2b-row> -->
+            <ng-container row-body *ngIf="isLoggedIn">
+                <b2b-row class="pointer tour-hotel-budget" *appRoleBasedButton="[186,1]" row-body (click)="vendor_budget()">
+                    <b2b-tdata row-body [toolTip]="true" toolTipName="Budget">
+                        <b2b-image tdata-body image="assets/previewimage.png" backgroundTheme="--color-drawer-active"
+                            width="90%" borderRadius="4px" colorTheme="--color-white" margin="0 0 5px 0"></b2b-image>
+                    </b2b-tdata>
+                </b2b-row>
+            </ng-container>
+          
+            <b2b-row class="pointer tour-payment-history" *appRoleBasedButton="[187,1]" row-body
+                (click)="pending_payment()">
+                <b2b-tdata row-body [toolTip]="true" toolTipName="pending payment">
+                    <b2b-image tdata-body image="assets/calender.png" backgroundTheme="--color-drawer-active"
+                        width="90%" borderRadius="4px" colorTheme="--color-white" margin="0 0 5px 0"></b2b-image>
+                </b2b-tdata>
+            </b2b-row>
+        </b2b-row>
+
+        <!-- <b2b-spacer container-body height="10px"></b2b-spacer> -->
+        <!-- <b2b-container *ngIf="fliterpopUp" container-body [property]="{backgroundTheme: '--color-light-grey', flex: 1, height: 'auto',padding:'0 10px 10px 10px',borderRadius:'10px',borderRight:''}">
+            <b2b-row container-body  >
+                <b2b-container row-body [property]="{padding:'0',backgroundTheme:'',borderRadius:'0px'}">
+                    <ng-container container-body *ngFor="let data of tabledata">
+                       <b2b-trow row-body fontSize="12px"  [column]="catelogColumnSpacing" colorTheme="--color-black"  borderRadius="var(--table-radius)" height="30px"  >
+                          <b2b-tdata trow-body  >
+                            <b2b-choice tdata-body [name]="data['id']" fontSize="11.5px" [checked]="data['checkedStyle']"></b2b-choice> 
+                           </b2b-tdata>
+                          <b2b-tdata trow-body>
+                             <b2b-text tdata-body [text]="data['inputOne']" fontSize="11.5px"></b2b-text>
+                         </b2b-tdata>
+                         <b2b-tdata trow-body>
+                            <b2b-inputbox tdata-body  inputboxPadding="10px" [bold]="false" [value]="data['input']" borderRadius="5px" [popupOption]="true" fontSize="10px" inputSize="10px" margin="0 5px 0 0" height="35px" width="110px"></b2b-inputbox>
+                        </b2b-tdata>
+                        <b2b-tdata trow-body>
+                            <b2b-text tdata-body [text]="data['inputTwo']" fontSize="11.5px"></b2b-text>
+                        </b2b-tdata>
+                        <b2b-tdata trow-body>
+                            <b2b-inputbox tdata-body   [bold]="false" [value]="data['two']"borderRadius="5px" [popupOption]="true" fontSize="10px" inputSize="10px" margin="0 5px 0 0" height="35px" width="110px"></b2b-inputbox>
+                        </b2b-tdata>
+                    </b2b-trow>
+                  </ng-container>
+              </b2b-container>
+            <b2b-container row-body [property]="{backgroundTheme:'',padding:'10px 0 0 10px'}">
+                   <b2b-row container-body >
+                         <b2b-container row-body [property]="{backgroundTheme:'',padding:'0'}">
+                            <b2b-row container-body alignItem="start">
+                               <b2b-text row-body text="New Product added"  fontSize="11.5px"></b2b-text>
+                               <b2b-spacer row-body width="15px"></b2b-spacer>
+                               <b2b-choice row-body radioType="checkbox"   alignItem="start"></b2b-choice>
+                              <b2b-text row-body text="CAPEX Items" fontSize="11.5px"></b2b-text>
+                               <b2b-spacer row-body width="15px"></b2b-spacer>
+                               <b2b-toggle row-body alignItem="start" padding="0 0 10px 0"> </b2b-toggle>
+                                <b2b-text row-body text="OPEX Items" fontSize="11.5px"></b2b-text>
+                               <b2b-spacer row-body width="15px" ></b2b-spacer>
+                               <b2b-toggle row-body alignItem="start" padding="0 0 10px 0" [toggle]="true" ></b2b-toggle>
+                               <b2b-spacer row-body width="25px"></b2b-spacer>
+                               <b2b-label row-body  [isRounded]="true" height="30px" width="80px" padding="0" backgroundTheme="--color-primary">
+                                   <b2b-spacer label-leading width="10px"></b2b-spacer>    
+                                   <b2b-icon-button label-leading icon="add" width="20px" iconSize="20px" backgroundTheme="--color-drawer-light" [isRounded]="true"></b2b-icon-button>
+                                   <b2b-spacer label-leading width="10px"></b2b-spacer>
+                                   <b2b-text label-leading text=Add colorTheme="--color-white" fontSize="12px"></b2b-text>
+                               </b2b-label>
+                            </b2b-row>
+                          </b2b-container>
+                    </b2b-row>
+                    <b2b-row container-body alignItem="start"> 
+                        <b2b-inputbox row-body value="Search" width="100%" borderRadius="7px"  inputSize="11px" height="30px"></b2b-inputbox>
+                        <b2b-spacer row-body width="10px"></b2b-spacer>
+                    </b2b-row>
+                </b2b-container>
+        </b2b-row>
+        </b2b-container> -->
+
+        <b2b-spacer container-body height="10px"></b2b-spacer>
+        <b2b-container container-body
+            [property]="{backgroundTheme: '--color-dashboard', flex: 1, height: '80vh',padding:'0 10px 10px 10px',alignItem:'start'}"
+            [ngStyle]="{'overflow-y': hidescroll ? 'auto' : 'hidden', 'background-color': 'var(--color-dashboard)'}">
+            <b2b-catelog-table *ngIf="isNewProduct != 'new_products' " container-body
+                (cancelfilter)="filerproduct = $event"></b2b-catelog-table>
+
+            <ng-container *ngIf="isNewProduct == 'new_products' " container-body>
+                <b2b-text text="New Products"></b2b-text>
+
+                <b2b-spacer height="20px"></b2b-spacer>
+                <ng-container *ngFor="let i of newProductsData">
+                    <b2b-hotel-card row-body [allhoteldata]="i"></b2b-hotel-card>
+                </ng-container>
+            </ng-container>
+
+        </b2b-container>
+    </b2b-container>
+</b2b-dashboard-body>
+
+<b2b-vendor-budget *ngIf="budget" [type]="budgetType" (cancelpopup)="budget = $event"></b2b-vendor-budget>
+
+<!-- Grouping_orders RFQ,DO,Scheduled Order -->
+<b2b-row class="blur-overlay" height="100vh" *ngIf="grouping">
+    <b2b-group-by row-body (cancelPopup)="grouping = $event"></b2b-group-by>
+</b2b-row>
+<!-- Pendingpayment -->
+<b2b-pending-payment *ngIf="payment" [Hotel_id]="Hotel_Name_id" (cancelPopup)="payment = $event"></b2b-pending-payment>
+<!-- maintenance request -->
+<b2b-maintenance-request *ngIf="openmaintenance" (cancelPopup)="openmaintenance = $event"></b2b-maintenance-request>
+<!-- Chat and email -->
+<b2b-chat-email *ngIf="open_chat" (cancelpopup)="open_chat = $event" screen="owner"></b2b-chat-email>

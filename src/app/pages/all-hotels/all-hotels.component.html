@@ -1,0 +1,48 @@
+<b2b-dashboard-body  backgroundTheme="--color-light-grey">
+    <!-- (AH-1) -->
+    <b2b-heading-panel body-content class="allhotel" title="All Hotels - {{allHotelCount}}" height="22px" fontSize="16px">
+        <b2b-icon-button panel-leading icon="chevron_left" (click)="goBack()" backgroundTheme="--color-primary" [isCurved]="true" colorTheme="--color-white" height="22px" width="23px"></b2b-icon-button>
+        <b2b-label panel-actions *appRoleBasedButton="[152,1]" text="Create New Hotel" [isRounded]="true" backgroundTheme="--color-sky-blue" fontSize="12px" height="34px" padding="5px" (click)="test()" >
+            <b2b-icon-button label-leading icon="add" iconSize="20px" backgroundTheme="--color-drawer-light" [isRounded]="true" height="25px" width="25px"></b2b-icon-button>
+            <b2b-spacer label-leading width="10px"></b2b-spacer>
+        </b2b-label>
+    </b2b-heading-panel>
+    <b2b-spacer body-content minHeight="15px"></b2b-spacer>
+    <b2b-container body-content class="scrollmobile" [property]="{padding:'0'}">
+    
+    <b2b-container container-body [property]="{padding:'5px 20px 5px 30px'}">
+        <b2b-row container-body>
+            <b2b-text row-body text="Filter by" fontSize="16px"></b2b-text>
+        </b2b-row>
+        <b2b-spacer container-body height="5px"></b2b-spacer>
+        <b2b-trow container-body column="3*1fr" height="auto" gap="15px" [mobileview]="true">
+            <b2b-inputbox trow-body dropdownWidth="80%" [twoInputFeild]="true" [readOnly]="true" [value]="filterCountryValue" placeholder="Country" [popupOption]="true" width="100%" border="1px solid var(--color-light-grey)" height="50px" borderRadius="5px">
+                <b2b-list-tile popup-body title="All"  hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="20px" fontSize="14px" margin="2px 0" (click)="All()"></b2b-list-tile>
+                <b2b-list-tile popup-body title="{{i}}" *ngFor="let i of filterCountryArr " hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (click)="filterHotel(i)"></b2b-list-tile>
+                <!-- <b2b-list-tile popup-body title="USA" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile> -->
+            </b2b-inputbox>
+            <b2b-inputbox trow-body dropdownWidth="80%" [twoInputFeild]="true" [readOnly]="true" [value]="filterStateValue" placeholder="State" [popupOption]="true" width="100%" border="1px solid var(--color-light-grey)" height="50px" borderRadius="5px">
+                <b2b-list-tile popup-body title="All" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="20px" fontSize="14px" margin="2px 0" (click)="All()"></b2b-list-tile>
+                <b2b-list-tile popup-body title="{{i}}" *ngFor="let i of filterStateArr" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (click)="filterState(i)"></b2b-list-tile>
+            </b2b-inputbox>
+            <b2b-inputbox trow-body dropdownWidth="80%" [twoInputFeild]="true" [readOnly]="true" [value]="filterBrandValue" placeholder="Brand" [popupOption]="true" width="100%" border="1px solid var(--color-light-grey)" height="50px" borderRadius="5px">
+                <b2b-list-tile popup-body title="All" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="20px" fontSize="14px" margin="2px 0" (click)="All()"></b2b-list-tile>
+                <b2b-list-tile popup-body title="{{i}}" *ngFor="let i of filterBrandArr" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (click)="filterBrand(i)"></b2b-list-tile>
+            </b2b-inputbox>
+            <!-- <b2b-filterby-selection-card trow-body name="Country" [values]="['India', 'USA', 'UK']"></b2b-filterby-selection-card>
+            <b2b-filterby-selection-card trow-body name="State" [values]="['Mumbai', 'Tamilnadu', 'Delhi']" [activeIndex]="2"></b2b-filterby-selection-card>
+            <b2b-filterby-selection-card trow-body name="Brand" [values]="['USA', 'GRT Zibi', 'Radisson']" [activeIndex]="2"></b2b-filterby-selection-card> -->
+        </b2b-trow>
+    </b2b-container>
+    <b2b-spacer container-body minHeight="5px"></b2b-spacer>
+    <b2b-container class="scrollweb" container-body [property]="{padding:'5px 20px 5px 20px',height:'70vh',backgroundTheme:'none'}">
+       <b2b-trow container-body  gap="50px" height="auto" [mobileview]="true">
+        <b2b-row trow-body *ngFor="let i of producArray" justifyContent="center">      
+           <b2b-hotel-card row-body [allhoteldata]="i" height="200px"></b2b-hotel-card>
+          </b2b-row>  
+         </b2b-trow>     
+    </b2b-container>
+    </b2b-container>
+
+    
+</b2b-dashboard-body>

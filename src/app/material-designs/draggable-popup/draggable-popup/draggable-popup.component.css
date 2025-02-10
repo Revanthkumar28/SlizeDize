@@ -1,0 +1,29 @@
+#mydiv {
+  position: fixed;
+  z-index: 9;
+  /* background-color: #f1f1f1; */
+  /* text-align: center; */
+  /* border: 1px solid #d3d3d3; */
+  top: 0%;
+  left: 30%;
+  z-index: 1000;
+  /* position: relative; */
+}
+
+#mydivheader {
+  /* padding: 10px; */
+  cursor: move;
+  z-index: 10;
+  position: absolute;
+  top: 20px;
+  left: 15%;
+  width: 75%;
+  color: white;
+}
+
+#div1 {
+  width: 350px;
+  height: 70px;
+  /* padding: 10px; */
+  border: 1px solid #aaaaaa;
+}

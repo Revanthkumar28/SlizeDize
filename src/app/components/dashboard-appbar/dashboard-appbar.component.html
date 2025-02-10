@@ -1,0 +1,106 @@
+<b2b-appbar>
+    <b2b-row appbar-logo minWidth="100%" position="relative" margin="auto" backgroundTheme="" width="100%">
+        <!-- LOGO - (DA-1) -->
+        <img row-body *ngIf="hotelBasedImage == null && (usertype.user_type =='ho' || usertype.user_type =='he')" [src]="getLogo == '' ? defaultImageLogo : getLogo" alt="Choose Logo (ex:jpg,jpeg)"  height="50px" width=100%>
+        <img row-body *ngIf="hotelBasedImage != null && (usertype.user_type =='ho' || usertype.user_type =='he') " [src]="hotelBasedImage" alt="Choose Logo" height="50px" width=100%>
+        <img row-body *ngIf="usertype.user_type =='vu'" [src]="vendor_profile"   height="50px" alt="No Profile Image" width=100%>
+
+        <b2b-container row-body [property]="{padding:'0',width:'0px'}">
+            <b2b-row container-body  position="absolute" positionLeft="70px" positionRight="0" positionTop="10px">
+                <b2b-inputbox row-body class="upload" inputType="file"  position="absolute" width="52px" height="32px" backgroundTheme="" inputboxPadding="0" (change)="onFileSelecteddd($event)" padding="0"></b2b-inputbox> 
+            </b2b-row>
+        </b2b-container>
+    </b2b-row>
+    <b2b-spacer appbar-body width="20px"></b2b-spacer>
+    <b2b-row appbar-body [ngClass]="{ 'open': side_bar, 'closed': !side_bar }" class="buttons">
+<!-- sidebar icon -->
+    <b2b-icon-button class="mobilehide" row-body icon="view_sidebar" iconSize="22px" borderRadius="50%" backgroundTheme="--color-light-grey" height="20px" width="20px" colorTheme="--color-dark-grey" padding="10px" (click)="sidebar()"></b2b-icon-button>
+    <b2b-spacer class="mobilehide" row-body width="20px"></b2b-spacer>
+    
+    <!-- ADMIN BUTTON - (DA-2) -->
+     <ng-container  row-body *ngIf="isLoggedIn">
+        <b2b-label row-body *ngIf="admin" class="mobilehide" [text]="usertype.user_type =='ho' ? 'Admin' :user_role "  width="auto" height="30px" colorTheme="--color-white" borderRadius="20px" backgroundTheme="--color-sky-blue" ></b2b-label>
+     
+    
+     </ng-container>
+
+ <ng-container row-body *ngIf="!isLoggedIn">
+    <b2b-label row-body  [text]="joblogin ? 'Sign Out' :'Sign In' "  width="auto" height="30px" colorTheme="--color-white" borderRadius="20px" backgroundTheme="--color-sky-blue" (click)="joblogin ? logout() : login()" ></b2b-label>
+ 
+
+ </ng-container>
+</b2b-row>
+
+   <!-- WEB CLIPPER - (DA-3) -->
+   <ng-container appbar-actions  row-body *ngIf="isLoggedIn || joblogin">
+
+    <b2b-button appbar-actions *appRoleBasedButton="[155,1]" class="Web_Clipper" title="Web Clipper " hoverTheme="--color-dark-grey" padding="0" width="100px" height="25px" colorTheme="--color-white" backgroundTheme="--color-primary" ></b2b-button>
+    <b2b-spacer appbar-actions width="20px"></b2b-spacer>
+
+
+    <!-- Notification - (DA-4) -->
+    <audio appbar-actions id="notificationSound" src="assets/start-13691.mp3"></audio>
+
+    <b2b-dropdown appbar-actions popupWidth="250px" dropdownPosition="right" [overflow]="notifyCount > 3 ? 'scroll' : 'hidden'" maxheight="500px">
+        <b2b-badge dropdown-selector class="notifications" text="{{notifyCount >= 0 ? notifyCount : 0 }}" fontSize="9px">
+            <b2b-icon  badge-body icon="notifications" fontSize="28px" ></b2b-icon>
+        </b2b-badge>
+        <b2b-container dropdown-items [property]="{padding:'0px'}">
+            <b2b-text container-body text="ALL ORGANIZATIONS" fontSize="11px" margin="5px 0 5px 0"></b2b-text>
+
+            <!-- RFQ - direct order notify -->
+            <b2b-row container-body justifyContent="space-between" width="100%" padding="10px">
+                <b2b-text row-body [text]="notifyCount > 0 ? 'UNREAD' : 'No New Notification' " [bold]="true" fontSize="11px" margin="5px 0 5px 0"></b2b-text>
+                <b2b-text row-body [text]="notifyCount > 0 ? 'CLEAR ALL' : ' ' " [bold]="true" fontSize="11px" margin="5px 0 5px 0" (click)="clearnofification()"></b2b-text>
+
+            </b2b-row>
+
+            <!-- RFQ - direct order notify -->
+            <b2b-container class="profileImg" container-body [property]="{padding:'10px',margin:'0 0 5px 0',backgroundTheme:'--color-notify-backgroundColor',borderRadius:'none'}">
+
+                <b2b-row container-body *ngFor="let i of nofifyPerson.slice().reverse() ; let t = index" margin="0 0 7px 0" >
+                    <img row-body src="https://th.bing.com/th?id=OIP.QsTQiIXafX4lsEPvCmognAHaHS&w=252&h=247&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2" alt="Avatar" style="width:50px">
+                    <b2b-container row-body class="details" [property]="{padding:'0px 5px 5px 10px',backgroundTheme:'none',alignItem:'start'}">
+                        <p container-body (click)="ignoreNotification(i,t,'remove')"><span>{{i.notifications_text}} </span>mentioned you on the {{i.status}}</p>
+                        <!-- <p container-body>artboard <span>{{request_type_details.rqType}} , {{request_type_details.massage}}</span></p> -->
+                        <!-- <p container-body>19 hours ago , Core screen</p> -->
+                        <hr container-body width="100%">
+                        <b2b-row container-body>
+                            <p row-body class="ignore" *ngIf="i.status == '29'" style="color: blue;" (click)="acceptNotification(i,t)">Accept</p>
+                            <b2b-spacer row-body width="10px"></b2b-spacer>
+                            <p row-body class="ignore" *ngIf="i.status == '29'" (click)="igNore(i)">Ignore</p>
+                        </b2b-row>
+                    </b2b-container>
+                </b2b-row>
+
+            </b2b-container>
+
+        </b2b-container>
+    </b2b-dropdown>
+   </ng-container>
+    <!-- New Products -->
+    <b2b-spacer appbar-actions width="20px"></b2b-spacer>
+
+    <b2b-spacer appbar-actions width="20px"></b2b-spacer>
+    <!-- PROFILE - (DA-5) -->
+    <ng-container appbar-actions row-body *ngIf="isLoggedIn">
+
+    <b2b-dropdown appbar-actions  popupWidth="200px" zIndex="18" dropdownPosition="right">
+
+        <img dropdown-selector [title]="currentUser[0] | titlecase"  [src]="profile_logo ? profile_logo : 'assets/default-profile.jpg'"  class="Admin-img" width="35px" height="35px" >
+        <b2b-text dropdown-selector  [text]="currentUser?.split(' ')[0] || currentUser" fontSize="15px"  width="auto" height="25px" colorTheme="--color-sky-blue" marginLeft="12px" style="font-weight: 600;"></b2b-text>
+
+        <!-- <b2b-button  dropdown-selector [title]="currentUser[0] | titlecase" [bold]="true" borderRadius="50%" colorTheme="--color-white" width="30px" height="30px" backgroundTheme="--color-green"></b2b-button> -->
+        <b2b-list-tile dropdown-items title="Profile" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (click)="profile()"></b2b-list-tile>
+        <b2b-list-tile dropdown-items *appRoleBasedButton="[158,1]" title="My Dashboard" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" ></b2b-list-tile>
+        <b2b-list-tile dropdown-items *appRoleBasedButton="[157,1]" title="Account Settings" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" ></b2b-list-tile>
+        <b2b-list-tile dropdown-items [title]="currentUser | titlecase"  hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0"></b2b-list-tile>
+        <b2b-list-tile dropdown-items title="Logout" hoverTheme="--color-light-grey" colorTheme="--color-black" borderRadius="8px" height="30px" fontSize="14px" margin="2px 0" (tileClicked)="logout()"></b2b-list-tile>
+    </b2b-dropdown>
+    </ng-container>
+    <b2b-spacer appbar-actions width="20px"></b2b-spacer>
+
+    <!-- <b2b-text appbar-actions [text]="hotel_id" [bold]="true"></b2b-text> -->
+</b2b-appbar>
+<b2b-toast *ngIf="newnotification" [text]="notificationmsg"></b2b-toast>
+<b2b-user-profile *ngIf="profileview" [type_user]="usertype" (cancelpopup)="profileview = $event"></b2b-user-profile>

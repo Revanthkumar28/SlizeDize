@@ -1,0 +1,70 @@
+<b2b-row container-body *ngIf="continueButton">
+    <b2b-text row-body text="RFQ ID NO:GRTD134545" fontSize="13px"></b2b-text>
+    <b2b-spacer row-body [flex]="1"></b2b-spacer>
+    <b2b-label row-body *appRoleBasedButton="[181,1]" [isRounded]="true" height="30px" width="100px" padding="0" backgroundTheme="--color-primary">
+        <b2b-spacer label-leading width="10px"></b2b-spacer>    
+        <b2b-icon-button label-leading icon="add" width="20px" iconSize="20px" backgroundTheme="--color-drawer-light" [isRounded]="true"></b2b-icon-button>
+        <b2b-spacer label-leading width="10px"></b2b-spacer>
+        <b2b-text label-leading text="Add Vendor" colorTheme="--color-white" fontSize="10px"></b2b-text>
+    </b2b-label>
+</b2b-row>
+
+<b2b-row container-body *ngIf="continueButton">
+    <b2b-choice row-body group="cat-rfq-1" name="Product" [checked]="true" fontSize="14px" ></b2b-choice>
+    <b2b-spacer row-body width="20px" ></b2b-spacer>
+    <b2b-choice row-body group="cat-rfq-2" fontSize="14px" name="Service"></b2b-choice>
+</b2b-row>
+<b2b-spacer container-body height="10px" *ngIf="continueButton"></b2b-spacer>
+<ng-container container-body *ngFor="let data of catalog"  >
+    <b2b-trow container-body [column]="tableColumnSpacing"  *ngIf="continueButton" colorTheme="--color-drawer-bottom-card"  gap="0 10px" height="20px" fontSize="12px" margin="0">
+        <ng-container trow-body *ngFor="let column of buttons; let i = index">
+            <b2b-tdata [title]="column['name']" *ngIf="i != 0" backgroundTheme="--color-primary" color="--color-white" fontSize="10px" height="20px" borderRadius="var(--table-radius) var(--table-radius) 0 0"></b2b-tdata>
+            <b2b-tdata title="Preffered Vendar" *ngIf="i == 0" backgroundTheme="--color-transparent" color="--color-black"  borderRadius="var(--table-radius) var(--table-radius) 0 0"></b2b-tdata>
+        </ng-container>
+    </b2b-trow>
+    
+   <b2b-trow  [column]="tableColumnSpacing" *ngIf="continueButton"    borderRadius="10px">
+      <b2b-tdata trow-body>
+        <b2b-choice tdata-body  [checked]="true"></b2b-choice> 
+    </b2b-tdata>
+    <b2b-tdata trow-body [title]="data['name']" fontSize="12px"></b2b-tdata>
+    <b2b-tdata trow-body>
+        <b2b-row tdata-body justifyContent="center">
+            <b2b-icon-button row-body icon="star" colorTheme="--color-yellow"></b2b-icon-button>
+            <b2b-icon-button row-body icon="star" colorTheme="--color-yellow"></b2b-icon-button>
+       </b2b-row>
+    </b2b-tdata>
+    <b2b-tdata trow-body [title]="data['area']" fontSize="12px"></b2b-tdata>
+</b2b-trow>
+
+</ng-container>
+
+<b2b-spacer minHeight="30px" *ngIf="continueButton" display="block"></b2b-spacer>
+<b2b-container *ngIf="continueButton" [property]="{backgroundTheme: '--color-transparent', width: '100%', padding: '0', borderRadius: '0', height: 'auto'}">
+    <b2b-row container-body alignItem="stretch">
+        <b2b-container row-body [property]="{borderRadius: '0', padding: '0', flex: 2}">
+            <b2b-trow container-body column="3*1fr"  gap="0 10px" height="auto">
+                <b2b-inputbox trow-body inputName="Quote by" [bold]="false" inputboxPadding="3px"  placeholder="20/11/11"  width="auto" [twoInputFeild]="true" fontSize="13px" border="2px solid var(--color-light-grey)"></b2b-inputbox>
+                <b2b-inputbox trow-body inputName="Planned Date" fontSize="12px" inputboxPadding="5px" placeholder="11/12/22" [twoInputFeild]="true" value="{{request}}" [bold]="false"  width="auto" border="2px solid var(--color-light-grey)"></b2b-inputbox>
+                <b2b-inputbox trow-body inputName="Delivery Date" fontSize="12px" inputboxPadding="5px" [twoInputFeild]="true" placeholder="22/11/22" [bold]="false" value="{{delivery_date}}" width="auto" border="2px solid var(--color-light-grey)" ></b2b-inputbox>
+            </b2b-trow>
+            
+            <b2b-trow container-body column="1fr" gap="0 10px" height="auto">
+                <b2b-inputbox trow-body border="1px solid var(--color-light-grey)" height="55px" width="auto" [twoInputFeild]="true" placeholder="Add Remarks"></b2b-inputbox>
+            </b2b-trow>
+        </b2b-container>
+        <b2b-spacer row-body width="30px"></b2b-spacer>
+        <b2b-container row-body [property]="{borderRadius: '0', padding: '0', flex: 1, alignItem: 'flex-start', justifyContent: 'space-around', height: '100px', rootHeight: 'auto',border:'2px solid var(--color-light-grey'}">
+           <b2b-row container-body borderBottom="2px solid var(--color-light-grey)" alignItem="center" justifyContent="center">
+            <b2b-choice row-body group="catelog-rfq1"  name="Schedule RFQ" [checked]="true" fontSize="14px" ></b2b-choice>
+          </b2b-row>
+          <b2b-row container-body justifyContent="center" padding="0 30px 0 0 ">
+            <b2b-choice row-body group="catelog-rfq1"  name="Send RFQ" [checked]="true" fontSize="14px" ></b2b-choice>
+          </b2b-row>
+           </b2b-container>
+    </b2b-row>
+
+    <b2b-spacer container-body height="10px"></b2b-spacer>
+
+    <b2b-button container-body title="Continue" (click)="contuneButton()" borderRadius="var(--global-radius)" backgroundTheme="--color-primary" width="120px"></b2b-button>
+</b2b-container>

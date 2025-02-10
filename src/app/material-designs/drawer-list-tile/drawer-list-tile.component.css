@@ -1,0 +1,70 @@
+:host {
+    width: 100%;
+}
+div.list-tile {
+    width: calc(100% - 25px);
+    height: 55px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    color: var(--color-white);
+
+    padding: 0 var(--global-padding);
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+
+div.list-tile i {
+    user-select: none;
+    padding: 1px;
+    background-color: var(--color-light-grey);
+    border-radius: 50px;
+    color: rgb(192, 190, 190);
+    font-size: 30px;
+}
+
+
+div.list-tile i.open {
+    transform: rotate(180deg);
+}
+
+div.active {
+     background-color: var(--color-drawer-active); 
+     border-radius: 0 var(--global-radius) 0 0; 
+}
+
+
+/* List tile child */
+div.list-tile-child {
+    width: calc(100% - 25px);
+    height: 55px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    color: var(--color-white);
+    background-color: var(--color-drawer-dark);
+
+    padding: 0 var(--global-padding);
+    box-sizing: border-box;
+
+    cursor: pointer;
+
+    border-left: 5px solid var(--color-drawer-dark);
+}
+
+div.active-child {
+    background-color: var(--color-drawer-active);
+    border-left-color: var(--color-white);
+    box-shadow: inset 1px 1px 5px 2px rgba(0,0,2,0.1);
+}
+.req{
+      color: #EF9A9A;
+   
+}

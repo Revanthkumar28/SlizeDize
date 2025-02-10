@@ -1,0 +1,53 @@
+:host {
+    width: 100%;
+  }
+  table {
+    border-collapse: collapse; /* Merge borders */
+    width: 100%;
+    font-size: 13px;
+  }
+  .head{
+    background-color: var(--color-light-red);
+  }
+  table, th, td {
+    border: 1px solid black; /* Add borders */
+  }
+  
+  th, td {
+    width: 120px;
+    padding: 4px;
+    text-align: center;
+  }
+  
+  
+  .textbox{
+   width: 162px;
+  }
+ 
+  /* .mass td{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  } */
+  .run td{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+ /* BACKGROUND BLUR */
+.blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Light black shadow effect */
+  backdrop-filter: blur(5px);
+  /* You can adjust the blur amount */
+  z-index: 999;
+  /* Make sure it's above other elements */
+}
+  
+  /* Optional: Add additional styles as needed */
+  

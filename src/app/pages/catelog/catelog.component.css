@@ -1,0 +1,17 @@
+::ng-deep .part2-chart .container {
+    padding: 0 !important;
+    background-color: transparent !important;
+  }
+  .filtericon{
+    position: absolute;
+    top: -4px;
+    right: 10%;
+  }
+  .curser{
+    cursor: pointer;
+  }
+
+  /* ::ng-deep .Hotel_name p{
+    color: green !important;
+  } */
+  

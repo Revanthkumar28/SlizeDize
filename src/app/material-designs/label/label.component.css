@@ -1,0 +1,17 @@
+
+div.label {
+    padding: calc(var(--global-padding) /2.5) var(--global-padding);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+div.label p {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+
+}

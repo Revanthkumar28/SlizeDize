@@ -1,0 +1,28 @@
+:host{
+    width: 100%;
+    
+}
+.grid{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr ;
+    column-gap: 1vw;
+    row-gap: 1vw;
+}
+.admin{
+    width: 100%;
+}
+.box{
+    width: 100%;
+    height: 40px;
+    border:1px solid rgba(211, 211, 211, 0.696);
+    border-radius: 5px;
+    padding-left: 15px;
+}
+::ng-deep .boxes{
+    box-shadow: 0 0 7px darkgray !important;
+    border-radius: 10px;
+    border:'1px solid grey';
+    position: relative;
+    cursor: pointer;
+}

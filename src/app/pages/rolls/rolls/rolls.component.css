@@ -1,0 +1,39 @@
+/* Default color for unchecked checkbox */
+.green-checkbox input[type="checkbox"] {
+    border-color: green; /* Border color when unchecked */
+}
+
+/* Color for checked checkbox */
+.green-checkbox input[type="checkbox"]:checked {
+    border-color: green; /* Border color when checked */
+    background-color: green; /* Background color when checked */
+    -ms-border-color: green; /* Edge-specific border color when checked */
+    -ms-background-color: green; /* Edge-specific background color when checked */
+}
+
+
+/* TABLE FOR ROLES */
+/* Add styles to control the table layout */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Set specific width for the first column */
+.table th:first-child,
+.table td:first-child {
+  width: 8.33%;
+}
+
+.center-content {
+  text-align: center;
+}
+
+/* Additional styles as needed */

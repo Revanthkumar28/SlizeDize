@@ -1,0 +1,14 @@
+/* Styles for the previous and next icons */
+.pagination{
+  display: flex;
+}
+.pagination span {
+  cursor: pointer; /* Cursor style */
+  margin: 0 5px; /* Margin between icons and text */
+}
+
+/* Styles for the disabled state */
+.pagination span.disabled {
+  opacity: 0.5; /* Dim the icon when disabled */
+  cursor: not-allowed; /* Change cursor for disabled state */
+}

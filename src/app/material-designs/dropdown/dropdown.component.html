@@ -1,0 +1,48 @@
+<div class="dropdownContainer" b2bGestureDetector [detectInsideClicks]="isPopupOpen" (clickedOutside)="clickedOutside()">
+    
+    <!-- lable icon selector -->
+    <ng-container *ngIf="dropdownWithLable == true ">
+        <div class="flex" [style]="dropdownContainerStyle" (click)="dropdownClicked()">
+            <b2b-list-tile title="{{text}}" [bold]="true" fontSize="11px" height="25px" borderRadius="4px 4px 4px 4px" colorTheme="--color-black" padding="0"></b2b-list-tile>
+    
+            <div class="dropdown-trigger">
+                <ng-content select="[dropdown-selector-container]"></ng-content>
+            </div>
+        </div>
+    </ng-container>
+    
+
+    <!-- only icon selector -->
+    <ng-container *ngIf="dropdownWithLable == false">
+        <div class="dropdown-trigger" [style]="dropdownContainerStyle" (click)="dropdownClicked()">
+            <ng-content select="[dropdown-selector]"></ng-content>
+        </div>
+    </ng-container>
+    
+    <div class="dropdown-trigger" (mouseenter)="isPopupOpen=true" (mouseleave)="isPopupOpen=false" (click)="dropdownClicked()">
+        <ng-content select="[dropdown-hover]"></ng-content>
+    </div>
+
+    <!-- All Dropdown ,when click option its will false -->
+    <div class="dropdown" *ngIf="isPopupOpen" [style]="dropdownStyles" >
+        <ng-content select="[search]" ></ng-content>
+        <b2b-popup [width]="popupWidth" [overflow]="overflow" [top]="dropdownTop" [left]="dropdownLeft" [alignItem]="alignItem" [height]="popupHeight" [maxheight]="maxheight" (click)="dropdownItemsClicked()">
+            <ng-content popup-content select="[dropdown-items]"></ng-content>
+        </b2b-popup>
+    </div>
+
+    <!-- This is only for line item kitchen, hotel wide usage edit -->
+    <div class="dropdown" *ngIf="isPopupOpen" [style]="dropdownStyles" >
+        <ng-content select="[search]" ></ng-content>
+        <b2b-popup [width]="popupWidth" *ngIf="isEditPopup" [overflow]="overflow" [top]="dropdownTop" [left]="dropdownLeft" [alignItem]="alignItem" [height]="popupHeight" [maxheight]="maxheight" >
+            <b2b-row popup-content padding="10px">
+                <ng-content row-body select="[dropdown-kitchen]"></ng-content>
+
+                <b2b-row row-body width="auto" (click)="dropdownItemsClicked()">
+                    <ng-content row-body select="[dropdown-submit]" ></ng-content>
+                </b2b-row>
+            </b2b-row>
+        </b2b-popup>
+    </div>
+
+</div>

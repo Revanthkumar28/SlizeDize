@@ -1,0 +1,64 @@
+<b2b-dashboard-body backgroundTheme="--color-light-grey">
+    <b2b-heading-panel body-content title="Innovative Design" height="22px" fontSize="20px">
+        <b2b-icon-button panel-leading icon="chevron_left" (click)="goBack()" backgroundTheme="--color-primary" [isCurved]="true" colorTheme="--color-white" height="25px" width="25px"></b2b-icon-button>
+    </b2b-heading-panel>
+
+    <b2b-row body-content margin="1px 0 0 0" alignItem="flex-start" width="100%" padding="30px 20px 0 8%" [mobileview]="true">
+        <b2b-text row-body text="Share Unique Design" class="share-design" fontSize="20px" margin="10px"></b2b-text>
+        <b2b-spacer row-body [flex]="1"></b2b-spacer>
+        
+        <b2b-container row-body [property]="{backgroundTheme:' none',padding:'0 0 10px 0px',height:'auto',width:'400px'}">
+            <b2b-menu-dropdown container-body class="upload_image" text="Upload Picture" fontSize="13px" icon="arrow_drop_down"  height="50px" width="100%" margin="10px 0 0 7px" [active]="true" colorTheme="--color-dark-grey"  [isExpand]="true">
+                <b2b-container list-child [property]="{backgroundTheme:' none',alignItem:'center',padding:'0 0 10px 0px',height:'auto'}">
+                    <b2b-row container-body backgroundTheme="--color-white"  width="90%" borderRadius="8px"  alignItem="flex-start" margin="10px 0px 0px 10px" border="0px solid var(--color-dark-grey)">                               
+                        <b2b-container row-body>
+                            <b2b-row container-body>
+                                <b2b-text row-body text="Select a image"   fontSize="12px"></b2b-text>
+                            </b2b-row>
+                            <b2b-spacer container-body height="5px"></b2b-spacer>
+                            <b2b-row container-body border="1px solid var(--color-dark-grey)"  padding="8px" borderRadius="5px">
+                                <ng-container row-body *ngFor="let data of values; let i = index">
+                                    <b2b-label row-body [text]="data" [isRounded]="true" fontSize="14px" padding="20px" height="40px" [center]="true" [backgroundTheme]="(i == activeIndex-1) ? '--color-dark-grey' : '--color-transparent'" [colorTheme]="(i == activeIndex-1) ? '--color-white' : '--color-black'" (click)="changeIndex(i+1)"></b2b-label>
+                                </ng-container>
+                            </b2b-row>  
+                            <b2b-spacer container-body height="5px"></b2b-spacer>
+                            <b2b-row container-body>
+                                <b2b-text row-body text="Description" fontSize="12px"></b2b-text>
+                            </b2b-row>                                    
+                            <b2b-textarea container-body  border="1px solid var(--color-dark-grey)" width="94%" height="70px" padding="6px" borderRadius="5px"></b2b-textarea>
+    
+                            <b2b-spacer container-body height="15px"></b2b-spacer>
+                            <b2b-label container-body text="Post" [isRounded]="true" fontSize="14px" padding="20px" width="100px" height="40px" [center]="true" backgroundTheme="--color-primary"></b2b-label>
+    
+                        </b2b-container>                    
+                    </b2b-row>                           
+                </b2b-container>
+            </b2b-menu-dropdown>
+        </b2b-container>
+    </b2b-row>
+    <b2b-spacer body-content minHeight="10px"></b2b-spacer>
+
+    <b2b-container body-content>
+        <b2b-row container-body class="fav_likes">
+        <b2b-text row-body text="Posts" class="innovative_post" fontSize="15px" ></b2b-text>
+        <b2b-text row-body text="Fovourites" class="innovative_post2" fontSize="15px"></b2b-text>
+        <b2b-text row-body text="02" class="innovative_post3" fontSize="15px"></b2b-text>
+
+        </b2b-row>
+        <b2b-spacer container-body minHeight="10px"></b2b-spacer>
+        <b2b-row container-body >
+            <b2b-container row-body class="Hotel_card" [property]="{backgroundTheme: '--color-light-grey'}"  >
+                <b2b-trow container-body  height="auto" gap="40px" overflowY="scroll" height="58vh" [mobileview]="true">                    
+                    <b2b-innovative-design-card trow-body></b2b-innovative-design-card>
+                    <b2b-innovative-design-card trow-body></b2b-innovative-design-card>                                      
+                    <b2b-innovative-design-card trow-body></b2b-innovative-design-card>                                      
+                    <b2b-innovative-design-card trow-body></b2b-innovative-design-card>
+                    <b2b-innovative-design-card trow-body></b2b-innovative-design-card>                                      
+                    <b2b-innovative-design-card trow-body></b2b-innovative-design-card> 
+                </b2b-trow>
+                
+                    
+            </b2b-container>
+        </b2b-row>
+    </b2b-container>    
+</b2b-dashboard-body>    

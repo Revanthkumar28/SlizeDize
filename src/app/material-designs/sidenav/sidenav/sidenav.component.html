@@ -1,0 +1,9 @@
+<div class="title" [style]="sidenavstyle">
+
+
+<div b2bGestureDetector [ngClass]="menu">
+  <p (click)="buttonPressed()">
+    <ng-content select="[sidenavhotel]" ></ng-content> 
+  </p>
+</div>
+</div>

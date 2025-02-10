@@ -1,0 +1,23 @@
+<div class="dashboard-layout">
+    
+    <div class="appbar">
+        <b2b-icon row-body icon="menu" (click)="toggleDrawer()" class="icon"></b2b-icon>
+        <ng-content select="[dashboard-appbar]"></ng-content>
+    </div>
+    <div class="dashboard-body">
+        
+            <div [ngClass]="{ 'open': side_bar, 'closed': !side_bar }"  class="dashboard-drawer web" >
+                <ng-content select="[dashboard-drawer]"></ng-content> 
+            </div>
+            <!-- dashboard-drawer-mobile is on the console page -->
+            <div  class="dashboard-drawer mobile" *ngIf="isDrawerOpen" style="position:fixed; top:40px;z-index: 100;" (click)="toggleDrawer()">
+                <ng-content select="[dashboard-drawer-mobile]"></ng-content> 
+            </div>
+       
+        <div [ngClass]="{ 'open': side_bar, 'closed': !side_bar }" class="dashboard-content">
+            <ng-content select="[dashboard-body]"></ng-content>
+        </div>
+    
+    
+    </div>
+</div>

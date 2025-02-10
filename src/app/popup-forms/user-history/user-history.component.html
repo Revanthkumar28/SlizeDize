@@ -1,0 +1,205 @@
+<!-- grouping_orders RFQ,DO,Scheduled Order -->
+<!-- <b2b-row  row-body height="58vh" overflowY="auto" widths="79vw" zIndex="15" backgroundTheme="--color-white"  flexDirection="column" padding="50px 10px 10px 10px" borderRadius="10px" justifyContent="flex-start" border="3px solid var(--color-dashboard) " position="fixed"  positionTop="33%" positionLeft="17%">
+    <b2b-icon row-body icon="close" left="97%"  top="2%" (click)="close_window()"
+    backgroundTheme="--color-white" fontSize="20px" colorTheme="--color-dark-grey"
+    position="absolute"></b2b-icon> -->
+    <b2b-container [property]="{flex:1,padding: '0', backgroundTheme: '--color-transparent' ,overflowY:'auto'}">
+        <b2b-spacer container-body height="15px"></b2b-spacer>
+
+            
+    <b2b-text container-body text="Purchase Request" colorTheme="--color-primary" fontSize="14px" [bold]="true" margin="0 10px 5px 0"></b2b-text>
+    <!-- completed  Orders-->
+    <b2b-row container-body *appRoleBasedButton="[210,212,280,281,1]" boxShadow="0 0 10px darkGrey" style="position: relative;" borderRadius="10px"
+    border="2.3px solid var(--color-primary)" padding="5px"overflowY="hidden">
+
+            <b2b-container row-body [property]="{padding:'0',alignItem:'start',overflowX:'auto',overflowY:'auto',maxHeight:'50vh'}">
+                    <b2b-text container-body style="position: absolute;top: 4px;left: 4px;" text="Completed Orders" colorTheme="--color-black" [bold]="true"
+                    height="20px" fontSize="15px"></b2b-text>
+                     <!-- Heading -->
+                    <b2b-trow container-body display="flex" colorTheme="--color-drawer-bottom-card" [bold]="true" margin="18px 0 0 0">
+                            <ng-container trow-body *ngFor="let column of completedOrders">
+                                    <b2b-tdata [title]="column.one" [title2]="column.two" flexDirection="column"
+                                            [toolTipName]="column.full" [toolTip]="false" fontSize="11px"
+                                            [width]="column.one == 'Purchase Order'?'150px':'110px' "></b2b-tdata>
+                            </ng-container>
+                    </b2b-trow>
+                    
+                  
+                    <!-- Value -->
+                    <b2b-trow container-body id="1" *ngFor="let val of completedorder.slice().reverse()" fontSize="10px" display="flex" margin="10px 0 0 0" colorTheme="--color-black"
+                    backgroundTheme="--color-light-grey" width="null" borderRadius="5px" height="40px"
+                    [showExpand]="false">
+
+                            <b2b-tdata trow-body [title]="val.purchase_request_random" width="110px"></b2b-tdata>
+                            <b2b-tdata trow-body [title]="val.user_name +'(' + val.department_name+')' " width="110px"></b2b-tdata>
+                            <b2b-tdata trow-body [title]="val.rfq_id" width="150px"></b2b-tdata>
+                            <b2b-tdata trow-body [title]="val.vendor_quantity" width="110px"></b2b-tdata>
+                            <b2b-tdata trow-body [title]="price_symbol +val.vendor_coating_price" width="110px"></b2b-tdata>
+                            <b2b-tdata trow-body [title]="price_symbol + val.total_cost" width="110px"></b2b-tdata>
+
+                            <b2b-tdata trow-body [title]="val.before_required_date" width="110px"></b2b-tdata>
+                            <b2b-tdata trow-body [title]="val.companyName" width="110px"></b2b-tdata>
+                            <!-- <b2b-tdata trow-body title="-" width="110px"></b2b-tdata> -->
+                            <!-- <b2b-tdata trow-body [title]="val.vendor_quantity" width="110px"></b2b-tdata> -->
+                            <b2b-tdata trow-body title="All Good" width="110px"></b2b-tdata>
+                            <!-- <b2b-tdata trow-body [title]="val.order_completes_receive.price_received" width="110px"></b2b-tdata> -->
+                            <!-- <b2b-tdata trow-body [title]="val.order_completes_receive.command_by_user" width="110px"></b2b-tdata> -->
+                            <b2b-tdata trow-body [title]="val.Vendor_remarks" width="110px"></b2b-tdata>
+                            
+                            <b2b-tdata trow-body [title]="val.payment_terms" width="110px"></b2b-tdata>
+                            <b2b-tdata trow-body    fontSize="12px" width="110px" style="font-weight: bold;">
+                                <b2b-text tdata-body *appRoleBasedButton="[212,1]" [text]="val.reconciled == '1' ? 'Yes' : 'NO' " [colorTheme]="val.reconciled == '1' ? '--color-green' : '--color-redd' "> </b2b-text>
+                            </b2b-tdata>
+                            <b2b-tdata trow-body width="40px">
+                                <ng-container tdata-body *ngIf="isLoggedIn">
+                                <b2b-drop-down-xaxis tdata-body *appRoleBasedButton="[280,281,1]">
+                                                <b2b-icon-button select-item icon="more_vert" padding="0 5px 0 0"
+                                                colorTheme="--color-dark-grey">
+                                                </b2b-icon-button>
+                                                <div dropDown-Items>
+                                                        <b2b-list-tile dropdown-items  *appRoleBasedButton="[280,1]" [isIcon]="true" icon="cyclone" [bold]="true" iconWidth="10px" iconsize="14px" title="Communication(chat & email)"hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="Chat(val)"></b2b-list-tile> 
+                                                        <b2b-spacer height="5px"></b2b-spacer>
+                                                        <b2b-list-tile dropdown-items *appRoleBasedButton="[281,1]" [isIcon]="true" icon="cyclone" [bold]="true" iconWidth="10px" iconsize="14px" title="view history" hoverTheme="--color-dark-grey" colorTheme="--color-black" borderRadius="8px" height="20px"  fontSize="10px" margin="2px 0" (click)="fullhistory(val.p_id)"></b2b-list-tile> 
+                                                        <b2b-spacer height="5px"></b2b-spacer>
+                                                        </div>
+                                                        </b2b-drop-down-xaxis>
+                                                       </ng-container>
+                                                        </b2b-tdata>
+                          </b2b-trow>
+            </b2b-container>
+    </b2b-row>
+    <b2b-spacer container-body height="10px"></b2b-spacer>
+     <!-- Deleted  Orders-->
+     <ng-container container-body *ngIf="isLoggedIn">
+        <b2b-row container-body *appRoleBasedButton="[211,1]" boxShadow="0 0 10px darkGrey" style="position: relative;" borderRadius="10px"
+     border="2.3px solid var(--color-orange)" padding="5px"overflowY="hidden">
+
+         <b2b-container row-body [property]="{padding:'0',alignItem:'start',overflowX:'auto',overflowY:'auto',maxHeight:'50vh'}">
+                 <b2b-text container-body style="position: absolute;top: 4px;left: 4px;" text="Deleted Orders" colorTheme="--color-black" [bold]="true"
+                 height="20px" fontSize="15px"></b2b-text>
+                  <!-- Heading -->
+                 <b2b-trow container-body display="flex" colorTheme="--color-drawer-bottom-card" [bold]="true" margin="18px 0 0 0">
+                         <ng-container trow-body *ngFor="let column of DeletedOrders">
+                                 <b2b-tdata [title]="column.one" [title2]="column.two" flexDirection="column"
+                                         [toolTipName]="column.full" [toolTip]="false" fontSize="11px"
+                                         [width]="column.one == 'Purchase Order'?'150px':'110px' "></b2b-tdata>
+                         </ng-container>
+                 </b2b-trow>
+                 
+               
+                 <!-- Value -->
+                 <b2b-trow container-body id="1" *ngFor="let val of deleted_Order_data.slice().reverse()" fontSize="10px" display="flex" margin="10px 0 0 0" colorTheme="--color-black"
+                 backgroundTheme="--color-light-grey" width="null" borderRadius="5px" height="40px"
+                 [showExpand]="false">
+
+                         <b2b-tdata trow-body [title]="val.purchase_request_random" width="110px"></b2b-tdata>
+                         <b2b-tdata trow-body [title]="val.user_name +'(' + val.department_name ? val.department_name : '-'+')'" width="110px"></b2b-tdata>
+                         <b2b-tdata trow-body [title]="val.rfq_id || val.mv_id ? val.rfq_id || val.mv_id :'-' " width="150px"></b2b-tdata>
+                         <b2b-tdata trow-body [title]="val.required_quantity || val.vendor_quantity" width="110px"></b2b-tdata>
+                         <b2b-tdata trow-body [title]="val.vendor_coating_price != undefined ?  price_symbol + val.vendor_coating_price : '-'" width="110px"></b2b-tdata>
+                         <b2b-tdata trow-body [title]="val.total_cost != undefined ?  price_symbol + val.total_cost : '-' " width="110px"></b2b-tdata>
+
+                         <b2b-tdata trow-body [title]="val.requested_on || val.ETA" width="110px"></b2b-tdata>
+                         <b2b-tdata trow-body [title]="val.vednor" width="110px"></b2b-tdata>
+                         <b2b-tdata trow-body [title]="val.Vendor_remarks ? val.Vendor_remarks :'-' " width="110px"></b2b-tdata>
+                        
+                         <b2b-tdata trow-body [title]="val.payment_terms ? val.payment_terms :'-' " width="110px"></b2b-tdata>
+                        
+                         <b2b-tdata trow-body [title]="val.deleted_place" width="110px"></b2b-tdata>
+                         <b2b-tdata trow-body [title]="val.reject_reason ||val.rejected_reason " width="110px"></b2b-tdata>
+
+                        
+                 </b2b-trow>
+         </b2b-container>
+     </b2b-row>
+     <b2b-spacer container-body height="10px"></b2b-spacer>
+
+     <b2b-text container-body text="Service Request" colorTheme="--color-primary" fontSize="14px" [bold]="true" margin="0 10px 5px 0"></b2b-text>
+
+     <!-- completed  Orders - Service Request-->
+        <b2b-row container-body *appRoleBasedButton="[213,1]" boxShadow="0 0 10px darkGrey" style="position: relative;" borderRadius="10px"
+        border="2.3px solid var(--color-primary)" padding="5px"overflowY="hidden">
+
+                <b2b-container row-body [property]="{padding:'0',alignItem:'start',overflowX:'auto',overflowY:'auto',maxHeight:'50vh'}">
+                        <!-- <b2b-text container-body style="position: absolute;top: 4px;left: 4px;" text="Completed Orders" colorTheme="--color-black" [bold]="true"
+                        height="20px" fontSize="15px"></b2b-text> -->
+                        <!-- Heading -->
+                        <b2b-trow container-body display="flex" colorTheme="--color-drawer-bottom-card" [bold]="true" margin="18px 0 0 0">
+                                <ng-container trow-body *ngFor="let column of serviceRequestCompleted_Heading">
+                                        <b2b-tdata [title]="column"  flexDirection="column"
+                                                [toolTip]="false" fontSize="11px"
+                                                width="150px"></b2b-tdata>
+                                </ng-container>
+                        </b2b-trow>
+                        
+                
+                        <!-- Value -->
+                        <b2b-trow container-body id="1" *ngFor="let data of servicehistory.slice().reverse()" fontSize="10px" display="flex" margin="10px 0 0 0" colorTheme="--color-black"
+                        backgroundTheme="--color-light-grey" width="null" borderRadius="5px" height="40px"
+                        [showExpand]="false">
+
+                        <b2b-tdata trow-body [title]="data.service_request_random" width="150px"></b2b-tdata>
+
+                        <b2b-tdata trow-body [title]="data.name+'('+data.department_name+')'  " width="150px"></b2b-tdata>
+                        <b2b-tdata trow-body [title]="formatDate(data.created_at)" width="150px"></b2b-tdata>
+
+                        <b2b-tdata trow-body [title]="data.vendor_name" width="150px"></b2b-tdata>
+
+                        <b2b-tdata trow-body width="150px" (click)="ServiceIMG(data.imagearray)">
+                        
+                        <b2b-badge tdata-body height="18px" width="18px" backgroundTheme="--color-green" fontSize="13px" [text]="data.imagearray.length" >
+                                <b2b-image badge-body id="image-element" height="2.3vw" width="3.2vw" image="{{data.image}}" ></b2b-image> 
+
+                        </b2b-badge>
+
+                        
+                        </b2b-tdata> 
+                
+                        <b2b-tdata trow-body [title]="data.room_area" width="150px"></b2b-tdata>
+
+                        <b2b-tdata trow-body [title]="data.required_by" width="150px"></b2b-tdata>
+                        <b2b-tdata trow-body [title]="data.current_condition" width="150px"></b2b-tdata>
+                        <b2b-tdata trow-body [title]="data.remarks" width="150px"></b2b-tdata>
+                        <b2b-tdata trow-body [title]="price_symbol + data.total_cost" width="150px"></b2b-tdata>
+
+                        <b2b-tdata trow-body [title]="data.payment_terms" width="150px"></b2b-tdata>
+                        <b2b-tdata trow-body [title]="data.working_status" [bold]="true" [colorTheme]="data.work_status == '2' ? '--color-green' : data.work_status == '3' ? '--color-redd' : '--color-black' " width="150px"></b2b-tdata>
+                       
+
+                        </b2b-trow>
+                </b2b-container>
+        </b2b-row>
+ <b2b-spacer container-body height="10px"></b2b-spacer>
+</ng-container>
+</b2b-container>
+
+ <!-- draggable-popup for images in service request -->
+ <b2b-draggable-popup *ngIf="serviceimg" positionTop="20%" positionLeft="50%">
+        <b2b-container draggable-popup [property]="{backgroundTheme: '--color-white', height:'65vh',width1:'39vw',padding:'10px'}">
+            <b2b-icon container-body icon="close" left="92%" (click)="closeimg()" top="2%"
+                backgroundTheme="--color-white" fontSize="16px" colorTheme="--color-dark-grey"
+                position="absolute"></b2b-icon>
+            <div container-body>
+                <b2b-icon *ngIf="currentImageIndex > 0" icon="arrow_circle_left" [isRounded]="true" left="1%" top="45%"
+                    backgroundTheme="--color-white" fontSize="30px" colorTheme="--color-dark-grey"
+                    position="absolute" (click)="previousImage()"></b2b-icon>
+    
+                <ng-container *ngIf="isImage(serviceImages[currentImageIndex]); else videoTemplate">
+                    <b2b-image id="image-element" height="400px" width="400px" margin="15px 0 0 0"
+                        [image]="serviceImages[currentImageIndex]"></b2b-image>
+                </ng-container>
+                <ng-template #videoTemplate>
+                    <video id="video-element" height="400px" width="400px" margin="15px 0 0 0" controls>
+                        <source [src]="serviceImages[currentImageIndex]" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </ng-template>
+    
+                <b2b-icon *ngIf="currentImageIndex < serviceImages.length - 1" icon="arrow_circle_right" [isRounded]="true" left="93%" top="45%"
+                    backgroundTheme="--color-white" fontSize="30px" colorTheme="--color-dark-grey"
+                    position="absolute" (click)="nextImage()"></b2b-icon>
+            </div>
+        </b2b-container>
+    </b2b-draggable-popup>
+    <b2b-full-history *ngIf="showhistory" [historydata]="historydata"  (cancelpopup)="showhistory = $event"></b2b-full-history>
+    <b2b-chat-email *ngIf="openchat" (cancelpopup)="openchat = $event" [chat_orders]="orders" screen="order"></b2b-chat-email>

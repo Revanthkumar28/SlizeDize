@@ -1,0 +1,108 @@
+.container {
+    margin: 4px 0px;
+    float: left;
+}
+.semi-dount {
+    display: flex;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(#1a54b8 var(--progress), #fff 0deg);
+  font-size: 0;
+  animation: 2s ease-out turn_in reverse; 
+}
+.semi-dount-contract {
+    --progress: 75%; 
+    background: conic-gradient(#ffa500 var(--progress), #fff 0deg);
+}
+.semi-dount-unlist {
+    --progress: 25%; 
+    background: conic-gradient(#8baf8a var(--progress), #fff 0deg);
+}
+.semi-dount:after {
+    content: attr(data-progress) ;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 21px;
+    border-radius: 50%;
+    background: white;
+    font-size: 9px;
+    font-weight: 600;
+    text-align: center;
+    background-color: var(--color-light-grey);
+    box-shadow: 0px 2px 5px 1px rgb(64 60 67 / 16%);
+} 
+.donut-chart {
+    position: relative;
+      width: 100px;
+    height: 100px;
+      border-radius: 100%;
+      float: left;
+      margin-right: 10px;
+      box-shadow: 0px 2px 5px 1px rgb(64 60 67 / 16%);
+   }
+  
+  @keyframes turn_in {
+   
+    85% {
+        background: conic-gradient(#cacaca calc(var(--progress) * .4), #cacaca 0deg);
+      }
+      100% {
+        background: conic-gradient(#fff 0deg);
+      }  
+    } 
+.suppliers-box  {
+    border: none;
+    box-shadow: none;
+    margin-right: 0px;
+    width:136px ;
+}  
+.suppliers-box .suppliers-header {
+    font-size: 12px;
+    color: white;
+    font-weight: 600;
+}
+.suppliers-box .suppliers-box-table {
+    margin: 5px 0px;
+}
+.suppliers-box .suppliers-box-table .suppliers-box-header {
+    background-color: #d9d9d9;
+    margin: 2px 0px;
+    padding: 2px;
+    font-size: 10px;
+    width: 100px;
+}
+.icon-layout {
+    position: relative;
+    float: left;
+    padding: 5px;
+}
+.cart-icon {
+    display: flex;
+    position: static;
+    float: none;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+
+}
+.expand-icon {
+    font-size: 7px;
+    position: absolute;
+    left:14px;
+    right: auto;
+    top: 3px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background-color: #d9d9d9;
+    border: 1px solid ;
+    border-radius: 50%;
+}
+.supplier-count {
+    width: 18px;
+    float: left;
+    padding-left: 5px;
+}

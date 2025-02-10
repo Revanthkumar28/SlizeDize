@@ -1,0 +1,97 @@
+<b2b-row container-body >
+    <!-- AV-1 -->
+    <b2b-container row-body *ngFor="let data of quationTable" [style]="data.badge" [property]="{padding:'10px 5px 5px 5px',backgroundTheme:'',width:'auto',flex:1,height:'600px'}">
+    <b2b-row container-body  *ngFor="let a of data.peffered_Supplier"  [style]="a['heading']"  padding="10px" width="auto" justifyContent="center">
+      <b2b-text row-body [text]="a['name']"  fontSize="12px" [bold]="true" colorTheme="--color-white"></b2b-text>
+
+      <!-- SELECT VENDOR FOR EACH PRODUCT - (AV-2)-->
+      <b2b-tdata row-body>
+        <b2b-dropdown tdata-body *ngIf="data.id != 1" popupWidth="150px" position="absolute" dropdownLeft="-123px" overflow="auto" [isInsideClickFalsePopup]="false" alertPopWidth="150px" popupHeight="auto" zIndex="100"
+            alignItem="start">
+            <b2b-row dropdown-selector *appRoleBasedButton="[159,1]">
+                <b2b-tdata row-body (click)="columnWiseVendChecked(data.id,data.vendorColumn)">
+                    <b2b-icon-button  tdata-body icon="add" width="20px" margin="0 0 0 3px"  iconSize="20px" colorTheme="--color-white" backgroundTheme="--color-drawer-light" [isRounded]="true"></b2b-icon-button>
+                </b2b-tdata>
+            </b2b-row>
+
+            <b2b-text dropdown-selector-container text="Click Order Frequency"  fontSize="10px"></b2b-text>
+            <b2b-row dropdown-items>
+                <b2b-container row-body [property]="{padding:'0',borderRadius:'0'}">
+                    <b2b-row container-body padding="0 0 0 7px">
+                        <b2b-text row-body text="Add Vendor"  [bold]="true" fontSize="11px"></b2b-text>
+                    </b2b-row>
+                    <input container-body type="text" [(ngModel)]="vendorFilter.companyName" placeholder="Search" style="width: 90%;outline: none;border-radius: 3px;" >
+                    <b2b-spacer container-body height="5px"></b2b-spacer>
+                    
+                    <ng-container container-body *ngFor="let vend of data.vendorColumn | filter : vendorFilter.companyName : 'companyName' ">
+                        <!-- <b2b-spacer row-body width="10px"></b2b-spacer>  -->
+                        <b2b-row>
+                            <input row-body type="checkbox" [checked]="vend.ischecked" (change)="selectVendor($event,vend,data.id)" />
+                            <b2b-list-tile row-body class="orderFrequency" [title]="vend.companyName" padding="2px 0"  row-body hoverTheme="--color-dark-grey" colorTheme="--color-black" height="10px" fontSize="13px"></b2b-list-tile>
+                        </b2b-row>
+                    </ng-container>
+                    <b2b-spacer container-body height="5px"></b2b-spacer>
+                    <b2b-button container-body title="Add"  width="60px" height="20px" backgroundTheme="--color-primary" margin="10px" (click)="selectedVendor(data.id,data)"></b2b-button>
+                </b2b-container>
+            </b2b-row>
+        </b2b-dropdown>
+    </b2b-tdata>
+    </b2b-row>
+    <b2b-spacer container-body height="20px"></b2b-spacer>
+    <!-- - (AV-3) -->
+    <b2b-row container-body  *ngFor="let y of data.list1">
+        <b2b-container row-body [property]="{backgroundTheme:'',padding:'0'}">
+            <b2b-menu-dropdown container-body [menuContent]="true" [showExpand]="true" [bold]="true" [text]="y.companyName" [childOpen]="isOpen" iconBackgroundTheme="--color-white" backgroundTheme="--color-lighter-green" height="45px" fontSize="13px"  [active]="true" colorTheme="--color-black" [isExpand]="true" paddingg="0 0 0 10px" margin="10px 0 0px 0" (onPressed)="remove_1($event)">
+                    <b2b-choice svg-icon  radioType="checkbox" [checked]="y.id === selectedItemId && 'DO - Direct Order' === ISDO" height="auto" width="auto" (click)="check(y.id,$event,y,data.id)" ></b2b-choice>
+                    <b2b-text menu-number text="{{y.value | titlecase}}" backgroundTheme="--color-white" padding="0 5px 0 5px"></b2b-text>
+                
+                    <b2b-row menu-content border="1px solid var(--color-dark-grey)">
+                    <b2b-container row-body [property]="{backgroundTheme:'',borderRadius:'0',padding:'3px'}">
+                        <b2b-row container-body>
+                            <b2b-icon row-body icon="star" colorTheme="--color-yellow" padding="0 5px 0 5px"></b2b-icon>
+                            <b2b-icon row-body icon="star" colorTheme="--color-yellow" padding="0 5px 0 5px"></b2b-icon>
+                            <b2b-icon row-body icon="star" colorTheme="--color-yellow" padding="0 5px 0 5px"></b2b-icon>
+                            <b2b-icon row-body icon="star" colorTheme="--color-yellow" padding="0 5px 0 5px"></b2b-icon>
+                        </b2b-row>
+                    </b2b-container>
+                    <b2b-container row-body [property]="{backgroundTheme:'',borderRadius:'0',padding:'3px'}">
+                        <b2b-row container-body>
+                            <b2b-icon row-body icon="forum" borderRadius="10px" colorTheme="--color-white"  backgroundTheme="--color-toggle-background" padding="0 5px 0 5px"></b2b-icon>
+                            <b2b-icon row-body icon="accessibility" colorTheme="" padding="0 5px 0 5px"></b2b-icon>
+                            <b2b-icon row-body icon="compost" colorTheme="--color-white" backgroundTheme="--color-toggle-background" padding="0 5px 0 5px"></b2b-icon>
+                            <b2b-spacer row-body [flex]="1"></b2b-spacer>
+                            <b2b-icon row-body *ngIf="data.id != 1 " icon="edit_square" colorTheme="--color-white" backgroundTheme="--color-drawer-bottom-card" padding="0 5px 0 5px" (click)="edit(y)"></b2b-icon>
+                        </b2b-row>
+                    </b2b-container>
+                        </b2b-row>
+                        <b2b-row list-child >
+                    <b2b-container row-body [property]="{padding:'0'}">
+                        <b2b-row   container-body border="1px solid var(--color-dark-grey)" padding="3px">
+                            <b2b-text row-body [text]="y['Bed &  Bath Linen  Manufacturer']" fontSize="10px"></b2b-text>
+                        </b2b-row>
+                        <b2b-row  container-body border="1px solid var(--color-dark-grey)"  padding="3px">
+                            <b2b-text row-body [text]="y['Mr.Ramkrishan-GM']" fontSize="10px"></b2b-text>
+                        </b2b-row>
+                        <b2b-row  container-body border="1px solid var(--color-dark-grey)">
+                            <b2b-icon row-body icon="apartment" backgroundTheme="" padding="0 5px 0 5px"></b2b-icon>
+                            <b2b-text row-body [text]="y.companyName + '('+ (y.po_access== '1' && y.service_access == '1' ? 'Service & Product Provider':y.po_access== '1' && y.service_access == '0'? 'Products Provider':y.po_access== '0' && y.service_access == '1' ? 'Service Provider':'')  +')' " fontSize="10px"></b2b-text>
+                        </b2b-row>
+                        <b2b-row  container-body border="1px solid var(--color-dark-grey)">
+                            <b2b-icon row-body icon="call" backgroundTheme="" padding="0 5px 0 5px"></b2b-icon>
+                            <b2b-text row-body [text]="y.mobileNumber" fontSize="10px"></b2b-text>
+                            <b2b-icon-button row-body icon="content_copy" padding="0 5px 0 5px" backgroundTheme="" [toolTip]="true" toolTipName="Copy Number" height="20px" width="20px" iconSize="15px" (click)="copyNumberToClipboard(y.mobileNumber)"></b2b-icon-button>
+                        </b2b-row>
+
+                        <b2b-row  container-body border="1px solid var(--color-dark-grey)">
+                            <b2b-icon row-body icon="factory" backgroundTheme="" padding="0 5px 0 5px"></b2b-icon>
+                            <b2b-text row-body text="{{y.street1}} , {{y.city}} , {{y.state}} , {{y.country}}" fontSize="10px"></b2b-text>
+                        </b2b-row>
+
+                    </b2b-container>
+            </b2b-row>
+            </b2b-menu-dropdown>
+    </b2b-container>
+    </b2b-row>
+</b2b-container>
+<b2b-spacer row-body width="10px"></b2b-spacer>
+</b2b-row>

@@ -1,0 +1,92 @@
+table {
+  border-collapse: collapse; /* Merge borders */
+  width: 100%;
+}
+.head{
+  background-color: #466ead;
+  -webkit-text-fill-color: aliceblue;
+}
+.button{
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+table, th, td {
+  border: 1px solid black; /* Add borders */
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  width: 150px;
+  font-size: 12px;
+}
+button{
+-webkit-text-fill-color: aliceblue;
+}
+.triangle-right {
+
+border-top: 20px solid transparent;
+border-left: 40px solid #466ead;
+border-bottom: 20px solid transparent;
+}
+.rectangle {
+height: 40px;
+width: 50px;
+background-color:#466ead ;
+}
+.right{
+display:flex;
+flex-direction:row;
+position: absolute;
+top: 41%;
+right: -69px;
+  
+}
+.next{
+text-align: center;
+-webkit-text-fill-color: aliceblue;
+font-size: 11px;
+}
+.triangle-left {
+
+border-top: 20px solid transparent;
+border-right: 40px solid #466ead;
+border-bottom: 20px solid transparent;
+}
+.rectangle2 {
+height: 40px;
+width: 50px;
+background-color:#466ead ;
+}
+.left{
+display:flex;
+flex-direction:row;
+position: absolute;
+  top: 41%;
+  right: 744px;
+  
+}
+.input{
+border-color: transparent;
+}
+.new{
+  text-decoration: underline;
+  cursor: pointer;
+  -webkit-text-fill-color: blue;
+}
+
+/* BACKGROUND BLUR */
+.blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Light black shadow effect */
+  backdrop-filter: blur(5px);
+  /* You can adjust the blur amount */
+  z-index: 999;
+  /* Make sure it's above other elements */
+}
